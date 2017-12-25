@@ -656,14 +656,6 @@ public class CognitoUser {
             public void run() {
                 Runnable returnCallback;
                 try {
-                    getCachedSession();
-                    returnCallback = new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onSuccess(cipSession, null);
-                        }
-                    };
-                } catch (final CognitoNotAuthorizedException e) {
                     returnCallback = new Runnable() {
                         @Override
                         public void run() {
