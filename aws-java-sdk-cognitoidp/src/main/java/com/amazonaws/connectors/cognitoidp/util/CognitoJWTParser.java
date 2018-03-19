@@ -17,13 +17,13 @@
 
 package com.amazonaws.connectors.cognitoidp.util;
 
-import com.amazonaws.util.Base64;
 import com.amazonaws.connectors.cognitoidp.exceptions.CognitoParameterInvalidException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 
 /**
  * Utility class for all operations on JWT.
@@ -49,7 +49,7 @@ public class CognitoJWTParser {
     public static JSONObject getHeader(String jwt) {
         try {
             validateJWT(jwt);
-            final byte[] sectionDecoded = Base64.decode(jwt.split("\\.")[HEADER]);
+            final byte[] sectionDecoded = Base64.getDecoder().decode(jwt.split("\\.")[HEADER]);
             final String jwtSection = new String(sectionDecoded, "UTF-8");
             return new JSONObject(jwtSection);
         } catch (final UnsupportedEncodingException e) {
@@ -71,7 +71,7 @@ public class CognitoJWTParser {
         try {
             validateJWT(jwt);
             final String payload = jwt.split("\\.")[PAYLOAD];
-            final byte[] sectionDecoded = Base64.decode(payload);
+            final byte[] sectionDecoded = Base64.getDecoder().decode(payload);
             final String jwtSection = new String(sectionDecoded, "UTF-8");
             return new JSONObject(jwtSection);
         } catch (final UnsupportedEncodingException e) {
@@ -92,7 +92,7 @@ public class CognitoJWTParser {
     public static String getSignature(String jwt) {
         try {
             validateJWT(jwt);
-            final byte[] sectionDecoded = Base64.decode(jwt.split("\\.")[SIGNATURE]);
+            final byte[] sectionDecoded = Base64.getDecoder().decode(jwt.split("\\.")[SIGNATURE]);
             return new String(sectionDecoded, "UTF-8");
         } catch (final Exception e) {
             throw new CognitoParameterInvalidException("error in parsing JSON");

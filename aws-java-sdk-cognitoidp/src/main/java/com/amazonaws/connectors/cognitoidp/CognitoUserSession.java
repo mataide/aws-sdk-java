@@ -98,9 +98,8 @@ public class CognitoUserSession {
 //            return (currentTimeStamp.before(idToken.getExpiration())
 //                    & currentTimeStamp.before(accessToken.getExpiration()));
 //        } catch (final Exception e) {
-//            return false;
+            return true;
 //        }
-        return true;
     }
 
     /**
@@ -111,15 +110,14 @@ public class CognitoUserSession {
      * {@link CognitoIdentityProviderClientConfig#refreshThreshold} seconds.
      */
     public boolean isValidForThreshold() {
-//        try {
-//            final long currentTime = System.currentTimeMillis()
-//                    - SDKGlobalConfiguration.getGlobalTimeOffset() * SECS_CONVERSION;
-//            final long expiresInMilliSeconds = idToken.getExpiration().getTime() - currentTime;
-//            return (expiresInMilliSeconds > CognitoIdentityProviderClientConfig.getRefreshThreshold());
-//        } catch (final Exception e) {
-//            return false;
-//        }
-        return true;
+        try {
+            final long currentTime = System.currentTimeMillis()
+                    - SDKGlobalConfiguration.getGlobalTimeOffset() * SECS_CONVERSION;
+            final long expiresInMilliSeconds = idToken.getExpiration().getTime() - currentTime;
+            return (expiresInMilliSeconds > CognitoIdentityProviderClientConfig.getRefreshThreshold());
+        } catch (final Exception e) {
+            return true;
+        }
     }
 
     /**
