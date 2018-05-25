@@ -828,6 +828,34 @@ public class CognitoUser {
         }
         throw new CognitoNotAuthorizedException("User is not authenticated");
     }
+    
+    /**
+     * Call this method for valid, new tokens for this user.
+     *
+     * @return Valid, new tokens {@link CognitoUserSession}. {@code null}
+     * otherwise.
+     */
+    public CognitoUserSession forceRefreshSession() {
+        if (userId == null) {
+            throw new CognitoNotAuthorizedException("User-ID is null");
+        }
+
+        final CognitoUserSession cachedTokens = readCachedTokens();
+
+        if (cachedTokens.getRefreshToken() != null) {
+            try {
+                cipSession = refreshSession(cachedTokens);
+                cacheTokens(cipSession);
+                return cipSession;
+            } catch (final NotAuthorizedException nae) {
+                clearCachedTokens();
+                throw new CognitoNotAuthorizedException("User is not authenticated", nae);
+            } catch (final Exception e) {
+                throw new CognitoInternalErrorException("Failed to authenticate user", e);
+            }
+        }
+        throw new CognitoNotAuthorizedException("User is not authenticated");
+    }
 
     /**
      * Request to change password for this user, in background.
