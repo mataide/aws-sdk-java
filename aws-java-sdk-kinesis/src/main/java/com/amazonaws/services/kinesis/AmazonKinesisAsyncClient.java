@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -30,9 +30,10 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
  * the asynchronous operation; overloads which accept an {@code AsyncHandler} can be used to receive notification when
  * an asynchronous operation completes.
  * <p>
- * <fullname>Amazon Kinesis Streams Service API Reference</fullname>
+ * <fullname>Amazon Kinesis Data Streams Service API Reference</fullname>
  * <p>
- * Amazon Kinesis Streams is a managed service that scales elastically for real time processing of streaming big data.
+ * Amazon Kinesis Data Streams is a managed service that scales elastically for real-time processing of streaming big
+ * data.
  * </p>
  */
 @ThreadSafe
@@ -424,6 +425,39 @@ public class AmazonKinesisAsyncClient extends AmazonKinesisClient implements Ama
     }
 
     @Override
+    public java.util.concurrent.Future<DeregisterStreamConsumerResult> deregisterStreamConsumerAsync(DeregisterStreamConsumerRequest request) {
+
+        return deregisterStreamConsumerAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DeregisterStreamConsumerResult> deregisterStreamConsumerAsync(final DeregisterStreamConsumerRequest request,
+            final com.amazonaws.handlers.AsyncHandler<DeregisterStreamConsumerRequest, DeregisterStreamConsumerResult> asyncHandler) {
+        final DeregisterStreamConsumerRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<DeregisterStreamConsumerResult>() {
+            @Override
+            public DeregisterStreamConsumerResult call() throws Exception {
+                DeregisterStreamConsumerResult result = null;
+
+                try {
+                    result = executeDeregisterStreamConsumer(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
     public java.util.concurrent.Future<DescribeLimitsResult> describeLimitsAsync(DescribeLimitsRequest request) {
 
         return describeLimitsAsync(request, null);
@@ -557,6 +591,39 @@ public class AmazonKinesisAsyncClient extends AmazonKinesisClient implements Ama
 
         return describeStreamAsync(new DescribeStreamRequest().withStreamName(streamName).withLimit(limit).withExclusiveStartShardId(exclusiveStartShardId),
                 asyncHandler);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DescribeStreamConsumerResult> describeStreamConsumerAsync(DescribeStreamConsumerRequest request) {
+
+        return describeStreamConsumerAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DescribeStreamConsumerResult> describeStreamConsumerAsync(final DescribeStreamConsumerRequest request,
+            final com.amazonaws.handlers.AsyncHandler<DescribeStreamConsumerRequest, DescribeStreamConsumerResult> asyncHandler) {
+        final DescribeStreamConsumerRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<DescribeStreamConsumerResult>() {
+            @Override
+            public DescribeStreamConsumerResult call() throws Exception {
+                DescribeStreamConsumerResult result = null;
+
+                try {
+                    result = executeDescribeStreamConsumer(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
     }
 
     @Override
@@ -793,6 +860,72 @@ public class AmazonKinesisAsyncClient extends AmazonKinesisClient implements Ama
 
                 try {
                     result = executeIncreaseStreamRetentionPeriod(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListShardsResult> listShardsAsync(ListShardsRequest request) {
+
+        return listShardsAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListShardsResult> listShardsAsync(final ListShardsRequest request,
+            final com.amazonaws.handlers.AsyncHandler<ListShardsRequest, ListShardsResult> asyncHandler) {
+        final ListShardsRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<ListShardsResult>() {
+            @Override
+            public ListShardsResult call() throws Exception {
+                ListShardsResult result = null;
+
+                try {
+                    result = executeListShards(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListStreamConsumersResult> listStreamConsumersAsync(ListStreamConsumersRequest request) {
+
+        return listStreamConsumersAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListStreamConsumersResult> listStreamConsumersAsync(final ListStreamConsumersRequest request,
+            final com.amazonaws.handlers.AsyncHandler<ListStreamConsumersRequest, ListStreamConsumersResult> asyncHandler) {
+        final ListStreamConsumersRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<ListStreamConsumersResult>() {
+            @Override
+            public ListStreamConsumersResult call() throws Exception {
+                ListStreamConsumersResult result = null;
+
+                try {
+                    result = executeListStreamConsumers(finalRequest);
                 } catch (Exception ex) {
                     if (asyncHandler != null) {
                         asyncHandler.onError(ex);
@@ -1102,6 +1235,39 @@ public class AmazonKinesisAsyncClient extends AmazonKinesisClient implements Ama
 
                 try {
                     result = executePutRecords(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
+    public java.util.concurrent.Future<RegisterStreamConsumerResult> registerStreamConsumerAsync(RegisterStreamConsumerRequest request) {
+
+        return registerStreamConsumerAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<RegisterStreamConsumerResult> registerStreamConsumerAsync(final RegisterStreamConsumerRequest request,
+            final com.amazonaws.handlers.AsyncHandler<RegisterStreamConsumerRequest, RegisterStreamConsumerResult> asyncHandler) {
+        final RegisterStreamConsumerRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<RegisterStreamConsumerResult>() {
+            @Override
+            public RegisterStreamConsumerResult call() throws Exception {
+                RegisterStreamConsumerResult result = null;
+
+                try {
+                    result = executeRegisterStreamConsumer(finalRequest);
                 } catch (Exception ex) {
                     if (asyncHandler != null) {
                         asyncHandler.onError(ex);

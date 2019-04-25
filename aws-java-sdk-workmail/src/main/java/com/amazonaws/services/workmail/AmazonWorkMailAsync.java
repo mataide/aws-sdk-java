@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -28,11 +28,11 @@ import com.amazonaws.services.workmail.model.*;
  * <p>
  * Amazon WorkMail is a secure, managed business email and calendaring service with support for existing desktop and
  * mobile email clients. You can access your email, contacts, and calendars using Microsoft Outlook, your browser, or
- * their native iOS and Android email applications. You can integrate Amazon WorkMail with your existing corporate
- * directory and control both the keys that encrypt your data and the location in which your data is stored.
+ * other native iOS and Android email applications. You can integrate WorkMail with your existing corporate directory
+ * and control both the keys that encrypt your data and the location in which your data is stored.
  * </p>
  * <p>
- * The Amazon WorkMail API is designed for the following scenarios:
+ * The WorkMail API is designed for the following scenarios:
  * </p>
  * <ul>
  * <li>
@@ -63,13 +63,13 @@ import com.amazonaws.services.workmail.model.*;
  * </li>
  * </ul>
  * <p>
- * All Amazon WorkMail API actions are Amazon-authenticated and certificate-signed. They not only require the use of the
- * AWS SDK, but also allow for the exclusive use of IAM users and roles to help facilitate access, trust, and permission
- * policies. By creating a role and allowing an IAM user to access the Amazon WorkMail site, the IAM user gains full
- * administrative visibility into the entire Amazon WorkMail organization (or as set in the IAM policy). This includes,
- * but is not limited to, the ability to create, update, and delete users, groups, and resources. This allows developers
- * to perform the scenarios listed above, as well as give users the ability to grant access on a selective basis using
- * the IAM model.
+ * All WorkMail API operations are Amazon-authenticated and certificate-signed. They not only require the use of the AWS
+ * SDK, but also allow for the exclusive use of AWS Identity and Access Management users and roles to help facilitate
+ * access, trust, and permission policies. By creating a role and allowing an IAM user to access the WorkMail site, the
+ * IAM user gains full administrative visibility into the entire WorkMail organization (or as set in the IAM policy).
+ * This includes, but is not limited to, the ability to create, update, and delete users, groups, and resources. This
+ * allows developers to perform the scenarios listed above, as well as give users the ability to grant access on a
+ * selective basis using the IAM model.
  * </p>
  */
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
@@ -77,7 +77,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Adds a member to the resource's set of delegates.
+     * Adds a member (user or group) to the resource's set of delegates.
      * </p>
      * 
      * @param associateDelegateToResourceRequest
@@ -91,7 +91,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Adds a member to the resource's set of delegates.
+     * Adds a member (user or group) to the resource's set of delegates.
      * </p>
      * 
      * @param associateDelegateToResourceRequest
@@ -110,7 +110,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Adds a member to the group's set.
+     * Adds a member (user or group) to the group's set.
      * </p>
      * 
      * @param associateMemberToGroupRequest
@@ -123,7 +123,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Adds a member to the group's set.
+     * Adds a member (user or group) to the group's set.
      * </p>
      * 
      * @param associateMemberToGroupRequest
@@ -141,7 +141,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Adds an alias to the set of a given member of Amazon WorkMail.
+     * Adds an alias to the set of a given member (user or group) of Amazon WorkMail.
      * </p>
      * 
      * @param createAliasRequest
@@ -154,7 +154,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Adds an alias to the set of a given member of Amazon WorkMail.
+     * Adds an alias to the set of a given member (user or group) of Amazon WorkMail.
      * </p>
      * 
      * @param createAliasRequest
@@ -172,7 +172,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Creates a group that can be used in Amazon WorkMail by calling the RegisterToWorkMail operation.
+     * Creates a group that can be used in Amazon WorkMail by calling the <a>RegisterToWorkMail</a> operation.
      * </p>
      * 
      * @param createGroupRequest
@@ -185,7 +185,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Creates a group that can be used in Amazon WorkMail by calling the RegisterToWorkMail operation.
+     * Creates a group that can be used in Amazon WorkMail by calling the <a>RegisterToWorkMail</a> operation.
      * </p>
      * 
      * @param createGroupRequest
@@ -203,7 +203,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Creates a new Amazon WorkMail resource. The available types are equipment and room.
+     * Creates a new Amazon WorkMail resource.
      * </p>
      * 
      * @param createResourceRequest
@@ -216,7 +216,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Creates a new Amazon WorkMail resource. The available types are equipment and room.
+     * Creates a new Amazon WorkMail resource.
      * </p>
      * 
      * @param createResourceRequest
@@ -234,7 +234,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Creates a user who can be used in Amazon WorkMail by calling the RegisterToWorkMail operation.
+     * Creates a user who can be used in Amazon WorkMail by calling the <a>RegisterToWorkMail</a> operation.
      * </p>
      * 
      * @param createUserRequest
@@ -247,7 +247,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Creates a user who can be used in Amazon WorkMail by calling the RegisterToWorkMail operation.
+     * Creates a user who can be used in Amazon WorkMail by calling the <a>RegisterToWorkMail</a> operation.
      * </p>
      * 
      * @param createUserRequest
@@ -265,7 +265,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Remove the alias from a set of aliases for a given user.
+     * Remove one or more specified aliases from a set of aliases for a given user.
      * </p>
      * 
      * @param deleteAliasRequest
@@ -278,7 +278,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Remove the alias from a set of aliases for a given user.
+     * Remove one or more specified aliases from a set of aliases for a given user.
      * </p>
      * 
      * @param deleteAliasRequest
@@ -327,6 +327,37 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
+     * Deletes permissions granted to a member (user or group).
+     * </p>
+     * 
+     * @param deleteMailboxPermissionsRequest
+     * @return A Java Future containing the result of the DeleteMailboxPermissions operation returned by the service.
+     * @sample AmazonWorkMailAsync.DeleteMailboxPermissions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/workmail-2017-10-01/DeleteMailboxPermissions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteMailboxPermissionsResult> deleteMailboxPermissionsAsync(DeleteMailboxPermissionsRequest deleteMailboxPermissionsRequest);
+
+    /**
+     * <p>
+     * Deletes permissions granted to a member (user or group).
+     * </p>
+     * 
+     * @param deleteMailboxPermissionsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteMailboxPermissions operation returned by the service.
+     * @sample AmazonWorkMailAsyncHandler.DeleteMailboxPermissions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/workmail-2017-10-01/DeleteMailboxPermissions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteMailboxPermissionsResult> deleteMailboxPermissionsAsync(DeleteMailboxPermissionsRequest deleteMailboxPermissionsRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteMailboxPermissionsRequest, DeleteMailboxPermissionsResult> asyncHandler);
+
+    /**
+     * <p>
      * Deletes the specified resource.
      * </p>
      * 
@@ -358,8 +389,12 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Deletes a user from Amazon WorkMail and all subsequent systems. The action can't be undone. The mailbox is kept
-     * as-is for a minimum of 30 days, without any means to restore it.
+     * Deletes a user from Amazon WorkMail and all subsequent systems. Before you can delete a user, the user state must
+     * be <code>DISABLED</code>. Use the <a>DescribeUser</a> action to confirm the user state.
+     * </p>
+     * <p>
+     * Deleting a user is permanent and cannot be undone. WorkMail archives user mailboxes for 30 days before they are
+     * permanently removed.
      * </p>
      * 
      * @param deleteUserRequest
@@ -372,8 +407,12 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Deletes a user from Amazon WorkMail and all subsequent systems. The action can't be undone. The mailbox is kept
-     * as-is for a minimum of 30 days, without any means to restore it.
+     * Deletes a user from Amazon WorkMail and all subsequent systems. Before you can delete a user, the user state must
+     * be <code>DISABLED</code>. Use the <a>DescribeUser</a> action to confirm the user state.
+     * </p>
+     * <p>
+     * Deleting a user is permanent and cannot be undone. WorkMail archives user mailboxes for 30 days before they are
+     * permanently removed.
      * </p>
      * 
      * @param deleteUserRequest
@@ -392,7 +431,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
     /**
      * <p>
      * Mark a user, group, or resource as no longer used in Amazon WorkMail. This action disassociates the mailbox and
-     * schedules it for clean-up. Amazon WorkMail keeps mailboxes for 30 days before they are permanently removed. The
+     * schedules it for clean-up. WorkMail keeps mailboxes for 30 days before they are permanently removed. The
      * functionality in the console is <i>Disable</i>.
      * </p>
      * 
@@ -407,7 +446,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
     /**
      * <p>
      * Mark a user, group, or resource as no longer used in Amazon WorkMail. This action disassociates the mailbox and
-     * schedules it for clean-up. Amazon WorkMail keeps mailboxes for 30 days before they are permanently removed. The
+     * schedules it for clean-up. WorkMail keeps mailboxes for 30 days before they are permanently removed. The
      * functionality in the console is <i>Disable</i>.
      * </p>
      * 
@@ -649,7 +688,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Returns an overview of the members of a group.
+     * Returns an overview of the members of a group. Users and groups can be members of a group.
      * </p>
      * 
      * @param listGroupMembersRequest
@@ -662,7 +701,7 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Returns an overview of the members of a group.
+     * Returns an overview of the members of a group. Users and groups can be members of a group.
      * </p>
      * 
      * @param listGroupMembersRequest
@@ -708,6 +747,37 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
      */
     java.util.concurrent.Future<ListGroupsResult> listGroupsAsync(ListGroupsRequest listGroupsRequest,
             com.amazonaws.handlers.AsyncHandler<ListGroupsRequest, ListGroupsResult> asyncHandler);
+
+    /**
+     * <p>
+     * Lists the mailbox permissions associated with a user, group, or resource mailbox.
+     * </p>
+     * 
+     * @param listMailboxPermissionsRequest
+     * @return A Java Future containing the result of the ListMailboxPermissions operation returned by the service.
+     * @sample AmazonWorkMailAsync.ListMailboxPermissions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/workmail-2017-10-01/ListMailboxPermissions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListMailboxPermissionsResult> listMailboxPermissionsAsync(ListMailboxPermissionsRequest listMailboxPermissionsRequest);
+
+    /**
+     * <p>
+     * Lists the mailbox permissions associated with a user, group, or resource mailbox.
+     * </p>
+     * 
+     * @param listMailboxPermissionsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListMailboxPermissions operation returned by the service.
+     * @sample AmazonWorkMailAsyncHandler.ListMailboxPermissions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/workmail-2017-10-01/ListMailboxPermissions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListMailboxPermissionsResult> listMailboxPermissionsAsync(ListMailboxPermissionsRequest listMailboxPermissionsRequest,
+            com.amazonaws.handlers.AsyncHandler<ListMailboxPermissionsRequest, ListMailboxPermissionsResult> asyncHandler);
 
     /**
      * <p>
@@ -837,12 +907,46 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Registers an existing and disabled user, group, or resource/entity for Amazon WorkMail use by associating a
-     * mailbox and calendaring capabilities. It performs no change if the entity is enabled and fails if the entity is
-     * deleted. This operation results in the accumulation of costs. For more information, see <a
-     * href="http://aws.amazon.com/workmail/pricing">Pricing</a>. The equivalent console functionality for this
-     * operation is <i>Enable</i>. Users can either be created by calling the CreateUser API or they can be synchronized
-     * from your directory. For more information, see DeregisterFromWorkMail.
+     * Sets permissions for a user, group, or resource. This replaces any pre-existing permissions.
+     * </p>
+     * 
+     * @param putMailboxPermissionsRequest
+     * @return A Java Future containing the result of the PutMailboxPermissions operation returned by the service.
+     * @sample AmazonWorkMailAsync.PutMailboxPermissions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/workmail-2017-10-01/PutMailboxPermissions" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<PutMailboxPermissionsResult> putMailboxPermissionsAsync(PutMailboxPermissionsRequest putMailboxPermissionsRequest);
+
+    /**
+     * <p>
+     * Sets permissions for a user, group, or resource. This replaces any pre-existing permissions.
+     * </p>
+     * 
+     * @param putMailboxPermissionsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the PutMailboxPermissions operation returned by the service.
+     * @sample AmazonWorkMailAsyncHandler.PutMailboxPermissions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/workmail-2017-10-01/PutMailboxPermissions" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<PutMailboxPermissionsResult> putMailboxPermissionsAsync(PutMailboxPermissionsRequest putMailboxPermissionsRequest,
+            com.amazonaws.handlers.AsyncHandler<PutMailboxPermissionsRequest, PutMailboxPermissionsResult> asyncHandler);
+
+    /**
+     * <p>
+     * Registers an existing and disabled user, group, or resource for Amazon WorkMail use by associating a mailbox and
+     * calendaring capabilities. It performs no change if the user, group, or resource is enabled and fails if the user,
+     * group, or resource is deleted. This operation results in the accumulation of costs. For more information, see <a
+     * href="https://aws.amazon.com//workmail/pricing">Pricing</a>. The equivalent console functionality for this
+     * operation is <i>Enable</i>.
+     * </p>
+     * <p>
+     * Users can either be created by calling the <a>CreateUser</a> API operation or they can be synchronized from your
+     * directory. For more information, see <a>DeregisterFromWorkMail</a>.
      * </p>
      * 
      * @param registerToWorkMailRequest
@@ -855,12 +959,15 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Registers an existing and disabled user, group, or resource/entity for Amazon WorkMail use by associating a
-     * mailbox and calendaring capabilities. It performs no change if the entity is enabled and fails if the entity is
-     * deleted. This operation results in the accumulation of costs. For more information, see <a
-     * href="http://aws.amazon.com/workmail/pricing">Pricing</a>. The equivalent console functionality for this
-     * operation is <i>Enable</i>. Users can either be created by calling the CreateUser API or they can be synchronized
-     * from your directory. For more information, see DeregisterFromWorkMail.
+     * Registers an existing and disabled user, group, or resource for Amazon WorkMail use by associating a mailbox and
+     * calendaring capabilities. It performs no change if the user, group, or resource is enabled and fails if the user,
+     * group, or resource is deleted. This operation results in the accumulation of costs. For more information, see <a
+     * href="https://aws.amazon.com//workmail/pricing">Pricing</a>. The equivalent console functionality for this
+     * operation is <i>Enable</i>.
+     * </p>
+     * <p>
+     * Users can either be created by calling the <a>CreateUser</a> API operation or they can be synchronized from your
+     * directory. For more information, see <a>DeregisterFromWorkMail</a>.
      * </p>
      * 
      * @param registerToWorkMailRequest
@@ -909,8 +1016,9 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Updates the primary email for an entity. The current email is moved into the list of aliases (or swapped between
-     * an existing alias and the current primary email) and the email provided in the input is promoted as the primary.
+     * Updates the primary email for a user, group, or resource. The current email is moved into the list of aliases (or
+     * swapped between an existing alias and the current primary email), and the email provided in the input is promoted
+     * as the primary.
      * </p>
      * 
      * @param updatePrimaryEmailAddressRequest
@@ -924,8 +1032,9 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Updates the primary email for an entity. The current email is moved into the list of aliases (or swapped between
-     * an existing alias and the current primary email) and the email provided in the input is promoted as the primary.
+     * Updates the primary email for a user, group, or resource. The current email is moved into the list of aliases (or
+     * swapped between an existing alias and the current primary email), and the email provided in the input is promoted
+     * as the primary.
      * </p>
      * 
      * @param updatePrimaryEmailAddressRequest
@@ -944,8 +1053,9 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Updates data for the resource. It must be preceded by a describe call in order to have the latest information.
-     * The dataset in the request should be the one expected when performing another describe call.
+     * Updates data for the resource. To have the latest information, it must be preceded by a <a>DescribeResource</a>
+     * call. The dataset in the request should be the one expected when performing another <code>DescribeResource</code>
+     * call.
      * </p>
      * 
      * @param updateResourceRequest
@@ -958,8 +1068,9 @@ public interface AmazonWorkMailAsync extends AmazonWorkMail {
 
     /**
      * <p>
-     * Updates data for the resource. It must be preceded by a describe call in order to have the latest information.
-     * The dataset in the request should be the one expected when performing another describe call.
+     * Updates data for the resource. To have the latest information, it must be preceded by a <a>DescribeResource</a>
+     * call. The dataset in the request should be the one expected when performing another <code>DescribeResource</code>
+     * call.
      * </p>
      * 
      * @param updateResourceRequest

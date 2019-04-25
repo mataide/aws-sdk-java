@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -20,16 +20,14 @@ import com.amazonaws.Request;
 import com.amazonaws.services.ec2.model.transform.DescribeSnapshotsRequestMarshaller;
 
 /**
- * <p>
- * Contains the parameters for DescribeSnapshots.
- * </p>
+ * 
  */
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements Serializable, Cloneable, DryRunSupportedRequest<DescribeSnapshotsRequest> {
 
     /**
      * <p>
-     * One or more filters.
+     * The filters.
      * </p>
      * <ul>
      * <li>
@@ -39,9 +37,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> |
-     * <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the
-     * user-configured AWS account alias, which is set from the IAM console.
+     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>self</code> |
+     * <code>all</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused
+     * with the user-configured AWS account alias, which is set from the IAM console.
      * </p>
      * </li>
      * <li>
@@ -72,24 +70,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify
-     * the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag
-     * Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-value</code> filter. For example, if you use both the filter "tag-key=Purpose" and the filter
-     * "tag-value=X", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is),
-     * and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X,
-     * see the <code>tag</code>:<i>key</i>=<i>value</i> filter.
-     * </p>
-     * </li>
-     * <li>
-     * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-key</code> filter.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -128,29 +118,29 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
     private String nextToken;
     /**
      * <p>
-     * Returns the snapshots owned by the specified owner. Multiple owners can be specified.
+     * Describes the snapshots owned by these owners.
      * </p>
      */
     private com.amazonaws.internal.SdkInternalList<String> ownerIds;
     /**
      * <p>
-     * One or more AWS accounts IDs that can create volumes from the snapshot.
+     * The IDs of the AWS accounts that can create volumes from the snapshot.
      * </p>
      */
     private com.amazonaws.internal.SdkInternalList<String> restorableByUserIds;
     /**
      * <p>
-     * One or more snapshot IDs.
+     * The snapshot IDs.
      * </p>
      * <p>
-     * Default: Describes snapshots for which you have launch permissions.
+     * Default: Describes the snapshots for which you have create volume permissions.
      * </p>
      */
     private com.amazonaws.internal.SdkInternalList<String> snapshotIds;
 
     /**
      * <p>
-     * One or more filters.
+     * The filters.
      * </p>
      * <ul>
      * <li>
@@ -160,9 +150,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> |
-     * <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the
-     * user-configured AWS account alias, which is set from the IAM console.
+     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>self</code> |
+     * <code>all</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused
+     * with the user-configured AWS account alias, which is set from the IAM console.
      * </p>
      * </li>
      * <li>
@@ -193,24 +183,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify
-     * the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag
-     * Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-value</code> filter. For example, if you use both the filter "tag-key=Purpose" and the filter
-     * "tag-value=X", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is),
-     * and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X,
-     * see the <code>tag</code>:<i>key</i>=<i>value</i> filter.
-     * </p>
-     * </li>
-     * <li>
-     * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-key</code> filter.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -225,7 +207,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * </ul>
      * 
-     * @return One or more filters.</p>
+     * @return The filters.</p>
      *         <ul>
      *         <li>
      *         <p>
@@ -234,9 +216,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      *         </li>
      *         <li>
      *         <p>
-     *         <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> |
-     *         <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the
-     *         user-configured AWS account alias, which is set from the IAM console.
+     *         <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>self</code>
+     *         | <code>all</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be
+     *         confused with the user-configured AWS account alias, which is set from the IAM console.
      *         </p>
      *         </li>
      *         <li>
@@ -267,25 +249,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      *         </li>
      *         <li>
      *         <p>
-     *         <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource.
-     *         Specify the key of the tag in the filter name and the value of the tag in the filter value. For example,
-     *         for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the
-     *         filter value.
+     *         <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag
+     *         key in the filter name and the tag value as the filter value. For example, to find all resources that
+     *         have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify
+     *         <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the
-     *         <code>tag-value</code> filter. For example, if you use both the filter "tag-key=Purpose" and the filter
-     *         "tag-value=X", you get any resources assigned both the tag key Purpose (regardless of what the tag's
-     *         value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources
-     *         where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.
-     *         </p>
-     *         </li>
-     *         <li>
-     *         <p>
-     *         <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the
-     *         <code>tag-key</code> filter.
+     *         <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources
+     *         assigned a tag with a specific key, regardless of the tag value.
      *         </p>
      *         </li>
      *         <li>
@@ -309,7 +282,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more filters.
+     * The filters.
      * </p>
      * <ul>
      * <li>
@@ -319,9 +292,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> |
-     * <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the
-     * user-configured AWS account alias, which is set from the IAM console.
+     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>self</code> |
+     * <code>all</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused
+     * with the user-configured AWS account alias, which is set from the IAM console.
      * </p>
      * </li>
      * <li>
@@ -352,24 +325,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify
-     * the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag
-     * Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-value</code> filter. For example, if you use both the filter "tag-key=Purpose" and the filter
-     * "tag-value=X", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is),
-     * and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X,
-     * see the <code>tag</code>:<i>key</i>=<i>value</i> filter.
-     * </p>
-     * </li>
-     * <li>
-     * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-key</code> filter.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -385,7 +350,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </ul>
      * 
      * @param filters
-     *        One or more filters.</p>
+     *        The filters.</p>
      *        <ul>
      *        <li>
      *        <p>
@@ -394,9 +359,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      *        </li>
      *        <li>
      *        <p>
-     *        <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> |
-     *        <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the
-     *        user-configured AWS account alias, which is set from the IAM console.
+     *        <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>self</code> |
+     *        <code>all</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be
+     *        confused with the user-configured AWS account alias, which is set from the IAM console.
      *        </p>
      *        </li>
      *        <li>
@@ -427,25 +392,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource.
-     *        Specify the key of the tag in the filter name and the value of the tag in the filter value. For example,
-     *        for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the
-     *        filter value.
+     *        <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag
+     *        key in the filter name and the tag value as the filter value. For example, to find all resources that have
+     *        a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for
+     *        the filter name and <code>TeamA</code> for the filter value.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the
-     *        <code>tag-value</code> filter. For example, if you use both the filter "tag-key=Purpose" and the filter
-     *        "tag-value=X", you get any resources assigned both the tag key Purpose (regardless of what the tag's value
-     *        is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where
-     *        Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.
-     *        </p>
-     *        </li>
-     *        <li>
-     *        <p>
-     *        <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the
-     *        <code>tag-key</code> filter.
+     *        <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources
+     *        assigned a tag with a specific key, regardless of the tag value.
      *        </p>
      *        </li>
      *        <li>
@@ -471,7 +427,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more filters.
+     * The filters.
      * </p>
      * <ul>
      * <li>
@@ -481,9 +437,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> |
-     * <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the
-     * user-configured AWS account alias, which is set from the IAM console.
+     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>self</code> |
+     * <code>all</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused
+     * with the user-configured AWS account alias, which is set from the IAM console.
      * </p>
      * </li>
      * <li>
@@ -514,24 +470,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify
-     * the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag
-     * Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-value</code> filter. For example, if you use both the filter "tag-key=Purpose" and the filter
-     * "tag-value=X", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is),
-     * and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X,
-     * see the <code>tag</code>:<i>key</i>=<i>value</i> filter.
-     * </p>
-     * </li>
-     * <li>
-     * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-key</code> filter.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -552,7 +500,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </p>
      * 
      * @param filters
-     *        One or more filters.</p>
+     *        The filters.</p>
      *        <ul>
      *        <li>
      *        <p>
@@ -561,9 +509,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      *        </li>
      *        <li>
      *        <p>
-     *        <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> |
-     *        <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the
-     *        user-configured AWS account alias, which is set from the IAM console.
+     *        <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>self</code> |
+     *        <code>all</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be
+     *        confused with the user-configured AWS account alias, which is set from the IAM console.
      *        </p>
      *        </li>
      *        <li>
@@ -594,25 +542,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource.
-     *        Specify the key of the tag in the filter name and the value of the tag in the filter value. For example,
-     *        for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the
-     *        filter value.
+     *        <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag
+     *        key in the filter name and the tag value as the filter value. For example, to find all resources that have
+     *        a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for
+     *        the filter name and <code>TeamA</code> for the filter value.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the
-     *        <code>tag-value</code> filter. For example, if you use both the filter "tag-key=Purpose" and the filter
-     *        "tag-value=X", you get any resources assigned both the tag key Purpose (regardless of what the tag's value
-     *        is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where
-     *        Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.
-     *        </p>
-     *        </li>
-     *        <li>
-     *        <p>
-     *        <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the
-     *        <code>tag-key</code> filter.
+     *        <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources
+     *        assigned a tag with a specific key, regardless of the tag value.
      *        </p>
      *        </li>
      *        <li>
@@ -640,7 +579,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more filters.
+     * The filters.
      * </p>
      * <ul>
      * <li>
@@ -650,9 +589,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> |
-     * <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the
-     * user-configured AWS account alias, which is set from the IAM console.
+     * <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>self</code> |
+     * <code>all</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused
+     * with the user-configured AWS account alias, which is set from the IAM console.
      * </p>
      * </li>
      * <li>
@@ -683,24 +622,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </li>
      * <li>
      * <p>
-     * <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify
-     * the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag
-     * Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-value</code> filter. For example, if you use both the filter "tag-key=Purpose" and the filter
-     * "tag-value=X", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is),
-     * and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X,
-     * see the <code>tag</code>:<i>key</i>=<i>value</i> filter.
-     * </p>
-     * </li>
-     * <li>
-     * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the
-     * <code>tag-key</code> filter.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -716,7 +647,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </ul>
      * 
      * @param filters
-     *        One or more filters.</p>
+     *        The filters.</p>
      *        <ul>
      *        <li>
      *        <p>
@@ -725,9 +656,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      *        </li>
      *        <li>
      *        <p>
-     *        <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> |
-     *        <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the
-     *        user-configured AWS account alias, which is set from the IAM console.
+     *        <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>self</code> |
+     *        <code>all</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be
+     *        confused with the user-configured AWS account alias, which is set from the IAM console.
      *        </p>
      *        </li>
      *        <li>
@@ -758,25 +689,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource.
-     *        Specify the key of the tag in the filter name and the value of the tag in the filter value. For example,
-     *        for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the
-     *        filter value.
+     *        <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag
+     *        key in the filter name and the tag value as the filter value. For example, to find all resources that have
+     *        a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for
+     *        the filter name and <code>TeamA</code> for the filter value.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the
-     *        <code>tag-value</code> filter. For example, if you use both the filter "tag-key=Purpose" and the filter
-     *        "tag-value=X", you get any resources assigned both the tag key Purpose (regardless of what the tag's value
-     *        is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where
-     *        Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.
-     *        </p>
-     *        </li>
-     *        <li>
-     *        <p>
-     *        <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the
-     *        <code>tag-key</code> filter.
+     *        <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources
+     *        assigned a tag with a specific key, regardless of the tag value.
      *        </p>
      *        </li>
      *        <li>
@@ -936,10 +858,10 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * Returns the snapshots owned by the specified owner. Multiple owners can be specified.
+     * Describes the snapshots owned by these owners.
      * </p>
      * 
-     * @return Returns the snapshots owned by the specified owner. Multiple owners can be specified.
+     * @return Describes the snapshots owned by these owners.
      */
 
     public java.util.List<String> getOwnerIds() {
@@ -951,11 +873,11 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * Returns the snapshots owned by the specified owner. Multiple owners can be specified.
+     * Describes the snapshots owned by these owners.
      * </p>
      * 
      * @param ownerIds
-     *        Returns the snapshots owned by the specified owner. Multiple owners can be specified.
+     *        Describes the snapshots owned by these owners.
      */
 
     public void setOwnerIds(java.util.Collection<String> ownerIds) {
@@ -969,7 +891,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * Returns the snapshots owned by the specified owner. Multiple owners can be specified.
+     * Describes the snapshots owned by these owners.
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
@@ -978,7 +900,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </p>
      * 
      * @param ownerIds
-     *        Returns the snapshots owned by the specified owner. Multiple owners can be specified.
+     *        Describes the snapshots owned by these owners.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -994,11 +916,11 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * Returns the snapshots owned by the specified owner. Multiple owners can be specified.
+     * Describes the snapshots owned by these owners.
      * </p>
      * 
      * @param ownerIds
-     *        Returns the snapshots owned by the specified owner. Multiple owners can be specified.
+     *        Describes the snapshots owned by these owners.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1009,10 +931,10 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more AWS accounts IDs that can create volumes from the snapshot.
+     * The IDs of the AWS accounts that can create volumes from the snapshot.
      * </p>
      * 
-     * @return One or more AWS accounts IDs that can create volumes from the snapshot.
+     * @return The IDs of the AWS accounts that can create volumes from the snapshot.
      */
 
     public java.util.List<String> getRestorableByUserIds() {
@@ -1024,11 +946,11 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more AWS accounts IDs that can create volumes from the snapshot.
+     * The IDs of the AWS accounts that can create volumes from the snapshot.
      * </p>
      * 
      * @param restorableByUserIds
-     *        One or more AWS accounts IDs that can create volumes from the snapshot.
+     *        The IDs of the AWS accounts that can create volumes from the snapshot.
      */
 
     public void setRestorableByUserIds(java.util.Collection<String> restorableByUserIds) {
@@ -1042,7 +964,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more AWS accounts IDs that can create volumes from the snapshot.
+     * The IDs of the AWS accounts that can create volumes from the snapshot.
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
@@ -1051,7 +973,7 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </p>
      * 
      * @param restorableByUserIds
-     *        One or more AWS accounts IDs that can create volumes from the snapshot.
+     *        The IDs of the AWS accounts that can create volumes from the snapshot.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1067,11 +989,11 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more AWS accounts IDs that can create volumes from the snapshot.
+     * The IDs of the AWS accounts that can create volumes from the snapshot.
      * </p>
      * 
      * @param restorableByUserIds
-     *        One or more AWS accounts IDs that can create volumes from the snapshot.
+     *        The IDs of the AWS accounts that can create volumes from the snapshot.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1082,15 +1004,15 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more snapshot IDs.
+     * The snapshot IDs.
      * </p>
      * <p>
-     * Default: Describes snapshots for which you have launch permissions.
+     * Default: Describes the snapshots for which you have create volume permissions.
      * </p>
      * 
-     * @return One or more snapshot IDs.</p>
+     * @return The snapshot IDs.</p>
      *         <p>
-     *         Default: Describes snapshots for which you have launch permissions.
+     *         Default: Describes the snapshots for which you have create volume permissions.
      */
 
     public java.util.List<String> getSnapshotIds() {
@@ -1102,16 +1024,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more snapshot IDs.
+     * The snapshot IDs.
      * </p>
      * <p>
-     * Default: Describes snapshots for which you have launch permissions.
+     * Default: Describes the snapshots for which you have create volume permissions.
      * </p>
      * 
      * @param snapshotIds
-     *        One or more snapshot IDs.</p>
+     *        The snapshot IDs.</p>
      *        <p>
-     *        Default: Describes snapshots for which you have launch permissions.
+     *        Default: Describes the snapshots for which you have create volume permissions.
      */
 
     public void setSnapshotIds(java.util.Collection<String> snapshotIds) {
@@ -1125,10 +1047,10 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more snapshot IDs.
+     * The snapshot IDs.
      * </p>
      * <p>
-     * Default: Describes snapshots for which you have launch permissions.
+     * Default: Describes the snapshots for which you have create volume permissions.
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
@@ -1137,9 +1059,9 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
      * </p>
      * 
      * @param snapshotIds
-     *        One or more snapshot IDs.</p>
+     *        The snapshot IDs.</p>
      *        <p>
-     *        Default: Describes snapshots for which you have launch permissions.
+     *        Default: Describes the snapshots for which you have create volume permissions.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1155,16 +1077,16 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * One or more snapshot IDs.
+     * The snapshot IDs.
      * </p>
      * <p>
-     * Default: Describes snapshots for which you have launch permissions.
+     * Default: Describes the snapshots for which you have create volume permissions.
      * </p>
      * 
      * @param snapshotIds
-     *        One or more snapshot IDs.</p>
+     *        The snapshot IDs.</p>
      *        <p>
-     *        Default: Describes snapshots for which you have launch permissions.
+     *        Default: Describes the snapshots for which you have create volume permissions.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1185,7 +1107,8 @@ public class DescribeSnapshotsRequest extends AmazonWebServiceRequest implements
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

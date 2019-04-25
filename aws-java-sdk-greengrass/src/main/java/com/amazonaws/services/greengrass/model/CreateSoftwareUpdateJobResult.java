@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -23,16 +23,16 @@ import javax.annotation.Generated;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class CreateSoftwareUpdateJobResult extends com.amazonaws.AmazonWebServiceResult<com.amazonaws.ResponseMetadata> implements Serializable, Cloneable {
 
-    /** The Iot Job Arn corresponding to this update. */
+    /** The IoT Job ARN corresponding to this update. */
     private String iotJobArn;
-    /** The Iot Job Id corresponding to this update. */
+    /** The IoT Job Id corresponding to this update. */
     private String iotJobId;
 
     /**
-     * The Iot Job Arn corresponding to this update.
+     * The IoT Job ARN corresponding to this update.
      * 
      * @param iotJobArn
-     *        The Iot Job Arn corresponding to this update.
+     *        The IoT Job ARN corresponding to this update.
      */
 
     public void setIotJobArn(String iotJobArn) {
@@ -40,9 +40,9 @@ public class CreateSoftwareUpdateJobResult extends com.amazonaws.AmazonWebServic
     }
 
     /**
-     * The Iot Job Arn corresponding to this update.
+     * The IoT Job ARN corresponding to this update.
      * 
-     * @return The Iot Job Arn corresponding to this update.
+     * @return The IoT Job ARN corresponding to this update.
      */
 
     public String getIotJobArn() {
@@ -50,10 +50,10 @@ public class CreateSoftwareUpdateJobResult extends com.amazonaws.AmazonWebServic
     }
 
     /**
-     * The Iot Job Arn corresponding to this update.
+     * The IoT Job ARN corresponding to this update.
      * 
      * @param iotJobArn
-     *        The Iot Job Arn corresponding to this update.
+     *        The IoT Job ARN corresponding to this update.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -63,10 +63,10 @@ public class CreateSoftwareUpdateJobResult extends com.amazonaws.AmazonWebServic
     }
 
     /**
-     * The Iot Job Id corresponding to this update.
+     * The IoT Job Id corresponding to this update.
      * 
      * @param iotJobId
-     *        The Iot Job Id corresponding to this update.
+     *        The IoT Job Id corresponding to this update.
      */
 
     public void setIotJobId(String iotJobId) {
@@ -74,9 +74,9 @@ public class CreateSoftwareUpdateJobResult extends com.amazonaws.AmazonWebServic
     }
 
     /**
-     * The Iot Job Id corresponding to this update.
+     * The IoT Job Id corresponding to this update.
      * 
-     * @return The Iot Job Id corresponding to this update.
+     * @return The IoT Job Id corresponding to this update.
      */
 
     public String getIotJobId() {
@@ -84,10 +84,10 @@ public class CreateSoftwareUpdateJobResult extends com.amazonaws.AmazonWebServic
     }
 
     /**
-     * The Iot Job Id corresponding to this update.
+     * The IoT Job Id corresponding to this update.
      * 
      * @param iotJobId
-     *        The Iot Job Id corresponding to this update.
+     *        The IoT Job Id corresponding to this update.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -97,7 +97,8 @@ public class CreateSoftwareUpdateJobResult extends com.amazonaws.AmazonWebServic
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

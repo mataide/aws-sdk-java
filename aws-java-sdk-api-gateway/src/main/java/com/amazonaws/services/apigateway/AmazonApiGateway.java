@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -53,9 +53,10 @@ public interface AmazonApiGateway {
      * protocol from this client's {@link ClientConfiguration} will be used, which by default is HTTPS.
      * <p>
      * For more information on using AWS regions with the AWS SDK for Java, and a complete list of all available
-     * endpoints for all AWS services, see: <a
-     * href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3912">
-     * http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3912</a>
+     * endpoints for all AWS services, see: <a href=
+     * "https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-region-selection.html#region-selection-choose-endpoint"
+     * > https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-region-selection.html#region-selection-
+     * choose-endpoint</a>
      * <p>
      * <b>This method is not threadsafe. An endpoint should be configured when the client is created and before any
      * service requests are made. Changing it afterwards creates inevitable race conditions for any service requests in
@@ -99,8 +100,8 @@ public interface AmazonApiGateway {
      * <p>
      * Create an <a>ApiKey</a> resource.
      * </p>
-     * <div class="seeAlso"><a href="http://docs.aws.amazon.com/cli/latest/reference/apigateway/create-api-key.html">AWS
-     * CLI</a></div>
+     * <div class="seeAlso"><a
+     * href="https://docs.aws.amazon.com/cli/latest/reference/apigateway/create-api-key.html">AWS CLI</a></div>
      * 
      * @param createApiKeyRequest
      *        Request to create an <a>ApiKey</a> resource.
@@ -127,7 +128,7 @@ public interface AmazonApiGateway {
      * Adds a new <a>Authorizer</a> resource to an existing <a>RestApi</a> resource.
      * </p>
      * <div class="seeAlso"><a
-     * href="http://docs.aws.amazon.com/cli/latest/reference/apigateway/create-authorizer.html">AWS CLI</a></div>
+     * href="https://docs.aws.amazon.com/cli/latest/reference/apigateway/create-authorizer.html">AWS CLI</a></div>
      * 
      * @param createAuthorizerRequest
      *        Request to add a new <a>Authorizer</a> to an existing <a>RestApi</a> resource.
@@ -476,7 +477,7 @@ public interface AmazonApiGateway {
      * Deletes an existing <a>Authorizer</a> resource.
      * </p>
      * <div class="seeAlso"><a
-     * href="http://docs.aws.amazon.com/cli/latest/reference/apigateway/delete-authorizer.html">AWS CLI</a></div>
+     * href="https://docs.aws.amazon.com/cli/latest/reference/apigateway/delete-authorizer.html">AWS CLI</a></div>
      * 
      * @param deleteAuthorizerRequest
      *        Request to delete an existing <a>Authorizer</a> resource.
@@ -1025,8 +1026,8 @@ public interface AmazonApiGateway {
      * <p>
      * Describe an existing <a>Authorizer</a> resource.
      * </p>
-     * <div class="seeAlso"><a href="http://docs.aws.amazon.com/cli/latest/reference/apigateway/get-authorizer.html">AWS
-     * CLI</a></div>
+     * <div class="seeAlso"><a
+     * href="https://docs.aws.amazon.com/cli/latest/reference/apigateway/get-authorizer.html">AWS CLI</a></div>
      * 
      * @param getAuthorizerRequest
      *        Request to describe an existing <a>Authorizer</a> resource.
@@ -1046,7 +1047,7 @@ public interface AmazonApiGateway {
      * Describe an existing <a>Authorizers</a> resource.
      * </p>
      * <div class="seeAlso"><a
-     * href="http://docs.aws.amazon.com/cli/latest/reference/apigateway/get-authorizers.html">AWS CLI</a></div>
+     * href="https://docs.aws.amazon.com/cli/latest/reference/apigateway/get-authorizers.html">AWS CLI</a></div>
      * 
      * @param getAuthorizersRequest
      *        Request to describe an existing <a>Authorizers</a> resource.
@@ -1683,6 +1684,29 @@ public interface AmazonApiGateway {
 
     /**
      * <p>
+     * Gets the <a>Tags</a> collection for a given resource.
+     * </p>
+     * 
+     * @param getTagsRequest
+     *        Gets the <a>Tags</a> collection for a given resource.
+     * @return Result of the GetTags operation returned by the service.
+     * @throws BadRequestException
+     *         The submitted request is not valid, for example, the input is incomplete or incorrect. See the
+     *         accompanying error message for details.
+     * @throws UnauthorizedException
+     *         The request is denied because the caller has insufficient permissions.
+     * @throws TooManyRequestsException
+     *         The request has reached its throttling limit. Retry after the specified time period.
+     * @throws NotFoundException
+     *         The requested resource is not found. Make sure that the request URI is correct.
+     * @throws LimitExceededException
+     *         The request exceeded the rate limit. Retry after the specified time period.
+     * @sample AmazonApiGateway.GetTags
+     */
+    GetTagsResult getTags(GetTagsRequest getTagsRequest);
+
+    /**
+     * <p>
      * Gets the usage data of a usage plan in a specified time interval.
      * </p>
      * 
@@ -1852,7 +1876,7 @@ public interface AmazonApiGateway {
 
     /**
      * @param importDocumentationPartsRequest
-     *        Import documentation parts from an external (e.g., Swagger) definition file.
+     *        Import documentation parts from an external (e.g., OpenAPI) definition file.
      * @return Result of the ImportDocumentationParts operation returned by the service.
      * @throws UnauthorizedException
      *         The request is denied because the caller has insufficient permissions.
@@ -2044,11 +2068,36 @@ public interface AmazonApiGateway {
 
     /**
      * <p>
+     * Adds or updates a tag on a given resource.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     *        Adds or updates a tag on a given resource.
+     * @return Result of the TagResource operation returned by the service.
+     * @throws BadRequestException
+     *         The submitted request is not valid, for example, the input is incomplete or incorrect. See the
+     *         accompanying error message for details.
+     * @throws UnauthorizedException
+     *         The request is denied because the caller has insufficient permissions.
+     * @throws TooManyRequestsException
+     *         The request has reached its throttling limit. Retry after the specified time period.
+     * @throws NotFoundException
+     *         The requested resource is not found. Make sure that the request URI is correct.
+     * @throws LimitExceededException
+     *         The request exceeded the rate limit. Retry after the specified time period.
+     * @throws ConflictException
+     *         The request configuration has conflicts. For details, see the accompanying error message.
+     * @sample AmazonApiGateway.TagResource
+     */
+    TagResourceResult tagResource(TagResourceRequest tagResourceRequest);
+
+    /**
+     * <p>
      * Simulate the execution of an <a>Authorizer</a> in your <a>RestApi</a> with headers, parameters, and an incoming
      * request body.
      * </p>
      * <div class="seeAlso"> <a
-     * href="http://docs.aws.amazon.com/apigateway/latest/developerguide/use-custom-authorizer.html">Enable custom
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/use-custom-authorizer.html">Enable custom
      * authorizers</a> </div>
      * 
      * @param testInvokeAuthorizerRequest
@@ -2088,6 +2137,29 @@ public interface AmazonApiGateway {
      * @sample AmazonApiGateway.TestInvokeMethod
      */
     TestInvokeMethodResult testInvokeMethod(TestInvokeMethodRequest testInvokeMethodRequest);
+
+    /**
+     * <p>
+     * Removes a tag from a given resource.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     *        Removes a tag from a given resource.
+     * @return Result of the UntagResource operation returned by the service.
+     * @throws BadRequestException
+     *         The submitted request is not valid, for example, the input is incomplete or incorrect. See the
+     *         accompanying error message for details.
+     * @throws UnauthorizedException
+     *         The request is denied because the caller has insufficient permissions.
+     * @throws TooManyRequestsException
+     *         The request has reached its throttling limit. Retry after the specified time period.
+     * @throws NotFoundException
+     *         The requested resource is not found. Make sure that the request URI is correct.
+     * @throws ConflictException
+     *         The request configuration has conflicts. For details, see the accompanying error message.
+     * @sample AmazonApiGateway.UntagResource
+     */
+    UntagResourceResult untagResource(UntagResourceRequest untagResourceRequest);
 
     /**
      * <p>
@@ -2138,7 +2210,7 @@ public interface AmazonApiGateway {
      * Updates an existing <a>Authorizer</a> resource.
      * </p>
      * <div class="seeAlso"><a
-     * href="http://docs.aws.amazon.com/cli/latest/reference/apigateway/update-authorizer.html">AWS CLI</a></div>
+     * href="https://docs.aws.amazon.com/cli/latest/reference/apigateway/update-authorizer.html">AWS CLI</a></div>
      * 
      * @param updateAuthorizerRequest
      *        Request to update an existing <a>Authorizer</a> resource.

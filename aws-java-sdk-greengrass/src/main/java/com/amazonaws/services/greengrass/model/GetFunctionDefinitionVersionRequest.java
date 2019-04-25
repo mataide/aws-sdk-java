@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,16 +25,18 @@ import com.amazonaws.AmazonWebServiceRequest;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWebServiceRequest implements Serializable, Cloneable {
 
-    /** the unique Id of the lambda definition */
+    /** The ID of the Lambda function definition. */
     private String functionDefinitionId;
-    /** Function definition version Id */
+    /** The ID of the function definition version. */
     private String functionDefinitionVersionId;
+    /** The token for the next set of results, or ''null'' if there are no additional results. */
+    private String nextToken;
 
     /**
-     * the unique Id of the lambda definition
+     * The ID of the Lambda function definition.
      * 
      * @param functionDefinitionId
-     *        the unique Id of the lambda definition
+     *        The ID of the Lambda function definition.
      */
 
     public void setFunctionDefinitionId(String functionDefinitionId) {
@@ -42,9 +44,9 @@ public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWeb
     }
 
     /**
-     * the unique Id of the lambda definition
+     * The ID of the Lambda function definition.
      * 
-     * @return the unique Id of the lambda definition
+     * @return The ID of the Lambda function definition.
      */
 
     public String getFunctionDefinitionId() {
@@ -52,10 +54,10 @@ public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWeb
     }
 
     /**
-     * the unique Id of the lambda definition
+     * The ID of the Lambda function definition.
      * 
      * @param functionDefinitionId
-     *        the unique Id of the lambda definition
+     *        The ID of the Lambda function definition.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -65,10 +67,10 @@ public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWeb
     }
 
     /**
-     * Function definition version Id
+     * The ID of the function definition version.
      * 
      * @param functionDefinitionVersionId
-     *        Function definition version Id
+     *        The ID of the function definition version.
      */
 
     public void setFunctionDefinitionVersionId(String functionDefinitionVersionId) {
@@ -76,9 +78,9 @@ public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWeb
     }
 
     /**
-     * Function definition version Id
+     * The ID of the function definition version.
      * 
-     * @return Function definition version Id
+     * @return The ID of the function definition version.
      */
 
     public String getFunctionDefinitionVersionId() {
@@ -86,10 +88,10 @@ public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWeb
     }
 
     /**
-     * Function definition version Id
+     * The ID of the function definition version.
      * 
      * @param functionDefinitionVersionId
-     *        Function definition version Id
+     *        The ID of the function definition version.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -99,7 +101,42 @@ public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWeb
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * The token for the next set of results, or ''null'' if there are no additional results.
+     * 
+     * @param nextToken
+     *        The token for the next set of results, or ''null'' if there are no additional results.
+     */
+
+    public void setNextToken(String nextToken) {
+        this.nextToken = nextToken;
+    }
+
+    /**
+     * The token for the next set of results, or ''null'' if there are no additional results.
+     * 
+     * @return The token for the next set of results, or ''null'' if there are no additional results.
+     */
+
+    public String getNextToken() {
+        return this.nextToken;
+    }
+
+    /**
+     * The token for the next set of results, or ''null'' if there are no additional results.
+     * 
+     * @param nextToken
+     *        The token for the next set of results, or ''null'' if there are no additional results.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public GetFunctionDefinitionVersionRequest withNextToken(String nextToken) {
+        setNextToken(nextToken);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -112,7 +149,9 @@ public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWeb
         if (getFunctionDefinitionId() != null)
             sb.append("FunctionDefinitionId: ").append(getFunctionDefinitionId()).append(",");
         if (getFunctionDefinitionVersionId() != null)
-            sb.append("FunctionDefinitionVersionId: ").append(getFunctionDefinitionVersionId());
+            sb.append("FunctionDefinitionVersionId: ").append(getFunctionDefinitionVersionId()).append(",");
+        if (getNextToken() != null)
+            sb.append("NextToken: ").append(getNextToken());
         sb.append("}");
         return sb.toString();
     }
@@ -135,6 +174,10 @@ public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWeb
             return false;
         if (other.getFunctionDefinitionVersionId() != null && other.getFunctionDefinitionVersionId().equals(this.getFunctionDefinitionVersionId()) == false)
             return false;
+        if (other.getNextToken() == null ^ this.getNextToken() == null)
+            return false;
+        if (other.getNextToken() != null && other.getNextToken().equals(this.getNextToken()) == false)
+            return false;
         return true;
     }
 
@@ -145,6 +188,7 @@ public class GetFunctionDefinitionVersionRequest extends com.amazonaws.AmazonWeb
 
         hashCode = prime * hashCode + ((getFunctionDefinitionId() == null) ? 0 : getFunctionDefinitionId().hashCode());
         hashCode = prime * hashCode + ((getFunctionDefinitionVersionId() == null) ? 0 : getFunctionDefinitionVersionId().hashCode());
+        hashCode = prime * hashCode + ((getNextToken() == null) ? 0 : getNextToken().hashCode());
         return hashCode;
     }
 

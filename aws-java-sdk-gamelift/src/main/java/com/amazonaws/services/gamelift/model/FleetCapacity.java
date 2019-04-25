@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -23,9 +23,6 @@ import com.amazonaws.protocol.ProtocolMarshaller;
  * capacity of one instance, but can be updated as needed. The maximum number of instances for a fleet is determined by
  * the fleet's instance type.
  * </p>
- * <p>
- * Fleet-related operations include:
- * </p>
  * <ul>
  * <li>
  * <p>
@@ -39,12 +36,22 @@ import com.amazonaws.protocol.ProtocolMarshaller;
  * </li>
  * <li>
  * <p>
+ * <a>DeleteFleet</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
  * Describe fleets:
  * </p>
  * <ul>
  * <li>
  * <p>
  * <a>DescribeFleetAttributes</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DescribeFleetCapacity</a>
  * </p>
  * </li>
  * <li>
@@ -60,6 +67,11 @@ import com.amazonaws.protocol.ProtocolMarshaller;
  * <li>
  * <p>
  * <a>DescribeRuntimeConfiguration</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DescribeEC2InstanceLimits</a>
  * </p>
  * </li>
  * <li>
@@ -98,45 +110,20 @@ import com.amazonaws.protocol.ProtocolMarshaller;
  * </li>
  * <li>
  * <p>
- * Manage fleet capacity:
+ * Manage fleet actions:
  * </p>
  * <ul>
  * <li>
  * <p>
- * <a>DescribeFleetCapacity</a>
+ * <a>StartFleetActions</a>
  * </p>
  * </li>
  * <li>
  * <p>
- * <a>UpdateFleetCapacity</a>
- * </p>
- * </li>
- * <li>
- * <p>
- * <a>PutScalingPolicy</a> (automatic scaling)
- * </p>
- * </li>
- * <li>
- * <p>
- * <a>DescribeScalingPolicies</a> (automatic scaling)
- * </p>
- * </li>
- * <li>
- * <p>
- * <a>DeleteScalingPolicy</a> (automatic scaling)
- * </p>
- * </li>
- * <li>
- * <p>
- * <a>DescribeEC2InstanceLimits</a>
+ * <a>StopFleetActions</a>
  * </p>
  * </li>
  * </ul>
- * </li>
- * <li>
- * <p>
- * <a>DeleteFleet</a>
- * </p>
  * </li>
  * </ul>
  * 
@@ -352,7 +339,8 @@ public class FleetCapacity implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

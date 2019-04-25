@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -26,7 +26,7 @@ public class ListResourceDefinitionVersionsResult extends com.amazonaws.AmazonWe
 
     /** The token for the next set of results, or ''null'' if there are no additional results. */
     private String nextToken;
-    /** Versions */
+    /** Information about a version. */
     private java.util.List<VersionInformation> versions;
 
     /**
@@ -64,9 +64,9 @@ public class ListResourceDefinitionVersionsResult extends com.amazonaws.AmazonWe
     }
 
     /**
-     * Versions
+     * Information about a version.
      * 
-     * @return Versions
+     * @return Information about a version.
      */
 
     public java.util.List<VersionInformation> getVersions() {
@@ -74,10 +74,10 @@ public class ListResourceDefinitionVersionsResult extends com.amazonaws.AmazonWe
     }
 
     /**
-     * Versions
+     * Information about a version.
      * 
      * @param versions
-     *        Versions
+     *        Information about a version.
      */
 
     public void setVersions(java.util.Collection<VersionInformation> versions) {
@@ -90,7 +90,7 @@ public class ListResourceDefinitionVersionsResult extends com.amazonaws.AmazonWe
     }
 
     /**
-     * Versions
+     * Information about a version.
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setVersions(java.util.Collection)} or {@link #withVersions(java.util.Collection)} if you want to override
@@ -98,7 +98,7 @@ public class ListResourceDefinitionVersionsResult extends com.amazonaws.AmazonWe
      * </p>
      * 
      * @param versions
-     *        Versions
+     *        Information about a version.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -113,10 +113,10 @@ public class ListResourceDefinitionVersionsResult extends com.amazonaws.AmazonWe
     }
 
     /**
-     * Versions
+     * Information about a version.
      * 
      * @param versions
-     *        Versions
+     *        Information about a version.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -126,7 +126,8 @@ public class ListResourceDefinitionVersionsResult extends com.amazonaws.AmazonWe
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

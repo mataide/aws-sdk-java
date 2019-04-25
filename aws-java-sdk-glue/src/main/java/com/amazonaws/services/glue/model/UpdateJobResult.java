@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,18 +25,18 @@ public class UpdateJobResult extends com.amazonaws.AmazonWebServiceResult<com.am
 
     /**
      * <p>
-     * Returns the name of the updated job.
+     * Returns the name of the updated job definition.
      * </p>
      */
     private String jobName;
 
     /**
      * <p>
-     * Returns the name of the updated job.
+     * Returns the name of the updated job definition.
      * </p>
      * 
      * @param jobName
-     *        Returns the name of the updated job.
+     *        Returns the name of the updated job definition.
      */
 
     public void setJobName(String jobName) {
@@ -45,10 +45,10 @@ public class UpdateJobResult extends com.amazonaws.AmazonWebServiceResult<com.am
 
     /**
      * <p>
-     * Returns the name of the updated job.
+     * Returns the name of the updated job definition.
      * </p>
      * 
-     * @return Returns the name of the updated job.
+     * @return Returns the name of the updated job definition.
      */
 
     public String getJobName() {
@@ -57,11 +57,11 @@ public class UpdateJobResult extends com.amazonaws.AmazonWebServiceResult<com.am
 
     /**
      * <p>
-     * Returns the name of the updated job.
+     * Returns the name of the updated job definition.
      * </p>
      * 
      * @param jobName
-     *        Returns the name of the updated job.
+     *        Returns the name of the updated job definition.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -71,7 +71,8 @@ public class UpdateJobResult extends com.amazonaws.AmazonWebServiceResult<com.am
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

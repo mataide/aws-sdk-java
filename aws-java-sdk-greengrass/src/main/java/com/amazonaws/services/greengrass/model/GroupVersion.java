@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,7 +18,7 @@ import com.amazonaws.protocol.StructuredPojo;
 import com.amazonaws.protocol.ProtocolMarshaller;
 
 /**
- * Information on group version
+ * Information about a group version.
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/GroupVersion" target="_top">AWS API
  *      Documentation</a>
@@ -26,24 +26,60 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
 
-    /** Core definition version arn for this group. */
+    /** The ARN of the connector definition version for this group. */
+    private String connectorDefinitionVersionArn;
+    /** The ARN of the core definition version for this group. */
     private String coreDefinitionVersionArn;
-    /** Device definition version arn for this group. */
+    /** The ARN of the device definition version for this group. */
     private String deviceDefinitionVersionArn;
-    /** Function definition version arn for this group. */
+    /** The ARN of the function definition version for this group. */
     private String functionDefinitionVersionArn;
-    /** Logger definition version arn for this group. */
+    /** The ARN of the logger definition version for this group. */
     private String loggerDefinitionVersionArn;
-    /** Resource definition version arn for this group. */
+    /** The ARN of the resource definition version for this group. */
     private String resourceDefinitionVersionArn;
-    /** Subscription definition version arn for this group. */
+    /** The ARN of the subscription definition version for this group. */
     private String subscriptionDefinitionVersionArn;
 
     /**
-     * Core definition version arn for this group.
+     * The ARN of the connector definition version for this group.
+     * 
+     * @param connectorDefinitionVersionArn
+     *        The ARN of the connector definition version for this group.
+     */
+
+    public void setConnectorDefinitionVersionArn(String connectorDefinitionVersionArn) {
+        this.connectorDefinitionVersionArn = connectorDefinitionVersionArn;
+    }
+
+    /**
+     * The ARN of the connector definition version for this group.
+     * 
+     * @return The ARN of the connector definition version for this group.
+     */
+
+    public String getConnectorDefinitionVersionArn() {
+        return this.connectorDefinitionVersionArn;
+    }
+
+    /**
+     * The ARN of the connector definition version for this group.
+     * 
+     * @param connectorDefinitionVersionArn
+     *        The ARN of the connector definition version for this group.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public GroupVersion withConnectorDefinitionVersionArn(String connectorDefinitionVersionArn) {
+        setConnectorDefinitionVersionArn(connectorDefinitionVersionArn);
+        return this;
+    }
+
+    /**
+     * The ARN of the core definition version for this group.
      * 
      * @param coreDefinitionVersionArn
-     *        Core definition version arn for this group.
+     *        The ARN of the core definition version for this group.
      */
 
     public void setCoreDefinitionVersionArn(String coreDefinitionVersionArn) {
@@ -51,9 +87,9 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Core definition version arn for this group.
+     * The ARN of the core definition version for this group.
      * 
-     * @return Core definition version arn for this group.
+     * @return The ARN of the core definition version for this group.
      */
 
     public String getCoreDefinitionVersionArn() {
@@ -61,10 +97,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Core definition version arn for this group.
+     * The ARN of the core definition version for this group.
      * 
      * @param coreDefinitionVersionArn
-     *        Core definition version arn for this group.
+     *        The ARN of the core definition version for this group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -74,10 +110,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Device definition version arn for this group.
+     * The ARN of the device definition version for this group.
      * 
      * @param deviceDefinitionVersionArn
-     *        Device definition version arn for this group.
+     *        The ARN of the device definition version for this group.
      */
 
     public void setDeviceDefinitionVersionArn(String deviceDefinitionVersionArn) {
@@ -85,9 +121,9 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Device definition version arn for this group.
+     * The ARN of the device definition version for this group.
      * 
-     * @return Device definition version arn for this group.
+     * @return The ARN of the device definition version for this group.
      */
 
     public String getDeviceDefinitionVersionArn() {
@@ -95,10 +131,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Device definition version arn for this group.
+     * The ARN of the device definition version for this group.
      * 
      * @param deviceDefinitionVersionArn
-     *        Device definition version arn for this group.
+     *        The ARN of the device definition version for this group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -108,10 +144,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Function definition version arn for this group.
+     * The ARN of the function definition version for this group.
      * 
      * @param functionDefinitionVersionArn
-     *        Function definition version arn for this group.
+     *        The ARN of the function definition version for this group.
      */
 
     public void setFunctionDefinitionVersionArn(String functionDefinitionVersionArn) {
@@ -119,9 +155,9 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Function definition version arn for this group.
+     * The ARN of the function definition version for this group.
      * 
-     * @return Function definition version arn for this group.
+     * @return The ARN of the function definition version for this group.
      */
 
     public String getFunctionDefinitionVersionArn() {
@@ -129,10 +165,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Function definition version arn for this group.
+     * The ARN of the function definition version for this group.
      * 
      * @param functionDefinitionVersionArn
-     *        Function definition version arn for this group.
+     *        The ARN of the function definition version for this group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -142,10 +178,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Logger definition version arn for this group.
+     * The ARN of the logger definition version for this group.
      * 
      * @param loggerDefinitionVersionArn
-     *        Logger definition version arn for this group.
+     *        The ARN of the logger definition version for this group.
      */
 
     public void setLoggerDefinitionVersionArn(String loggerDefinitionVersionArn) {
@@ -153,9 +189,9 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Logger definition version arn for this group.
+     * The ARN of the logger definition version for this group.
      * 
-     * @return Logger definition version arn for this group.
+     * @return The ARN of the logger definition version for this group.
      */
 
     public String getLoggerDefinitionVersionArn() {
@@ -163,10 +199,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Logger definition version arn for this group.
+     * The ARN of the logger definition version for this group.
      * 
      * @param loggerDefinitionVersionArn
-     *        Logger definition version arn for this group.
+     *        The ARN of the logger definition version for this group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -176,10 +212,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Resource definition version arn for this group.
+     * The ARN of the resource definition version for this group.
      * 
      * @param resourceDefinitionVersionArn
-     *        Resource definition version arn for this group.
+     *        The ARN of the resource definition version for this group.
      */
 
     public void setResourceDefinitionVersionArn(String resourceDefinitionVersionArn) {
@@ -187,9 +223,9 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Resource definition version arn for this group.
+     * The ARN of the resource definition version for this group.
      * 
-     * @return Resource definition version arn for this group.
+     * @return The ARN of the resource definition version for this group.
      */
 
     public String getResourceDefinitionVersionArn() {
@@ -197,10 +233,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Resource definition version arn for this group.
+     * The ARN of the resource definition version for this group.
      * 
      * @param resourceDefinitionVersionArn
-     *        Resource definition version arn for this group.
+     *        The ARN of the resource definition version for this group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -210,10 +246,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Subscription definition version arn for this group.
+     * The ARN of the subscription definition version for this group.
      * 
      * @param subscriptionDefinitionVersionArn
-     *        Subscription definition version arn for this group.
+     *        The ARN of the subscription definition version for this group.
      */
 
     public void setSubscriptionDefinitionVersionArn(String subscriptionDefinitionVersionArn) {
@@ -221,9 +257,9 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Subscription definition version arn for this group.
+     * The ARN of the subscription definition version for this group.
      * 
-     * @return Subscription definition version arn for this group.
+     * @return The ARN of the subscription definition version for this group.
      */
 
     public String getSubscriptionDefinitionVersionArn() {
@@ -231,10 +267,10 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Subscription definition version arn for this group.
+     * The ARN of the subscription definition version for this group.
      * 
      * @param subscriptionDefinitionVersionArn
-     *        Subscription definition version arn for this group.
+     *        The ARN of the subscription definition version for this group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -244,7 +280,8 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -254,6 +291,8 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
+        if (getConnectorDefinitionVersionArn() != null)
+            sb.append("ConnectorDefinitionVersionArn: ").append(getConnectorDefinitionVersionArn()).append(",");
         if (getCoreDefinitionVersionArn() != null)
             sb.append("CoreDefinitionVersionArn: ").append(getCoreDefinitionVersionArn()).append(",");
         if (getDeviceDefinitionVersionArn() != null)
@@ -280,6 +319,11 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
         if (obj instanceof GroupVersion == false)
             return false;
         GroupVersion other = (GroupVersion) obj;
+        if (other.getConnectorDefinitionVersionArn() == null ^ this.getConnectorDefinitionVersionArn() == null)
+            return false;
+        if (other.getConnectorDefinitionVersionArn() != null
+                && other.getConnectorDefinitionVersionArn().equals(this.getConnectorDefinitionVersionArn()) == false)
+            return false;
         if (other.getCoreDefinitionVersionArn() == null ^ this.getCoreDefinitionVersionArn() == null)
             return false;
         if (other.getCoreDefinitionVersionArn() != null && other.getCoreDefinitionVersionArn().equals(this.getCoreDefinitionVersionArn()) == false)
@@ -313,6 +357,7 @@ public class GroupVersion implements Serializable, Cloneable, StructuredPojo {
         final int prime = 31;
         int hashCode = 1;
 
+        hashCode = prime * hashCode + ((getConnectorDefinitionVersionArn() == null) ? 0 : getConnectorDefinitionVersionArn().hashCode());
         hashCode = prime * hashCode + ((getCoreDefinitionVersionArn() == null) ? 0 : getCoreDefinitionVersionArn().hashCode());
         hashCode = prime * hashCode + ((getDeviceDefinitionVersionArn() == null) ? 0 : getDeviceDefinitionVersionArn().hashCode());
         hashCode = prime * hashCode + ((getFunctionDefinitionVersionArn() == null) ? 0 : getFunctionDefinitionVersionArn().hashCode());

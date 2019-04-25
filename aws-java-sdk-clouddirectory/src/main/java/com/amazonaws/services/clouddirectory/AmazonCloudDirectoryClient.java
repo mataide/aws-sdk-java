@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,8 @@ import com.amazonaws.protocol.json.*;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.annotation.ThreadSafe;
 import com.amazonaws.client.AwsSyncClientParams;
+import com.amazonaws.client.builder.AdvancedConfig;
+
 import com.amazonaws.services.clouddirectory.AmazonCloudDirectoryClientBuilder;
 
 import com.amazonaws.AmazonServiceException;
@@ -52,15 +54,16 @@ import com.amazonaws.services.clouddirectory.model.transform.*;
  * <p>
  * Amazon Cloud Directory is a component of the AWS Directory Service that simplifies the development and management of
  * cloud-scale web, mobile, and IoT applications. This guide describes the Cloud Directory operations that you can call
- * programmatically and includes detailed information on data types and errors. For information about AWS Directory
- * Services features, see <a href="https://aws.amazon.com/directoryservice/">AWS Directory Service</a> and the <a
- * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html">AWS Directory Service
- * Administration Guide</a>.
+ * programmatically and includes detailed information on data types and errors. For information about Cloud Directory
+ * features, see <a href="https://aws.amazon.com/directoryservice/">AWS Directory Service</a> and the <a
+ * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/what_is_cloud_directory.html">Amazon Cloud
+ * Directory Developer Guide</a>.
  * </p>
  */
 @ThreadSafe
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implements AmazonCloudDirectory {
+
     /** Provider for AWS credentials. */
     private final AWSCredentialsProvider awsCredentialsProvider;
 
@@ -71,6 +74,8 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /** Client configuration factory providing ClientConfigurations tailored to this client */
     protected static final ClientConfigurationFactory configFactory = new ClientConfigurationFactory();
+
+    private final AdvancedConfig advancedConfig;
 
     private static final com.amazonaws.protocol.json.SdkJsonProtocolFactory protocolFactory = new com.amazonaws.protocol.json.SdkJsonProtocolFactory(
             new JsonClientMetadata()
@@ -269,6 +274,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     public AmazonCloudDirectoryClient(AWSCredentials awsCredentials, ClientConfiguration clientConfiguration) {
         super(clientConfiguration);
         this.awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -334,6 +340,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
             RequestMetricCollector requestMetricCollector) {
         super(clientConfiguration, requestMetricCollector);
         this.awsCredentialsProvider = awsCredentialsProvider;
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -352,8 +359,23 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *        Object providing client parameters.
      */
     AmazonCloudDirectoryClient(AwsSyncClientParams clientParams) {
+        this(clientParams, false);
+    }
+
+    /**
+     * Constructs a new client to invoke service methods on Amazon CloudDirectory using the specified parameters.
+     *
+     * <p>
+     * All service calls made using this new client object are blocking, and will not return until the service call
+     * completes.
+     *
+     * @param clientParams
+     *        Object providing client parameters.
+     */
+    AmazonCloudDirectoryClient(AwsSyncClientParams clientParams, boolean endpointDiscoveryEnabled) {
         super(clientParams);
         this.awsCredentialsProvider = clientParams.getCredentialsProvider();
+        this.advancedConfig = clientParams.getAdvancedConfig();
         init();
     }
 
@@ -370,7 +392,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Adds a new <a>Facet</a> to an object.
+     * Adds a new <a>Facet</a> to an object. An object can have more than one facet applied on it.
      * </p>
      * 
      * @param addFacetToObjectRequest
@@ -392,18 +414,18 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.AddFacetToObject
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/AddFacetToObject"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/AddFacetToObject"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -427,6 +449,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new AddFacetToObjectRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(addFacetToObjectRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AddFacetToObject");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -468,17 +494,20 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
+     * @throws SchemaAlreadyExistsException
+     *         Indicates that a schema could not be created due to a naming conflict. Please select a different name and
+     *         then try again.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidAttachmentException
-     *         Indicates that an attempt to attach an object with the same link name or to apply a schema with the same
-     *         name has occurred. Rename the link or the schema and then try again.
+     *         Indicates that an attempt to make an attachment was invalid. For example, attaching two nodes with a link
+     *         type that is not applicable to the nodes or attempting to apply a schema to a directory a second time.
      * @sample AmazonCloudDirectory.ApplySchema
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ApplySchema" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ApplySchema" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -502,6 +531,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ApplySchemaRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(applySchemaRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ApplySchema");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -554,26 +587,26 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws LinkNameAlreadyInUseException
      *         Indicates that a link could not be created due to a naming conflict. Choose a different name and then try
      *         again.
      * @throws InvalidAttachmentException
-     *         Indicates that an attempt to attach an object with the same link name or to apply a schema with the same
-     *         name has occurred. Rename the link or the schema and then try again.
+     *         Indicates that an attempt to make an attachment was invalid. For example, attaching two nodes with a link
+     *         type that is not applicable to the nodes or attempting to apply a schema to a directory a second time.
      * @throws ValidationException
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.AttachObject
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/AttachObject" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/AttachObject" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -597,6 +630,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new AttachObjectRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(attachObjectRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AttachObject");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -637,20 +674,18 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
-     * @throws InvalidArnException
-     *         Indicates that the provided ARN value is not valid.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws NotPolicyException
      *         Indicates that the requested operation can only operate on policy objects.
      * @sample AmazonCloudDirectory.AttachPolicy
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/AttachPolicy" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/AttachPolicy" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -674,6 +709,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new AttachPolicyRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(attachPolicyRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AttachPolicy");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -714,12 +753,15 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
+     * @throws InvalidAttachmentException
+     *         Indicates that an attempt to make an attachment was invalid. For example, attaching two nodes with a link
+     *         type that is not applicable to the nodes or attempting to apply a schema to a directory a second time.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws LinkNameAlreadyInUseException
@@ -731,7 +773,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws NotIndexException
      *         Indicates that the requested operation can only operate on index objects.
      * @sample AmazonCloudDirectory.AttachToIndex
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/AttachToIndex" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/AttachToIndex" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -755,6 +797,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new AttachToIndexRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(attachToIndexRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AttachToIndex");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -773,9 +819,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Attaches a typed link to a specified source and target object. For more information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * Attaches a typed link to a specified source and target object. For more information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param attachTypedLinkRequest
@@ -797,23 +843,23 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidAttachmentException
-     *         Indicates that an attempt to attach an object with the same link name or to apply a schema with the same
-     *         name has occurred. Rename the link or the schema and then try again.
+     *         Indicates that an attempt to make an attachment was invalid. For example, attaching two nodes with a link
+     *         type that is not applicable to the nodes or attempting to apply a schema to a directory a second time.
      * @throws ValidationException
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.AttachTypedLink
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/AttachTypedLink" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/AttachTypedLink" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -837,6 +883,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new AttachTypedLinkRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(attachTypedLinkRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AttachTypedLink");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -877,14 +927,14 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @sample AmazonCloudDirectory.BatchRead
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/BatchRead" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/BatchRead" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -908,6 +958,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new BatchReadRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(batchReadRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "BatchRead");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -948,16 +1002,16 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws BatchWriteException
      *         A <code>BatchWrite</code> exception has occurred.
      * @sample AmazonCloudDirectory.BatchWrite
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/BatchWrite" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/BatchWrite" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -981,6 +1035,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new BatchWriteRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(batchWriteRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "BatchWrite");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1002,6 +1060,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * Creates a <a>Directory</a> by copying the published schema into the directory. A directory cannot be created
      * without a schema.
      * </p>
+     * <p>
+     * You can also quickly create a directory using a managed schema, called the <code>QuickStartSchema</code>. For
+     * more information, see <a
+     * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/schemas_managed.html">Managed Schema</a>
+     * in the <i>Amazon Cloud Directory Developer Guide</i>.
+     * </p>
      * 
      * @param createDirectoryRequest
      * @return Result of the CreateDirectory operation returned by the service.
@@ -1022,19 +1086,17 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryAlreadyExistsException
      *         Indicates that a <a>Directory</a> could not be created due to a naming conflict. Choose a different name
      *         and try again.
-     * @throws InvalidArnException
-     *         Indicates that the provided ARN value is not valid.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @sample AmazonCloudDirectory.CreateDirectory
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/CreateDirectory" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/CreateDirectory" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -1058,6 +1120,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new CreateDirectoryRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createDirectoryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateDirectory");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1098,7 +1164,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -1111,7 +1177,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.CreateFacet
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/CreateFacet" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/CreateFacet" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -1135,6 +1201,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new CreateFacetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createFacetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateFacet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1154,8 +1224,8 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     /**
      * <p>
      * Creates an index object. See <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/cd_indexing.html">Indexing</a> for more
-     * information.
+     * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/indexing_search.html">Indexing and
+     * search</a> for more information.
      * </p>
      * 
      * @param createIndexRequest
@@ -1177,12 +1247,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws FacetValidationException
@@ -1193,7 +1263,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws UnsupportedIndexTypeException
      *         Indicates that the requested index type is not supported.
      * @sample AmazonCloudDirectory.CreateIndex
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/CreateIndex" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/CreateIndex" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -1217,6 +1287,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new CreateIndexRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createIndexRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateIndex");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1259,14 +1333,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
-     * @throws InvalidArnException
-     *         Indicates that the provided ARN value is not valid.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws FacetValidationException
@@ -1277,7 +1349,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws UnsupportedIndexTypeException
      *         Indicates that the requested index type is not supported.
      * @sample AmazonCloudDirectory.CreateObject
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/CreateObject" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/CreateObject" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -1301,6 +1373,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new CreateObjectRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createObjectRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateObject");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1360,7 +1436,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -1370,7 +1446,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @sample AmazonCloudDirectory.CreateSchema
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/CreateSchema" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/CreateSchema" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -1394,6 +1470,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new CreateSchemaRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createSchemaRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateSchema");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1412,9 +1492,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Creates a <a>TypedLinkFacet</a>. For more information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * Creates a <a>TypedLinkFacet</a>. For more information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param createTypedLinkFacetRequest
@@ -1436,7 +1516,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -1449,7 +1529,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.CreateTypedLinkFacet
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/CreateTypedLinkFacet"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/CreateTypedLinkFacet"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -1473,6 +1553,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new CreateTypedLinkFacetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createTypedLinkFacetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateTypedLinkFacet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1510,7 +1594,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -1526,7 +1610,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidArnException
      *         Indicates that the provided ARN value is not valid.
      * @sample AmazonCloudDirectory.DeleteDirectory
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DeleteDirectory" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DeleteDirectory" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -1550,6 +1634,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DeleteDirectoryRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteDirectoryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteDirectory");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1591,7 +1679,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -1603,7 +1691,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Occurs when deleting a facet that contains an attribute that is a target to an attribute reference in a
      *         different facet.
      * @sample AmazonCloudDirectory.DeleteFacet
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DeleteFacet" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DeleteFacet" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -1627,6 +1715,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DeleteFacetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteFacetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteFacet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1645,7 +1737,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Deletes an object and its associated attributes. Only objects with no children and no parents can be deleted.
+     * Deletes an object and its associated attributes. Only objects with no children and no parents can be deleted. The
+     * maximum number of attributes that can be deleted during an object deletion is 30. For more information, see <a
+     * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Amazon Cloud Directory
+     * Limits</a>.
      * </p>
      * 
      * @param deleteObjectRequest
@@ -1667,19 +1762,19 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws ObjectNotDetachedException
      *         Indicates that the requested operation cannot be completed because the object has not been detached from
      *         the tree.
      * @sample AmazonCloudDirectory.DeleteObject
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DeleteObject" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DeleteObject" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -1703,6 +1798,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DeleteObjectRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteObjectRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteObject");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1743,7 +1842,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -1753,7 +1852,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         The object could not be deleted because links still exist. Remove the links and then try the operation
      *         again.
      * @sample AmazonCloudDirectory.DeleteSchema
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DeleteSchema" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DeleteSchema" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -1777,6 +1876,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DeleteSchemaRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteSchemaRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteSchema");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1795,9 +1898,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Deletes a <a>TypedLinkFacet</a>. For more information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * Deletes a <a>TypedLinkFacet</a>. For more information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param deleteTypedLinkFacetRequest
@@ -1819,7 +1922,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -1828,7 +1931,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws FacetNotFoundException
      *         The specified <a>Facet</a> could not be found.
      * @sample AmazonCloudDirectory.DeleteTypedLinkFacet
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DeleteTypedLinkFacet"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DeleteTypedLinkFacet"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -1852,6 +1955,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DeleteTypedLinkFacetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteTypedLinkFacetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteTypedLinkFacet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1892,12 +1999,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws ObjectAlreadyDetachedException
@@ -1905,7 +2012,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws NotIndexException
      *         Indicates that the requested operation can only operate on index objects.
      * @sample AmazonCloudDirectory.DetachFromIndex
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DetachFromIndex" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DetachFromIndex" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -1929,6 +2036,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DetachFromIndexRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(detachFromIndexRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DetachFromIndex");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1970,16 +2081,19 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
+     * @throws NotNodeException
+     *         Occurs when any invalid operations are performed on an object that is not a node, such as calling
+     *         <code>ListObjectChildren</code> for a leaf node object.
      * @sample AmazonCloudDirectory.DetachObject
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DetachObject" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DetachObject" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -2003,6 +2117,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DetachObjectRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(detachObjectRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DetachObject");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2043,20 +2161,18 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
-     * @throws InvalidArnException
-     *         Indicates that the provided ARN value is not valid.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws NotPolicyException
      *         Indicates that the requested operation can only operate on policy objects.
      * @sample AmazonCloudDirectory.DetachPolicy
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DetachPolicy" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DetachPolicy" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -2080,6 +2196,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DetachPolicyRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(detachPolicyRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DetachPolicy");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2098,9 +2218,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Detaches a typed link from a specified source and target object. For more information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * Detaches a typed link from a specified source and target object. For more information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param detachTypedLinkRequest
@@ -2122,18 +2242,18 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.DetachTypedLink
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DetachTypedLink" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DetachTypedLink" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -2157,6 +2277,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DetachTypedLinkRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(detachTypedLinkRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DetachTypedLink");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2195,7 +2319,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -2208,7 +2332,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidArnException
      *         Indicates that the provided ARN value is not valid.
      * @sample AmazonCloudDirectory.DisableDirectory
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/DisableDirectory"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/DisableDirectory"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -2232,6 +2356,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new DisableDirectoryRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(disableDirectoryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisableDirectory");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2270,7 +2398,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -2283,7 +2411,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidArnException
      *         Indicates that the provided ARN value is not valid.
      * @sample AmazonCloudDirectory.EnableDirectory
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/EnableDirectory" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/EnableDirectory" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -2307,6 +2435,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new EnableDirectoryRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(enableDirectoryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "EnableDirectory");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2347,14 +2479,14 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @sample AmazonCloudDirectory.GetAppliedSchemaVersion
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/GetAppliedSchemaVersion"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/GetAppliedSchemaVersion"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -2379,6 +2511,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(getAppliedSchemaVersionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetAppliedSchemaVersion");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2420,12 +2556,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @sample AmazonCloudDirectory.GetDirectory
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/GetDirectory" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/GetDirectory" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -2449,6 +2585,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new GetDirectoryRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getDirectoryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetDirectory");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2490,7 +2630,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -2499,7 +2639,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws FacetNotFoundException
      *         The specified <a>Facet</a> could not be found.
      * @sample AmazonCloudDirectory.GetFacet
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/GetFacet" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/GetFacet" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -2523,12 +2663,174 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new GetFacetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getFacetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetFacet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             HttpResponseHandler<AmazonWebServiceResponse<GetFacetResult>> responseHandler = protocolFactory.createResponseHandler(new JsonOperationMetadata()
                     .withPayloadJson(true).withHasStreamingSuccessResponse(false), new GetFacetResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Retrieves attributes that are associated with a typed link.
+     * </p>
+     * 
+     * @param getLinkAttributesRequest
+     * @return Result of the GetLinkAttributes operation returned by the service.
+     * @throws InternalServiceException
+     *         Indicates a problem that must be resolved by Amazon Web Services. This might be a transient error in
+     *         which case you can retry your request until it succeeds. Otherwise, go to the <a
+     *         href="http://status.aws.amazon.com/">AWS Service Health Dashboard</a> site to see if there are any
+     *         operational issues with the service.
+     * @throws InvalidArnException
+     *         Indicates that the provided ARN value is not valid.
+     * @throws RetryableConflictException
+     *         Occurs when a conflict with a previous successful write is detected. For example, if a write operation
+     *         occurs on an object and then an attempt is made to read the object using “SERIALIZABLE” consistency, this
+     *         exception may result. This generally occurs when the previous write did not have time to propagate to the
+     *         host serving the current request. A retry (with appropriate backoff logic) is the recommended response to
+     *         this exception.
+     * @throws ValidationException
+     *         Indicates that your request is malformed in some manner. See the exception message.
+     * @throws LimitExceededException
+     *         Indicates that limits are exceeded. See <a
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
+     *         information.
+     * @throws AccessDeniedException
+     *         Access denied. Check your permissions.
+     * @throws DirectoryNotEnabledException
+     *         Operations are only permitted on enabled directories.
+     * @throws ResourceNotFoundException
+     *         The specified resource could not be found.
+     * @throws FacetValidationException
+     *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
+     * @sample AmazonCloudDirectory.GetLinkAttributes
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/GetLinkAttributes"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public GetLinkAttributesResult getLinkAttributes(GetLinkAttributesRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetLinkAttributes(request);
+    }
+
+    @SdkInternalApi
+    final GetLinkAttributesResult executeGetLinkAttributes(GetLinkAttributesRequest getLinkAttributesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getLinkAttributesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetLinkAttributesRequest> request = null;
+        Response<GetLinkAttributesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetLinkAttributesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getLinkAttributesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetLinkAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<GetLinkAttributesResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new GetLinkAttributesResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Retrieves attributes within a facet that are associated with an object.
+     * </p>
+     * 
+     * @param getObjectAttributesRequest
+     * @return Result of the GetObjectAttributes operation returned by the service.
+     * @throws InternalServiceException
+     *         Indicates a problem that must be resolved by Amazon Web Services. This might be a transient error in
+     *         which case you can retry your request until it succeeds. Otherwise, go to the <a
+     *         href="http://status.aws.amazon.com/">AWS Service Health Dashboard</a> site to see if there are any
+     *         operational issues with the service.
+     * @throws InvalidArnException
+     *         Indicates that the provided ARN value is not valid.
+     * @throws RetryableConflictException
+     *         Occurs when a conflict with a previous successful write is detected. For example, if a write operation
+     *         occurs on an object and then an attempt is made to read the object using “SERIALIZABLE” consistency, this
+     *         exception may result. This generally occurs when the previous write did not have time to propagate to the
+     *         host serving the current request. A retry (with appropriate backoff logic) is the recommended response to
+     *         this exception.
+     * @throws ValidationException
+     *         Indicates that your request is malformed in some manner. See the exception message.
+     * @throws LimitExceededException
+     *         Indicates that limits are exceeded. See <a
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
+     *         information.
+     * @throws AccessDeniedException
+     *         Access denied. Check your permissions.
+     * @throws DirectoryNotEnabledException
+     *         Operations are only permitted on enabled directories.
+     * @throws ResourceNotFoundException
+     *         The specified resource could not be found.
+     * @throws FacetValidationException
+     *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
+     * @sample AmazonCloudDirectory.GetObjectAttributes
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/GetObjectAttributes"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public GetObjectAttributesResult getObjectAttributes(GetObjectAttributesRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetObjectAttributes(request);
+    }
+
+    @SdkInternalApi
+    final GetObjectAttributesResult executeGetObjectAttributes(GetObjectAttributesRequest getObjectAttributesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getObjectAttributesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetObjectAttributesRequest> request = null;
+        Response<GetObjectAttributesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetObjectAttributesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getObjectAttributesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetObjectAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<GetObjectAttributesResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new GetObjectAttributesResultJsonUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -2563,16 +2865,16 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @sample AmazonCloudDirectory.GetObjectInformation
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/GetObjectInformation"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/GetObjectInformation"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -2596,6 +2898,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new GetObjectInformationRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getObjectInformationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetObjectInformation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2615,8 +2921,8 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     /**
      * <p>
      * Retrieves a JSON representation of the schema. See <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/cd_schemas.html#jsonformat">JSON Schema
-     * Format</a> for more information.
+     * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/schemas_jsonformat.html#schemas_json">JSON
+     * Schema Format</a> for more information.
      * </p>
      * 
      * @param getSchemaAsJsonRequest
@@ -2638,7 +2944,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -2647,7 +2953,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws ValidationException
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @sample AmazonCloudDirectory.GetSchemaAsJson
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/GetSchemaAsJson" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/GetSchemaAsJson" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -2671,6 +2977,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new GetSchemaAsJsonRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getSchemaAsJsonRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetSchemaAsJson");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2689,9 +2999,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Returns the identity attribute order for a specific <a>TypedLinkFacet</a>. For more information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * Returns the identity attribute order for a specific <a>TypedLinkFacet</a>. For more information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param getTypedLinkFacetInformationRequest
@@ -2713,7 +3023,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -2724,7 +3034,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws FacetNotFoundException
      *         The specified <a>Facet</a> could not be found.
      * @sample AmazonCloudDirectory.GetTypedLinkFacetInformation
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/GetTypedLinkFacetInformation"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/GetTypedLinkFacetInformation"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -2749,6 +3059,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(getTypedLinkFacetInformationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetTypedLinkFacetInformation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2791,7 +3105,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -2800,7 +3114,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @sample AmazonCloudDirectory.ListAppliedSchemaArns
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListAppliedSchemaArns"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListAppliedSchemaArns"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -2824,6 +3138,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListAppliedSchemaArnsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listAppliedSchemaArnsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListAppliedSchemaArns");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2865,16 +3183,16 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @sample AmazonCloudDirectory.ListAttachedIndices
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListAttachedIndices"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListAttachedIndices"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -2898,6 +3216,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListAttachedIndicesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listAttachedIndicesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListAttachedIndices");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2938,7 +3260,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -2947,7 +3269,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @sample AmazonCloudDirectory.ListDevelopmentSchemaArns
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListDevelopmentSchemaArns"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListDevelopmentSchemaArns"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -2972,6 +3294,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(listDevelopmentSchemaArnsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListDevelopmentSchemaArns");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3013,14 +3339,14 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @sample AmazonCloudDirectory.ListDirectories
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListDirectories" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListDirectories" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -3044,6 +3370,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListDirectoriesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listDirectoriesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListDirectories");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3084,7 +3414,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -3095,7 +3425,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @sample AmazonCloudDirectory.ListFacetAttributes
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListFacetAttributes"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListFacetAttributes"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3119,6 +3449,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListFacetAttributesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listFacetAttributesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListFacetAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3159,7 +3493,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -3168,7 +3502,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @sample AmazonCloudDirectory.ListFacetNames
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListFacetNames" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListFacetNames" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -3192,6 +3526,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListFacetNamesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listFacetNamesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListFacetNames");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3211,9 +3549,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     /**
      * <p>
      * Returns a paginated list of all the incoming <a>TypedLinkSpecifier</a> information for an object. It also
-     * supports filtering by typed link facet and identity attributes. For more information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * supports filtering by typed link facet and identity attributes. For more information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param listIncomingTypedLinksRequest
@@ -3235,12 +3573,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidNextTokenException
@@ -3248,7 +3586,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.ListIncomingTypedLinks
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListIncomingTypedLinks"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListIncomingTypedLinks"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3272,6 +3610,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListIncomingTypedLinksRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listIncomingTypedLinksRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListIncomingTypedLinks");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3291,7 +3633,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Lists objects and indexed values attached to the index.
+     * Lists objects attached to the specified index.
      * </p>
      * 
      * @param listIndexRequest
@@ -3309,22 +3651,26 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         exception may result. This generally occurs when the previous write did not have time to propagate to the
      *         host serving the current request. A retry (with appropriate backoff logic) is the recommended response to
      *         this exception.
+     * @throws FacetValidationException
+     *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @throws ValidationException
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
+     * @throws InvalidNextTokenException
+     *         Indicates that the <code>NextToken</code> value is not valid.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws NotIndexException
      *         Indicates that the requested operation can only operate on index objects.
      * @sample AmazonCloudDirectory.ListIndex
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListIndex" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListIndex" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -3348,12 +3694,85 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListIndexRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listIndexRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListIndex");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             HttpResponseHandler<AmazonWebServiceResponse<ListIndexResult>> responseHandler = protocolFactory.createResponseHandler(new JsonOperationMetadata()
                     .withPayloadJson(true).withHasStreamingSuccessResponse(false), new ListIndexResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Lists the major version families of each managed schema. If a major version ARN is provided as SchemaArn, the
+     * minor version revisions in that family are listed instead.
+     * </p>
+     * 
+     * @param listManagedSchemaArnsRequest
+     * @return Result of the ListManagedSchemaArns operation returned by the service.
+     * @throws InternalServiceException
+     *         Indicates a problem that must be resolved by Amazon Web Services. This might be a transient error in
+     *         which case you can retry your request until it succeeds. Otherwise, go to the <a
+     *         href="http://status.aws.amazon.com/">AWS Service Health Dashboard</a> site to see if there are any
+     *         operational issues with the service.
+     * @throws InvalidArnException
+     *         Indicates that the provided ARN value is not valid.
+     * @throws ValidationException
+     *         Indicates that your request is malformed in some manner. See the exception message.
+     * @throws AccessDeniedException
+     *         Access denied. Check your permissions.
+     * @throws ResourceNotFoundException
+     *         The specified resource could not be found.
+     * @throws InvalidNextTokenException
+     *         Indicates that the <code>NextToken</code> value is not valid.
+     * @sample AmazonCloudDirectory.ListManagedSchemaArns
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListManagedSchemaArns"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public ListManagedSchemaArnsResult listManagedSchemaArns(ListManagedSchemaArnsRequest request) {
+        request = beforeClientExecution(request);
+        return executeListManagedSchemaArns(request);
+    }
+
+    @SdkInternalApi
+    final ListManagedSchemaArnsResult executeListManagedSchemaArns(ListManagedSchemaArnsRequest listManagedSchemaArnsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(listManagedSchemaArnsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListManagedSchemaArnsRequest> request = null;
+        Response<ListManagedSchemaArnsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListManagedSchemaArnsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listManagedSchemaArnsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListManagedSchemaArns");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<ListManagedSchemaArnsResult>> responseHandler = protocolFactory
+                    .createResponseHandler(new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false),
+                            new ListManagedSchemaArnsResultJsonUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -3388,14 +3807,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
-     * @throws InvalidArnException
-     *         Indicates that the provided ARN value is not valid.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidNextTokenException
@@ -3403,7 +3820,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.ListObjectAttributes
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListObjectAttributes"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListObjectAttributes"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3427,6 +3844,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListObjectAttributesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listObjectAttributesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListObjectAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3467,14 +3888,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
-     * @throws InvalidArnException
-     *         Indicates that the provided ARN value is not valid.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidNextTokenException
@@ -3483,7 +3902,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Occurs when any invalid operations are performed on an object that is not a node, such as calling
      *         <code>ListObjectChildren</code> for a leaf node object.
      * @sample AmazonCloudDirectory.ListObjectChildren
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListObjectChildren"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListObjectChildren"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3507,6 +3926,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListObjectChildrenRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listObjectChildrenRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListObjectChildren");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3527,8 +3950,8 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * <p>
      * Retrieves all available parent paths for any object type such as node, leaf node, policy node, and index node
      * objects. For more information about objects, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/cd_key_concepts.html#dirstructure">Directory
-     * Structure</a>.
+     * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/key_concepts_directorystructure.html"
+     * >Directory Structure</a>.
      * </p>
      * <p>
      * Use this API to evaluate all parents for an object. The call returns all objects from the root of the directory
@@ -3557,18 +3980,18 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @sample AmazonCloudDirectory.ListObjectParentPaths
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListObjectParentPaths"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListObjectParentPaths"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3592,6 +4015,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListObjectParentPathsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listObjectParentPathsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListObjectParentPaths");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3633,14 +4060,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
-     * @throws InvalidArnException
-     *         Indicates that the provided ARN value is not valid.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidNextTokenException
@@ -3648,7 +4073,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws CannotListParentOfRootException
      *         Cannot list the parents of a <a>Directory</a> root.
      * @sample AmazonCloudDirectory.ListObjectParents
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListObjectParents"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListObjectParents"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3672,6 +4097,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListObjectParentsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listObjectParentsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListObjectParents");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3712,18 +4141,18 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @sample AmazonCloudDirectory.ListObjectPolicies
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListObjectPolicies"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListObjectPolicies"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3747,6 +4176,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListObjectPoliciesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listObjectPoliciesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListObjectPolicies");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3766,9 +4199,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     /**
      * <p>
      * Returns a paginated list of all the outgoing <a>TypedLinkSpecifier</a> information for an object. It also
-     * supports filtering by typed link facet and identity attributes. For more information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * supports filtering by typed link facet and identity attributes. For more information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param listOutgoingTypedLinksRequest
@@ -3790,12 +4223,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidNextTokenException
@@ -3803,7 +4236,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.ListOutgoingTypedLinks
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListOutgoingTypedLinks"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListOutgoingTypedLinks"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3827,6 +4260,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListOutgoingTypedLinksRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listOutgoingTypedLinksRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListOutgoingTypedLinks");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3868,14 +4305,12 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
-     * @throws InvalidArnException
-     *         Indicates that the provided ARN value is not valid.
+     *         Operations are only permitted on enabled directories.
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @throws ResourceNotFoundException
@@ -3883,7 +4318,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws NotPolicyException
      *         Indicates that the requested operation can only operate on policy objects.
      * @sample AmazonCloudDirectory.ListPolicyAttachments
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListPolicyAttachments"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListPolicyAttachments"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3907,6 +4342,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListPolicyAttachmentsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listPolicyAttachmentsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListPolicyAttachments");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3926,8 +4365,8 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Lists schema major versions for a published schema. If <code>SchemaArn</code> is provided, lists the minor
-     * version.
+     * Lists the major version families of each published schema. If a major version ARN is provided as
+     * <code>SchemaArn</code>, the minor version revisions in that family are listed instead.
      * </p>
      * 
      * @param listPublishedSchemaArnsRequest
@@ -3949,7 +4388,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -3958,7 +4397,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @sample AmazonCloudDirectory.ListPublishedSchemaArns
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListPublishedSchemaArns"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListPublishedSchemaArns"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -3983,6 +4422,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(listPublishedSchemaArnsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListPublishedSchemaArns");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4025,7 +4468,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -4035,7 +4478,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Can occur for multiple reasons such as when you tag a resource that doesn’t exist or if you specify a
      *         higher number of tags for a resource than the allowed limit. Allowed limit is 50 tags per resource.
      * @sample AmazonCloudDirectory.ListTagsForResource
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListTagsForResource"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListTagsForResource"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -4059,6 +4502,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new ListTagsForResourceRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listTagsForResourceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListTagsForResource");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4078,9 +4525,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     /**
      * <p>
      * Returns a paginated list of all attribute definitions for a particular <a>TypedLinkFacet</a>. For more
-     * information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param listTypedLinkFacetAttributesRequest
@@ -4102,7 +4549,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -4113,7 +4560,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @sample AmazonCloudDirectory.ListTypedLinkFacetAttributes
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListTypedLinkFacetAttributes"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListTypedLinkFacetAttributes"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -4138,6 +4585,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(listTypedLinkFacetAttributesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListTypedLinkFacetAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4158,8 +4609,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     /**
      * <p>
      * Returns a paginated list of <code>TypedLink</code> facet names for a particular schema. For more information, see
-     * <a href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param listTypedLinkFacetNamesRequest
@@ -4181,7 +4633,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -4190,7 +4642,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @sample AmazonCloudDirectory.ListTypedLinkFacetNames
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/ListTypedLinkFacetNames"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/ListTypedLinkFacetNames"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -4215,6 +4667,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(listTypedLinkFacetNamesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListTypedLinkFacetNames");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4238,8 +4694,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * present, an empty list is returned. If policies are present, and if some objects don't have the policies
      * attached, it returns the <code>ObjectIdentifier</code> for such objects. If policies are present, it returns
      * <code>ObjectIdentifier</code>, <code>policyId</code>, and <code>policyType</code>. Paths that don't lead to the
-     * root from the target object are ignored. For more information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/cd_key_concepts.html#policies">Policies</a>.
+     * root from the target object are ignored. For more information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/key_concepts_directory.html#key_concepts_policies"
+     * >Policies</a>.
      * </p>
      * 
      * @param lookupPolicyRequest
@@ -4261,20 +4718,18 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
-     * @throws InvalidArnException
-     *         Indicates that the provided ARN value is not valid.
+     *         Operations are only permitted on enabled directories.
      * @throws InvalidNextTokenException
      *         Indicates that the <code>NextToken</code> value is not valid.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @sample AmazonCloudDirectory.LookupPolicy
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/LookupPolicy" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/LookupPolicy" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -4298,6 +4753,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new LookupPolicyRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(lookupPolicyRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "LookupPolicy");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4338,7 +4797,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -4347,7 +4806,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws SchemaAlreadyPublishedException
      *         Indicates that a schema is already published.
      * @sample AmazonCloudDirectory.PublishSchema
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/PublishSchema" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/PublishSchema" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -4371,6 +4830,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new PublishSchemaRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(publishSchemaRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "PublishSchema");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4390,8 +4853,8 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     /**
      * <p>
      * Allows a schema to be updated using JSON upload. Only available for development schemas. See <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/cd_schemas.html#jsonformat">JSON Schema
-     * Format</a> for more information.
+     * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/schemas_jsonformat.html#schemas_json">JSON
+     * Schema Format</a> for more information.
      * </p>
      * 
      * @param putSchemaFromJsonRequest
@@ -4413,7 +4876,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -4422,7 +4885,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidRuleException
      *         Occurs when any of the rule parameter keys or values are invalid.
      * @sample AmazonCloudDirectory.PutSchemaFromJson
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/PutSchemaFromJson"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/PutSchemaFromJson"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -4446,6 +4909,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new PutSchemaFromJsonRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(putSchemaFromJsonRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "PutSchemaFromJson");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4486,18 +4953,18 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.RemoveFacetFromObject
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/RemoveFacetFromObject"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/RemoveFacetFromObject"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -4521,6 +4988,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new RemoveFacetFromObjectRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(removeFacetFromObjectRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RemoveFacetFromObject");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4562,7 +5033,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -4572,7 +5043,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Can occur for multiple reasons such as when you tag a resource that doesn’t exist or if you specify a
      *         higher number of tags for a resource than the allowed limit. Allowed limit is 50 tags per resource.
      * @sample AmazonCloudDirectory.TagResource
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/TagResource" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/TagResource" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -4596,6 +5067,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new TagResourceRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(tagResourceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "TagResource");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4636,7 +5111,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -4646,7 +5121,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Can occur for multiple reasons such as when you tag a resource that doesn’t exist or if you specify a
      *         higher number of tags for a resource than the allowed limit. Allowed limit is 50 tags per resource.
      * @sample AmazonCloudDirectory.UntagResource
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/UntagResource" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/UntagResource" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -4670,6 +5145,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new UntagResourceRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(untagResourceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UntagResource");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4727,12 +5206,14 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws InvalidFacetUpdateException
      *         An attempt to modify a <a>Facet</a> resulted in an invalid schema exception.
+     * @throws FacetValidationException
+     *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws FacetNotFoundException
@@ -4740,7 +5221,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidRuleException
      *         Occurs when any of the rule parameter keys or values are invalid.
      * @sample AmazonCloudDirectory.UpdateFacet
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/UpdateFacet" target="_top">AWS API
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/UpdateFacet" target="_top">AWS API
      *      Documentation</a>
      */
     @Override
@@ -4764,12 +5245,96 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new UpdateFacetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateFacetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateFacet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             HttpResponseHandler<AmazonWebServiceResponse<UpdateFacetResult>> responseHandler = protocolFactory.createResponseHandler(
                     new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new UpdateFacetResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Updates a given typed link’s attributes. Attributes to be updated must not contribute to the typed link’s
+     * identity, as defined by its <code>IdentityAttributeOrder</code>.
+     * </p>
+     * 
+     * @param updateLinkAttributesRequest
+     * @return Result of the UpdateLinkAttributes operation returned by the service.
+     * @throws InternalServiceException
+     *         Indicates a problem that must be resolved by Amazon Web Services. This might be a transient error in
+     *         which case you can retry your request until it succeeds. Otherwise, go to the <a
+     *         href="http://status.aws.amazon.com/">AWS Service Health Dashboard</a> site to see if there are any
+     *         operational issues with the service.
+     * @throws InvalidArnException
+     *         Indicates that the provided ARN value is not valid.
+     * @throws RetryableConflictException
+     *         Occurs when a conflict with a previous successful write is detected. For example, if a write operation
+     *         occurs on an object and then an attempt is made to read the object using “SERIALIZABLE” consistency, this
+     *         exception may result. This generally occurs when the previous write did not have time to propagate to the
+     *         host serving the current request. A retry (with appropriate backoff logic) is the recommended response to
+     *         this exception.
+     * @throws ValidationException
+     *         Indicates that your request is malformed in some manner. See the exception message.
+     * @throws LimitExceededException
+     *         Indicates that limits are exceeded. See <a
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
+     *         information.
+     * @throws AccessDeniedException
+     *         Access denied. Check your permissions.
+     * @throws DirectoryNotEnabledException
+     *         Operations are only permitted on enabled directories.
+     * @throws ResourceNotFoundException
+     *         The specified resource could not be found.
+     * @throws FacetValidationException
+     *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
+     * @sample AmazonCloudDirectory.UpdateLinkAttributes
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/UpdateLinkAttributes"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public UpdateLinkAttributesResult updateLinkAttributes(UpdateLinkAttributesRequest request) {
+        request = beforeClientExecution(request);
+        return executeUpdateLinkAttributes(request);
+    }
+
+    @SdkInternalApi
+    final UpdateLinkAttributesResult executeUpdateLinkAttributes(UpdateLinkAttributesRequest updateLinkAttributesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(updateLinkAttributesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateLinkAttributesRequest> request = null;
+        Response<UpdateLinkAttributesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateLinkAttributesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateLinkAttributesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateLinkAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<UpdateLinkAttributesResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new UpdateLinkAttributesResultJsonUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -4804,18 +5369,21 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws DirectoryNotEnabledException
-     *         An operation can only operate on a directory that is not enabled.
+     *         Operations are only permitted on enabled directories.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
+     * @throws LinkNameAlreadyInUseException
+     *         Indicates that a link could not be created due to a naming conflict. Choose a different name and then try
+     *         again.
      * @throws FacetValidationException
      *         The <a>Facet</a> that you provided was not well formed or could not be validated with the schema.
      * @sample AmazonCloudDirectory.UpdateObjectAttributes
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/UpdateObjectAttributes"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/UpdateObjectAttributes"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -4839,6 +5407,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new UpdateObjectAttributesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateObjectAttributesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateObjectAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4880,14 +5452,14 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @sample AmazonCloudDirectory.UpdateSchema
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/UpdateSchema" target="_top">AWS
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/UpdateSchema" target="_top">AWS
      *      API Documentation</a>
      */
     @Override
@@ -4911,6 +5483,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new UpdateSchemaRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateSchemaRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateSchema");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4929,9 +5505,9 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * Updates a <a>TypedLinkFacet</a>. For more information, see <a
-     * href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink">Typed
-     * link</a>.
+     * Updates a <a>TypedLinkFacet</a>. For more information, see <a href=
+     * "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/directory_objects_links.html#directory_objects_links_typedlink"
+     * >Typed Links</a>.
      * </p>
      * 
      * @param updateTypedLinkFacetRequest
@@ -4953,7 +5529,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      *         Indicates that your request is malformed in some manner. See the exception message.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @throws AccessDeniedException
      *         Access denied. Check your permissions.
@@ -4968,7 +5544,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws InvalidRuleException
      *         Occurs when any of the rule parameter keys or values are invalid.
      * @sample AmazonCloudDirectory.UpdateTypedLinkFacet
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/UpdateTypedLinkFacet"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/UpdateTypedLinkFacet"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -4992,6 +5568,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new UpdateTypedLinkFacetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateTypedLinkFacetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateTypedLinkFacet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5042,10 +5622,13 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidAttachmentException
-     *         Indicates that an attempt to attach an object with the same link name or to apply a schema with the same
-     *         name has occurred. Rename the link or the schema and then try again.
+     *         Indicates that an attempt to make an attachment was invalid. For example, attaching two nodes with a link
+     *         type that is not applicable to the nodes or attempting to apply a schema to a directory a second time.
+     * @throws SchemaAlreadyExistsException
+     *         Indicates that a schema could not be created due to a naming conflict. Please select a different name and
+     *         then try again.
      * @sample AmazonCloudDirectory.UpgradeAppliedSchema
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/UpgradeAppliedSchema"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/UpgradeAppliedSchema"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -5069,6 +5652,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new UpgradeAppliedSchemaRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(upgradeAppliedSchemaRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpgradeAppliedSchema");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5116,14 +5703,14 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * @throws ResourceNotFoundException
      *         The specified resource could not be found.
      * @throws InvalidAttachmentException
-     *         Indicates that an attempt to attach an object with the same link name or to apply a schema with the same
-     *         name has occurred. Rename the link or the schema and then try again.
+     *         Indicates that an attempt to make an attachment was invalid. For example, attaching two nodes with a link
+     *         type that is not applicable to the nodes or attempting to apply a schema to a directory a second time.
      * @throws LimitExceededException
      *         Indicates that limits are exceeded. See <a
-     *         href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html">Limits</a> for more
+     *         href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/limits.html">Limits</a> for more
      *         information.
      * @sample AmazonCloudDirectory.UpgradePublishedSchema
-     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2016-05-10/UpgradePublishedSchema"
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/clouddirectory-2017-01-11/UpgradePublishedSchema"
      *      target="_top">AWS API Documentation</a>
      */
     @Override
@@ -5147,6 +5734,10 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
                 request = new UpgradePublishedSchemaRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(upgradePublishedSchemaRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "CloudDirectory");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpgradePublishedSchema");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5188,9 +5779,18 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
             ExecutionContext executionContext) {
 
+        return invoke(request, responseHandler, executionContext, null, null);
+    }
+
+    /**
+     * Normal invoke with authentication. Credentials are required and may be overriden at the request level.
+     **/
+    private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
+            ExecutionContext executionContext, URI cachedEndpoint, URI uriFromEndpointTrait) {
+
         executionContext.setCredentialsProvider(CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, cachedEndpoint, uriFromEndpointTrait);
     }
 
     /**
@@ -5200,7 +5800,7 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
     private <X, Y extends AmazonWebServiceRequest> Response<X> anonymousInvoke(Request<Y> request,
             HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler, ExecutionContext executionContext) {
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, null, null);
     }
 
     /**
@@ -5208,8 +5808,17 @@ public class AmazonCloudDirectoryClient extends AmazonWebServiceClient implement
      * ExecutionContext beforehand.
      **/
     private <X, Y extends AmazonWebServiceRequest> Response<X> doInvoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
-            ExecutionContext executionContext) {
-        request.setEndpoint(endpoint);
+            ExecutionContext executionContext, URI discoveredEndpoint, URI uriFromEndpointTrait) {
+
+        if (discoveredEndpoint != null) {
+            request.setEndpoint(discoveredEndpoint);
+            request.getOriginalRequest().getRequestClientOptions().appendUserAgent("endpoint-discovery");
+        } else if (uriFromEndpointTrait != null) {
+            request.setEndpoint(uriFromEndpointTrait);
+        } else {
+            request.setEndpoint(endpoint);
+        }
+
         request.setTimeOffset(timeOffset);
 
         HttpResponseHandler<AmazonServiceException> errorResponseHandler = protocolFactory.createErrorResponseHandler(new JsonErrorResponseMetadata());

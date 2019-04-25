@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -36,7 +36,7 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
     private String instanceId;
     /**
      * <p>
-     * Connection status of the SSM Agent.
+     * Connection status of SSM Agent.
      * </p>
      */
     private String pingStatus;
@@ -48,13 +48,15 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
     private java.util.Date lastPingDateTime;
     /**
      * <p>
-     * The version of the SSM Agent running on your Linux instance.
+     * The version of SSM Agent running on your Linux instance.
      * </p>
      */
     private String agentVersion;
     /**
      * <p>
-     * Indicates whether latest version of the SSM Agent is running on your instance.
+     * Indicates whether latest version of SSM Agent is running on your instance. Some older versions of Windows Server
+     * use the EC2Config service to process SSM requests. For this reason, this field does not indicate whether or not
+     * the latest version is installed on Windows managed instances.
      * </p>
      */
     private Boolean isLatestVersion;
@@ -84,7 +86,8 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
     private String activationId;
     /**
      * <p>
-     * The Amazon Identity and Access Management (IAM) role assigned to EC2 instances or managed instances.
+     * The Amazon Identity and Access Management (IAM) role assigned to the on-premises Systems Manager managed
+     * instances. This call does not return the IAM role for Amazon EC2 instances.
      * </p>
      */
     private String iamRole;
@@ -126,7 +129,7 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
     private String associationStatus;
     /**
      * <p>
-     * The date the association was last executed.
+     * The date the association was last run.
      * </p>
      */
     private java.util.Date lastAssociationExecutionDate;
@@ -185,11 +188,11 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * Connection status of the SSM Agent.
+     * Connection status of SSM Agent.
      * </p>
      * 
      * @param pingStatus
-     *        Connection status of the SSM Agent.
+     *        Connection status of SSM Agent.
      * @see PingStatus
      */
 
@@ -199,10 +202,10 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * Connection status of the SSM Agent.
+     * Connection status of SSM Agent.
      * </p>
      * 
-     * @return Connection status of the SSM Agent.
+     * @return Connection status of SSM Agent.
      * @see PingStatus
      */
 
@@ -212,11 +215,11 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * Connection status of the SSM Agent.
+     * Connection status of SSM Agent.
      * </p>
      * 
      * @param pingStatus
-     *        Connection status of the SSM Agent.
+     *        Connection status of SSM Agent.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see PingStatus
      */
@@ -228,11 +231,11 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * Connection status of the SSM Agent.
+     * Connection status of SSM Agent.
      * </p>
      * 
      * @param pingStatus
-     *        Connection status of the SSM Agent.
+     *        Connection status of SSM Agent.
      * @see PingStatus
      */
 
@@ -242,11 +245,11 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * Connection status of the SSM Agent.
+     * Connection status of SSM Agent.
      * </p>
      * 
      * @param pingStatus
-     *        Connection status of the SSM Agent.
+     *        Connection status of SSM Agent.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see PingStatus
      */
@@ -298,11 +301,11 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The version of the SSM Agent running on your Linux instance.
+     * The version of SSM Agent running on your Linux instance.
      * </p>
      * 
      * @param agentVersion
-     *        The version of the SSM Agent running on your Linux instance.
+     *        The version of SSM Agent running on your Linux instance.
      */
 
     public void setAgentVersion(String agentVersion) {
@@ -311,10 +314,10 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The version of the SSM Agent running on your Linux instance.
+     * The version of SSM Agent running on your Linux instance.
      * </p>
      * 
-     * @return The version of the SSM Agent running on your Linux instance.
+     * @return The version of SSM Agent running on your Linux instance.
      */
 
     public String getAgentVersion() {
@@ -323,11 +326,11 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The version of the SSM Agent running on your Linux instance.
+     * The version of SSM Agent running on your Linux instance.
      * </p>
      * 
      * @param agentVersion
-     *        The version of the SSM Agent running on your Linux instance.
+     *        The version of SSM Agent running on your Linux instance.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -338,11 +341,15 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * Indicates whether latest version of the SSM Agent is running on your instance.
+     * Indicates whether latest version of SSM Agent is running on your instance. Some older versions of Windows Server
+     * use the EC2Config service to process SSM requests. For this reason, this field does not indicate whether or not
+     * the latest version is installed on Windows managed instances.
      * </p>
      * 
      * @param isLatestVersion
-     *        Indicates whether latest version of the SSM Agent is running on your instance.
+     *        Indicates whether latest version of SSM Agent is running on your instance. Some older versions of Windows
+     *        Server use the EC2Config service to process SSM requests. For this reason, this field does not indicate
+     *        whether or not the latest version is installed on Windows managed instances.
      */
 
     public void setIsLatestVersion(Boolean isLatestVersion) {
@@ -351,10 +358,14 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * Indicates whether latest version of the SSM Agent is running on your instance.
+     * Indicates whether latest version of SSM Agent is running on your instance. Some older versions of Windows Server
+     * use the EC2Config service to process SSM requests. For this reason, this field does not indicate whether or not
+     * the latest version is installed on Windows managed instances.
      * </p>
      * 
-     * @return Indicates whether latest version of the SSM Agent is running on your instance.
+     * @return Indicates whether latest version of SSM Agent is running on your instance. Some older versions of Windows
+     *         Server use the EC2Config service to process SSM requests. For this reason, this field does not indicate
+     *         whether or not the latest version is installed on Windows managed instances.
      */
 
     public Boolean getIsLatestVersion() {
@@ -363,11 +374,15 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * Indicates whether latest version of the SSM Agent is running on your instance.
+     * Indicates whether latest version of SSM Agent is running on your instance. Some older versions of Windows Server
+     * use the EC2Config service to process SSM requests. For this reason, this field does not indicate whether or not
+     * the latest version is installed on Windows managed instances.
      * </p>
      * 
      * @param isLatestVersion
-     *        Indicates whether latest version of the SSM Agent is running on your instance.
+     *        Indicates whether latest version of SSM Agent is running on your instance. Some older versions of Windows
+     *        Server use the EC2Config service to process SSM requests. For this reason, this field does not indicate
+     *        whether or not the latest version is installed on Windows managed instances.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -378,10 +393,14 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * Indicates whether latest version of the SSM Agent is running on your instance.
+     * Indicates whether latest version of SSM Agent is running on your instance. Some older versions of Windows Server
+     * use the EC2Config service to process SSM requests. For this reason, this field does not indicate whether or not
+     * the latest version is installed on Windows managed instances.
      * </p>
      * 
-     * @return Indicates whether latest version of the SSM Agent is running on your instance.
+     * @return Indicates whether latest version of SSM Agent is running on your instance. Some older versions of Windows
+     *         Server use the EC2Config service to process SSM requests. For this reason, this field does not indicate
+     *         whether or not the latest version is installed on Windows managed instances.
      */
 
     public Boolean isLatestVersion() {
@@ -583,11 +602,13 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The Amazon Identity and Access Management (IAM) role assigned to EC2 instances or managed instances.
+     * The Amazon Identity and Access Management (IAM) role assigned to the on-premises Systems Manager managed
+     * instances. This call does not return the IAM role for Amazon EC2 instances.
      * </p>
      * 
      * @param iamRole
-     *        The Amazon Identity and Access Management (IAM) role assigned to EC2 instances or managed instances.
+     *        The Amazon Identity and Access Management (IAM) role assigned to the on-premises Systems Manager managed
+     *        instances. This call does not return the IAM role for Amazon EC2 instances.
      */
 
     public void setIamRole(String iamRole) {
@@ -596,10 +617,12 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The Amazon Identity and Access Management (IAM) role assigned to EC2 instances or managed instances.
+     * The Amazon Identity and Access Management (IAM) role assigned to the on-premises Systems Manager managed
+     * instances. This call does not return the IAM role for Amazon EC2 instances.
      * </p>
      * 
-     * @return The Amazon Identity and Access Management (IAM) role assigned to EC2 instances or managed instances.
+     * @return The Amazon Identity and Access Management (IAM) role assigned to the on-premises Systems Manager managed
+     *         instances. This call does not return the IAM role for Amazon EC2 instances.
      */
 
     public String getIamRole() {
@@ -608,11 +631,13 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The Amazon Identity and Access Management (IAM) role assigned to EC2 instances or managed instances.
+     * The Amazon Identity and Access Management (IAM) role assigned to the on-premises Systems Manager managed
+     * instances. This call does not return the IAM role for Amazon EC2 instances.
      * </p>
      * 
      * @param iamRole
-     *        The Amazon Identity and Access Management (IAM) role assigned to EC2 instances or managed instances.
+     *        The Amazon Identity and Access Management (IAM) role assigned to the on-premises Systems Manager managed
+     *        instances. This call does not return the IAM role for Amazon EC2 instances.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -896,11 +921,11 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The date the association was last executed.
+     * The date the association was last run.
      * </p>
      * 
      * @param lastAssociationExecutionDate
-     *        The date the association was last executed.
+     *        The date the association was last run.
      */
 
     public void setLastAssociationExecutionDate(java.util.Date lastAssociationExecutionDate) {
@@ -909,10 +934,10 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The date the association was last executed.
+     * The date the association was last run.
      * </p>
      * 
-     * @return The date the association was last executed.
+     * @return The date the association was last run.
      */
 
     public java.util.Date getLastAssociationExecutionDate() {
@@ -921,11 +946,11 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The date the association was last executed.
+     * The date the association was last run.
      * </p>
      * 
      * @param lastAssociationExecutionDate
-     *        The date the association was last executed.
+     *        The date the association was last run.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1015,7 +1040,8 @@ public class InstanceInformation implements Serializable, Cloneable, StructuredP
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

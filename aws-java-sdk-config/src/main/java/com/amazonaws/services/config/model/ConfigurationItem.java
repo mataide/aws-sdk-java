@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -36,7 +36,7 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
     private String version;
     /**
      * <p>
-     * The 12 digit AWS account ID associated with the resource.
+     * The 12-digit AWS account ID associated with the resource.
      * </p>
      */
     private String accountId;
@@ -70,7 +70,7 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
     private String configurationItemMD5Hash;
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the resource.
+     * accoun
      * </p>
      */
     private String arn;
@@ -82,7 +82,7 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
     private String resourceType;
     /**
      * <p>
-     * The ID of the resource (for example., <code>sg-xxxxxx</code>).
+     * The ID of the resource (for example, <code>sg-xxxxxx</code>).
      * </p>
      */
     private String resourceId;
@@ -123,8 +123,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
      * <p>
      * A populated field indicates that the current configuration was initiated by the events recorded in the CloudTrail
      * log. For more information about CloudTrail, see <a
-     * href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What is AWS
-     * CloudTrail?</a>.
+     * href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What Is AWS
+     * CloudTrail</a>.
      * </p>
      * <p>
      * An empty field indicates that the current configuration was not initiated by any event.
@@ -193,11 +193,11 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
 
     /**
      * <p>
-     * The 12 digit AWS account ID associated with the resource.
+     * The 12-digit AWS account ID associated with the resource.
      * </p>
      * 
      * @param accountId
-     *        The 12 digit AWS account ID associated with the resource.
+     *        The 12-digit AWS account ID associated with the resource.
      */
 
     public void setAccountId(String accountId) {
@@ -206,10 +206,10 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
 
     /**
      * <p>
-     * The 12 digit AWS account ID associated with the resource.
+     * The 12-digit AWS account ID associated with the resource.
      * </p>
      * 
-     * @return The 12 digit AWS account ID associated with the resource.
+     * @return The 12-digit AWS account ID associated with the resource.
      */
 
     public String getAccountId() {
@@ -218,11 +218,11 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
 
     /**
      * <p>
-     * The 12 digit AWS account ID associated with the resource.
+     * The 12-digit AWS account ID associated with the resource.
      * </p>
      * 
      * @param accountId
-     *        The 12 digit AWS account ID associated with the resource.
+     *        The 12-digit AWS account ID associated with the resource.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -447,11 +447,11 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the resource.
+     * accoun
      * </p>
      * 
      * @param arn
-     *        The Amazon Resource Name (ARN) of the resource.
+     *        accoun
      */
 
     public void setArn(String arn) {
@@ -460,10 +460,10 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the resource.
+     * accoun
      * </p>
      * 
-     * @return The Amazon Resource Name (ARN) of the resource.
+     * @return accoun
      */
 
     public String getArn() {
@@ -472,11 +472,11 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the resource.
+     * accoun
      * </p>
      * 
      * @param arn
-     *        The Amazon Resource Name (ARN) of the resource.
+     *        accoun
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -560,11 +560,11 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
 
     /**
      * <p>
-     * The ID of the resource (for example., <code>sg-xxxxxx</code>).
+     * The ID of the resource (for example, <code>sg-xxxxxx</code>).
      * </p>
      * 
      * @param resourceId
-     *        The ID of the resource (for example., <code>sg-xxxxxx</code>).
+     *        The ID of the resource (for example, <code>sg-xxxxxx</code>).
      */
 
     public void setResourceId(String resourceId) {
@@ -573,10 +573,10 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
 
     /**
      * <p>
-     * The ID of the resource (for example., <code>sg-xxxxxx</code>).
+     * The ID of the resource (for example, <code>sg-xxxxxx</code>).
      * </p>
      * 
-     * @return The ID of the resource (for example., <code>sg-xxxxxx</code>).
+     * @return The ID of the resource (for example, <code>sg-xxxxxx</code>).
      */
 
     public String getResourceId() {
@@ -585,11 +585,11 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
 
     /**
      * <p>
-     * The ID of the resource (for example., <code>sg-xxxxxx</code>).
+     * The ID of the resource (for example, <code>sg-xxxxxx</code>).
      * </p>
      * 
      * @param resourceId
-     *        The ID of the resource (for example., <code>sg-xxxxxx</code>).
+     *        The ID of the resource (for example, <code>sg-xxxxxx</code>).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -826,8 +826,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
      * <p>
      * A populated field indicates that the current configuration was initiated by the events recorded in the CloudTrail
      * log. For more information about CloudTrail, see <a
-     * href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What is AWS
-     * CloudTrail?</a>.
+     * href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What Is AWS
+     * CloudTrail</a>.
      * </p>
      * <p>
      * An empty field indicates that the current configuration was not initiated by any event.
@@ -837,8 +837,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
      *         <p>
      *         A populated field indicates that the current configuration was initiated by the events recorded in the
      *         CloudTrail log. For more information about CloudTrail, see <a
-     *         href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What
-     *         is AWS CloudTrail?</a>.
+     *         href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What
+     *         Is AWS CloudTrail</a>.
      *         </p>
      *         <p>
      *         An empty field indicates that the current configuration was not initiated by any event.
@@ -858,8 +858,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
      * <p>
      * A populated field indicates that the current configuration was initiated by the events recorded in the CloudTrail
      * log. For more information about CloudTrail, see <a
-     * href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What is AWS
-     * CloudTrail?</a>.
+     * href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What Is AWS
+     * CloudTrail</a>.
      * </p>
      * <p>
      * An empty field indicates that the current configuration was not initiated by any event.
@@ -870,8 +870,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
      *        <p>
      *        A populated field indicates that the current configuration was initiated by the events recorded in the
      *        CloudTrail log. For more information about CloudTrail, see <a
-     *        href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What
-     *        is AWS CloudTrail?</a>.
+     *        href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What
+     *        Is AWS CloudTrail</a>.
      *        </p>
      *        <p>
      *        An empty field indicates that the current configuration was not initiated by any event.
@@ -893,8 +893,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
      * <p>
      * A populated field indicates that the current configuration was initiated by the events recorded in the CloudTrail
      * log. For more information about CloudTrail, see <a
-     * href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What is AWS
-     * CloudTrail?</a>.
+     * href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What Is AWS
+     * CloudTrail</a>.
      * </p>
      * <p>
      * An empty field indicates that the current configuration was not initiated by any event.
@@ -910,8 +910,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
      *        <p>
      *        A populated field indicates that the current configuration was initiated by the events recorded in the
      *        CloudTrail log. For more information about CloudTrail, see <a
-     *        href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What
-     *        is AWS CloudTrail?</a>.
+     *        href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What
+     *        Is AWS CloudTrail</a>.
      *        </p>
      *        <p>
      *        An empty field indicates that the current configuration was not initiated by any event.
@@ -935,8 +935,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
      * <p>
      * A populated field indicates that the current configuration was initiated by the events recorded in the CloudTrail
      * log. For more information about CloudTrail, see <a
-     * href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What is AWS
-     * CloudTrail?</a>.
+     * href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What Is AWS
+     * CloudTrail</a>.
      * </p>
      * <p>
      * An empty field indicates that the current configuration was not initiated by any event.
@@ -947,8 +947,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
      *        <p>
      *        A populated field indicates that the current configuration was initiated by the events recorded in the
      *        CloudTrail log. For more information about CloudTrail, see <a
-     *        href="http://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What
-     *        is AWS CloudTrail?</a>.
+     *        href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">What
+     *        Is AWS CloudTrail</a>.
      *        </p>
      *        <p>
      *        An empty field indicates that the current configuration was not initiated by any event.
@@ -1141,7 +1141,8 @@ public class ConfigurationItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

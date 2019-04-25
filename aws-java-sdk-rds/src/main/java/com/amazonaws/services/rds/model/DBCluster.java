@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -17,10 +17,11 @@ import javax.annotation.Generated;
 
 /**
  * <p>
- * Contains the details of an Amazon RDS DB cluster.
+ * Contains the details of an Amazon Aurora DB cluster.
  * </p>
  * <p>
- * This data type is used as a response element in the <a>DescribeDBClusters</a> action.
+ * This data type is used as a response element in the <a>DescribeDBClusters</a>, <a>StopDBCluster</a>, and
+ * <a>StartDBCluster</a> actions.
  * </p>
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DBCluster" target="_top">AWS API
@@ -32,7 +33,7 @@ public class DBCluster implements Serializable, Cloneable {
     /**
      * <p>
      * For all database engines except Amazon Aurora, <code>AllocatedStorage</code> specifies the allocated storage size
-     * in gigabytes (GB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage
+     * in gibibytes (GiB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage
      * size is not fixed, but instead automatically adjusts as needed.
      * </p>
      */
@@ -95,7 +96,7 @@ public class DBCluster implements Serializable, Cloneable {
     private String percentProgress;
     /**
      * <p>
-     * Specifies the earliest time to which a database can be restored with point-in-time restore.
+     * The earliest time to which a database can be restored with point-in-time restore.
      * </p>
      */
     private java.util.Date earliestRestorableTime;
@@ -119,6 +120,12 @@ public class DBCluster implements Serializable, Cloneable {
      * </p>
      */
     private String readerEndpoint;
+    /**
+     * <p>
+     * Identifies all custom endpoints associated with the cluster.
+     * </p>
+     */
+    private com.amazonaws.internal.SdkInternalList<String> customEndpoints;
     /**
      * <p>
      * Specifies whether the DB cluster has instances in multiple Availability Zones.
@@ -256,18 +263,102 @@ public class DBCluster implements Serializable, Cloneable {
      * </p>
      */
     private java.util.Date clusterCreateTime;
+    /**
+     * <p>
+     * The earliest time to which a DB cluster can be backtracked.
+     * </p>
+     */
+    private java.util.Date earliestBacktrackTime;
+    /**
+     * <p>
+     * The target backtrack window, in seconds. If this value is set to 0, backtracking is disabled for the DB cluster.
+     * Otherwise, backtracking is enabled.
+     * </p>
+     */
+    private Long backtrackWindow;
+    /**
+     * <p>
+     * The number of change records stored for Backtrack.
+     * </p>
+     */
+    private Long backtrackConsumedChangeRecords;
+    /**
+     * <p>
+     * A list of log types that this DB cluster is configured to export to CloudWatch Logs.
+     * </p>
+     * <p>
+     * Log types vary by DB engine. For information about the log types for each DB engine, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html">Amazon RDS Database Log
+     * Files</a> in the <i>Amazon Aurora User Guide.</i>
+     * </p>
+     */
+    private com.amazonaws.internal.SdkInternalList<String> enabledCloudwatchLogsExports;
+    /**
+     * <p>
+     * The current capacity of an Aurora Serverless DB cluster. The capacity is 0 (zero) when the cluster is paused.
+     * </p>
+     * <p>
+     * For more information about Aurora Serverless, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon Aurora
+     * Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * </p>
+     */
+    private Integer capacity;
+    /**
+     * <p>
+     * The DB engine mode of the DB cluster, either <code>provisioned</code>, <code>serverless</code>, or
+     * <code>parallelquery</code>.
+     * </p>
+     */
+    private String engineMode;
+
+    private ScalingConfigurationInfo scalingConfigurationInfo;
+    /**
+     * <p>
+     * Indicates if the DB cluster has deletion protection enabled. The database can't be deleted when this value is set
+     * to true.
+     * </p>
+     */
+    private Boolean deletionProtection;
+    /**
+     * <note>
+     * <p>
+     * HTTP endpoint functionality is in beta for Aurora Serverless and is subject to change.
+     * </p>
+     * </note>
+     * <p>
+     * Value that is <code>true</code> if the HTTP endpoint for an Aurora Serverless DB cluster is enabled and
+     * <code>false</code> otherwise.
+     * </p>
+     * <p>
+     * When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the Aurora
+     * Serverless DB cluster. You can also query your database from inside the RDS console with the query editor.
+     * </p>
+     * <p>
+     * For more information about Aurora Serverless, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon Aurora
+     * Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * </p>
+     */
+    private Boolean httpEndpointEnabled;
+    /**
+     * <p>
+     * Specifies whether tags are copied from the DB cluster to snapshots of the DB cluster.
+     * </p>
+     */
+    private Boolean copyTagsToSnapshot;
 
     /**
      * <p>
      * For all database engines except Amazon Aurora, <code>AllocatedStorage</code> specifies the allocated storage size
-     * in gigabytes (GB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage
+     * in gibibytes (GiB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage
      * size is not fixed, but instead automatically adjusts as needed.
      * </p>
      * 
      * @param allocatedStorage
      *        For all database engines except Amazon Aurora, <code>AllocatedStorage</code> specifies the allocated
-     *        storage size in gigabytes (GB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora
-     *        DB cluster storage size is not fixed, but instead automatically adjusts as needed.
+     *        storage size in gibibytes (GiB). For Aurora, <code>AllocatedStorage</code> always returns 1, because
+     *        Aurora DB cluster storage size is not fixed, but instead automatically adjusts as needed.
      */
 
     public void setAllocatedStorage(Integer allocatedStorage) {
@@ -277,12 +368,12 @@ public class DBCluster implements Serializable, Cloneable {
     /**
      * <p>
      * For all database engines except Amazon Aurora, <code>AllocatedStorage</code> specifies the allocated storage size
-     * in gigabytes (GB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage
+     * in gibibytes (GiB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage
      * size is not fixed, but instead automatically adjusts as needed.
      * </p>
      * 
      * @return For all database engines except Amazon Aurora, <code>AllocatedStorage</code> specifies the allocated
-     *         storage size in gigabytes (GB). For Aurora, <code>AllocatedStorage</code> always returns 1, because
+     *         storage size in gibibytes (GiB). For Aurora, <code>AllocatedStorage</code> always returns 1, because
      *         Aurora DB cluster storage size is not fixed, but instead automatically adjusts as needed.
      */
 
@@ -293,14 +384,14 @@ public class DBCluster implements Serializable, Cloneable {
     /**
      * <p>
      * For all database engines except Amazon Aurora, <code>AllocatedStorage</code> specifies the allocated storage size
-     * in gigabytes (GB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage
+     * in gibibytes (GiB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage
      * size is not fixed, but instead automatically adjusts as needed.
      * </p>
      * 
      * @param allocatedStorage
      *        For all database engines except Amazon Aurora, <code>AllocatedStorage</code> specifies the allocated
-     *        storage size in gigabytes (GB). For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora
-     *        DB cluster storage size is not fixed, but instead automatically adjusts as needed.
+     *        storage size in gibibytes (GiB). For Aurora, <code>AllocatedStorage</code> always returns 1, because
+     *        Aurora DB cluster storage size is not fixed, but instead automatically adjusts as needed.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -719,11 +810,11 @@ public class DBCluster implements Serializable, Cloneable {
 
     /**
      * <p>
-     * Specifies the earliest time to which a database can be restored with point-in-time restore.
+     * The earliest time to which a database can be restored with point-in-time restore.
      * </p>
      * 
      * @param earliestRestorableTime
-     *        Specifies the earliest time to which a database can be restored with point-in-time restore.
+     *        The earliest time to which a database can be restored with point-in-time restore.
      */
 
     public void setEarliestRestorableTime(java.util.Date earliestRestorableTime) {
@@ -732,10 +823,10 @@ public class DBCluster implements Serializable, Cloneable {
 
     /**
      * <p>
-     * Specifies the earliest time to which a database can be restored with point-in-time restore.
+     * The earliest time to which a database can be restored with point-in-time restore.
      * </p>
      * 
-     * @return Specifies the earliest time to which a database can be restored with point-in-time restore.
+     * @return The earliest time to which a database can be restored with point-in-time restore.
      */
 
     public java.util.Date getEarliestRestorableTime() {
@@ -744,11 +835,11 @@ public class DBCluster implements Serializable, Cloneable {
 
     /**
      * <p>
-     * Specifies the earliest time to which a database can be restored with point-in-time restore.
+     * The earliest time to which a database can be restored with point-in-time restore.
      * </p>
      * 
      * @param earliestRestorableTime
-     *        Specifies the earliest time to which a database can be restored with point-in-time restore.
+     *        The earliest time to which a database can be restored with point-in-time restore.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -882,6 +973,79 @@ public class DBCluster implements Serializable, Cloneable {
 
     public DBCluster withReaderEndpoint(String readerEndpoint) {
         setReaderEndpoint(readerEndpoint);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Identifies all custom endpoints associated with the cluster.
+     * </p>
+     * 
+     * @return Identifies all custom endpoints associated with the cluster.
+     */
+
+    public java.util.List<String> getCustomEndpoints() {
+        if (customEndpoints == null) {
+            customEndpoints = new com.amazonaws.internal.SdkInternalList<String>();
+        }
+        return customEndpoints;
+    }
+
+    /**
+     * <p>
+     * Identifies all custom endpoints associated with the cluster.
+     * </p>
+     * 
+     * @param customEndpoints
+     *        Identifies all custom endpoints associated with the cluster.
+     */
+
+    public void setCustomEndpoints(java.util.Collection<String> customEndpoints) {
+        if (customEndpoints == null) {
+            this.customEndpoints = null;
+            return;
+        }
+
+        this.customEndpoints = new com.amazonaws.internal.SdkInternalList<String>(customEndpoints);
+    }
+
+    /**
+     * <p>
+     * Identifies all custom endpoints associated with the cluster.
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setCustomEndpoints(java.util.Collection)} or {@link #withCustomEndpoints(java.util.Collection)} if you
+     * want to override the existing values.
+     * </p>
+     * 
+     * @param customEndpoints
+     *        Identifies all custom endpoints associated with the cluster.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withCustomEndpoints(String... customEndpoints) {
+        if (this.customEndpoints == null) {
+            setCustomEndpoints(new com.amazonaws.internal.SdkInternalList<String>(customEndpoints.length));
+        }
+        for (String ele : customEndpoints) {
+            this.customEndpoints.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Identifies all custom endpoints associated with the cluster.
+     * </p>
+     * 
+     * @param customEndpoints
+     *        Identifies all custom endpoints associated with the cluster.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withCustomEndpoints(java.util.Collection<String> customEndpoints) {
+        setCustomEndpoints(customEndpoints);
         return this;
     }
 
@@ -2006,7 +2170,673 @@ public class DBCluster implements Serializable, Cloneable {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The earliest time to which a DB cluster can be backtracked.
+     * </p>
+     * 
+     * @param earliestBacktrackTime
+     *        The earliest time to which a DB cluster can be backtracked.
+     */
+
+    public void setEarliestBacktrackTime(java.util.Date earliestBacktrackTime) {
+        this.earliestBacktrackTime = earliestBacktrackTime;
+    }
+
+    /**
+     * <p>
+     * The earliest time to which a DB cluster can be backtracked.
+     * </p>
+     * 
+     * @return The earliest time to which a DB cluster can be backtracked.
+     */
+
+    public java.util.Date getEarliestBacktrackTime() {
+        return this.earliestBacktrackTime;
+    }
+
+    /**
+     * <p>
+     * The earliest time to which a DB cluster can be backtracked.
+     * </p>
+     * 
+     * @param earliestBacktrackTime
+     *        The earliest time to which a DB cluster can be backtracked.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withEarliestBacktrackTime(java.util.Date earliestBacktrackTime) {
+        setEarliestBacktrackTime(earliestBacktrackTime);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The target backtrack window, in seconds. If this value is set to 0, backtracking is disabled for the DB cluster.
+     * Otherwise, backtracking is enabled.
+     * </p>
+     * 
+     * @param backtrackWindow
+     *        The target backtrack window, in seconds. If this value is set to 0, backtracking is disabled for the DB
+     *        cluster. Otherwise, backtracking is enabled.
+     */
+
+    public void setBacktrackWindow(Long backtrackWindow) {
+        this.backtrackWindow = backtrackWindow;
+    }
+
+    /**
+     * <p>
+     * The target backtrack window, in seconds. If this value is set to 0, backtracking is disabled for the DB cluster.
+     * Otherwise, backtracking is enabled.
+     * </p>
+     * 
+     * @return The target backtrack window, in seconds. If this value is set to 0, backtracking is disabled for the DB
+     *         cluster. Otherwise, backtracking is enabled.
+     */
+
+    public Long getBacktrackWindow() {
+        return this.backtrackWindow;
+    }
+
+    /**
+     * <p>
+     * The target backtrack window, in seconds. If this value is set to 0, backtracking is disabled for the DB cluster.
+     * Otherwise, backtracking is enabled.
+     * </p>
+     * 
+     * @param backtrackWindow
+     *        The target backtrack window, in seconds. If this value is set to 0, backtracking is disabled for the DB
+     *        cluster. Otherwise, backtracking is enabled.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withBacktrackWindow(Long backtrackWindow) {
+        setBacktrackWindow(backtrackWindow);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The number of change records stored for Backtrack.
+     * </p>
+     * 
+     * @param backtrackConsumedChangeRecords
+     *        The number of change records stored for Backtrack.
+     */
+
+    public void setBacktrackConsumedChangeRecords(Long backtrackConsumedChangeRecords) {
+        this.backtrackConsumedChangeRecords = backtrackConsumedChangeRecords;
+    }
+
+    /**
+     * <p>
+     * The number of change records stored for Backtrack.
+     * </p>
+     * 
+     * @return The number of change records stored for Backtrack.
+     */
+
+    public Long getBacktrackConsumedChangeRecords() {
+        return this.backtrackConsumedChangeRecords;
+    }
+
+    /**
+     * <p>
+     * The number of change records stored for Backtrack.
+     * </p>
+     * 
+     * @param backtrackConsumedChangeRecords
+     *        The number of change records stored for Backtrack.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withBacktrackConsumedChangeRecords(Long backtrackConsumedChangeRecords) {
+        setBacktrackConsumedChangeRecords(backtrackConsumedChangeRecords);
+        return this;
+    }
+
+    /**
+     * <p>
+     * A list of log types that this DB cluster is configured to export to CloudWatch Logs.
+     * </p>
+     * <p>
+     * Log types vary by DB engine. For information about the log types for each DB engine, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html">Amazon RDS Database Log
+     * Files</a> in the <i>Amazon Aurora User Guide.</i>
+     * </p>
+     * 
+     * @return A list of log types that this DB cluster is configured to export to CloudWatch Logs.</p>
+     *         <p>
+     *         Log types vary by DB engine. For information about the log types for each DB engine, see <a
+     *         href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html">Amazon RDS
+     *         Database Log Files</a> in the <i>Amazon Aurora User Guide.</i>
+     */
+
+    public java.util.List<String> getEnabledCloudwatchLogsExports() {
+        if (enabledCloudwatchLogsExports == null) {
+            enabledCloudwatchLogsExports = new com.amazonaws.internal.SdkInternalList<String>();
+        }
+        return enabledCloudwatchLogsExports;
+    }
+
+    /**
+     * <p>
+     * A list of log types that this DB cluster is configured to export to CloudWatch Logs.
+     * </p>
+     * <p>
+     * Log types vary by DB engine. For information about the log types for each DB engine, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html">Amazon RDS Database Log
+     * Files</a> in the <i>Amazon Aurora User Guide.</i>
+     * </p>
+     * 
+     * @param enabledCloudwatchLogsExports
+     *        A list of log types that this DB cluster is configured to export to CloudWatch Logs.</p>
+     *        <p>
+     *        Log types vary by DB engine. For information about the log types for each DB engine, see <a
+     *        href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html">Amazon RDS
+     *        Database Log Files</a> in the <i>Amazon Aurora User Guide.</i>
+     */
+
+    public void setEnabledCloudwatchLogsExports(java.util.Collection<String> enabledCloudwatchLogsExports) {
+        if (enabledCloudwatchLogsExports == null) {
+            this.enabledCloudwatchLogsExports = null;
+            return;
+        }
+
+        this.enabledCloudwatchLogsExports = new com.amazonaws.internal.SdkInternalList<String>(enabledCloudwatchLogsExports);
+    }
+
+    /**
+     * <p>
+     * A list of log types that this DB cluster is configured to export to CloudWatch Logs.
+     * </p>
+     * <p>
+     * Log types vary by DB engine. For information about the log types for each DB engine, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html">Amazon RDS Database Log
+     * Files</a> in the <i>Amazon Aurora User Guide.</i>
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setEnabledCloudwatchLogsExports(java.util.Collection)} or
+     * {@link #withEnabledCloudwatchLogsExports(java.util.Collection)} if you want to override the existing values.
+     * </p>
+     * 
+     * @param enabledCloudwatchLogsExports
+     *        A list of log types that this DB cluster is configured to export to CloudWatch Logs.</p>
+     *        <p>
+     *        Log types vary by DB engine. For information about the log types for each DB engine, see <a
+     *        href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html">Amazon RDS
+     *        Database Log Files</a> in the <i>Amazon Aurora User Guide.</i>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withEnabledCloudwatchLogsExports(String... enabledCloudwatchLogsExports) {
+        if (this.enabledCloudwatchLogsExports == null) {
+            setEnabledCloudwatchLogsExports(new com.amazonaws.internal.SdkInternalList<String>(enabledCloudwatchLogsExports.length));
+        }
+        for (String ele : enabledCloudwatchLogsExports) {
+            this.enabledCloudwatchLogsExports.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * A list of log types that this DB cluster is configured to export to CloudWatch Logs.
+     * </p>
+     * <p>
+     * Log types vary by DB engine. For information about the log types for each DB engine, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html">Amazon RDS Database Log
+     * Files</a> in the <i>Amazon Aurora User Guide.</i>
+     * </p>
+     * 
+     * @param enabledCloudwatchLogsExports
+     *        A list of log types that this DB cluster is configured to export to CloudWatch Logs.</p>
+     *        <p>
+     *        Log types vary by DB engine. For information about the log types for each DB engine, see <a
+     *        href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_LogAccess.html">Amazon RDS
+     *        Database Log Files</a> in the <i>Amazon Aurora User Guide.</i>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withEnabledCloudwatchLogsExports(java.util.Collection<String> enabledCloudwatchLogsExports) {
+        setEnabledCloudwatchLogsExports(enabledCloudwatchLogsExports);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The current capacity of an Aurora Serverless DB cluster. The capacity is 0 (zero) when the cluster is paused.
+     * </p>
+     * <p>
+     * For more information about Aurora Serverless, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon Aurora
+     * Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * </p>
+     * 
+     * @param capacity
+     *        The current capacity of an Aurora Serverless DB cluster. The capacity is 0 (zero) when the cluster is
+     *        paused.</p>
+     *        <p>
+     *        For more information about Aurora Serverless, see <a
+     *        href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon
+     *        Aurora Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     */
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    /**
+     * <p>
+     * The current capacity of an Aurora Serverless DB cluster. The capacity is 0 (zero) when the cluster is paused.
+     * </p>
+     * <p>
+     * For more information about Aurora Serverless, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon Aurora
+     * Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * </p>
+     * 
+     * @return The current capacity of an Aurora Serverless DB cluster. The capacity is 0 (zero) when the cluster is
+     *         paused.</p>
+     *         <p>
+     *         For more information about Aurora Serverless, see <a
+     *         href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon
+     *         Aurora Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     */
+
+    public Integer getCapacity() {
+        return this.capacity;
+    }
+
+    /**
+     * <p>
+     * The current capacity of an Aurora Serverless DB cluster. The capacity is 0 (zero) when the cluster is paused.
+     * </p>
+     * <p>
+     * For more information about Aurora Serverless, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon Aurora
+     * Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * </p>
+     * 
+     * @param capacity
+     *        The current capacity of an Aurora Serverless DB cluster. The capacity is 0 (zero) when the cluster is
+     *        paused.</p>
+     *        <p>
+     *        For more information about Aurora Serverless, see <a
+     *        href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon
+     *        Aurora Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withCapacity(Integer capacity) {
+        setCapacity(capacity);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The DB engine mode of the DB cluster, either <code>provisioned</code>, <code>serverless</code>, or
+     * <code>parallelquery</code>.
+     * </p>
+     * 
+     * @param engineMode
+     *        The DB engine mode of the DB cluster, either <code>provisioned</code>, <code>serverless</code>, or
+     *        <code>parallelquery</code>.
+     */
+
+    public void setEngineMode(String engineMode) {
+        this.engineMode = engineMode;
+    }
+
+    /**
+     * <p>
+     * The DB engine mode of the DB cluster, either <code>provisioned</code>, <code>serverless</code>, or
+     * <code>parallelquery</code>.
+     * </p>
+     * 
+     * @return The DB engine mode of the DB cluster, either <code>provisioned</code>, <code>serverless</code>, or
+     *         <code>parallelquery</code>.
+     */
+
+    public String getEngineMode() {
+        return this.engineMode;
+    }
+
+    /**
+     * <p>
+     * The DB engine mode of the DB cluster, either <code>provisioned</code>, <code>serverless</code>, or
+     * <code>parallelquery</code>.
+     * </p>
+     * 
+     * @param engineMode
+     *        The DB engine mode of the DB cluster, either <code>provisioned</code>, <code>serverless</code>, or
+     *        <code>parallelquery</code>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withEngineMode(String engineMode) {
+        setEngineMode(engineMode);
+        return this;
+    }
+
+    /**
+     * @param scalingConfigurationInfo
+     */
+
+    public void setScalingConfigurationInfo(ScalingConfigurationInfo scalingConfigurationInfo) {
+        this.scalingConfigurationInfo = scalingConfigurationInfo;
+    }
+
+    /**
+     * @return
+     */
+
+    public ScalingConfigurationInfo getScalingConfigurationInfo() {
+        return this.scalingConfigurationInfo;
+    }
+
+    /**
+     * @param scalingConfigurationInfo
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withScalingConfigurationInfo(ScalingConfigurationInfo scalingConfigurationInfo) {
+        setScalingConfigurationInfo(scalingConfigurationInfo);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates if the DB cluster has deletion protection enabled. The database can't be deleted when this value is set
+     * to true.
+     * </p>
+     * 
+     * @param deletionProtection
+     *        Indicates if the DB cluster has deletion protection enabled. The database can't be deleted when this value
+     *        is set to true.
+     */
+
+    public void setDeletionProtection(Boolean deletionProtection) {
+        this.deletionProtection = deletionProtection;
+    }
+
+    /**
+     * <p>
+     * Indicates if the DB cluster has deletion protection enabled. The database can't be deleted when this value is set
+     * to true.
+     * </p>
+     * 
+     * @return Indicates if the DB cluster has deletion protection enabled. The database can't be deleted when this
+     *         value is set to true.
+     */
+
+    public Boolean getDeletionProtection() {
+        return this.deletionProtection;
+    }
+
+    /**
+     * <p>
+     * Indicates if the DB cluster has deletion protection enabled. The database can't be deleted when this value is set
+     * to true.
+     * </p>
+     * 
+     * @param deletionProtection
+     *        Indicates if the DB cluster has deletion protection enabled. The database can't be deleted when this value
+     *        is set to true.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withDeletionProtection(Boolean deletionProtection) {
+        setDeletionProtection(deletionProtection);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates if the DB cluster has deletion protection enabled. The database can't be deleted when this value is set
+     * to true.
+     * </p>
+     * 
+     * @return Indicates if the DB cluster has deletion protection enabled. The database can't be deleted when this
+     *         value is set to true.
+     */
+
+    public Boolean isDeletionProtection() {
+        return this.deletionProtection;
+    }
+
+    /**
+     * <note>
+     * <p>
+     * HTTP endpoint functionality is in beta for Aurora Serverless and is subject to change.
+     * </p>
+     * </note>
+     * <p>
+     * Value that is <code>true</code> if the HTTP endpoint for an Aurora Serverless DB cluster is enabled and
+     * <code>false</code> otherwise.
+     * </p>
+     * <p>
+     * When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the Aurora
+     * Serverless DB cluster. You can also query your database from inside the RDS console with the query editor.
+     * </p>
+     * <p>
+     * For more information about Aurora Serverless, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon Aurora
+     * Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * </p>
+     * 
+     * @param httpEndpointEnabled
+     *        <p>
+     *        HTTP endpoint functionality is in beta for Aurora Serverless and is subject to change.
+     *        </p>
+     *        </note>
+     *        <p>
+     *        Value that is <code>true</code> if the HTTP endpoint for an Aurora Serverless DB cluster is enabled and
+     *        <code>false</code> otherwise.
+     *        </p>
+     *        <p>
+     *        When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the
+     *        Aurora Serverless DB cluster. You can also query your database from inside the RDS console with the query
+     *        editor.
+     *        </p>
+     *        <p>
+     *        For more information about Aurora Serverless, see <a
+     *        href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon
+     *        Aurora Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     */
+
+    public void setHttpEndpointEnabled(Boolean httpEndpointEnabled) {
+        this.httpEndpointEnabled = httpEndpointEnabled;
+    }
+
+    /**
+     * <note>
+     * <p>
+     * HTTP endpoint functionality is in beta for Aurora Serverless and is subject to change.
+     * </p>
+     * </note>
+     * <p>
+     * Value that is <code>true</code> if the HTTP endpoint for an Aurora Serverless DB cluster is enabled and
+     * <code>false</code> otherwise.
+     * </p>
+     * <p>
+     * When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the Aurora
+     * Serverless DB cluster. You can also query your database from inside the RDS console with the query editor.
+     * </p>
+     * <p>
+     * For more information about Aurora Serverless, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon Aurora
+     * Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * </p>
+     * 
+     * @return <p>
+     *         HTTP endpoint functionality is in beta for Aurora Serverless and is subject to change.
+     *         </p>
+     *         </note>
+     *         <p>
+     *         Value that is <code>true</code> if the HTTP endpoint for an Aurora Serverless DB cluster is enabled and
+     *         <code>false</code> otherwise.
+     *         </p>
+     *         <p>
+     *         When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the
+     *         Aurora Serverless DB cluster. You can also query your database from inside the RDS console with the query
+     *         editor.
+     *         </p>
+     *         <p>
+     *         For more information about Aurora Serverless, see <a
+     *         href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon
+     *         Aurora Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     */
+
+    public Boolean getHttpEndpointEnabled() {
+        return this.httpEndpointEnabled;
+    }
+
+    /**
+     * <note>
+     * <p>
+     * HTTP endpoint functionality is in beta for Aurora Serverless and is subject to change.
+     * </p>
+     * </note>
+     * <p>
+     * Value that is <code>true</code> if the HTTP endpoint for an Aurora Serverless DB cluster is enabled and
+     * <code>false</code> otherwise.
+     * </p>
+     * <p>
+     * When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the Aurora
+     * Serverless DB cluster. You can also query your database from inside the RDS console with the query editor.
+     * </p>
+     * <p>
+     * For more information about Aurora Serverless, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon Aurora
+     * Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * </p>
+     * 
+     * @param httpEndpointEnabled
+     *        <p>
+     *        HTTP endpoint functionality is in beta for Aurora Serverless and is subject to change.
+     *        </p>
+     *        </note>
+     *        <p>
+     *        Value that is <code>true</code> if the HTTP endpoint for an Aurora Serverless DB cluster is enabled and
+     *        <code>false</code> otherwise.
+     *        </p>
+     *        <p>
+     *        When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the
+     *        Aurora Serverless DB cluster. You can also query your database from inside the RDS console with the query
+     *        editor.
+     *        </p>
+     *        <p>
+     *        For more information about Aurora Serverless, see <a
+     *        href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon
+     *        Aurora Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withHttpEndpointEnabled(Boolean httpEndpointEnabled) {
+        setHttpEndpointEnabled(httpEndpointEnabled);
+        return this;
+    }
+
+    /**
+     * <note>
+     * <p>
+     * HTTP endpoint functionality is in beta for Aurora Serverless and is subject to change.
+     * </p>
+     * </note>
+     * <p>
+     * Value that is <code>true</code> if the HTTP endpoint for an Aurora Serverless DB cluster is enabled and
+     * <code>false</code> otherwise.
+     * </p>
+     * <p>
+     * When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the Aurora
+     * Serverless DB cluster. You can also query your database from inside the RDS console with the query editor.
+     * </p>
+     * <p>
+     * For more information about Aurora Serverless, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon Aurora
+     * Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     * </p>
+     * 
+     * @return <p>
+     *         HTTP endpoint functionality is in beta for Aurora Serverless and is subject to change.
+     *         </p>
+     *         </note>
+     *         <p>
+     *         Value that is <code>true</code> if the HTTP endpoint for an Aurora Serverless DB cluster is enabled and
+     *         <code>false</code> otherwise.
+     *         </p>
+     *         <p>
+     *         When enabled, the HTTP endpoint provides a connectionless web service API for running SQL queries on the
+     *         Aurora Serverless DB cluster. You can also query your database from inside the RDS console with the query
+     *         editor.
+     *         </p>
+     *         <p>
+     *         For more information about Aurora Serverless, see <a
+     *         href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html">Using Amazon
+     *         Aurora Serverless</a> in the <i>Amazon Aurora User Guide</i>.
+     */
+
+    public Boolean isHttpEndpointEnabled() {
+        return this.httpEndpointEnabled;
+    }
+
+    /**
+     * <p>
+     * Specifies whether tags are copied from the DB cluster to snapshots of the DB cluster.
+     * </p>
+     * 
+     * @param copyTagsToSnapshot
+     *        Specifies whether tags are copied from the DB cluster to snapshots of the DB cluster.
+     */
+
+    public void setCopyTagsToSnapshot(Boolean copyTagsToSnapshot) {
+        this.copyTagsToSnapshot = copyTagsToSnapshot;
+    }
+
+    /**
+     * <p>
+     * Specifies whether tags are copied from the DB cluster to snapshots of the DB cluster.
+     * </p>
+     * 
+     * @return Specifies whether tags are copied from the DB cluster to snapshots of the DB cluster.
+     */
+
+    public Boolean getCopyTagsToSnapshot() {
+        return this.copyTagsToSnapshot;
+    }
+
+    /**
+     * <p>
+     * Specifies whether tags are copied from the DB cluster to snapshots of the DB cluster.
+     * </p>
+     * 
+     * @param copyTagsToSnapshot
+     *        Specifies whether tags are copied from the DB cluster to snapshots of the DB cluster.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DBCluster withCopyTagsToSnapshot(Boolean copyTagsToSnapshot) {
+        setCopyTagsToSnapshot(copyTagsToSnapshot);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies whether tags are copied from the DB cluster to snapshots of the DB cluster.
+     * </p>
+     * 
+     * @return Specifies whether tags are copied from the DB cluster to snapshots of the DB cluster.
+     */
+
+    public Boolean isCopyTagsToSnapshot() {
+        return this.copyTagsToSnapshot;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -2042,6 +2872,8 @@ public class DBCluster implements Serializable, Cloneable {
             sb.append("Endpoint: ").append(getEndpoint()).append(",");
         if (getReaderEndpoint() != null)
             sb.append("ReaderEndpoint: ").append(getReaderEndpoint()).append(",");
+        if (getCustomEndpoints() != null)
+            sb.append("CustomEndpoints: ").append(getCustomEndpoints()).append(",");
         if (getMultiAZ() != null)
             sb.append("MultiAZ: ").append(getMultiAZ()).append(",");
         if (getEngine() != null)
@@ -2085,7 +2917,27 @@ public class DBCluster implements Serializable, Cloneable {
         if (getCloneGroupId() != null)
             sb.append("CloneGroupId: ").append(getCloneGroupId()).append(",");
         if (getClusterCreateTime() != null)
-            sb.append("ClusterCreateTime: ").append(getClusterCreateTime());
+            sb.append("ClusterCreateTime: ").append(getClusterCreateTime()).append(",");
+        if (getEarliestBacktrackTime() != null)
+            sb.append("EarliestBacktrackTime: ").append(getEarliestBacktrackTime()).append(",");
+        if (getBacktrackWindow() != null)
+            sb.append("BacktrackWindow: ").append(getBacktrackWindow()).append(",");
+        if (getBacktrackConsumedChangeRecords() != null)
+            sb.append("BacktrackConsumedChangeRecords: ").append(getBacktrackConsumedChangeRecords()).append(",");
+        if (getEnabledCloudwatchLogsExports() != null)
+            sb.append("EnabledCloudwatchLogsExports: ").append(getEnabledCloudwatchLogsExports()).append(",");
+        if (getCapacity() != null)
+            sb.append("Capacity: ").append(getCapacity()).append(",");
+        if (getEngineMode() != null)
+            sb.append("EngineMode: ").append(getEngineMode()).append(",");
+        if (getScalingConfigurationInfo() != null)
+            sb.append("ScalingConfigurationInfo: ").append(getScalingConfigurationInfo()).append(",");
+        if (getDeletionProtection() != null)
+            sb.append("DeletionProtection: ").append(getDeletionProtection()).append(",");
+        if (getHttpEndpointEnabled() != null)
+            sb.append("HttpEndpointEnabled: ").append(getHttpEndpointEnabled()).append(",");
+        if (getCopyTagsToSnapshot() != null)
+            sb.append("CopyTagsToSnapshot: ").append(getCopyTagsToSnapshot());
         sb.append("}");
         return sb.toString();
     }
@@ -2151,6 +3003,10 @@ public class DBCluster implements Serializable, Cloneable {
         if (other.getReaderEndpoint() == null ^ this.getReaderEndpoint() == null)
             return false;
         if (other.getReaderEndpoint() != null && other.getReaderEndpoint().equals(this.getReaderEndpoint()) == false)
+            return false;
+        if (other.getCustomEndpoints() == null ^ this.getCustomEndpoints() == null)
+            return false;
+        if (other.getCustomEndpoints() != null && other.getCustomEndpoints().equals(this.getCustomEndpoints()) == false)
             return false;
         if (other.getMultiAZ() == null ^ this.getMultiAZ() == null)
             return false;
@@ -2242,6 +3098,47 @@ public class DBCluster implements Serializable, Cloneable {
             return false;
         if (other.getClusterCreateTime() != null && other.getClusterCreateTime().equals(this.getClusterCreateTime()) == false)
             return false;
+        if (other.getEarliestBacktrackTime() == null ^ this.getEarliestBacktrackTime() == null)
+            return false;
+        if (other.getEarliestBacktrackTime() != null && other.getEarliestBacktrackTime().equals(this.getEarliestBacktrackTime()) == false)
+            return false;
+        if (other.getBacktrackWindow() == null ^ this.getBacktrackWindow() == null)
+            return false;
+        if (other.getBacktrackWindow() != null && other.getBacktrackWindow().equals(this.getBacktrackWindow()) == false)
+            return false;
+        if (other.getBacktrackConsumedChangeRecords() == null ^ this.getBacktrackConsumedChangeRecords() == null)
+            return false;
+        if (other.getBacktrackConsumedChangeRecords() != null
+                && other.getBacktrackConsumedChangeRecords().equals(this.getBacktrackConsumedChangeRecords()) == false)
+            return false;
+        if (other.getEnabledCloudwatchLogsExports() == null ^ this.getEnabledCloudwatchLogsExports() == null)
+            return false;
+        if (other.getEnabledCloudwatchLogsExports() != null && other.getEnabledCloudwatchLogsExports().equals(this.getEnabledCloudwatchLogsExports()) == false)
+            return false;
+        if (other.getCapacity() == null ^ this.getCapacity() == null)
+            return false;
+        if (other.getCapacity() != null && other.getCapacity().equals(this.getCapacity()) == false)
+            return false;
+        if (other.getEngineMode() == null ^ this.getEngineMode() == null)
+            return false;
+        if (other.getEngineMode() != null && other.getEngineMode().equals(this.getEngineMode()) == false)
+            return false;
+        if (other.getScalingConfigurationInfo() == null ^ this.getScalingConfigurationInfo() == null)
+            return false;
+        if (other.getScalingConfigurationInfo() != null && other.getScalingConfigurationInfo().equals(this.getScalingConfigurationInfo()) == false)
+            return false;
+        if (other.getDeletionProtection() == null ^ this.getDeletionProtection() == null)
+            return false;
+        if (other.getDeletionProtection() != null && other.getDeletionProtection().equals(this.getDeletionProtection()) == false)
+            return false;
+        if (other.getHttpEndpointEnabled() == null ^ this.getHttpEndpointEnabled() == null)
+            return false;
+        if (other.getHttpEndpointEnabled() != null && other.getHttpEndpointEnabled().equals(this.getHttpEndpointEnabled()) == false)
+            return false;
+        if (other.getCopyTagsToSnapshot() == null ^ this.getCopyTagsToSnapshot() == null)
+            return false;
+        if (other.getCopyTagsToSnapshot() != null && other.getCopyTagsToSnapshot().equals(this.getCopyTagsToSnapshot()) == false)
+            return false;
         return true;
     }
 
@@ -2263,6 +3160,7 @@ public class DBCluster implements Serializable, Cloneable {
         hashCode = prime * hashCode + ((getEarliestRestorableTime() == null) ? 0 : getEarliestRestorableTime().hashCode());
         hashCode = prime * hashCode + ((getEndpoint() == null) ? 0 : getEndpoint().hashCode());
         hashCode = prime * hashCode + ((getReaderEndpoint() == null) ? 0 : getReaderEndpoint().hashCode());
+        hashCode = prime * hashCode + ((getCustomEndpoints() == null) ? 0 : getCustomEndpoints().hashCode());
         hashCode = prime * hashCode + ((getMultiAZ() == null) ? 0 : getMultiAZ().hashCode());
         hashCode = prime * hashCode + ((getEngine() == null) ? 0 : getEngine().hashCode());
         hashCode = prime * hashCode + ((getEngineVersion() == null) ? 0 : getEngineVersion().hashCode());
@@ -2285,6 +3183,16 @@ public class DBCluster implements Serializable, Cloneable {
         hashCode = prime * hashCode + ((getIAMDatabaseAuthenticationEnabled() == null) ? 0 : getIAMDatabaseAuthenticationEnabled().hashCode());
         hashCode = prime * hashCode + ((getCloneGroupId() == null) ? 0 : getCloneGroupId().hashCode());
         hashCode = prime * hashCode + ((getClusterCreateTime() == null) ? 0 : getClusterCreateTime().hashCode());
+        hashCode = prime * hashCode + ((getEarliestBacktrackTime() == null) ? 0 : getEarliestBacktrackTime().hashCode());
+        hashCode = prime * hashCode + ((getBacktrackWindow() == null) ? 0 : getBacktrackWindow().hashCode());
+        hashCode = prime * hashCode + ((getBacktrackConsumedChangeRecords() == null) ? 0 : getBacktrackConsumedChangeRecords().hashCode());
+        hashCode = prime * hashCode + ((getEnabledCloudwatchLogsExports() == null) ? 0 : getEnabledCloudwatchLogsExports().hashCode());
+        hashCode = prime * hashCode + ((getCapacity() == null) ? 0 : getCapacity().hashCode());
+        hashCode = prime * hashCode + ((getEngineMode() == null) ? 0 : getEngineMode().hashCode());
+        hashCode = prime * hashCode + ((getScalingConfigurationInfo() == null) ? 0 : getScalingConfigurationInfo().hashCode());
+        hashCode = prime * hashCode + ((getDeletionProtection() == null) ? 0 : getDeletionProtection().hashCode());
+        hashCode = prime * hashCode + ((getHttpEndpointEnabled() == null) ? 0 : getHttpEndpointEnabled().hashCode());
+        hashCode = prime * hashCode + ((getCopyTagsToSnapshot() == null) ? 0 : getCopyTagsToSnapshot().hashCode());
         return hashCode;
     }
 

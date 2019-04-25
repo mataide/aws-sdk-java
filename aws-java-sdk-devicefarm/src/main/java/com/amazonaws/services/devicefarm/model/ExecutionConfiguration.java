@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -46,6 +46,23 @@ public class ExecutionConfiguration implements Serializable, Cloneable, Structur
      * </p>
      */
     private Boolean appPackagesCleanup;
+    /**
+     * <p>
+     * Set to true to enable video capture; otherwise, set to false. The default is true.
+     * </p>
+     */
+    private Boolean videoCapture;
+    /**
+     * <p>
+     * When set to <code>true</code>, for private devices, Device Farm will not sign your app again. For public devices,
+     * Device Farm always signs your apps again and this parameter has no effect.
+     * </p>
+     * <p>
+     * For more information about how Device Farm re-signs your app(s), see <a
+     * href="https://aws.amazon.com/device-farm/faq/">Do you modify my app?</a> in the <i>AWS Device Farm FAQs</i>.
+     * </p>
+     */
+    private Boolean skipAppResign;
 
     /**
      * <p>
@@ -192,7 +209,152 @@ public class ExecutionConfiguration implements Serializable, Cloneable, Structur
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * Set to true to enable video capture; otherwise, set to false. The default is true.
+     * </p>
+     * 
+     * @param videoCapture
+     *        Set to true to enable video capture; otherwise, set to false. The default is true.
+     */
+
+    public void setVideoCapture(Boolean videoCapture) {
+        this.videoCapture = videoCapture;
+    }
+
+    /**
+     * <p>
+     * Set to true to enable video capture; otherwise, set to false. The default is true.
+     * </p>
+     * 
+     * @return Set to true to enable video capture; otherwise, set to false. The default is true.
+     */
+
+    public Boolean getVideoCapture() {
+        return this.videoCapture;
+    }
+
+    /**
+     * <p>
+     * Set to true to enable video capture; otherwise, set to false. The default is true.
+     * </p>
+     * 
+     * @param videoCapture
+     *        Set to true to enable video capture; otherwise, set to false. The default is true.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public ExecutionConfiguration withVideoCapture(Boolean videoCapture) {
+        setVideoCapture(videoCapture);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Set to true to enable video capture; otherwise, set to false. The default is true.
+     * </p>
+     * 
+     * @return Set to true to enable video capture; otherwise, set to false. The default is true.
+     */
+
+    public Boolean isVideoCapture() {
+        return this.videoCapture;
+    }
+
+    /**
+     * <p>
+     * When set to <code>true</code>, for private devices, Device Farm will not sign your app again. For public devices,
+     * Device Farm always signs your apps again and this parameter has no effect.
+     * </p>
+     * <p>
+     * For more information about how Device Farm re-signs your app(s), see <a
+     * href="https://aws.amazon.com/device-farm/faq/">Do you modify my app?</a> in the <i>AWS Device Farm FAQs</i>.
+     * </p>
+     * 
+     * @param skipAppResign
+     *        When set to <code>true</code>, for private devices, Device Farm will not sign your app again. For public
+     *        devices, Device Farm always signs your apps again and this parameter has no effect.</p>
+     *        <p>
+     *        For more information about how Device Farm re-signs your app(s), see <a
+     *        href="https://aws.amazon.com/device-farm/faq/">Do you modify my app?</a> in the <i>AWS Device Farm
+     *        FAQs</i>.
+     */
+
+    public void setSkipAppResign(Boolean skipAppResign) {
+        this.skipAppResign = skipAppResign;
+    }
+
+    /**
+     * <p>
+     * When set to <code>true</code>, for private devices, Device Farm will not sign your app again. For public devices,
+     * Device Farm always signs your apps again and this parameter has no effect.
+     * </p>
+     * <p>
+     * For more information about how Device Farm re-signs your app(s), see <a
+     * href="https://aws.amazon.com/device-farm/faq/">Do you modify my app?</a> in the <i>AWS Device Farm FAQs</i>.
+     * </p>
+     * 
+     * @return When set to <code>true</code>, for private devices, Device Farm will not sign your app again. For public
+     *         devices, Device Farm always signs your apps again and this parameter has no effect.</p>
+     *         <p>
+     *         For more information about how Device Farm re-signs your app(s), see <a
+     *         href="https://aws.amazon.com/device-farm/faq/">Do you modify my app?</a> in the <i>AWS Device Farm
+     *         FAQs</i>.
+     */
+
+    public Boolean getSkipAppResign() {
+        return this.skipAppResign;
+    }
+
+    /**
+     * <p>
+     * When set to <code>true</code>, for private devices, Device Farm will not sign your app again. For public devices,
+     * Device Farm always signs your apps again and this parameter has no effect.
+     * </p>
+     * <p>
+     * For more information about how Device Farm re-signs your app(s), see <a
+     * href="https://aws.amazon.com/device-farm/faq/">Do you modify my app?</a> in the <i>AWS Device Farm FAQs</i>.
+     * </p>
+     * 
+     * @param skipAppResign
+     *        When set to <code>true</code>, for private devices, Device Farm will not sign your app again. For public
+     *        devices, Device Farm always signs your apps again and this parameter has no effect.</p>
+     *        <p>
+     *        For more information about how Device Farm re-signs your app(s), see <a
+     *        href="https://aws.amazon.com/device-farm/faq/">Do you modify my app?</a> in the <i>AWS Device Farm
+     *        FAQs</i>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public ExecutionConfiguration withSkipAppResign(Boolean skipAppResign) {
+        setSkipAppResign(skipAppResign);
+        return this;
+    }
+
+    /**
+     * <p>
+     * When set to <code>true</code>, for private devices, Device Farm will not sign your app again. For public devices,
+     * Device Farm always signs your apps again and this parameter has no effect.
+     * </p>
+     * <p>
+     * For more information about how Device Farm re-signs your app(s), see <a
+     * href="https://aws.amazon.com/device-farm/faq/">Do you modify my app?</a> in the <i>AWS Device Farm FAQs</i>.
+     * </p>
+     * 
+     * @return When set to <code>true</code>, for private devices, Device Farm will not sign your app again. For public
+     *         devices, Device Farm always signs your apps again and this parameter has no effect.</p>
+     *         <p>
+     *         For more information about how Device Farm re-signs your app(s), see <a
+     *         href="https://aws.amazon.com/device-farm/faq/">Do you modify my app?</a> in the <i>AWS Device Farm
+     *         FAQs</i>.
+     */
+
+    public Boolean isSkipAppResign() {
+        return this.skipAppResign;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -207,7 +369,11 @@ public class ExecutionConfiguration implements Serializable, Cloneable, Structur
         if (getAccountsCleanup() != null)
             sb.append("AccountsCleanup: ").append(getAccountsCleanup()).append(",");
         if (getAppPackagesCleanup() != null)
-            sb.append("AppPackagesCleanup: ").append(getAppPackagesCleanup());
+            sb.append("AppPackagesCleanup: ").append(getAppPackagesCleanup()).append(",");
+        if (getVideoCapture() != null)
+            sb.append("VideoCapture: ").append(getVideoCapture()).append(",");
+        if (getSkipAppResign() != null)
+            sb.append("SkipAppResign: ").append(getSkipAppResign());
         sb.append("}");
         return sb.toString();
     }
@@ -234,6 +400,14 @@ public class ExecutionConfiguration implements Serializable, Cloneable, Structur
             return false;
         if (other.getAppPackagesCleanup() != null && other.getAppPackagesCleanup().equals(this.getAppPackagesCleanup()) == false)
             return false;
+        if (other.getVideoCapture() == null ^ this.getVideoCapture() == null)
+            return false;
+        if (other.getVideoCapture() != null && other.getVideoCapture().equals(this.getVideoCapture()) == false)
+            return false;
+        if (other.getSkipAppResign() == null ^ this.getSkipAppResign() == null)
+            return false;
+        if (other.getSkipAppResign() != null && other.getSkipAppResign().equals(this.getSkipAppResign()) == false)
+            return false;
         return true;
     }
 
@@ -245,6 +419,8 @@ public class ExecutionConfiguration implements Serializable, Cloneable, Structur
         hashCode = prime * hashCode + ((getJobTimeoutMinutes() == null) ? 0 : getJobTimeoutMinutes().hashCode());
         hashCode = prime * hashCode + ((getAccountsCleanup() == null) ? 0 : getAccountsCleanup().hashCode());
         hashCode = prime * hashCode + ((getAppPackagesCleanup() == null) ? 0 : getAppPackagesCleanup().hashCode());
+        hashCode = prime * hashCode + ((getVideoCapture() == null) ? 0 : getVideoCapture().hashCode());
+        hashCode = prime * hashCode + ((getSkipAppResign() == null) ? 0 : getSkipAppResign().hashCode());
         return hashCode;
     }
 

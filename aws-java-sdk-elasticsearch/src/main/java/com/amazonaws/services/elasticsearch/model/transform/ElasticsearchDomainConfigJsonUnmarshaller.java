@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -72,9 +72,18 @@ public class ElasticsearchDomainConfigJsonUnmarshaller implements Unmarshaller<E
                     context.nextToken();
                     elasticsearchDomainConfig.setVPCOptions(VPCDerivedInfoStatusJsonUnmarshaller.getInstance().unmarshall(context));
                 }
+                if (context.testExpression("CognitoOptions", targetDepth)) {
+                    context.nextToken();
+                    elasticsearchDomainConfig.setCognitoOptions(CognitoOptionsStatusJsonUnmarshaller.getInstance().unmarshall(context));
+                }
                 if (context.testExpression("EncryptionAtRestOptions", targetDepth)) {
                     context.nextToken();
                     elasticsearchDomainConfig.setEncryptionAtRestOptions(EncryptionAtRestOptionsStatusJsonUnmarshaller.getInstance().unmarshall(context));
+                }
+                if (context.testExpression("NodeToNodeEncryptionOptions", targetDepth)) {
+                    context.nextToken();
+                    elasticsearchDomainConfig.setNodeToNodeEncryptionOptions(NodeToNodeEncryptionOptionsStatusJsonUnmarshaller.getInstance()
+                            .unmarshall(context));
                 }
                 if (context.testExpression("AdvancedOptions", targetDepth)) {
                     context.nextToken();

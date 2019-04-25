@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -167,7 +167,7 @@ public class DescribeJobResult extends com.amazonaws.AmazonWebServiceResult<com.
     private String retrievalByteRange;
     /**
      * <p>
-     * The retrieval option to use for the archive retrieval. Valid values are <code>Expedited</code>,
+     * The tier to use for a select or an archive retrieval. Valid values are <code>Expedited</code>,
      * <code>Standard</code>, or <code>Bulk</code>. <code>Standard</code> is the default.
      * </p>
      */
@@ -186,7 +186,7 @@ public class DescribeJobResult extends com.amazonaws.AmazonWebServiceResult<com.
     private String jobOutputPath;
     /**
      * <p>
-     * Contains the parameters that define a select job.
+     * Contains the parameters used for a select.
      * </p>
      */
     private SelectParameters selectParameters;
@@ -1201,12 +1201,12 @@ public class DescribeJobResult extends com.amazonaws.AmazonWebServiceResult<com.
 
     /**
      * <p>
-     * The retrieval option to use for the archive retrieval. Valid values are <code>Expedited</code>,
+     * The tier to use for a select or an archive retrieval. Valid values are <code>Expedited</code>,
      * <code>Standard</code>, or <code>Bulk</code>. <code>Standard</code> is the default.
      * </p>
      * 
      * @param tier
-     *        The retrieval option to use for the archive retrieval. Valid values are <code>Expedited</code>,
+     *        The tier to use for a select or an archive retrieval. Valid values are <code>Expedited</code>,
      *        <code>Standard</code>, or <code>Bulk</code>. <code>Standard</code> is the default.
      */
 
@@ -1216,11 +1216,11 @@ public class DescribeJobResult extends com.amazonaws.AmazonWebServiceResult<com.
 
     /**
      * <p>
-     * The retrieval option to use for the archive retrieval. Valid values are <code>Expedited</code>,
+     * The tier to use for a select or an archive retrieval. Valid values are <code>Expedited</code>,
      * <code>Standard</code>, or <code>Bulk</code>. <code>Standard</code> is the default.
      * </p>
      * 
-     * @return The retrieval option to use for the archive retrieval. Valid values are <code>Expedited</code>,
+     * @return The tier to use for a select or an archive retrieval. Valid values are <code>Expedited</code>,
      *         <code>Standard</code>, or <code>Bulk</code>. <code>Standard</code> is the default.
      */
 
@@ -1230,12 +1230,12 @@ public class DescribeJobResult extends com.amazonaws.AmazonWebServiceResult<com.
 
     /**
      * <p>
-     * The retrieval option to use for the archive retrieval. Valid values are <code>Expedited</code>,
+     * The tier to use for a select or an archive retrieval. Valid values are <code>Expedited</code>,
      * <code>Standard</code>, or <code>Bulk</code>. <code>Standard</code> is the default.
      * </p>
      * 
      * @param tier
-     *        The retrieval option to use for the archive retrieval. Valid values are <code>Expedited</code>,
+     *        The tier to use for a select or an archive retrieval. Valid values are <code>Expedited</code>,
      *        <code>Standard</code>, or <code>Bulk</code>. <code>Standard</code> is the default.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
@@ -1327,11 +1327,11 @@ public class DescribeJobResult extends com.amazonaws.AmazonWebServiceResult<com.
 
     /**
      * <p>
-     * Contains the parameters that define a select job.
+     * Contains the parameters used for a select.
      * </p>
      * 
      * @param selectParameters
-     *        Contains the parameters that define a select job.
+     *        Contains the parameters used for a select.
      */
 
     public void setSelectParameters(SelectParameters selectParameters) {
@@ -1340,10 +1340,10 @@ public class DescribeJobResult extends com.amazonaws.AmazonWebServiceResult<com.
 
     /**
      * <p>
-     * Contains the parameters that define a select job.
+     * Contains the parameters used for a select.
      * </p>
      * 
-     * @return Contains the parameters that define a select job.
+     * @return Contains the parameters used for a select.
      */
 
     public SelectParameters getSelectParameters() {
@@ -1352,11 +1352,11 @@ public class DescribeJobResult extends com.amazonaws.AmazonWebServiceResult<com.
 
     /**
      * <p>
-     * Contains the parameters that define a select job.
+     * Contains the parameters used for a select.
      * </p>
      * 
      * @param selectParameters
-     *        Contains the parameters that define a select job.
+     *        Contains the parameters used for a select.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1406,7 +1406,8 @@ public class DescribeJobResult extends com.amazonaws.AmazonWebServiceResult<com.
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

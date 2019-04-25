@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -105,9 +105,21 @@ public class JobDetailJsonUnmarshaller implements Unmarshaller<JobDetail, JsonUn
                     context.nextToken();
                     jobDetail.setContainer(ContainerDetailJsonUnmarshaller.getInstance().unmarshall(context));
                 }
+                if (context.testExpression("nodeDetails", targetDepth)) {
+                    context.nextToken();
+                    jobDetail.setNodeDetails(NodeDetailsJsonUnmarshaller.getInstance().unmarshall(context));
+                }
+                if (context.testExpression("nodeProperties", targetDepth)) {
+                    context.nextToken();
+                    jobDetail.setNodeProperties(NodePropertiesJsonUnmarshaller.getInstance().unmarshall(context));
+                }
                 if (context.testExpression("arrayProperties", targetDepth)) {
                     context.nextToken();
                     jobDetail.setArrayProperties(ArrayPropertiesDetailJsonUnmarshaller.getInstance().unmarshall(context));
+                }
+                if (context.testExpression("timeout", targetDepth)) {
+                    context.nextToken();
+                    jobDetail.setTimeout(JobTimeoutJsonUnmarshaller.getInstance().unmarshall(context));
                 }
             } else if (token == END_ARRAY || token == END_OBJECT) {
                 if (context.getLastParsedParentElement() == null || context.getLastParsedParentElement().equals(currentParentElement)) {

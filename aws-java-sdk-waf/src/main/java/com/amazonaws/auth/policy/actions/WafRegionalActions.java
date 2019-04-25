@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -57,6 +57,10 @@ public enum WafRegionalActions implements Action {
     DeleteGeoMatchSet("waf-regional:DeleteGeoMatchSet"),
     /** Action for the DeleteIPSet operation. */
     DeleteIPSet("waf-regional:DeleteIPSet"),
+    /** Action for the DeleteLoggingConfiguration operation. */
+    DeleteLoggingConfiguration("waf-regional:DeleteLoggingConfiguration"),
+    /** Action for the DeletePermissionPolicy operation. */
+    DeletePermissionPolicy("waf-regional:DeletePermissionPolicy"),
     /** Action for the DeleteRateBasedRule operation. */
     DeleteRateBasedRule("waf-regional:DeleteRateBasedRule"),
     /** Action for the DeleteRegexMatchSet operation. */
@@ -87,6 +91,10 @@ public enum WafRegionalActions implements Action {
     GetGeoMatchSet("waf-regional:GetGeoMatchSet"),
     /** Action for the GetIPSet operation. */
     GetIPSet("waf-regional:GetIPSet"),
+    /** Action for the GetLoggingConfiguration operation. */
+    GetLoggingConfiguration("waf-regional:GetLoggingConfiguration"),
+    /** Action for the GetPermissionPolicy operation. */
+    GetPermissionPolicy("waf-regional:GetPermissionPolicy"),
     /** Action for the GetRateBasedRule operation. */
     GetRateBasedRule("waf-regional:GetRateBasedRule"),
     /** Action for the GetRateBasedRuleManagedKeys operation. */
@@ -119,6 +127,8 @@ public enum WafRegionalActions implements Action {
     ListGeoMatchSets("waf-regional:ListGeoMatchSets"),
     /** Action for the ListIPSets operation. */
     ListIPSets("waf-regional:ListIPSets"),
+    /** Action for the ListLoggingConfigurations operation. */
+    ListLoggingConfigurations("waf-regional:ListLoggingConfigurations"),
     /** Action for the ListRateBasedRules operation. */
     ListRateBasedRules("waf-regional:ListRateBasedRules"),
     /** Action for the ListRegexMatchSets operation. */
@@ -141,6 +151,10 @@ public enum WafRegionalActions implements Action {
     ListWebACLs("waf-regional:ListWebACLs"),
     /** Action for the ListXssMatchSets operation. */
     ListXssMatchSets("waf-regional:ListXssMatchSets"),
+    /** Action for the PutLoggingConfiguration operation. */
+    PutLoggingConfiguration("waf-regional:PutLoggingConfiguration"),
+    /** Action for the PutPermissionPolicy operation. */
+    PutPermissionPolicy("waf-regional:PutPermissionPolicy"),
     /** Action for the UpdateByteMatchSet operation. */
     UpdateByteMatchSet("waf-regional:UpdateByteMatchSet"),
     /** Action for the UpdateGeoMatchSet operation. */

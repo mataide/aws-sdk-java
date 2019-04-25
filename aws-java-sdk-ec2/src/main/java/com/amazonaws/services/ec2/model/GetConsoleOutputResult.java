@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,9 +18,7 @@ import javax.annotation.Generated;
 import com.amazonaws.AmazonWebServiceResult;
 
 /**
- * <p>
- * Contains the output of GetConsoleOutput.
- * </p>
+ * 
  */
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class GetConsoleOutputResult extends com.amazonaws.AmazonWebServiceResult<com.amazonaws.ResponseMetadata> implements Serializable, Cloneable {
@@ -33,13 +31,13 @@ public class GetConsoleOutputResult extends com.amazonaws.AmazonWebServiceResult
     private String instanceId;
     /**
      * <p>
-     * The console output, Base64-encoded. If using a command line tool, the tool decodes the output for you.
+     * The console output, base64-encoded. If you are using a command line tool, the tool decodes the output for you.
      * </p>
      */
     private String output;
     /**
      * <p>
-     * The time the output was last updated.
+     * The time at which the output was last updated.
      * </p>
      */
     private java.util.Date timestamp;
@@ -86,11 +84,12 @@ public class GetConsoleOutputResult extends com.amazonaws.AmazonWebServiceResult
 
     /**
      * <p>
-     * The console output, Base64-encoded. If using a command line tool, the tool decodes the output for you.
+     * The console output, base64-encoded. If you are using a command line tool, the tool decodes the output for you.
      * </p>
      * 
      * @param output
-     *        The console output, Base64-encoded. If using a command line tool, the tool decodes the output for you.
+     *        The console output, base64-encoded. If you are using a command line tool, the tool decodes the output for
+     *        you.
      */
 
     public void setOutput(String output) {
@@ -99,10 +98,11 @@ public class GetConsoleOutputResult extends com.amazonaws.AmazonWebServiceResult
 
     /**
      * <p>
-     * The console output, Base64-encoded. If using a command line tool, the tool decodes the output for you.
+     * The console output, base64-encoded. If you are using a command line tool, the tool decodes the output for you.
      * </p>
      * 
-     * @return The console output, Base64-encoded. If using a command line tool, the tool decodes the output for you.
+     * @return The console output, base64-encoded. If you are using a command line tool, the tool decodes the output for
+     *         you.
      */
 
     public String getOutput() {
@@ -111,11 +111,12 @@ public class GetConsoleOutputResult extends com.amazonaws.AmazonWebServiceResult
 
     /**
      * <p>
-     * The console output, Base64-encoded. If using a command line tool, the tool decodes the output for you.
+     * The console output, base64-encoded. If you are using a command line tool, the tool decodes the output for you.
      * </p>
      * 
      * @param output
-     *        The console output, Base64-encoded. If using a command line tool, the tool decodes the output for you.
+     *        The console output, base64-encoded. If you are using a command line tool, the tool decodes the output for
+     *        you.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -126,11 +127,11 @@ public class GetConsoleOutputResult extends com.amazonaws.AmazonWebServiceResult
 
     /**
      * <p>
-     * The time the output was last updated.
+     * The time at which the output was last updated.
      * </p>
      * 
      * @param timestamp
-     *        The time the output was last updated.
+     *        The time at which the output was last updated.
      */
 
     public void setTimestamp(java.util.Date timestamp) {
@@ -139,10 +140,10 @@ public class GetConsoleOutputResult extends com.amazonaws.AmazonWebServiceResult
 
     /**
      * <p>
-     * The time the output was last updated.
+     * The time at which the output was last updated.
      * </p>
      * 
-     * @return The time the output was last updated.
+     * @return The time at which the output was last updated.
      */
 
     public java.util.Date getTimestamp() {
@@ -151,11 +152,11 @@ public class GetConsoleOutputResult extends com.amazonaws.AmazonWebServiceResult
 
     /**
      * <p>
-     * The time the output was last updated.
+     * The time at which the output was last updated.
      * </p>
      * 
      * @param timestamp
-     *        The time the output was last updated.
+     *        The time at which the output was last updated.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -175,7 +176,8 @@ public class GetConsoleOutputResult extends com.amazonaws.AmazonWebServiceResult
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

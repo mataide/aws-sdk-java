@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -98,6 +98,27 @@ public class StackSetOperation implements Serializable, Cloneable {
      * </p>
      */
     private Boolean retainStacks;
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the IAM role used to perform this stack set operation.
+     * </p>
+     * <p>
+     * Use customized administrator roles to control which users or groups can manage specific stack sets within the
+     * same administrator account. For more information, see <a
+     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Define Permissions
+     * for Multiple Administrators</a> in the <i>AWS CloudFormation User Guide</i>.
+     * </p>
+     */
+    private String administrationRoleARN;
+    /**
+     * <p>
+     * The name of the IAM execution role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized execution roles to control which stack resources users and groups can include in their stack sets.
+     * </p>
+     */
+    private String executionRoleName;
     /**
      * <p>
      * The time at which the operation was initiated. Note that the creation times for the stack set operation might
@@ -792,6 +813,137 @@ public class StackSetOperation implements Serializable, Cloneable {
 
     /**
      * <p>
+     * The Amazon Resource Number (ARN) of the IAM role used to perform this stack set operation.
+     * </p>
+     * <p>
+     * Use customized administrator roles to control which users or groups can manage specific stack sets within the
+     * same administrator account. For more information, see <a
+     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Define Permissions
+     * for Multiple Administrators</a> in the <i>AWS CloudFormation User Guide</i>.
+     * </p>
+     * 
+     * @param administrationRoleARN
+     *        The Amazon Resource Number (ARN) of the IAM role used to perform this stack set operation. </p>
+     *        <p>
+     *        Use customized administrator roles to control which users or groups can manage specific stack sets within
+     *        the same administrator account. For more information, see <a
+     *        href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Define
+     *        Permissions for Multiple Administrators</a> in the <i>AWS CloudFormation User Guide</i>.
+     */
+
+    public void setAdministrationRoleARN(String administrationRoleARN) {
+        this.administrationRoleARN = administrationRoleARN;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the IAM role used to perform this stack set operation.
+     * </p>
+     * <p>
+     * Use customized administrator roles to control which users or groups can manage specific stack sets within the
+     * same administrator account. For more information, see <a
+     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Define Permissions
+     * for Multiple Administrators</a> in the <i>AWS CloudFormation User Guide</i>.
+     * </p>
+     * 
+     * @return The Amazon Resource Number (ARN) of the IAM role used to perform this stack set operation. </p>
+     *         <p>
+     *         Use customized administrator roles to control which users or groups can manage specific stack sets within
+     *         the same administrator account. For more information, see <a
+     *         href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Define
+     *         Permissions for Multiple Administrators</a> in the <i>AWS CloudFormation User Guide</i>.
+     */
+
+    public String getAdministrationRoleARN() {
+        return this.administrationRoleARN;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the IAM role used to perform this stack set operation.
+     * </p>
+     * <p>
+     * Use customized administrator roles to control which users or groups can manage specific stack sets within the
+     * same administrator account. For more information, see <a
+     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Define Permissions
+     * for Multiple Administrators</a> in the <i>AWS CloudFormation User Guide</i>.
+     * </p>
+     * 
+     * @param administrationRoleARN
+     *        The Amazon Resource Number (ARN) of the IAM role used to perform this stack set operation. </p>
+     *        <p>
+     *        Use customized administrator roles to control which users or groups can manage specific stack sets within
+     *        the same administrator account. For more information, see <a
+     *        href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Define
+     *        Permissions for Multiple Administrators</a> in the <i>AWS CloudFormation User Guide</i>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public StackSetOperation withAdministrationRoleARN(String administrationRoleARN) {
+        setAdministrationRoleARN(administrationRoleARN);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The name of the IAM execution role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized execution roles to control which stack resources users and groups can include in their stack sets.
+     * </p>
+     * 
+     * @param executionRoleName
+     *        The name of the IAM execution role used to create or update the stack set.</p>
+     *        <p>
+     *        Use customized execution roles to control which stack resources users and groups can include in their
+     *        stack sets.
+     */
+
+    public void setExecutionRoleName(String executionRoleName) {
+        this.executionRoleName = executionRoleName;
+    }
+
+    /**
+     * <p>
+     * The name of the IAM execution role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized execution roles to control which stack resources users and groups can include in their stack sets.
+     * </p>
+     * 
+     * @return The name of the IAM execution role used to create or update the stack set.</p>
+     *         <p>
+     *         Use customized execution roles to control which stack resources users and groups can include in their
+     *         stack sets.
+     */
+
+    public String getExecutionRoleName() {
+        return this.executionRoleName;
+    }
+
+    /**
+     * <p>
+     * The name of the IAM execution role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized execution roles to control which stack resources users and groups can include in their stack sets.
+     * </p>
+     * 
+     * @param executionRoleName
+     *        The name of the IAM execution role used to create or update the stack set.</p>
+     *        <p>
+     *        Use customized execution roles to control which stack resources users and groups can include in their
+     *        stack sets.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public StackSetOperation withExecutionRoleName(String executionRoleName) {
+        setExecutionRoleName(executionRoleName);
+        return this;
+    }
+
+    /**
+     * <p>
      * The time at which the operation was initiated. Note that the creation times for the stack set operation might
      * differ from the creation time of the individual stacks themselves. This is because AWS CloudFormation needs to
      * perform preparatory work for the operation, such as dispatching the work to the requested regions, before
@@ -901,7 +1053,8 @@ public class StackSetOperation implements Serializable, Cloneable {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -923,6 +1076,10 @@ public class StackSetOperation implements Serializable, Cloneable {
             sb.append("OperationPreferences: ").append(getOperationPreferences()).append(",");
         if (getRetainStacks() != null)
             sb.append("RetainStacks: ").append(getRetainStacks()).append(",");
+        if (getAdministrationRoleARN() != null)
+            sb.append("AdministrationRoleARN: ").append(getAdministrationRoleARN()).append(",");
+        if (getExecutionRoleName() != null)
+            sb.append("ExecutionRoleName: ").append(getExecutionRoleName()).append(",");
         if (getCreationTimestamp() != null)
             sb.append("CreationTimestamp: ").append(getCreationTimestamp()).append(",");
         if (getEndTimestamp() != null)
@@ -965,6 +1122,14 @@ public class StackSetOperation implements Serializable, Cloneable {
             return false;
         if (other.getRetainStacks() != null && other.getRetainStacks().equals(this.getRetainStacks()) == false)
             return false;
+        if (other.getAdministrationRoleARN() == null ^ this.getAdministrationRoleARN() == null)
+            return false;
+        if (other.getAdministrationRoleARN() != null && other.getAdministrationRoleARN().equals(this.getAdministrationRoleARN()) == false)
+            return false;
+        if (other.getExecutionRoleName() == null ^ this.getExecutionRoleName() == null)
+            return false;
+        if (other.getExecutionRoleName() != null && other.getExecutionRoleName().equals(this.getExecutionRoleName()) == false)
+            return false;
         if (other.getCreationTimestamp() == null ^ this.getCreationTimestamp() == null)
             return false;
         if (other.getCreationTimestamp() != null && other.getCreationTimestamp().equals(this.getCreationTimestamp()) == false)
@@ -987,6 +1152,8 @@ public class StackSetOperation implements Serializable, Cloneable {
         hashCode = prime * hashCode + ((getStatus() == null) ? 0 : getStatus().hashCode());
         hashCode = prime * hashCode + ((getOperationPreferences() == null) ? 0 : getOperationPreferences().hashCode());
         hashCode = prime * hashCode + ((getRetainStacks() == null) ? 0 : getRetainStacks().hashCode());
+        hashCode = prime * hashCode + ((getAdministrationRoleARN() == null) ? 0 : getAdministrationRoleARN().hashCode());
+        hashCode = prime * hashCode + ((getExecutionRoleName() == null) ? 0 : getExecutionRoleName().hashCode());
         hashCode = prime * hashCode + ((getCreationTimestamp() == null) ? 0 : getCreationTimestamp().hashCode());
         hashCode = prime * hashCode + ((getEndTimestamp() == null) ? 0 : getEndTimestamp().hashCode());
         return hashCode;

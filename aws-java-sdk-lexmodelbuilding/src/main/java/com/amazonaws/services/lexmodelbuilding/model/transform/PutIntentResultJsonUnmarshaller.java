@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -94,11 +94,11 @@ public class PutIntentResultJsonUnmarshaller implements Unmarshaller<PutIntentRe
                 }
                 if (context.testExpression("lastUpdatedDate", targetDepth)) {
                     context.nextToken();
-                    putIntentResult.setLastUpdatedDate(context.getUnmarshaller(java.util.Date.class).unmarshall(context));
+                    putIntentResult.setLastUpdatedDate(DateJsonUnmarshallerFactory.getInstance("unixTimestamp").unmarshall(context));
                 }
                 if (context.testExpression("createdDate", targetDepth)) {
                     context.nextToken();
-                    putIntentResult.setCreatedDate(context.getUnmarshaller(java.util.Date.class).unmarshall(context));
+                    putIntentResult.setCreatedDate(DateJsonUnmarshallerFactory.getInstance("unixTimestamp").unmarshall(context));
                 }
                 if (context.testExpression("version", targetDepth)) {
                     context.nextToken();
@@ -107,6 +107,10 @@ public class PutIntentResultJsonUnmarshaller implements Unmarshaller<PutIntentRe
                 if (context.testExpression("checksum", targetDepth)) {
                     context.nextToken();
                     putIntentResult.setChecksum(context.getUnmarshaller(String.class).unmarshall(context));
+                }
+                if (context.testExpression("createVersion", targetDepth)) {
+                    context.nextToken();
+                    putIntentResult.setCreateVersion(context.getUnmarshaller(Boolean.class).unmarshall(context));
                 }
             } else if (token == END_ARRAY || token == END_OBJECT) {
                 if (context.getLastParsedParentElement() == null || context.getLastParsedParentElement().equals(currentParentElement)) {

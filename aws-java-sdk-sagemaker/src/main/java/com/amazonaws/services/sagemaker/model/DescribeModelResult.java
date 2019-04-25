@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -38,16 +38,24 @@ public class DescribeModelResult extends com.amazonaws.AmazonWebServiceResult<co
     private ContainerDefinition primaryContainer;
     /**
      * <p>
-     * The description of additional optional containers that you defined when creating the model.
+     * The containers in the inference pipeline.
      * </p>
      */
-    private java.util.List<ContainerDefinition> supplementalContainers;
+    private java.util.List<ContainerDefinition> containers;
     /**
      * <p>
      * The Amazon Resource Name (ARN) of the IAM role that you specified for the model.
      * </p>
      */
     private String executionRoleArn;
+    /**
+     * <p>
+     * A <a>VpcConfig</a> object that specifies the VPC that this model has access to. For more information, see <a
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html">Protect Endpoints by Using an Amazon Virtual
+     * Private Cloud</a>
+     * </p>
+     */
+    private VpcConfig vpcConfig;
     /**
      * <p>
      * A timestamp that shows when the model was created.
@@ -60,6 +68,17 @@ public class DescribeModelResult extends com.amazonaws.AmazonWebServiceResult<co
      * </p>
      */
     private String modelArn;
+    /**
+     * <p>
+     * If <code>True</code>, no inbound or outbound network calls can be made to or from the model container.
+     * </p>
+     * <note>
+     * <p>
+     * The Semantic Segmentation built-in algorithm does not support network isolation.
+     * </p>
+     * </note>
+     */
+    private Boolean enableNetworkIsolation;
 
     /**
      * <p>
@@ -149,71 +168,71 @@ public class DescribeModelResult extends com.amazonaws.AmazonWebServiceResult<co
 
     /**
      * <p>
-     * The description of additional optional containers that you defined when creating the model.
+     * The containers in the inference pipeline.
      * </p>
      * 
-     * @return The description of additional optional containers that you defined when creating the model.
+     * @return The containers in the inference pipeline.
      */
 
-    public java.util.List<ContainerDefinition> getSupplementalContainers() {
-        return supplementalContainers;
+    public java.util.List<ContainerDefinition> getContainers() {
+        return containers;
     }
 
     /**
      * <p>
-     * The description of additional optional containers that you defined when creating the model.
+     * The containers in the inference pipeline.
      * </p>
      * 
-     * @param supplementalContainers
-     *        The description of additional optional containers that you defined when creating the model.
+     * @param containers
+     *        The containers in the inference pipeline.
      */
 
-    public void setSupplementalContainers(java.util.Collection<ContainerDefinition> supplementalContainers) {
-        if (supplementalContainers == null) {
-            this.supplementalContainers = null;
+    public void setContainers(java.util.Collection<ContainerDefinition> containers) {
+        if (containers == null) {
+            this.containers = null;
             return;
         }
 
-        this.supplementalContainers = new java.util.ArrayList<ContainerDefinition>(supplementalContainers);
+        this.containers = new java.util.ArrayList<ContainerDefinition>(containers);
     }
 
     /**
      * <p>
-     * The description of additional optional containers that you defined when creating the model.
+     * The containers in the inference pipeline.
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
-     * {@link #setSupplementalContainers(java.util.Collection)} or
-     * {@link #withSupplementalContainers(java.util.Collection)} if you want to override the existing values.
+     * {@link #setContainers(java.util.Collection)} or {@link #withContainers(java.util.Collection)} if you want to
+     * override the existing values.
      * </p>
      * 
-     * @param supplementalContainers
-     *        The description of additional optional containers that you defined when creating the model.
+     * @param containers
+     *        The containers in the inference pipeline.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
-    public DescribeModelResult withSupplementalContainers(ContainerDefinition... supplementalContainers) {
-        if (this.supplementalContainers == null) {
-            setSupplementalContainers(new java.util.ArrayList<ContainerDefinition>(supplementalContainers.length));
+    public DescribeModelResult withContainers(ContainerDefinition... containers) {
+        if (this.containers == null) {
+            setContainers(new java.util.ArrayList<ContainerDefinition>(containers.length));
         }
-        for (ContainerDefinition ele : supplementalContainers) {
-            this.supplementalContainers.add(ele);
+        for (ContainerDefinition ele : containers) {
+            this.containers.add(ele);
         }
         return this;
     }
 
     /**
      * <p>
-     * The description of additional optional containers that you defined when creating the model.
+     * The containers in the inference pipeline.
      * </p>
      * 
-     * @param supplementalContainers
-     *        The description of additional optional containers that you defined when creating the model.
+     * @param containers
+     *        The containers in the inference pipeline.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
-    public DescribeModelResult withSupplementalContainers(java.util.Collection<ContainerDefinition> supplementalContainers) {
-        setSupplementalContainers(supplementalContainers);
+    public DescribeModelResult withContainers(java.util.Collection<ContainerDefinition> containers) {
+        setContainers(containers);
         return this;
     }
 
@@ -254,6 +273,58 @@ public class DescribeModelResult extends com.amazonaws.AmazonWebServiceResult<co
 
     public DescribeModelResult withExecutionRoleArn(String executionRoleArn) {
         setExecutionRoleArn(executionRoleArn);
+        return this;
+    }
+
+    /**
+     * <p>
+     * A <a>VpcConfig</a> object that specifies the VPC that this model has access to. For more information, see <a
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html">Protect Endpoints by Using an Amazon Virtual
+     * Private Cloud</a>
+     * </p>
+     * 
+     * @param vpcConfig
+     *        A <a>VpcConfig</a> object that specifies the VPC that this model has access to. For more information, see
+     *        <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html">Protect Endpoints by Using an
+     *        Amazon Virtual Private Cloud</a>
+     */
+
+    public void setVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+    }
+
+    /**
+     * <p>
+     * A <a>VpcConfig</a> object that specifies the VPC that this model has access to. For more information, see <a
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html">Protect Endpoints by Using an Amazon Virtual
+     * Private Cloud</a>
+     * </p>
+     * 
+     * @return A <a>VpcConfig</a> object that specifies the VPC that this model has access to. For more information, see
+     *         <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html">Protect Endpoints by Using an
+     *         Amazon Virtual Private Cloud</a>
+     */
+
+    public VpcConfig getVpcConfig() {
+        return this.vpcConfig;
+    }
+
+    /**
+     * <p>
+     * A <a>VpcConfig</a> object that specifies the VPC that this model has access to. For more information, see <a
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html">Protect Endpoints by Using an Amazon Virtual
+     * Private Cloud</a>
+     * </p>
+     * 
+     * @param vpcConfig
+     *        A <a>VpcConfig</a> object that specifies the VPC that this model has access to. For more information, see
+     *        <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html">Protect Endpoints by Using an
+     *        Amazon Virtual Private Cloud</a>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DescribeModelResult withVpcConfig(VpcConfig vpcConfig) {
+        setVpcConfig(vpcConfig);
         return this;
     }
 
@@ -338,7 +409,96 @@ public class DescribeModelResult extends com.amazonaws.AmazonWebServiceResult<co
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * If <code>True</code>, no inbound or outbound network calls can be made to or from the model container.
+     * </p>
+     * <note>
+     * <p>
+     * The Semantic Segmentation built-in algorithm does not support network isolation.
+     * </p>
+     * </note>
+     * 
+     * @param enableNetworkIsolation
+     *        If <code>True</code>, no inbound or outbound network calls can be made to or from the model container.</p>
+     *        <note>
+     *        <p>
+     *        The Semantic Segmentation built-in algorithm does not support network isolation.
+     *        </p>
+     */
+
+    public void setEnableNetworkIsolation(Boolean enableNetworkIsolation) {
+        this.enableNetworkIsolation = enableNetworkIsolation;
+    }
+
+    /**
+     * <p>
+     * If <code>True</code>, no inbound or outbound network calls can be made to or from the model container.
+     * </p>
+     * <note>
+     * <p>
+     * The Semantic Segmentation built-in algorithm does not support network isolation.
+     * </p>
+     * </note>
+     * 
+     * @return If <code>True</code>, no inbound or outbound network calls can be made to or from the model
+     *         container.</p> <note>
+     *         <p>
+     *         The Semantic Segmentation built-in algorithm does not support network isolation.
+     *         </p>
+     */
+
+    public Boolean getEnableNetworkIsolation() {
+        return this.enableNetworkIsolation;
+    }
+
+    /**
+     * <p>
+     * If <code>True</code>, no inbound or outbound network calls can be made to or from the model container.
+     * </p>
+     * <note>
+     * <p>
+     * The Semantic Segmentation built-in algorithm does not support network isolation.
+     * </p>
+     * </note>
+     * 
+     * @param enableNetworkIsolation
+     *        If <code>True</code>, no inbound or outbound network calls can be made to or from the model container.</p>
+     *        <note>
+     *        <p>
+     *        The Semantic Segmentation built-in algorithm does not support network isolation.
+     *        </p>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public DescribeModelResult withEnableNetworkIsolation(Boolean enableNetworkIsolation) {
+        setEnableNetworkIsolation(enableNetworkIsolation);
+        return this;
+    }
+
+    /**
+     * <p>
+     * If <code>True</code>, no inbound or outbound network calls can be made to or from the model container.
+     * </p>
+     * <note>
+     * <p>
+     * The Semantic Segmentation built-in algorithm does not support network isolation.
+     * </p>
+     * </note>
+     * 
+     * @return If <code>True</code>, no inbound or outbound network calls can be made to or from the model
+     *         container.</p> <note>
+     *         <p>
+     *         The Semantic Segmentation built-in algorithm does not support network isolation.
+     *         </p>
+     */
+
+    public Boolean isEnableNetworkIsolation() {
+        return this.enableNetworkIsolation;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -352,14 +512,18 @@ public class DescribeModelResult extends com.amazonaws.AmazonWebServiceResult<co
             sb.append("ModelName: ").append(getModelName()).append(",");
         if (getPrimaryContainer() != null)
             sb.append("PrimaryContainer: ").append(getPrimaryContainer()).append(",");
-        if (getSupplementalContainers() != null)
-            sb.append("SupplementalContainers: ").append(getSupplementalContainers()).append(",");
+        if (getContainers() != null)
+            sb.append("Containers: ").append(getContainers()).append(",");
         if (getExecutionRoleArn() != null)
             sb.append("ExecutionRoleArn: ").append(getExecutionRoleArn()).append(",");
+        if (getVpcConfig() != null)
+            sb.append("VpcConfig: ").append(getVpcConfig()).append(",");
         if (getCreationTime() != null)
             sb.append("CreationTime: ").append(getCreationTime()).append(",");
         if (getModelArn() != null)
-            sb.append("ModelArn: ").append(getModelArn());
+            sb.append("ModelArn: ").append(getModelArn()).append(",");
+        if (getEnableNetworkIsolation() != null)
+            sb.append("EnableNetworkIsolation: ").append(getEnableNetworkIsolation());
         sb.append("}");
         return sb.toString();
     }
@@ -382,13 +546,17 @@ public class DescribeModelResult extends com.amazonaws.AmazonWebServiceResult<co
             return false;
         if (other.getPrimaryContainer() != null && other.getPrimaryContainer().equals(this.getPrimaryContainer()) == false)
             return false;
-        if (other.getSupplementalContainers() == null ^ this.getSupplementalContainers() == null)
+        if (other.getContainers() == null ^ this.getContainers() == null)
             return false;
-        if (other.getSupplementalContainers() != null && other.getSupplementalContainers().equals(this.getSupplementalContainers()) == false)
+        if (other.getContainers() != null && other.getContainers().equals(this.getContainers()) == false)
             return false;
         if (other.getExecutionRoleArn() == null ^ this.getExecutionRoleArn() == null)
             return false;
         if (other.getExecutionRoleArn() != null && other.getExecutionRoleArn().equals(this.getExecutionRoleArn()) == false)
+            return false;
+        if (other.getVpcConfig() == null ^ this.getVpcConfig() == null)
+            return false;
+        if (other.getVpcConfig() != null && other.getVpcConfig().equals(this.getVpcConfig()) == false)
             return false;
         if (other.getCreationTime() == null ^ this.getCreationTime() == null)
             return false;
@@ -397,6 +565,10 @@ public class DescribeModelResult extends com.amazonaws.AmazonWebServiceResult<co
         if (other.getModelArn() == null ^ this.getModelArn() == null)
             return false;
         if (other.getModelArn() != null && other.getModelArn().equals(this.getModelArn()) == false)
+            return false;
+        if (other.getEnableNetworkIsolation() == null ^ this.getEnableNetworkIsolation() == null)
+            return false;
+        if (other.getEnableNetworkIsolation() != null && other.getEnableNetworkIsolation().equals(this.getEnableNetworkIsolation()) == false)
             return false;
         return true;
     }
@@ -408,10 +580,12 @@ public class DescribeModelResult extends com.amazonaws.AmazonWebServiceResult<co
 
         hashCode = prime * hashCode + ((getModelName() == null) ? 0 : getModelName().hashCode());
         hashCode = prime * hashCode + ((getPrimaryContainer() == null) ? 0 : getPrimaryContainer().hashCode());
-        hashCode = prime * hashCode + ((getSupplementalContainers() == null) ? 0 : getSupplementalContainers().hashCode());
+        hashCode = prime * hashCode + ((getContainers() == null) ? 0 : getContainers().hashCode());
         hashCode = prime * hashCode + ((getExecutionRoleArn() == null) ? 0 : getExecutionRoleArn().hashCode());
+        hashCode = prime * hashCode + ((getVpcConfig() == null) ? 0 : getVpcConfig().hashCode());
         hashCode = prime * hashCode + ((getCreationTime() == null) ? 0 : getCreationTime().hashCode());
         hashCode = prime * hashCode + ((getModelArn() == null) ? 0 : getModelArn().hashCode());
+        hashCode = prime * hashCode + ((getEnableNetworkIsolation() == null) ? 0 : getEnableNetworkIsolation().hashCode());
         return hashCode;
     }
 

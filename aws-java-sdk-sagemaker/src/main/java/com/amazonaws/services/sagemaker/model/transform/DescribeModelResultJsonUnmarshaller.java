@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -56,22 +56,30 @@ public class DescribeModelResultJsonUnmarshaller implements Unmarshaller<Describ
                     context.nextToken();
                     describeModelResult.setPrimaryContainer(ContainerDefinitionJsonUnmarshaller.getInstance().unmarshall(context));
                 }
-                if (context.testExpression("SupplementalContainers", targetDepth)) {
+                if (context.testExpression("Containers", targetDepth)) {
                     context.nextToken();
-                    describeModelResult.setSupplementalContainers(new ListUnmarshaller<ContainerDefinition>(ContainerDefinitionJsonUnmarshaller.getInstance())
+                    describeModelResult.setContainers(new ListUnmarshaller<ContainerDefinition>(ContainerDefinitionJsonUnmarshaller.getInstance())
                             .unmarshall(context));
                 }
                 if (context.testExpression("ExecutionRoleArn", targetDepth)) {
                     context.nextToken();
                     describeModelResult.setExecutionRoleArn(context.getUnmarshaller(String.class).unmarshall(context));
                 }
+                if (context.testExpression("VpcConfig", targetDepth)) {
+                    context.nextToken();
+                    describeModelResult.setVpcConfig(VpcConfigJsonUnmarshaller.getInstance().unmarshall(context));
+                }
                 if (context.testExpression("CreationTime", targetDepth)) {
                     context.nextToken();
-                    describeModelResult.setCreationTime(context.getUnmarshaller(java.util.Date.class).unmarshall(context));
+                    describeModelResult.setCreationTime(DateJsonUnmarshallerFactory.getInstance("unixTimestamp").unmarshall(context));
                 }
                 if (context.testExpression("ModelArn", targetDepth)) {
                     context.nextToken();
                     describeModelResult.setModelArn(context.getUnmarshaller(String.class).unmarshall(context));
+                }
+                if (context.testExpression("EnableNetworkIsolation", targetDepth)) {
+                    context.nextToken();
+                    describeModelResult.setEnableNetworkIsolation(context.getUnmarshaller(Boolean.class).unmarshall(context));
                 }
             } else if (token == END_ARRAY || token == END_OBJECT) {
                 if (context.getLastParsedParentElement() == null || context.getLastParsedParentElement().equals(currentParentElement)) {

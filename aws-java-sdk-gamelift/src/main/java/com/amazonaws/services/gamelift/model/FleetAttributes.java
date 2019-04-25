@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -21,9 +21,6 @@ import com.amazonaws.protocol.ProtocolMarshaller;
  * <p>
  * General properties describing a fleet.
  * </p>
- * <p>
- * Fleet-related operations include:
- * </p>
  * <ul>
  * <li>
  * <p>
@@ -37,12 +34,22 @@ import com.amazonaws.protocol.ProtocolMarshaller;
  * </li>
  * <li>
  * <p>
+ * <a>DeleteFleet</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
  * Describe fleets:
  * </p>
  * <ul>
  * <li>
  * <p>
  * <a>DescribeFleetAttributes</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DescribeFleetCapacity</a>
  * </p>
  * </li>
  * <li>
@@ -58,6 +65,11 @@ import com.amazonaws.protocol.ProtocolMarshaller;
  * <li>
  * <p>
  * <a>DescribeRuntimeConfiguration</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DescribeEC2InstanceLimits</a>
  * </p>
  * </li>
  * <li>
@@ -96,45 +108,20 @@ import com.amazonaws.protocol.ProtocolMarshaller;
  * </li>
  * <li>
  * <p>
- * Manage fleet capacity:
+ * Manage fleet actions:
  * </p>
  * <ul>
  * <li>
  * <p>
- * <a>DescribeFleetCapacity</a>
+ * <a>StartFleetActions</a>
  * </p>
  * </li>
  * <li>
  * <p>
- * <a>UpdateFleetCapacity</a>
- * </p>
- * </li>
- * <li>
- * <p>
- * <a>PutScalingPolicy</a> (automatic scaling)
- * </p>
- * </li>
- * <li>
- * <p>
- * <a>DescribeScalingPolicies</a> (automatic scaling)
- * </p>
- * </li>
- * <li>
- * <p>
- * <a>DeleteScalingPolicy</a> (automatic scaling)
- * </p>
- * </li>
- * <li>
- * <p>
- * <a>DescribeEC2InstanceLimits</a>
+ * <a>StopFleetActions</a>
  * </p>
  * </li>
  * </ul>
- * </li>
- * <li>
- * <p>
- * <a>DeleteFleet</a>
- * </p>
  * </li>
  * </ul>
  * 
@@ -156,6 +143,21 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * </p>
      */
     private String fleetArn;
+    /**
+     * <p>
+     * Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted with a
+     * two-minute notification.
+     * </p>
+     */
+    private String fleetType;
+    /**
+     * <p>
+     * EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     * storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2 Instance
+     * Types</a> for detailed descriptions.
+     * </p>
+     */
+    private String instanceType;
     /**
      * <p>
      * Human-readable description of the fleet.
@@ -198,7 +200,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * <li>
      * <p>
      * <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating new
-     * instances with the game build and starting server processes.
+     * instances with the game build or Realtime script and starting server processes.
      * </p>
      * </li>
      * <li>
@@ -232,6 +234,12 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
     private String buildId;
     /**
      * <p>
+     * Unique identifier for a Realtime script.
+     * </p>
+     */
+    private String scriptId;
+    /**
+     * <p>
      * Path to a game server executable in the fleet's build, specified for fleets created before 2016-08-04 (or AWS SDK
      * v. 0.12.16). Server launch paths for fleets created after this date are specified in the fleet's
      * <a>RuntimeConfiguration</a>.
@@ -250,7 +258,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * Location of default log files. When a server process is shut down, Amazon GameLift captures and stores any log
      * files in this location. These logs are in addition to game session logs; see more on game session logs in the <a
      * href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
      * >Amazon GameLift Developer Guide</a>. If no default log path for a fleet is specified, Amazon GameLift
      * automatically uploads logs that are stored on each instance at <code>C:\game\logs</code> (for Windows) or
      * <code>/local/game/logs</code> (for Linux). Use the Amazon GameLift console to access stored logs.
@@ -297,6 +305,24 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * </p>
      */
     private java.util.List<String> metricGroups;
+    /**
+     * <p>
+     * List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * </p>
+     */
+    private java.util.List<String> stoppedActions;
+    /**
+     * <p>
+     * Unique identifier for an AWS IAM role that manages access to your AWS services. With an instance role ARN set,
+     * any application that runs on an instance in this fleet can assume the role, including install scripts, server
+     * processes, daemons (background processes). Create a role or look up a role's ARN using the <a
+     * href="https://console.aws.amazon.com/iam/">IAM dashboard</a> in the AWS Management Console. Learn more about
+     * using on-box credentials for your game servers at <a
+     * href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-resources.html"> Access
+     * external resources from a game server</a>.
+     * </p>
+     */
+    private String instanceRoleArn;
 
     /**
      * <p>
@@ -375,6 +401,182 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
 
     public FleetAttributes withFleetArn(String fleetArn) {
         setFleetArn(fleetArn);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted with a
+     * two-minute notification.
+     * </p>
+     * 
+     * @param fleetType
+     *        Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted
+     *        with a two-minute notification.
+     * @see FleetType
+     */
+
+    public void setFleetType(String fleetType) {
+        this.fleetType = fleetType;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted with a
+     * two-minute notification.
+     * </p>
+     * 
+     * @return Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted
+     *         with a two-minute notification.
+     * @see FleetType
+     */
+
+    public String getFleetType() {
+        return this.fleetType;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted with a
+     * two-minute notification.
+     * </p>
+     * 
+     * @param fleetType
+     *        Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted
+     *        with a two-minute notification.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see FleetType
+     */
+
+    public FleetAttributes withFleetType(String fleetType) {
+        setFleetType(fleetType);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted with a
+     * two-minute notification.
+     * </p>
+     * 
+     * @param fleetType
+     *        Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted
+     *        with a two-minute notification.
+     * @see FleetType
+     */
+
+    public void setFleetType(FleetType fleetType) {
+        withFleetType(fleetType);
+    }
+
+    /**
+     * <p>
+     * Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted with a
+     * two-minute notification.
+     * </p>
+     * 
+     * @param fleetType
+     *        Indicates whether the fleet uses on-demand or spot instances. A spot instance in use may be interrupted
+     *        with a two-minute notification.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see FleetType
+     */
+
+    public FleetAttributes withFleetType(FleetType fleetType) {
+        this.fleetType = fleetType.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     * storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2 Instance
+     * Types</a> for detailed descriptions.
+     * </p>
+     * 
+     * @param instanceType
+     *        EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     *        storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2
+     *        Instance Types</a> for detailed descriptions.
+     * @see EC2InstanceType
+     */
+
+    public void setInstanceType(String instanceType) {
+        this.instanceType = instanceType;
+    }
+
+    /**
+     * <p>
+     * EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     * storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2 Instance
+     * Types</a> for detailed descriptions.
+     * </p>
+     * 
+     * @return EC2 instance type indicating the computing resources of each instance in the fleet, including CPU,
+     *         memory, storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon
+     *         EC2 Instance Types</a> for detailed descriptions.
+     * @see EC2InstanceType
+     */
+
+    public String getInstanceType() {
+        return this.instanceType;
+    }
+
+    /**
+     * <p>
+     * EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     * storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2 Instance
+     * Types</a> for detailed descriptions.
+     * </p>
+     * 
+     * @param instanceType
+     *        EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     *        storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2
+     *        Instance Types</a> for detailed descriptions.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see EC2InstanceType
+     */
+
+    public FleetAttributes withInstanceType(String instanceType) {
+        setInstanceType(instanceType);
+        return this;
+    }
+
+    /**
+     * <p>
+     * EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     * storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2 Instance
+     * Types</a> for detailed descriptions.
+     * </p>
+     * 
+     * @param instanceType
+     *        EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     *        storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2
+     *        Instance Types</a> for detailed descriptions.
+     * @see EC2InstanceType
+     */
+
+    public void setInstanceType(EC2InstanceType instanceType) {
+        withInstanceType(instanceType);
+    }
+
+    /**
+     * <p>
+     * EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     * storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2 Instance
+     * Types</a> for detailed descriptions.
+     * </p>
+     * 
+     * @param instanceType
+     *        EC2 instance type indicating the computing resources of each instance in the fleet, including CPU, memory,
+     *        storage, and networking capacity. See <a href="http://aws.amazon.com/ec2/instance-types/">Amazon EC2
+     *        Instance Types</a> for detailed descriptions.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see EC2InstanceType
+     */
+
+    public FleetAttributes withInstanceType(EC2InstanceType instanceType) {
+        this.instanceType = instanceType.toString();
         return this;
     }
 
@@ -566,7 +768,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * <li>
      * <p>
      * <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating new
-     * instances with the game build and starting server processes.
+     * instances with the game build or Realtime script and starting server processes.
      * </p>
      * </li>
      * <li>
@@ -605,7 +807,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      *        <li>
      *        <p>
      *        <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating
-     *        new instances with the game build and starting server processes.
+     *        new instances with the game build or Realtime script and starting server processes.
      *        </p>
      *        </li>
      *        <li>
@@ -651,7 +853,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * <li>
      * <p>
      * <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating new
-     * instances with the game build and starting server processes.
+     * instances with the game build or Realtime script and starting server processes.
      * </p>
      * </li>
      * <li>
@@ -689,7 +891,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      *         <li>
      *         <p>
      *         <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet,
-     *         creating new instances with the game build and starting server processes.
+     *         creating new instances with the game build or Realtime script and starting server processes.
      *         </p>
      *         </li>
      *         <li>
@@ -735,7 +937,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * <li>
      * <p>
      * <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating new
-     * instances with the game build and starting server processes.
+     * instances with the game build or Realtime script and starting server processes.
      * </p>
      * </li>
      * <li>
@@ -774,7 +976,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      *        <li>
      *        <p>
      *        <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating
-     *        new instances with the game build and starting server processes.
+     *        new instances with the game build or Realtime script and starting server processes.
      *        </p>
      *        </li>
      *        <li>
@@ -822,7 +1024,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * <li>
      * <p>
      * <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating new
-     * instances with the game build and starting server processes.
+     * instances with the game build or Realtime script and starting server processes.
      * </p>
      * </li>
      * <li>
@@ -861,7 +1063,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      *        <li>
      *        <p>
      *        <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating
-     *        new instances with the game build and starting server processes.
+     *        new instances with the game build or Realtime script and starting server processes.
      *        </p>
      *        </li>
      *        <li>
@@ -907,7 +1109,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * <li>
      * <p>
      * <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating new
-     * instances with the game build and starting server processes.
+     * instances with the game build or Realtime script and starting server processes.
      * </p>
      * </li>
      * <li>
@@ -946,7 +1148,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      *        <li>
      *        <p>
      *        <b>DOWNLOADING/VALIDATING/BUILDING/ACTIVATING</b> -- Amazon GameLift is setting up the new fleet, creating
-     *        new instances with the game build and starting server processes.
+     *        new instances with the game build or Realtime script and starting server processes.
      *        </p>
      *        </li>
      *        <li>
@@ -1015,6 +1217,46 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
 
     public FleetAttributes withBuildId(String buildId) {
         setBuildId(buildId);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Unique identifier for a Realtime script.
+     * </p>
+     * 
+     * @param scriptId
+     *        Unique identifier for a Realtime script.
+     */
+
+    public void setScriptId(String scriptId) {
+        this.scriptId = scriptId;
+    }
+
+    /**
+     * <p>
+     * Unique identifier for a Realtime script.
+     * </p>
+     * 
+     * @return Unique identifier for a Realtime script.
+     */
+
+    public String getScriptId() {
+        return this.scriptId;
+    }
+
+    /**
+     * <p>
+     * Unique identifier for a Realtime script.
+     * </p>
+     * 
+     * @param scriptId
+     *        Unique identifier for a Realtime script.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public FleetAttributes withScriptId(String scriptId) {
+        setScriptId(scriptId);
         return this;
     }
 
@@ -1124,7 +1366,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * Location of default log files. When a server process is shut down, Amazon GameLift captures and stores any log
      * files in this location. These logs are in addition to game session logs; see more on game session logs in the <a
      * href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
      * >Amazon GameLift Developer Guide</a>. If no default log path for a fleet is specified, Amazon GameLift
      * automatically uploads logs that are stored on each instance at <code>C:\game\logs</code> (for Windows) or
      * <code>/local/game/logs</code> (for Linux). Use the Amazon GameLift console to access stored logs.
@@ -1133,7 +1375,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * @return Location of default log files. When a server process is shut down, Amazon GameLift captures and stores
      *         any log files in this location. These logs are in addition to game session logs; see more on game session
      *         logs in the <a href=
-     *         "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
+     *         "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
      *         >Amazon GameLift Developer Guide</a>. If no default log path for a fleet is specified, Amazon GameLift
      *         automatically uploads logs that are stored on each instance at <code>C:\game\logs</code> (for Windows) or
      *         <code>/local/game/logs</code> (for Linux). Use the Amazon GameLift console to access stored logs.
@@ -1148,7 +1390,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * Location of default log files. When a server process is shut down, Amazon GameLift captures and stores any log
      * files in this location. These logs are in addition to game session logs; see more on game session logs in the <a
      * href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
      * >Amazon GameLift Developer Guide</a>. If no default log path for a fleet is specified, Amazon GameLift
      * automatically uploads logs that are stored on each instance at <code>C:\game\logs</code> (for Windows) or
      * <code>/local/game/logs</code> (for Linux). Use the Amazon GameLift console to access stored logs.
@@ -1158,7 +1400,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      *        Location of default log files. When a server process is shut down, Amazon GameLift captures and stores any
      *        log files in this location. These logs are in addition to game session logs; see more on game session logs
      *        in the <a href=
-     *        "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
+     *        "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
      *        >Amazon GameLift Developer Guide</a>. If no default log path for a fleet is specified, Amazon GameLift
      *        automatically uploads logs that are stored on each instance at <code>C:\game\logs</code> (for Windows) or
      *        <code>/local/game/logs</code> (for Linux). Use the Amazon GameLift console to access stored logs.
@@ -1178,7 +1420,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * Location of default log files. When a server process is shut down, Amazon GameLift captures and stores any log
      * files in this location. These logs are in addition to game session logs; see more on game session logs in the <a
      * href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
      * >Amazon GameLift Developer Guide</a>. If no default log path for a fleet is specified, Amazon GameLift
      * automatically uploads logs that are stored on each instance at <code>C:\game\logs</code> (for Windows) or
      * <code>/local/game/logs</code> (for Linux). Use the Amazon GameLift console to access stored logs.
@@ -1193,7 +1435,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      *        Location of default log files. When a server process is shut down, Amazon GameLift captures and stores any
      *        log files in this location. These logs are in addition to game session logs; see more on game session logs
      *        in the <a href=
-     *        "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
+     *        "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
      *        >Amazon GameLift Developer Guide</a>. If no default log path for a fleet is specified, Amazon GameLift
      *        automatically uploads logs that are stored on each instance at <code>C:\game\logs</code> (for Windows) or
      *        <code>/local/game/logs</code> (for Linux). Use the Amazon GameLift console to access stored logs.
@@ -1215,7 +1457,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      * Location of default log files. When a server process is shut down, Amazon GameLift captures and stores any log
      * files in this location. These logs are in addition to game session logs; see more on game session logs in the <a
      * href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
      * >Amazon GameLift Developer Guide</a>. If no default log path for a fleet is specified, Amazon GameLift
      * automatically uploads logs that are stored on each instance at <code>C:\game\logs</code> (for Windows) or
      * <code>/local/game/logs</code> (for Linux). Use the Amazon GameLift console to access stored logs.
@@ -1225,7 +1467,7 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
      *        Location of default log files. When a server process is shut down, Amazon GameLift captures and stores any
      *        log files in this location. These logs are in addition to game session logs; see more on game session logs
      *        in the <a href=
-     *        "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
+     *        "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-api-server-code"
      *        >Amazon GameLift Developer Guide</a>. If no default log path for a fleet is specified, Amazon GameLift
      *        automatically uploads logs that are stored on each instance at <code>C:\game\logs</code> (for Windows) or
      *        <code>/local/game/logs</code> (for Linux). Use the Amazon GameLift console to access stored logs.
@@ -1645,7 +1887,182 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * </p>
+     * 
+     * @return List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * @see FleetAction
+     */
+
+    public java.util.List<String> getStoppedActions() {
+        return stoppedActions;
+    }
+
+    /**
+     * <p>
+     * List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * </p>
+     * 
+     * @param stoppedActions
+     *        List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * @see FleetAction
+     */
+
+    public void setStoppedActions(java.util.Collection<String> stoppedActions) {
+        if (stoppedActions == null) {
+            this.stoppedActions = null;
+            return;
+        }
+
+        this.stoppedActions = new java.util.ArrayList<String>(stoppedActions);
+    }
+
+    /**
+     * <p>
+     * List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setStoppedActions(java.util.Collection)} or {@link #withStoppedActions(java.util.Collection)} if you want
+     * to override the existing values.
+     * </p>
+     * 
+     * @param stoppedActions
+     *        List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see FleetAction
+     */
+
+    public FleetAttributes withStoppedActions(String... stoppedActions) {
+        if (this.stoppedActions == null) {
+            setStoppedActions(new java.util.ArrayList<String>(stoppedActions.length));
+        }
+        for (String ele : stoppedActions) {
+            this.stoppedActions.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * </p>
+     * 
+     * @param stoppedActions
+     *        List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see FleetAction
+     */
+
+    public FleetAttributes withStoppedActions(java.util.Collection<String> stoppedActions) {
+        setStoppedActions(stoppedActions);
+        return this;
+    }
+
+    /**
+     * <p>
+     * List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * </p>
+     * 
+     * @param stoppedActions
+     *        List of fleet actions that have been suspended using <a>StopFleetActions</a>. This includes auto-scaling.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see FleetAction
+     */
+
+    public FleetAttributes withStoppedActions(FleetAction... stoppedActions) {
+        java.util.ArrayList<String> stoppedActionsCopy = new java.util.ArrayList<String>(stoppedActions.length);
+        for (FleetAction value : stoppedActions) {
+            stoppedActionsCopy.add(value.toString());
+        }
+        if (getStoppedActions() == null) {
+            setStoppedActions(stoppedActionsCopy);
+        } else {
+            getStoppedActions().addAll(stoppedActionsCopy);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Unique identifier for an AWS IAM role that manages access to your AWS services. With an instance role ARN set,
+     * any application that runs on an instance in this fleet can assume the role, including install scripts, server
+     * processes, daemons (background processes). Create a role or look up a role's ARN using the <a
+     * href="https://console.aws.amazon.com/iam/">IAM dashboard</a> in the AWS Management Console. Learn more about
+     * using on-box credentials for your game servers at <a
+     * href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-resources.html"> Access
+     * external resources from a game server</a>.
+     * </p>
+     * 
+     * @param instanceRoleArn
+     *        Unique identifier for an AWS IAM role that manages access to your AWS services. With an instance role ARN
+     *        set, any application that runs on an instance in this fleet can assume the role, including install
+     *        scripts, server processes, daemons (background processes). Create a role or look up a role's ARN using the
+     *        <a href="https://console.aws.amazon.com/iam/">IAM dashboard</a> in the AWS Management Console. Learn more
+     *        about using on-box credentials for your game servers at <a
+     *        href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-resources.html">
+     *        Access external resources from a game server</a>.
+     */
+
+    public void setInstanceRoleArn(String instanceRoleArn) {
+        this.instanceRoleArn = instanceRoleArn;
+    }
+
+    /**
+     * <p>
+     * Unique identifier for an AWS IAM role that manages access to your AWS services. With an instance role ARN set,
+     * any application that runs on an instance in this fleet can assume the role, including install scripts, server
+     * processes, daemons (background processes). Create a role or look up a role's ARN using the <a
+     * href="https://console.aws.amazon.com/iam/">IAM dashboard</a> in the AWS Management Console. Learn more about
+     * using on-box credentials for your game servers at <a
+     * href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-resources.html"> Access
+     * external resources from a game server</a>.
+     * </p>
+     * 
+     * @return Unique identifier for an AWS IAM role that manages access to your AWS services. With an instance role ARN
+     *         set, any application that runs on an instance in this fleet can assume the role, including install
+     *         scripts, server processes, daemons (background processes). Create a role or look up a role's ARN using
+     *         the <a href="https://console.aws.amazon.com/iam/">IAM dashboard</a> in the AWS Management Console. Learn
+     *         more about using on-box credentials for your game servers at <a
+     *         href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-resources.html">
+     *         Access external resources from a game server</a>.
+     */
+
+    public String getInstanceRoleArn() {
+        return this.instanceRoleArn;
+    }
+
+    /**
+     * <p>
+     * Unique identifier for an AWS IAM role that manages access to your AWS services. With an instance role ARN set,
+     * any application that runs on an instance in this fleet can assume the role, including install scripts, server
+     * processes, daemons (background processes). Create a role or look up a role's ARN using the <a
+     * href="https://console.aws.amazon.com/iam/">IAM dashboard</a> in the AWS Management Console. Learn more about
+     * using on-box credentials for your game servers at <a
+     * href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-resources.html"> Access
+     * external resources from a game server</a>.
+     * </p>
+     * 
+     * @param instanceRoleArn
+     *        Unique identifier for an AWS IAM role that manages access to your AWS services. With an instance role ARN
+     *        set, any application that runs on an instance in this fleet can assume the role, including install
+     *        scripts, server processes, daemons (background processes). Create a role or look up a role's ARN using the
+     *        <a href="https://console.aws.amazon.com/iam/">IAM dashboard</a> in the AWS Management Console. Learn more
+     *        about using on-box credentials for your game servers at <a
+     *        href="https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-resources.html">
+     *        Access external resources from a game server</a>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public FleetAttributes withInstanceRoleArn(String instanceRoleArn) {
+        setInstanceRoleArn(instanceRoleArn);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -1659,6 +2076,10 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
             sb.append("FleetId: ").append(getFleetId()).append(",");
         if (getFleetArn() != null)
             sb.append("FleetArn: ").append(getFleetArn()).append(",");
+        if (getFleetType() != null)
+            sb.append("FleetType: ").append(getFleetType()).append(",");
+        if (getInstanceType() != null)
+            sb.append("InstanceType: ").append(getInstanceType()).append(",");
         if (getDescription() != null)
             sb.append("Description: ").append(getDescription()).append(",");
         if (getName() != null)
@@ -1671,6 +2092,8 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
             sb.append("Status: ").append(getStatus()).append(",");
         if (getBuildId() != null)
             sb.append("BuildId: ").append(getBuildId()).append(",");
+        if (getScriptId() != null)
+            sb.append("ScriptId: ").append(getScriptId()).append(",");
         if (getServerLaunchPath() != null)
             sb.append("ServerLaunchPath: ").append(getServerLaunchPath()).append(",");
         if (getServerLaunchParameters() != null)
@@ -1684,7 +2107,11 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
         if (getResourceCreationLimitPolicy() != null)
             sb.append("ResourceCreationLimitPolicy: ").append(getResourceCreationLimitPolicy()).append(",");
         if (getMetricGroups() != null)
-            sb.append("MetricGroups: ").append(getMetricGroups());
+            sb.append("MetricGroups: ").append(getMetricGroups()).append(",");
+        if (getStoppedActions() != null)
+            sb.append("StoppedActions: ").append(getStoppedActions()).append(",");
+        if (getInstanceRoleArn() != null)
+            sb.append("InstanceRoleArn: ").append(getInstanceRoleArn());
         sb.append("}");
         return sb.toString();
     }
@@ -1706,6 +2133,14 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
         if (other.getFleetArn() == null ^ this.getFleetArn() == null)
             return false;
         if (other.getFleetArn() != null && other.getFleetArn().equals(this.getFleetArn()) == false)
+            return false;
+        if (other.getFleetType() == null ^ this.getFleetType() == null)
+            return false;
+        if (other.getFleetType() != null && other.getFleetType().equals(this.getFleetType()) == false)
+            return false;
+        if (other.getInstanceType() == null ^ this.getInstanceType() == null)
+            return false;
+        if (other.getInstanceType() != null && other.getInstanceType().equals(this.getInstanceType()) == false)
             return false;
         if (other.getDescription() == null ^ this.getDescription() == null)
             return false;
@@ -1730,6 +2165,10 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
         if (other.getBuildId() == null ^ this.getBuildId() == null)
             return false;
         if (other.getBuildId() != null && other.getBuildId().equals(this.getBuildId()) == false)
+            return false;
+        if (other.getScriptId() == null ^ this.getScriptId() == null)
+            return false;
+        if (other.getScriptId() != null && other.getScriptId().equals(this.getScriptId()) == false)
             return false;
         if (other.getServerLaunchPath() == null ^ this.getServerLaunchPath() == null)
             return false;
@@ -1760,6 +2199,14 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
             return false;
         if (other.getMetricGroups() != null && other.getMetricGroups().equals(this.getMetricGroups()) == false)
             return false;
+        if (other.getStoppedActions() == null ^ this.getStoppedActions() == null)
+            return false;
+        if (other.getStoppedActions() != null && other.getStoppedActions().equals(this.getStoppedActions()) == false)
+            return false;
+        if (other.getInstanceRoleArn() == null ^ this.getInstanceRoleArn() == null)
+            return false;
+        if (other.getInstanceRoleArn() != null && other.getInstanceRoleArn().equals(this.getInstanceRoleArn()) == false)
+            return false;
         return true;
     }
 
@@ -1770,12 +2217,15 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
 
         hashCode = prime * hashCode + ((getFleetId() == null) ? 0 : getFleetId().hashCode());
         hashCode = prime * hashCode + ((getFleetArn() == null) ? 0 : getFleetArn().hashCode());
+        hashCode = prime * hashCode + ((getFleetType() == null) ? 0 : getFleetType().hashCode());
+        hashCode = prime * hashCode + ((getInstanceType() == null) ? 0 : getInstanceType().hashCode());
         hashCode = prime * hashCode + ((getDescription() == null) ? 0 : getDescription().hashCode());
         hashCode = prime * hashCode + ((getName() == null) ? 0 : getName().hashCode());
         hashCode = prime * hashCode + ((getCreationTime() == null) ? 0 : getCreationTime().hashCode());
         hashCode = prime * hashCode + ((getTerminationTime() == null) ? 0 : getTerminationTime().hashCode());
         hashCode = prime * hashCode + ((getStatus() == null) ? 0 : getStatus().hashCode());
         hashCode = prime * hashCode + ((getBuildId() == null) ? 0 : getBuildId().hashCode());
+        hashCode = prime * hashCode + ((getScriptId() == null) ? 0 : getScriptId().hashCode());
         hashCode = prime * hashCode + ((getServerLaunchPath() == null) ? 0 : getServerLaunchPath().hashCode());
         hashCode = prime * hashCode + ((getServerLaunchParameters() == null) ? 0 : getServerLaunchParameters().hashCode());
         hashCode = prime * hashCode + ((getLogPaths() == null) ? 0 : getLogPaths().hashCode());
@@ -1783,6 +2233,8 @@ public class FleetAttributes implements Serializable, Cloneable, StructuredPojo 
         hashCode = prime * hashCode + ((getOperatingSystem() == null) ? 0 : getOperatingSystem().hashCode());
         hashCode = prime * hashCode + ((getResourceCreationLimitPolicy() == null) ? 0 : getResourceCreationLimitPolicy().hashCode());
         hashCode = prime * hashCode + ((getMetricGroups() == null) ? 0 : getMetricGroups().hashCode());
+        hashCode = prime * hashCode + ((getStoppedActions() == null) ? 0 : getStoppedActions().hashCode());
+        hashCode = prime * hashCode + ((getInstanceRoleArn() == null) ? 0 : getInstanceRoleArn().hashCode());
         return hashCode;
     }
 

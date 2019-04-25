@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,6 +18,7 @@ import com.amazonaws.*;
 import com.amazonaws.regions.*;
 
 import com.amazonaws.services.databasemigrationservice.model.*;
+import com.amazonaws.services.databasemigrationservice.waiters.AWSDatabaseMigrationServiceWaiters;
 
 /**
  * Interface for accessing AWS Database Migration Service.
@@ -35,8 +36,8 @@ import com.amazonaws.services.databasemigrationservice.model.*;
  * Server to PostgreSQL.
  * </p>
  * <p>
- * For more information about AWS DMS, see the AWS DMS user guide at <a
- * href="http://docs.aws.amazon.com/dms/latest/userguide/Welcome.html"> What Is AWS Database Migration Service? </a>
+ * For more information about AWS DMS, see <a href="https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html">What
+ * Is AWS Database Migration Service?</a> in the <i>AWS Database Migration User Guide.</i>
  * </p>
  */
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
@@ -59,9 +60,10 @@ public interface AWSDatabaseMigrationService {
      * client's {@link ClientConfiguration} will be used, which by default is HTTPS.
      * <p>
      * For more information on using AWS regions with the AWS SDK for Java, and a complete list of all available
-     * endpoints for all AWS services, see: <a
-     * href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3912">
-     * http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3912</a>
+     * endpoints for all AWS services, see: <a href=
+     * "https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-region-selection.html#region-selection-choose-endpoint"
+     * > https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-region-selection.html#region-selection-
+     * choose-endpoint</a>
      * <p>
      * <b>This method is not threadsafe. An endpoint should be configured when the client is created and before any
      * service requests are made. Changing it afterwards creates inevitable race conditions for any service requests in
@@ -102,9 +104,9 @@ public interface AWSDatabaseMigrationService {
 
     /**
      * <p>
-     * Adds metadata tags to a DMS resource, including replication instance, endpoint, security group, and migration
-     * task. These tags can also be used with cost allocation reporting to track cost associated with DMS resources, or
-     * used in a Condition statement in an IAM policy for DMS.
+     * Adds metadata tags to an AWS DMS resource, including replication instance, endpoint, security group, and
+     * migration task. These tags can also be used with cost allocation reporting to track cost associated with DMS
+     * resources, or used in a Condition statement in an IAM policy for DMS.
      * </p>
      * 
      * @param addTagsToResourceRequest
@@ -116,6 +118,21 @@ public interface AWSDatabaseMigrationService {
      *      Documentation</a>
      */
     AddTagsToResourceResult addTagsToResource(AddTagsToResourceRequest addTagsToResourceRequest);
+
+    /**
+     * <p>
+     * Applies a pending maintenance action to a resource (for example, to a replication instance).
+     * </p>
+     * 
+     * @param applyPendingMaintenanceActionRequest
+     * @return Result of the ApplyPendingMaintenanceAction operation returned by the service.
+     * @throws ResourceNotFoundException
+     *         The resource could not be found.
+     * @sample AWSDatabaseMigrationService.ApplyPendingMaintenanceAction
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ApplyPendingMaintenanceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    ApplyPendingMaintenanceActionResult applyPendingMaintenanceAction(ApplyPendingMaintenanceActionRequest applyPendingMaintenanceActionRequest);
 
     /**
      * <p>
@@ -135,7 +152,7 @@ public interface AWSDatabaseMigrationService {
      * @throws ResourceNotFoundException
      *         The resource could not be found.
      * @throws AccessDeniedException
-     *         AWS DMS was denied access to the endpoint.
+     *         AWS DMS was denied access to the endpoint. Check that the role is correctly configured.
      * @sample AWSDatabaseMigrationService.CreateEndpoint
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateEndpoint" target="_top">AWS API
      *      Documentation</a>
@@ -159,22 +176,32 @@ public interface AWSDatabaseMigrationService {
      * </p>
      * <p>
      * For more information about AWS DMS events, see <a
-     * href="http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html"> Working with Events and Notifications
-     * </a> in the AWS Database MIgration Service User Guide.
+     * href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html">Working with Events and
+     * Notifications</a> in the <i>AWS Database Migration Service User Guide.</i>
      * </p>
      * 
      * @param createEventSubscriptionRequest
      * @return Result of the CreateEventSubscription operation returned by the service.
      * @throws ResourceQuotaExceededException
      *         The quota for this resource quota has been exceeded.
+     * @throws ResourceNotFoundException
+     *         The resource could not be found.
      * @throws ResourceAlreadyExistsException
      *         The resource you are attempting to create already exists.
      * @throws SNSInvalidTopicException
      *         The SNS topic is invalid.
      * @throws SNSNoAuthorizationException
      *         You are not authorized for the SNS subscription.
-     * @throws ResourceNotFoundException
-     *         The resource could not be found.
+     * @throws KMSAccessDeniedException
+     *         The ciphertext references a key that doesn't exist or DMS account doesn't have an access to
+     * @throws KMSDisabledException
+     *         The specified master key (CMK) isn't enabled.
+     * @throws KMSInvalidStateException
+     *         The state of the specified KMS resource isn't valid for this request.
+     * @throws KMSNotFoundException
+     *         The specified KMS entity or resource can't be found.
+     * @throws KMSThrottlingException
+     *         This request triggered KMS request throttling.
      * @sample AWSDatabaseMigrationService.CreateEventSubscription
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateEventSubscription" target="_top">AWS
      *      API Documentation</a>
@@ -189,7 +216,7 @@ public interface AWSDatabaseMigrationService {
      * @param createReplicationInstanceRequest
      * @return Result of the CreateReplicationInstance operation returned by the service.
      * @throws AccessDeniedException
-     *         AWS DMS was denied access to the endpoint.
+     *         AWS DMS was denied access to the endpoint. Check that the role is correctly configured.
      * @throws ResourceAlreadyExistsException
      *         The resource you are attempting to create already exists.
      * @throws InsufficientResourceCapacityException
@@ -223,7 +250,7 @@ public interface AWSDatabaseMigrationService {
      * @param createReplicationSubnetGroupRequest
      * @return Result of the CreateReplicationSubnetGroup operation returned by the service.
      * @throws AccessDeniedException
-     *         AWS DMS was denied access to the endpoint.
+     *         AWS DMS was denied access to the endpoint. Check that the role is correctly configured.
      * @throws ResourceAlreadyExistsException
      *         The resource you are attempting to create already exists.
      * @throws ResourceNotFoundException
@@ -249,7 +276,7 @@ public interface AWSDatabaseMigrationService {
      * @param createReplicationTaskRequest
      * @return Result of the CreateReplicationTask operation returned by the service.
      * @throws AccessDeniedException
-     *         AWS DMS was denied access to the endpoint.
+     *         AWS DMS was denied access to the endpoint. Check that the role is correctly configured.
      * @throws InvalidResourceStateException
      *         The resource is in a state that prevents it from being used for database migration.
      * @throws ResourceAlreadyExistsException
@@ -461,8 +488,8 @@ public interface AWSDatabaseMigrationService {
      * <p>
      * Lists categories for all event source types, or, if specified, for a specified source type. You can see a list of
      * the event categories and source types in <a
-     * href="http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html"> Working with Events and Notifications
-     * </a> in the AWS Database Migration Service User Guide.
+     * href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html">Working with Events and
+     * Notifications</a> in the <i>AWS Database Migration Service User Guide.</i>
      * </p>
      * 
      * @param describeEventCategoriesRequest
@@ -496,8 +523,9 @@ public interface AWSDatabaseMigrationService {
     /**
      * <p>
      * Lists events for a given source identifier and source type. You can also specify a start and end time. For more
-     * information on AWS DMS events, see <a href="http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html">
-     * Working with Events and Notifications </a>.
+     * information on AWS DMS events, see <a
+     * href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html">Working with Events and
+     * Notifications</a> in the <i>AWS Database Migration User Guide.</i>
      * </p>
      * 
      * @param describeEventsRequest
@@ -524,6 +552,21 @@ public interface AWSDatabaseMigrationService {
 
     /**
      * <p>
+     * For internal use only
+     * </p>
+     * 
+     * @param describePendingMaintenanceActionsRequest
+     * @return Result of the DescribePendingMaintenanceActions operation returned by the service.
+     * @throws ResourceNotFoundException
+     *         The resource could not be found.
+     * @sample AWSDatabaseMigrationService.DescribePendingMaintenanceActions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribePendingMaintenanceActions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    DescribePendingMaintenanceActionsResult describePendingMaintenanceActions(DescribePendingMaintenanceActionsRequest describePendingMaintenanceActionsRequest);
+
+    /**
+     * <p>
      * Returns the status of the RefreshSchemas operation.
      * </p>
      * 
@@ -538,6 +581,24 @@ public interface AWSDatabaseMigrationService {
      *      target="_top">AWS API Documentation</a>
      */
     DescribeRefreshSchemasStatusResult describeRefreshSchemasStatus(DescribeRefreshSchemasStatusRequest describeRefreshSchemasStatusRequest);
+
+    /**
+     * <p>
+     * Returns information about the task logs for the specified task.
+     * </p>
+     * 
+     * @param describeReplicationInstanceTaskLogsRequest
+     * @return Result of the DescribeReplicationInstanceTaskLogs operation returned by the service.
+     * @throws ResourceNotFoundException
+     *         The resource could not be found.
+     * @throws InvalidResourceStateException
+     *         The resource is in a state that prevents it from being used for database migration.
+     * @sample AWSDatabaseMigrationService.DescribeReplicationInstanceTaskLogs
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeReplicationInstanceTaskLogs"
+     *      target="_top">AWS API Documentation</a>
+     */
+    DescribeReplicationInstanceTaskLogsResult describeReplicationInstanceTaskLogs(
+            DescribeReplicationInstanceTaskLogsRequest describeReplicationInstanceTaskLogsRequest);
 
     /**
      * <p>
@@ -651,6 +712,8 @@ public interface AWSDatabaseMigrationService {
      *         The resource you are attempting to create already exists.
      * @throws InvalidCertificateException
      *         The certificate was not valid.
+     * @throws ResourceQuotaExceededException
+     *         The quota for this resource quota has been exceeded.
      * @sample AWSDatabaseMigrationService.ImportCertificate
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ImportCertificate" target="_top">AWS API
      *      Documentation</a>
@@ -688,7 +751,7 @@ public interface AWSDatabaseMigrationService {
      * @throws KMSKeyNotAccessibleException
      *         AWS DMS cannot access the KMS key.
      * @throws AccessDeniedException
-     *         AWS DMS was denied access to the endpoint.
+     *         AWS DMS was denied access to the endpoint. Check that the role is correctly configured.
      * @sample AWSDatabaseMigrationService.ModifyEndpoint
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyEndpoint" target="_top">AWS API
      *      Documentation</a>
@@ -710,6 +773,16 @@ public interface AWSDatabaseMigrationService {
      *         The SNS topic is invalid.
      * @throws SNSNoAuthorizationException
      *         You are not authorized for the SNS subscription.
+     * @throws KMSAccessDeniedException
+     *         The ciphertext references a key that doesn't exist or DMS account doesn't have an access to
+     * @throws KMSDisabledException
+     *         The specified master key (CMK) isn't enabled.
+     * @throws KMSInvalidStateException
+     *         The state of the specified KMS resource isn't valid for this request.
+     * @throws KMSNotFoundException
+     *         The specified KMS entity or resource can't be found.
+     * @throws KMSThrottlingException
+     *         This request triggered KMS request throttling.
      * @sample AWSDatabaseMigrationService.ModifyEventSubscription
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyEventSubscription" target="_top">AWS
      *      API Documentation</a>
@@ -728,6 +801,8 @@ public interface AWSDatabaseMigrationService {
      * 
      * @param modifyReplicationInstanceRequest
      * @return Result of the ModifyReplicationInstance operation returned by the service.
+     * @throws AccessDeniedException
+     *         AWS DMS was denied access to the endpoint. Check that the role is correctly configured.
      * @throws InvalidResourceStateException
      *         The resource is in a state that prevents it from being used for database migration.
      * @throws ResourceAlreadyExistsException
@@ -754,7 +829,7 @@ public interface AWSDatabaseMigrationService {
      * @param modifyReplicationSubnetGroupRequest
      * @return Result of the ModifyReplicationSubnetGroup operation returned by the service.
      * @throws AccessDeniedException
-     *         AWS DMS was denied access to the endpoint.
+     *         AWS DMS was denied access to the endpoint. Check that the role is correctly configured.
      * @throws ResourceNotFoundException
      *         The resource could not be found.
      * @throws ResourceQuotaExceededException
@@ -780,8 +855,9 @@ public interface AWSDatabaseMigrationService {
      * You can't modify the task endpoints. The task must be stopped before you can modify it.
      * </p>
      * <p>
-     * For more information about AWS DMS tasks, see the AWS DMS user guide at <a
-     * href="http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.html"> Working with Migration Tasks </a>
+     * For more information about AWS DMS tasks, see <a
+     * href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.html">Working with Migration Tasks</a> in the
+     * <i>AWS Database Migration Service User Guide</i>.
      * </p>
      * 
      * @param modifyReplicationTaskRequest
@@ -799,6 +875,24 @@ public interface AWSDatabaseMigrationService {
      *      Documentation</a>
      */
     ModifyReplicationTaskResult modifyReplicationTask(ModifyReplicationTaskRequest modifyReplicationTaskRequest);
+
+    /**
+     * <p>
+     * Reboots a replication instance. Rebooting results in a momentary outage, until the replication instance becomes
+     * available again.
+     * </p>
+     * 
+     * @param rebootReplicationInstanceRequest
+     * @return Result of the RebootReplicationInstance operation returned by the service.
+     * @throws ResourceNotFoundException
+     *         The resource could not be found.
+     * @throws InvalidResourceStateException
+     *         The resource is in a state that prevents it from being used for database migration.
+     * @sample AWSDatabaseMigrationService.RebootReplicationInstance
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/RebootReplicationInstance" target="_top">AWS
+     *      API Documentation</a>
+     */
+    RebootReplicationInstanceResult rebootReplicationInstance(RebootReplicationInstanceRequest rebootReplicationInstanceRequest);
 
     /**
      * <p>
@@ -859,8 +953,9 @@ public interface AWSDatabaseMigrationService {
      * Starts the replication task.
      * </p>
      * <p>
-     * For more information about AWS DMS tasks, see the AWS DMS user guide at <a
-     * href="http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.html"> Working with Migration Tasks </a>
+     * For more information about AWS DMS tasks, see <a
+     * href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.html">Working with Migration Tasks </a> in the
+     * <i>AWS Database Migration Service User Guide.</i>
      * </p>
      * 
      * @param startReplicationTaskRequest
@@ -869,6 +964,8 @@ public interface AWSDatabaseMigrationService {
      *         The resource could not be found.
      * @throws InvalidResourceStateException
      *         The resource is in a state that prevents it from being used for database migration.
+     * @throws AccessDeniedException
+     *         AWS DMS was denied access to the endpoint. Check that the role is correctly configured.
      * @sample AWSDatabaseMigrationService.StartReplicationTask
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartReplicationTask" target="_top">AWS API
      *      Documentation</a>
@@ -953,5 +1050,7 @@ public interface AWSDatabaseMigrationService {
      * @return The response metadata for the specified request, or null if none is available.
      */
     ResponseMetadata getCachedResponseMetadata(AmazonWebServiceRequest request);
+
+    AWSDatabaseMigrationServiceWaiters waiters();
 
 }

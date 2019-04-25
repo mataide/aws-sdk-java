@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -100,6 +100,10 @@ public class M2tsSettingsJsonUnmarshaller implements Unmarshaller<M2tsSettings, 
                     context.nextToken();
                     m2tsSettings.setEsRateInPes(context.getUnmarshaller(String.class).unmarshall(context));
                 }
+                if (context.testExpression("forceTsVideoEbpOrder", targetDepth)) {
+                    context.nextToken();
+                    m2tsSettings.setForceTsVideoEbpOrder(context.getUnmarshaller(String.class).unmarshall(context));
+                }
                 if (context.testExpression("fragmentTime", targetDepth)) {
                     context.nextToken();
                     m2tsSettings.setFragmentTime(context.getUnmarshaller(Double.class).unmarshall(context));
@@ -111,6 +115,10 @@ public class M2tsSettingsJsonUnmarshaller implements Unmarshaller<M2tsSettings, 
                 if (context.testExpression("minEbpInterval", targetDepth)) {
                     context.nextToken();
                     m2tsSettings.setMinEbpInterval(context.getUnmarshaller(Integer.class).unmarshall(context));
+                }
+                if (context.testExpression("nielsenId3", targetDepth)) {
+                    context.nextToken();
+                    m2tsSettings.setNielsenId3(context.getUnmarshaller(String.class).unmarshall(context));
                 }
                 if (context.testExpression("nullPacketBitrate", targetDepth)) {
                     context.nextToken();
@@ -148,6 +156,10 @@ public class M2tsSettingsJsonUnmarshaller implements Unmarshaller<M2tsSettings, 
                     context.nextToken();
                     m2tsSettings.setRateMode(context.getUnmarshaller(String.class).unmarshall(context));
                 }
+                if (context.testExpression("scte35Esam", targetDepth)) {
+                    context.nextToken();
+                    m2tsSettings.setScte35Esam(M2tsScte35EsamJsonUnmarshaller.getInstance().unmarshall(context));
+                }
                 if (context.testExpression("scte35Pid", targetDepth)) {
                     context.nextToken();
                     m2tsSettings.setScte35Pid(context.getUnmarshaller(Integer.class).unmarshall(context));
@@ -167,6 +179,10 @@ public class M2tsSettingsJsonUnmarshaller implements Unmarshaller<M2tsSettings, 
                 if (context.testExpression("segmentationTime", targetDepth)) {
                     context.nextToken();
                     m2tsSettings.setSegmentationTime(context.getUnmarshaller(Double.class).unmarshall(context));
+                }
+                if (context.testExpression("timedMetadataPid", targetDepth)) {
+                    context.nextToken();
+                    m2tsSettings.setTimedMetadataPid(context.getUnmarshaller(Integer.class).unmarshall(context));
                 }
                 if (context.testExpression("transportStreamId", targetDepth)) {
                     context.nextToken();

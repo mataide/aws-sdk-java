@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -52,13 +52,25 @@ public class OutputGroupSettingsJsonUnmarshaller implements Unmarshaller<OutputG
                     context.nextToken();
                     outputGroupSettings.setArchiveGroupSettings(ArchiveGroupSettingsJsonUnmarshaller.getInstance().unmarshall(context));
                 }
+                if (context.testExpression("frameCaptureGroupSettings", targetDepth)) {
+                    context.nextToken();
+                    outputGroupSettings.setFrameCaptureGroupSettings(FrameCaptureGroupSettingsJsonUnmarshaller.getInstance().unmarshall(context));
+                }
                 if (context.testExpression("hlsGroupSettings", targetDepth)) {
                     context.nextToken();
                     outputGroupSettings.setHlsGroupSettings(HlsGroupSettingsJsonUnmarshaller.getInstance().unmarshall(context));
                 }
+                if (context.testExpression("mediaPackageGroupSettings", targetDepth)) {
+                    context.nextToken();
+                    outputGroupSettings.setMediaPackageGroupSettings(MediaPackageGroupSettingsJsonUnmarshaller.getInstance().unmarshall(context));
+                }
                 if (context.testExpression("msSmoothGroupSettings", targetDepth)) {
                     context.nextToken();
                     outputGroupSettings.setMsSmoothGroupSettings(MsSmoothGroupSettingsJsonUnmarshaller.getInstance().unmarshall(context));
+                }
+                if (context.testExpression("rtmpGroupSettings", targetDepth)) {
+                    context.nextToken();
+                    outputGroupSettings.setRtmpGroupSettings(RtmpGroupSettingsJsonUnmarshaller.getInstance().unmarshall(context));
                 }
                 if (context.testExpression("udpGroupSettings", targetDepth)) {
                     context.nextToken();

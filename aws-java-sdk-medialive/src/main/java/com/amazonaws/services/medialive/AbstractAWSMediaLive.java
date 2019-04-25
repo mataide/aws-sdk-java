@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -28,6 +28,11 @@ public class AbstractAWSMediaLive implements AWSMediaLive {
     }
 
     @Override
+    public BatchUpdateScheduleResult batchUpdateSchedule(BatchUpdateScheduleRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public CreateChannelResult createChannel(CreateChannelRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
@@ -39,6 +44,11 @@ public class AbstractAWSMediaLive implements AWSMediaLive {
 
     @Override
     public CreateInputSecurityGroupResult createInputSecurityGroup(CreateInputSecurityGroupRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public CreateTagsResult createTags(CreateTagsRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -58,6 +68,16 @@ public class AbstractAWSMediaLive implements AWSMediaLive {
     }
 
     @Override
+    public DeleteReservationResult deleteReservation(DeleteReservationRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public DeleteTagsResult deleteTags(DeleteTagsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public DescribeChannelResult describeChannel(DescribeChannelRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
@@ -69,6 +89,21 @@ public class AbstractAWSMediaLive implements AWSMediaLive {
 
     @Override
     public DescribeInputSecurityGroupResult describeInputSecurityGroup(DescribeInputSecurityGroupRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public DescribeOfferingResult describeOffering(DescribeOfferingRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public DescribeReservationResult describeReservation(DescribeReservationRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public DescribeScheduleResult describeSchedule(DescribeScheduleRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -88,12 +123,52 @@ public class AbstractAWSMediaLive implements AWSMediaLive {
     }
 
     @Override
+    public ListOfferingsResult listOfferings(ListOfferingsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public ListReservationsResult listReservations(ListReservationsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public ListTagsForResourceResult listTagsForResource(ListTagsForResourceRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public PurchaseOfferingResult purchaseOffering(PurchaseOfferingRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public StartChannelResult startChannel(StartChannelRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
     @Override
     public StopChannelResult stopChannel(StopChannelRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public UpdateChannelResult updateChannel(UpdateChannelRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public UpdateInputResult updateInput(UpdateInputRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public UpdateInputSecurityGroupResult updateInputSecurityGroup(UpdateInputSecurityGroupRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public UpdateReservationResult updateReservation(UpdateReservationRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -27,18 +27,21 @@ public class Concurrency implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The number of concurrent executions reserved for this function.
+     * The number of concurrent executions that are reserved for this function. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html">Managing Concurrency</a>.
      * </p>
      */
     private Integer reservedConcurrentExecutions;
 
     /**
      * <p>
-     * The number of concurrent executions reserved for this function.
+     * The number of concurrent executions that are reserved for this function. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html">Managing Concurrency</a>.
      * </p>
      * 
      * @param reservedConcurrentExecutions
-     *        The number of concurrent executions reserved for this function.
+     *        The number of concurrent executions that are reserved for this function. For more information, see <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html">Managing Concurrency</a>.
      */
 
     public void setReservedConcurrentExecutions(Integer reservedConcurrentExecutions) {
@@ -47,10 +50,12 @@ public class Concurrency implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The number of concurrent executions reserved for this function.
+     * The number of concurrent executions that are reserved for this function. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html">Managing Concurrency</a>.
      * </p>
      * 
-     * @return The number of concurrent executions reserved for this function.
+     * @return The number of concurrent executions that are reserved for this function. For more information, see <a
+     *         href="https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html">Managing Concurrency</a>.
      */
 
     public Integer getReservedConcurrentExecutions() {
@@ -59,11 +64,13 @@ public class Concurrency implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The number of concurrent executions reserved for this function.
+     * The number of concurrent executions that are reserved for this function. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html">Managing Concurrency</a>.
      * </p>
      * 
      * @param reservedConcurrentExecutions
-     *        The number of concurrent executions reserved for this function.
+     *        The number of concurrent executions that are reserved for this function. For more information, see <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html">Managing Concurrency</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -73,7 +80,8 @@ public class Concurrency implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

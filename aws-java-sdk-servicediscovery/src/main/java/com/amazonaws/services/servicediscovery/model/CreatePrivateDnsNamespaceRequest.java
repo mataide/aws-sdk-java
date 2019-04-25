@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -27,15 +27,16 @@ public class CreatePrivateDnsNamespaceRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * The name that you want to assign to this namespace. When you create a namespace, Amazon Route 53 automatically
-     * creates a hosted zone that has the same name as the namespace.
+     * The name that you want to assign to this namespace. When you create a private DNS namespace, AWS Cloud Map
+     * automatically creates an Amazon Route 53 private hosted zone that has the same name as the namespace.
      * </p>
      */
     private String name;
     /**
      * <p>
-     * An optional parameter that you can use to resolve concurrent creation requests. <code>CreatorRequestId</code>
-     * helps to determine if a specific client owns the namespace.
+     * A unique string that identifies the request and that allows failed <code>CreatePrivateDnsNamespace</code>
+     * requests to be retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be
+     * any unique string, for example, a date/time stamp.
      * </p>
      */
     private String creatorRequestId;
@@ -54,13 +55,13 @@ public class CreatePrivateDnsNamespaceRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * The name that you want to assign to this namespace. When you create a namespace, Amazon Route 53 automatically
-     * creates a hosted zone that has the same name as the namespace.
+     * The name that you want to assign to this namespace. When you create a private DNS namespace, AWS Cloud Map
+     * automatically creates an Amazon Route 53 private hosted zone that has the same name as the namespace.
      * </p>
      * 
      * @param name
-     *        The name that you want to assign to this namespace. When you create a namespace, Amazon Route 53
-     *        automatically creates a hosted zone that has the same name as the namespace.
+     *        The name that you want to assign to this namespace. When you create a private DNS namespace, AWS Cloud Map
+     *        automatically creates an Amazon Route 53 private hosted zone that has the same name as the namespace.
      */
 
     public void setName(String name) {
@@ -69,12 +70,12 @@ public class CreatePrivateDnsNamespaceRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * The name that you want to assign to this namespace. When you create a namespace, Amazon Route 53 automatically
-     * creates a hosted zone that has the same name as the namespace.
+     * The name that you want to assign to this namespace. When you create a private DNS namespace, AWS Cloud Map
+     * automatically creates an Amazon Route 53 private hosted zone that has the same name as the namespace.
      * </p>
      * 
-     * @return The name that you want to assign to this namespace. When you create a namespace, Amazon Route 53
-     *         automatically creates a hosted zone that has the same name as the namespace.
+     * @return The name that you want to assign to this namespace. When you create a private DNS namespace, AWS Cloud
+     *         Map automatically creates an Amazon Route 53 private hosted zone that has the same name as the namespace.
      */
 
     public String getName() {
@@ -83,13 +84,13 @@ public class CreatePrivateDnsNamespaceRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * The name that you want to assign to this namespace. When you create a namespace, Amazon Route 53 automatically
-     * creates a hosted zone that has the same name as the namespace.
+     * The name that you want to assign to this namespace. When you create a private DNS namespace, AWS Cloud Map
+     * automatically creates an Amazon Route 53 private hosted zone that has the same name as the namespace.
      * </p>
      * 
      * @param name
-     *        The name that you want to assign to this namespace. When you create a namespace, Amazon Route 53
-     *        automatically creates a hosted zone that has the same name as the namespace.
+     *        The name that you want to assign to this namespace. When you create a private DNS namespace, AWS Cloud Map
+     *        automatically creates an Amazon Route 53 private hosted zone that has the same name as the namespace.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -100,13 +101,15 @@ public class CreatePrivateDnsNamespaceRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * An optional parameter that you can use to resolve concurrent creation requests. <code>CreatorRequestId</code>
-     * helps to determine if a specific client owns the namespace.
+     * A unique string that identifies the request and that allows failed <code>CreatePrivateDnsNamespace</code>
+     * requests to be retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be
+     * any unique string, for example, a date/time stamp.
      * </p>
      * 
      * @param creatorRequestId
-     *        An optional parameter that you can use to resolve concurrent creation requests.
-     *        <code>CreatorRequestId</code> helps to determine if a specific client owns the namespace.
+     *        A unique string that identifies the request and that allows failed <code>CreatePrivateDnsNamespace</code>
+     *        requests to be retried without the risk of executing the operation twice. <code>CreatorRequestId</code>
+     *        can be any unique string, for example, a date/time stamp.
      */
 
     public void setCreatorRequestId(String creatorRequestId) {
@@ -115,12 +118,14 @@ public class CreatePrivateDnsNamespaceRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * An optional parameter that you can use to resolve concurrent creation requests. <code>CreatorRequestId</code>
-     * helps to determine if a specific client owns the namespace.
+     * A unique string that identifies the request and that allows failed <code>CreatePrivateDnsNamespace</code>
+     * requests to be retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be
+     * any unique string, for example, a date/time stamp.
      * </p>
      * 
-     * @return An optional parameter that you can use to resolve concurrent creation requests.
-     *         <code>CreatorRequestId</code> helps to determine if a specific client owns the namespace.
+     * @return A unique string that identifies the request and that allows failed <code>CreatePrivateDnsNamespace</code>
+     *         requests to be retried without the risk of executing the operation twice. <code>CreatorRequestId</code>
+     *         can be any unique string, for example, a date/time stamp.
      */
 
     public String getCreatorRequestId() {
@@ -129,13 +134,15 @@ public class CreatePrivateDnsNamespaceRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * An optional parameter that you can use to resolve concurrent creation requests. <code>CreatorRequestId</code>
-     * helps to determine if a specific client owns the namespace.
+     * A unique string that identifies the request and that allows failed <code>CreatePrivateDnsNamespace</code>
+     * requests to be retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be
+     * any unique string, for example, a date/time stamp.
      * </p>
      * 
      * @param creatorRequestId
-     *        An optional parameter that you can use to resolve concurrent creation requests.
-     *        <code>CreatorRequestId</code> helps to determine if a specific client owns the namespace.
+     *        A unique string that identifies the request and that allows failed <code>CreatePrivateDnsNamespace</code>
+     *        requests to be retried without the risk of executing the operation twice. <code>CreatorRequestId</code>
+     *        can be any unique string, for example, a date/time stamp.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -225,7 +232,8 @@ public class CreatePrivateDnsNamespaceRequest extends com.amazonaws.AmazonWebSer
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

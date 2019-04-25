@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,9 +18,6 @@ import javax.annotation.Generated;
 import com.amazonaws.AmazonWebServiceRequest;
 
 /**
- * <p>
- * Contains the inputs for the <a>RebuildWorkspaces</a> operation.
- * </p>
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/RebuildWorkspaces" target="_top">AWS API
  *      Documentation</a>
@@ -30,17 +27,23 @@ public class RebuildWorkspacesRequest extends com.amazonaws.AmazonWebServiceRequ
 
     /**
      * <p>
-     * An array of structures that specify the WorkSpaces to rebuild.
+     * The WorkSpace to rebuild. You can specify a single WorkSpace.
      * </p>
      */
     private com.amazonaws.internal.SdkInternalList<RebuildRequest> rebuildWorkspaceRequests;
+    /**
+     * <p>
+     * Reserved.
+     * </p>
+     */
+    private String additionalInfo;
 
     /**
      * <p>
-     * An array of structures that specify the WorkSpaces to rebuild.
+     * The WorkSpace to rebuild. You can specify a single WorkSpace.
      * </p>
      * 
-     * @return An array of structures that specify the WorkSpaces to rebuild.
+     * @return The WorkSpace to rebuild. You can specify a single WorkSpace.
      */
 
     public java.util.List<RebuildRequest> getRebuildWorkspaceRequests() {
@@ -52,11 +55,11 @@ public class RebuildWorkspacesRequest extends com.amazonaws.AmazonWebServiceRequ
 
     /**
      * <p>
-     * An array of structures that specify the WorkSpaces to rebuild.
+     * The WorkSpace to rebuild. You can specify a single WorkSpace.
      * </p>
      * 
      * @param rebuildWorkspaceRequests
-     *        An array of structures that specify the WorkSpaces to rebuild.
+     *        The WorkSpace to rebuild. You can specify a single WorkSpace.
      */
 
     public void setRebuildWorkspaceRequests(java.util.Collection<RebuildRequest> rebuildWorkspaceRequests) {
@@ -70,7 +73,7 @@ public class RebuildWorkspacesRequest extends com.amazonaws.AmazonWebServiceRequ
 
     /**
      * <p>
-     * An array of structures that specify the WorkSpaces to rebuild.
+     * The WorkSpace to rebuild. You can specify a single WorkSpace.
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
@@ -79,7 +82,7 @@ public class RebuildWorkspacesRequest extends com.amazonaws.AmazonWebServiceRequ
      * </p>
      * 
      * @param rebuildWorkspaceRequests
-     *        An array of structures that specify the WorkSpaces to rebuild.
+     *        The WorkSpace to rebuild. You can specify a single WorkSpace.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -95,11 +98,11 @@ public class RebuildWorkspacesRequest extends com.amazonaws.AmazonWebServiceRequ
 
     /**
      * <p>
-     * An array of structures that specify the WorkSpaces to rebuild.
+     * The WorkSpace to rebuild. You can specify a single WorkSpace.
      * </p>
      * 
      * @param rebuildWorkspaceRequests
-     *        An array of structures that specify the WorkSpaces to rebuild.
+     *        The WorkSpace to rebuild. You can specify a single WorkSpace.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -109,7 +112,48 @@ public class RebuildWorkspacesRequest extends com.amazonaws.AmazonWebServiceRequ
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * Reserved.
+     * </p>
+     * 
+     * @param additionalInfo
+     *        Reserved.
+     */
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    /**
+     * <p>
+     * Reserved.
+     * </p>
+     * 
+     * @return Reserved.
+     */
+
+    public String getAdditionalInfo() {
+        return this.additionalInfo;
+    }
+
+    /**
+     * <p>
+     * Reserved.
+     * </p>
+     * 
+     * @param additionalInfo
+     *        Reserved.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public RebuildWorkspacesRequest withAdditionalInfo(String additionalInfo) {
+        setAdditionalInfo(additionalInfo);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -120,7 +164,9 @@ public class RebuildWorkspacesRequest extends com.amazonaws.AmazonWebServiceRequ
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         if (getRebuildWorkspaceRequests() != null)
-            sb.append("RebuildWorkspaceRequests: ").append(getRebuildWorkspaceRequests());
+            sb.append("RebuildWorkspaceRequests: ").append(getRebuildWorkspaceRequests()).append(",");
+        if (getAdditionalInfo() != null)
+            sb.append("AdditionalInfo: ").append(getAdditionalInfo());
         sb.append("}");
         return sb.toString();
     }
@@ -139,6 +185,10 @@ public class RebuildWorkspacesRequest extends com.amazonaws.AmazonWebServiceRequ
             return false;
         if (other.getRebuildWorkspaceRequests() != null && other.getRebuildWorkspaceRequests().equals(this.getRebuildWorkspaceRequests()) == false)
             return false;
+        if (other.getAdditionalInfo() == null ^ this.getAdditionalInfo() == null)
+            return false;
+        if (other.getAdditionalInfo() != null && other.getAdditionalInfo().equals(this.getAdditionalInfo()) == false)
+            return false;
         return true;
     }
 
@@ -148,6 +198,7 @@ public class RebuildWorkspacesRequest extends com.amazonaws.AmazonWebServiceRequ
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getRebuildWorkspaceRequests() == null) ? 0 : getRebuildWorkspaceRequests().hashCode());
+        hashCode = prime * hashCode + ((getAdditionalInfo() == null) ? 0 : getAdditionalInfo().hashCode());
         return hashCode;
     }
 

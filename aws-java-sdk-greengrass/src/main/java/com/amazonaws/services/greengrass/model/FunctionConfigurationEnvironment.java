@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,7 +18,7 @@ import com.amazonaws.protocol.StructuredPojo;
 import com.amazonaws.protocol.ProtocolMarshaller;
 
 /**
- * Environment of the function configuration
+ * The environment configuration of the function.
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/FunctionConfigurationEnvironment"
  *      target="_top">AWS API Documentation</a>
@@ -26,18 +26,32 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class FunctionConfigurationEnvironment implements Serializable, Cloneable, StructuredPojo {
 
-    /** Flag to allow lambda access sys filesystem. */
+    /**
+     * If true, the Lambda function is allowed to access the host's /sys folder. Use this when the Lambda function needs
+     * to read device information from /sys. This setting applies only when you run the Lambda function in a Greengrass
+     * container.
+     */
     private Boolean accessSysfs;
-    /** Policies for the function to access resources. */
+    /** Configuration related to executing the Lambda function */
+    private FunctionExecutionConfig execution;
+    /**
+     * A list of the resources, with their permissions, to which the Lambda function will be granted access. A Lambda
+     * function can have at most 10 resources. ResourceAccessPolicies apply only when you run the Lambda function in a
+     * Greengrass container.
+     */
     private java.util.List<ResourceAccessPolicy> resourceAccessPolicies;
-    /** Environment variables for the lambda function. */
+    /** Environment variables for the Lambda function's configuration. */
     private java.util.Map<String, String> variables;
 
     /**
-     * Flag to allow lambda access sys filesystem.
+     * If true, the Lambda function is allowed to access the host's /sys folder. Use this when the Lambda function needs
+     * to read device information from /sys. This setting applies only when you run the Lambda function in a Greengrass
+     * container.
      * 
      * @param accessSysfs
-     *        Flag to allow lambda access sys filesystem.
+     *        If true, the Lambda function is allowed to access the host's /sys folder. Use this when the Lambda
+     *        function needs to read device information from /sys. This setting applies only when you run the Lambda
+     *        function in a Greengrass container.
      */
 
     public void setAccessSysfs(Boolean accessSysfs) {
@@ -45,9 +59,13 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Flag to allow lambda access sys filesystem.
+     * If true, the Lambda function is allowed to access the host's /sys folder. Use this when the Lambda function needs
+     * to read device information from /sys. This setting applies only when you run the Lambda function in a Greengrass
+     * container.
      * 
-     * @return Flag to allow lambda access sys filesystem.
+     * @return If true, the Lambda function is allowed to access the host's /sys folder. Use this when the Lambda
+     *         function needs to read device information from /sys. This setting applies only when you run the Lambda
+     *         function in a Greengrass container.
      */
 
     public Boolean getAccessSysfs() {
@@ -55,10 +73,14 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Flag to allow lambda access sys filesystem.
+     * If true, the Lambda function is allowed to access the host's /sys folder. Use this when the Lambda function needs
+     * to read device information from /sys. This setting applies only when you run the Lambda function in a Greengrass
+     * container.
      * 
      * @param accessSysfs
-     *        Flag to allow lambda access sys filesystem.
+     *        If true, the Lambda function is allowed to access the host's /sys folder. Use this when the Lambda
+     *        function needs to read device information from /sys. This setting applies only when you run the Lambda
+     *        function in a Greengrass container.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -68,9 +90,13 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Flag to allow lambda access sys filesystem.
+     * If true, the Lambda function is allowed to access the host's /sys folder. Use this when the Lambda function needs
+     * to read device information from /sys. This setting applies only when you run the Lambda function in a Greengrass
+     * container.
      * 
-     * @return Flag to allow lambda access sys filesystem.
+     * @return If true, the Lambda function is allowed to access the host's /sys folder. Use this when the Lambda
+     *         function needs to read device information from /sys. This setting applies only when you run the Lambda
+     *         function in a Greengrass container.
      */
 
     public Boolean isAccessSysfs() {
@@ -78,9 +104,47 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Policies for the function to access resources.
+     * Configuration related to executing the Lambda function
      * 
-     * @return Policies for the function to access resources.
+     * @param execution
+     *        Configuration related to executing the Lambda function
+     */
+
+    public void setExecution(FunctionExecutionConfig execution) {
+        this.execution = execution;
+    }
+
+    /**
+     * Configuration related to executing the Lambda function
+     * 
+     * @return Configuration related to executing the Lambda function
+     */
+
+    public FunctionExecutionConfig getExecution() {
+        return this.execution;
+    }
+
+    /**
+     * Configuration related to executing the Lambda function
+     * 
+     * @param execution
+     *        Configuration related to executing the Lambda function
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public FunctionConfigurationEnvironment withExecution(FunctionExecutionConfig execution) {
+        setExecution(execution);
+        return this;
+    }
+
+    /**
+     * A list of the resources, with their permissions, to which the Lambda function will be granted access. A Lambda
+     * function can have at most 10 resources. ResourceAccessPolicies apply only when you run the Lambda function in a
+     * Greengrass container.
+     * 
+     * @return A list of the resources, with their permissions, to which the Lambda function will be granted access. A
+     *         Lambda function can have at most 10 resources. ResourceAccessPolicies apply only when you run the Lambda
+     *         function in a Greengrass container.
      */
 
     public java.util.List<ResourceAccessPolicy> getResourceAccessPolicies() {
@@ -88,10 +152,14 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Policies for the function to access resources.
+     * A list of the resources, with their permissions, to which the Lambda function will be granted access. A Lambda
+     * function can have at most 10 resources. ResourceAccessPolicies apply only when you run the Lambda function in a
+     * Greengrass container.
      * 
      * @param resourceAccessPolicies
-     *        Policies for the function to access resources.
+     *        A list of the resources, with their permissions, to which the Lambda function will be granted access. A
+     *        Lambda function can have at most 10 resources. ResourceAccessPolicies apply only when you run the Lambda
+     *        function in a Greengrass container.
      */
 
     public void setResourceAccessPolicies(java.util.Collection<ResourceAccessPolicy> resourceAccessPolicies) {
@@ -104,7 +172,9 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Policies for the function to access resources.
+     * A list of the resources, with their permissions, to which the Lambda function will be granted access. A Lambda
+     * function can have at most 10 resources. ResourceAccessPolicies apply only when you run the Lambda function in a
+     * Greengrass container.
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setResourceAccessPolicies(java.util.Collection)} or
@@ -112,7 +182,9 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
      * </p>
      * 
      * @param resourceAccessPolicies
-     *        Policies for the function to access resources.
+     *        A list of the resources, with their permissions, to which the Lambda function will be granted access. A
+     *        Lambda function can have at most 10 resources. ResourceAccessPolicies apply only when you run the Lambda
+     *        function in a Greengrass container.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -127,10 +199,14 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Policies for the function to access resources.
+     * A list of the resources, with their permissions, to which the Lambda function will be granted access. A Lambda
+     * function can have at most 10 resources. ResourceAccessPolicies apply only when you run the Lambda function in a
+     * Greengrass container.
      * 
      * @param resourceAccessPolicies
-     *        Policies for the function to access resources.
+     *        A list of the resources, with their permissions, to which the Lambda function will be granted access. A
+     *        Lambda function can have at most 10 resources. ResourceAccessPolicies apply only when you run the Lambda
+     *        function in a Greengrass container.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -140,9 +216,9 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Environment variables for the lambda function.
+     * Environment variables for the Lambda function's configuration.
      * 
-     * @return Environment variables for the lambda function.
+     * @return Environment variables for the Lambda function's configuration.
      */
 
     public java.util.Map<String, String> getVariables() {
@@ -150,10 +226,10 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Environment variables for the lambda function.
+     * Environment variables for the Lambda function's configuration.
      * 
      * @param variables
-     *        Environment variables for the lambda function.
+     *        Environment variables for the Lambda function's configuration.
      */
 
     public void setVariables(java.util.Map<String, String> variables) {
@@ -161,10 +237,10 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Environment variables for the lambda function.
+     * Environment variables for the Lambda function's configuration.
      * 
      * @param variables
-     *        Environment variables for the lambda function.
+     *        Environment variables for the Lambda function's configuration.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -195,7 +271,8 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -207,6 +284,8 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
         sb.append("{");
         if (getAccessSysfs() != null)
             sb.append("AccessSysfs: ").append(getAccessSysfs()).append(",");
+        if (getExecution() != null)
+            sb.append("Execution: ").append(getExecution()).append(",");
         if (getResourceAccessPolicies() != null)
             sb.append("ResourceAccessPolicies: ").append(getResourceAccessPolicies()).append(",");
         if (getVariables() != null)
@@ -229,6 +308,10 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
             return false;
         if (other.getAccessSysfs() != null && other.getAccessSysfs().equals(this.getAccessSysfs()) == false)
             return false;
+        if (other.getExecution() == null ^ this.getExecution() == null)
+            return false;
+        if (other.getExecution() != null && other.getExecution().equals(this.getExecution()) == false)
+            return false;
         if (other.getResourceAccessPolicies() == null ^ this.getResourceAccessPolicies() == null)
             return false;
         if (other.getResourceAccessPolicies() != null && other.getResourceAccessPolicies().equals(this.getResourceAccessPolicies()) == false)
@@ -246,6 +329,7 @@ public class FunctionConfigurationEnvironment implements Serializable, Cloneable
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getAccessSysfs() == null) ? 0 : getAccessSysfs().hashCode());
+        hashCode = prime * hashCode + ((getExecution() == null) ? 0 : getExecution().hashCode());
         hashCode = prime * hashCode + ((getResourceAccessPolicies() == null) ? 0 : getResourceAccessPolicies().hashCode());
         hashCode = prime * hashCode + ((getVariables() == null) ? 0 : getVariables().hashCode());
         return hashCode;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,8 @@ import com.amazonaws.protocol.json.*;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.annotation.ThreadSafe;
 import com.amazonaws.client.AwsSyncClientParams;
+import com.amazonaws.client.builder.AdvancedConfig;
+
 import com.amazonaws.services.serverlessapplicationrepository.AWSServerlessApplicationRepositoryClientBuilder;
 
 import com.amazonaws.AmazonServiceException;
@@ -48,11 +50,46 @@ import com.amazonaws.services.serverlessapplicationrepository.model.transform.*;
  * Client for accessing AWSServerlessApplicationRepository. All service calls made using this client are blocking, and
  * will not return until the service call completes.
  * <p>
- * AWS Serverless Repository
+ * <p>
+ * The AWS Serverless Application Repository makes it easy for developers and enterprises to quickly find and deploy
+ * serverless applications in the AWS Cloud. For more information about serverless applications, see Serverless
+ * Computing and Applications on the AWS website.
+ * </p>
+ * <p>
+ * The AWS Serverless Application Repository is deeply integrated with the AWS Lambda console, so that developers of all
+ * levels can get started with serverless computing without needing to learn anything new. You can use category keywords
+ * to browse for applications such as web and mobile backends, data processing applications, or chatbots. You can also
+ * search for applications by name, publisher, or event source. To use an application, you simply choose it, configure
+ * any required fields, and deploy it with a few clicks.
+ * </p>
+ * <p>
+ * You can also easily publish applications, sharing them publicly with the community at large, or privately within your
+ * team or across your organization. To publish a serverless application (or app), you can use the AWS Management
+ * Console, AWS Command Line Interface (AWS CLI), or AWS SDKs to upload the code. Along with the code, you upload a
+ * simple manifest file, also known as the AWS Serverless Application Model (AWS SAM) template. For more information
+ * about AWS SAM, see AWS Serverless Application Model (AWS SAM) on the AWS Labs GitHub repository.
+ * </p>
+ * <p>
+ * The AWS Serverless Application Repository Developer Guide contains more information about the two developer
+ * experiences available:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * Consuming Applications – Browse for applications and view information about them, including source code and readme
+ * files. Also install, configure, and deploy applications of your choosing.
+ * </p>
+ * <p>
+ * Publishing Applications – Configure and upload applications to make them available to other developers, and publish
+ * new versions of applications.
+ * </p>
+ * </li>
+ * </ul>
  */
 @ThreadSafe
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceClient implements AWSServerlessApplicationRepository {
+
     /** Provider for AWS credentials. */
     private final AWSCredentialsProvider awsCredentialsProvider;
 
@@ -63,6 +100,8 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
 
     /** Client configuration factory providing ClientConfigurations tailored to this client */
     protected static final ClientConfigurationFactory configFactory = new ClientConfigurationFactory();
+
+    private final AdvancedConfig advancedConfig;
 
     private static final com.amazonaws.protocol.json.SdkJsonProtocolFactory protocolFactory = new com.amazonaws.protocol.json.SdkJsonProtocolFactory(
             new JsonClientMetadata()
@@ -107,8 +146,24 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
      *        Object providing client parameters.
      */
     AWSServerlessApplicationRepositoryClient(AwsSyncClientParams clientParams) {
+        this(clientParams, false);
+    }
+
+    /**
+     * Constructs a new client to invoke service methods on AWSServerlessApplicationRepository using the specified
+     * parameters.
+     *
+     * <p>
+     * All service calls made using this new client object are blocking, and will not return until the service call
+     * completes.
+     *
+     * @param clientParams
+     *        Object providing client parameters.
+     */
+    AWSServerlessApplicationRepositoryClient(AwsSyncClientParams clientParams, boolean endpointDiscoveryEnabled) {
         super(clientParams);
         this.awsCredentialsProvider = clientParams.getCredentialsProvider();
+        this.advancedConfig = clientParams.getAdvancedConfig();
         init();
     }
 
@@ -124,21 +179,23 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     }
 
     /**
+     * <p>
      * Creates an application, optionally including an AWS SAM file to create the first application version in the same
      * call.
+     * </p>
      * 
      * @param createApplicationRequest
      * @return Result of the CreateApplication operation returned by the service.
      * @throws TooManyRequestsException
-     *         429 response
+     *         The client is sending more than the allowed number of requests per unit of time.
      * @throws BadRequestException
-     *         400 response
+     *         One of the parameters in the request is invalid.
      * @throws InternalServerErrorException
-     *         500 response
+     *         The AWS Serverless Application Repository service encountered an internal error.
      * @throws ConflictException
-     *         409 response
+     *         The resource already exists.
      * @throws ForbiddenException
-     *         403 response
+     *         The client is not authenticated.
      * @sample AWSServerlessApplicationRepository.CreateApplication
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/CreateApplication"
      *      target="_top">AWS API Documentation</a>
@@ -164,6 +221,10 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
                 request = new CreateApplicationRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createApplicationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateApplication");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -181,20 +242,22 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     }
 
     /**
+     * <p>
      * Creates an application version.
+     * </p>
      * 
      * @param createApplicationVersionRequest
      * @return Result of the CreateApplicationVersion operation returned by the service.
      * @throws TooManyRequestsException
-     *         429 response
+     *         The client is sending more than the allowed number of requests per unit of time.
      * @throws BadRequestException
-     *         400 response
+     *         One of the parameters in the request is invalid.
      * @throws InternalServerErrorException
-     *         500 response
+     *         The AWS Serverless Application Repository service encountered an internal error.
      * @throws ConflictException
-     *         409 response
+     *         The resource already exists.
      * @throws ForbiddenException
-     *         403 response
+     *         The client is not authenticated.
      * @sample AWSServerlessApplicationRepository.CreateApplicationVersion
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/CreateApplicationVersion"
      *      target="_top">AWS API Documentation</a>
@@ -221,6 +284,10 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
                         .beforeMarshalling(createApplicationVersionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateApplicationVersion");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -239,19 +306,20 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     }
 
     /**
-     * Creates an AWS CloudFormation ChangeSet for the given application.
+     * <p>
+     * Creates an AWS CloudFormation change set for the given application.
+     * </p>
      * 
      * @param createCloudFormationChangeSetRequest
-     *        Create application ChangeSet request
      * @return Result of the CreateCloudFormationChangeSet operation returned by the service.
      * @throws TooManyRequestsException
-     *         429 response
+     *         The client is sending more than the allowed number of requests per unit of time.
      * @throws BadRequestException
-     *         400 response
+     *         One of the parameters in the request is invalid.
      * @throws InternalServerErrorException
-     *         500 response
+     *         The AWS Serverless Application Repository service encountered an internal error.
      * @throws ForbiddenException
-     *         403 response
+     *         The client is not authenticated.
      * @sample AWSServerlessApplicationRepository.CreateCloudFormationChangeSet
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/CreateCloudFormationChangeSet"
      *      target="_top">AWS API Documentation</a>
@@ -278,6 +346,10 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
                         .beforeMarshalling(createCloudFormationChangeSetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateCloudFormationChangeSet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -296,20 +368,150 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     }
 
     /**
+     * <p>
+     * Creates an AWS CloudFormation template.
+     * </p>
+     * 
+     * @param createCloudFormationTemplateRequest
+     * @return Result of the CreateCloudFormationTemplate operation returned by the service.
+     * @throws NotFoundException
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
+     * @throws TooManyRequestsException
+     *         The client is sending more than the allowed number of requests per unit of time.
+     * @throws BadRequestException
+     *         One of the parameters in the request is invalid.
+     * @throws InternalServerErrorException
+     *         The AWS Serverless Application Repository service encountered an internal error.
+     * @throws ForbiddenException
+     *         The client is not authenticated.
+     * @sample AWSServerlessApplicationRepository.CreateCloudFormationTemplate
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/CreateCloudFormationTemplate"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public CreateCloudFormationTemplateResult createCloudFormationTemplate(CreateCloudFormationTemplateRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateCloudFormationTemplate(request);
+    }
+
+    @SdkInternalApi
+    final CreateCloudFormationTemplateResult executeCreateCloudFormationTemplate(CreateCloudFormationTemplateRequest createCloudFormationTemplateRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createCloudFormationTemplateRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateCloudFormationTemplateRequest> request = null;
+        Response<CreateCloudFormationTemplateResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateCloudFormationTemplateRequestProtocolMarshaller(protocolFactory).marshall(super
+                        .beforeMarshalling(createCloudFormationTemplateRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateCloudFormationTemplate");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<CreateCloudFormationTemplateResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false),
+                    new CreateCloudFormationTemplateResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes the specified application.
+     * </p>
+     * 
+     * @param deleteApplicationRequest
+     * @return Result of the DeleteApplication operation returned by the service.
+     * @throws BadRequestException
+     *         One of the parameters in the request is invalid.
+     * @throws InternalServerErrorException
+     *         The AWS Serverless Application Repository service encountered an internal error.
+     * @throws ForbiddenException
+     *         The client is not authenticated.
+     * @throws NotFoundException
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
+     * @throws TooManyRequestsException
+     *         The client is sending more than the allowed number of requests per unit of time.
+     * @throws ConflictException
+     *         The resource already exists.
+     * @sample AWSServerlessApplicationRepository.DeleteApplication
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/DeleteApplication"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DeleteApplicationResult deleteApplication(DeleteApplicationRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteApplication(request);
+    }
+
+    @SdkInternalApi
+    final DeleteApplicationResult executeDeleteApplication(DeleteApplicationRequest deleteApplicationRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteApplicationRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteApplicationRequest> request = null;
+        Response<DeleteApplicationResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteApplicationRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteApplicationRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteApplication");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<DeleteApplicationResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new DeleteApplicationResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Gets the specified application.
+     * </p>
      * 
      * @param getApplicationRequest
      * @return Result of the GetApplication operation returned by the service.
      * @throws NotFoundException
-     *         404 response
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
      * @throws TooManyRequestsException
-     *         429 response
+     *         The client is sending more than the allowed number of requests per unit of time.
      * @throws BadRequestException
-     *         400 response
+     *         One of the parameters in the request is invalid.
      * @throws InternalServerErrorException
-     *         500 response
+     *         The AWS Serverless Application Repository service encountered an internal error.
      * @throws ForbiddenException
-     *         403 response
+     *         The client is not authenticated.
      * @sample AWSServerlessApplicationRepository.GetApplication
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/GetApplication" target="_top">AWS
      *      API Documentation</a>
@@ -335,6 +537,10 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
                 request = new GetApplicationRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getApplicationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetApplication");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -352,20 +558,22 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     }
 
     /**
-     * Gets the policy for the specified application.
+     * <p>
+     * Retrieves the policy for the application.
+     * </p>
      * 
      * @param getApplicationPolicyRequest
      * @return Result of the GetApplicationPolicy operation returned by the service.
      * @throws NotFoundException
-     *         404 response
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
      * @throws TooManyRequestsException
-     *         429 response
+     *         The client is sending more than the allowed number of requests per unit of time.
      * @throws BadRequestException
-     *         400 response
+     *         One of the parameters in the request is invalid.
      * @throws InternalServerErrorException
-     *         500 response
+     *         The AWS Serverless Application Repository service encountered an internal error.
      * @throws ForbiddenException
-     *         403 response
+     *         The client is not authenticated.
      * @sample AWSServerlessApplicationRepository.GetApplicationPolicy
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/GetApplicationPolicy"
      *      target="_top">AWS API Documentation</a>
@@ -391,6 +599,10 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
                 request = new GetApplicationPolicyRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getApplicationPolicyRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetApplicationPolicy");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -408,20 +620,150 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     }
 
     /**
+     * <p>
+     * Gets the specified AWS CloudFormation template.
+     * </p>
+     * 
+     * @param getCloudFormationTemplateRequest
+     * @return Result of the GetCloudFormationTemplate operation returned by the service.
+     * @throws NotFoundException
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
+     * @throws TooManyRequestsException
+     *         The client is sending more than the allowed number of requests per unit of time.
+     * @throws BadRequestException
+     *         One of the parameters in the request is invalid.
+     * @throws InternalServerErrorException
+     *         The AWS Serverless Application Repository service encountered an internal error.
+     * @throws ForbiddenException
+     *         The client is not authenticated.
+     * @sample AWSServerlessApplicationRepository.GetCloudFormationTemplate
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/GetCloudFormationTemplate"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public GetCloudFormationTemplateResult getCloudFormationTemplate(GetCloudFormationTemplateRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetCloudFormationTemplate(request);
+    }
+
+    @SdkInternalApi
+    final GetCloudFormationTemplateResult executeGetCloudFormationTemplate(GetCloudFormationTemplateRequest getCloudFormationTemplateRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getCloudFormationTemplateRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetCloudFormationTemplateRequest> request = null;
+        Response<GetCloudFormationTemplateResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetCloudFormationTemplateRequestProtocolMarshaller(protocolFactory).marshall(super
+                        .beforeMarshalling(getCloudFormationTemplateRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetCloudFormationTemplate");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<GetCloudFormationTemplateResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false),
+                    new GetCloudFormationTemplateResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Retrieves the list of applications nested in the containing application.
+     * </p>
+     * 
+     * @param listApplicationDependenciesRequest
+     * @return Result of the ListApplicationDependencies operation returned by the service.
+     * @throws NotFoundException
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
+     * @throws TooManyRequestsException
+     *         The client is sending more than the allowed number of requests per unit of time.
+     * @throws BadRequestException
+     *         One of the parameters in the request is invalid.
+     * @throws InternalServerErrorException
+     *         The AWS Serverless Application Repository service encountered an internal error.
+     * @throws ForbiddenException
+     *         The client is not authenticated.
+     * @sample AWSServerlessApplicationRepository.ListApplicationDependencies
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/ListApplicationDependencies"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public ListApplicationDependenciesResult listApplicationDependencies(ListApplicationDependenciesRequest request) {
+        request = beforeClientExecution(request);
+        return executeListApplicationDependencies(request);
+    }
+
+    @SdkInternalApi
+    final ListApplicationDependenciesResult executeListApplicationDependencies(ListApplicationDependenciesRequest listApplicationDependenciesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(listApplicationDependenciesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListApplicationDependenciesRequest> request = null;
+        Response<ListApplicationDependenciesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListApplicationDependenciesRequestProtocolMarshaller(protocolFactory).marshall(super
+                        .beforeMarshalling(listApplicationDependenciesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListApplicationDependencies");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<ListApplicationDependenciesResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false),
+                    new ListApplicationDependenciesResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Lists versions for the specified application.
+     * </p>
      * 
      * @param listApplicationVersionsRequest
      * @return Result of the ListApplicationVersions operation returned by the service.
      * @throws NotFoundException
-     *         404 response
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
      * @throws TooManyRequestsException
-     *         429 response
+     *         The client is sending more than the allowed number of requests per unit of time.
      * @throws BadRequestException
-     *         400 response
+     *         One of the parameters in the request is invalid.
      * @throws InternalServerErrorException
-     *         500 response
+     *         The AWS Serverless Application Repository service encountered an internal error.
      * @throws ForbiddenException
-     *         403 response
+     *         The client is not authenticated.
      * @sample AWSServerlessApplicationRepository.ListApplicationVersions
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/ListApplicationVersions"
      *      target="_top">AWS API Documentation</a>
@@ -448,6 +790,10 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
                         .beforeMarshalling(listApplicationVersionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListApplicationVersions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -466,18 +812,20 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     }
 
     /**
+     * <p>
      * Lists applications owned by the requester.
+     * </p>
      * 
      * @param listApplicationsRequest
      * @return Result of the ListApplications operation returned by the service.
      * @throws NotFoundException
-     *         404 response
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
      * @throws BadRequestException
-     *         400 response
+     *         One of the parameters in the request is invalid.
      * @throws InternalServerErrorException
-     *         500 response
+     *         The AWS Serverless Application Repository service encountered an internal error.
      * @throws ForbiddenException
-     *         403 response
+     *         The client is not authenticated.
      * @sample AWSServerlessApplicationRepository.ListApplications
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/ListApplications"
      *      target="_top">AWS API Documentation</a>
@@ -503,6 +851,10 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
                 request = new ListApplicationsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listApplicationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListApplications");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -520,21 +872,24 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     }
 
     /**
-     * Puts the policy for the specified application.
+     * <p>
+     * Sets the permission policy for an application. For the list of actions supported for this operation, see <a href=
+     * "https://docs.aws.amazon.com/serverlessrepo/latest/devguide/access-control-resource-based.html#application-permissions"
+     * >Application Permissions</a> .
+     * </p>
      * 
      * @param putApplicationPolicyRequest
-     *        Put policy request
      * @return Result of the PutApplicationPolicy operation returned by the service.
      * @throws NotFoundException
-     *         404 response
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
      * @throws TooManyRequestsException
-     *         429 response
+     *         The client is sending more than the allowed number of requests per unit of time.
      * @throws BadRequestException
-     *         400 response
+     *         One of the parameters in the request is invalid.
      * @throws InternalServerErrorException
-     *         500 response
+     *         The AWS Serverless Application Repository service encountered an internal error.
      * @throws ForbiddenException
-     *         403 response
+     *         The client is not authenticated.
      * @sample AWSServerlessApplicationRepository.PutApplicationPolicy
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/PutApplicationPolicy"
      *      target="_top">AWS API Documentation</a>
@@ -560,6 +915,10 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
                 request = new PutApplicationPolicyRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(putApplicationPolicyRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "PutApplicationPolicy");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -577,22 +936,24 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     }
 
     /**
+     * <p>
      * Updates the specified application.
+     * </p>
      * 
      * @param updateApplicationRequest
      * @return Result of the UpdateApplication operation returned by the service.
      * @throws BadRequestException
-     *         400 response
+     *         One of the parameters in the request is invalid.
      * @throws InternalServerErrorException
-     *         500 response
+     *         The AWS Serverless Application Repository service encountered an internal error.
      * @throws ForbiddenException
-     *         403 response
+     *         The client is not authenticated.
      * @throws NotFoundException
-     *         404 response
+     *         The resource (for example, an access policy statement) specified in the request doesn't exist.
      * @throws TooManyRequestsException
-     *         429 response
+     *         The client is sending more than the allowed number of requests per unit of time.
      * @throws ConflictException
-     *         409 response
+     *         The resource already exists.
      * @sample AWSServerlessApplicationRepository.UpdateApplication
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/UpdateApplication"
      *      target="_top">AWS API Documentation</a>
@@ -618,6 +979,10 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
                 request = new UpdateApplicationRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateApplicationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "ServerlessApplicationRepository");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateApplication");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -658,9 +1023,18 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
             ExecutionContext executionContext) {
 
+        return invoke(request, responseHandler, executionContext, null, null);
+    }
+
+    /**
+     * Normal invoke with authentication. Credentials are required and may be overriden at the request level.
+     **/
+    private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
+            ExecutionContext executionContext, URI cachedEndpoint, URI uriFromEndpointTrait) {
+
         executionContext.setCredentialsProvider(CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, cachedEndpoint, uriFromEndpointTrait);
     }
 
     /**
@@ -670,7 +1044,7 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
     private <X, Y extends AmazonWebServiceRequest> Response<X> anonymousInvoke(Request<Y> request,
             HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler, ExecutionContext executionContext) {
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, null, null);
     }
 
     /**
@@ -678,8 +1052,17 @@ public class AWSServerlessApplicationRepositoryClient extends AmazonWebServiceCl
      * ExecutionContext beforehand.
      **/
     private <X, Y extends AmazonWebServiceRequest> Response<X> doInvoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
-            ExecutionContext executionContext) {
-        request.setEndpoint(endpoint);
+            ExecutionContext executionContext, URI discoveredEndpoint, URI uriFromEndpointTrait) {
+
+        if (discoveredEndpoint != null) {
+            request.setEndpoint(discoveredEndpoint);
+            request.getOriginalRequest().getRequestClientOptions().appendUserAgent("endpoint-discovery");
+        } else if (uriFromEndpointTrait != null) {
+            request.setEndpoint(uriFromEndpointTrait);
+        } else {
+            request.setEndpoint(endpoint);
+        }
+
         request.setTimeOffset(timeOffset);
 
         HttpResponseHandler<AmazonServiceException> errorResponseHandler = protocolFactory.createErrorResponseHandler(new JsonErrorResponseMetadata());

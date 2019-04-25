@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -20,9 +20,7 @@ import com.amazonaws.Request;
 import com.amazonaws.services.ec2.model.transform.ModifyInstancePlacementRequestMarshaller;
 
 /**
- * <p>
- * Contains the parameters for ModifyInstancePlacement.
- * </p>
+ * 
  */
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest implements Serializable, Cloneable,
@@ -30,13 +28,24 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The new affinity setting for the instance.
+     * The affinity setting for the instance.
      * </p>
      */
     private String affinity;
     /**
      * <p>
-     * The ID of the Dedicated Host that the instance will have affinity with.
+     * The name of the placement group in which to place the instance. For spread placement groups, the instance must
+     * have a tenancy of <code>default</code>. For cluster and partition placement groups, the instance must have a
+     * tenancy of <code>default</code> or <code>dedicated</code>.
+     * </p>
+     * <p>
+     * To remove an instance from a placement group, specify an empty string ("").
+     * </p>
+     */
+    private String groupName;
+    /**
+     * <p>
+     * The ID of the Dedicated Host with which to associate the instance.
      * </p>
      */
     private String hostId;
@@ -48,18 +57,24 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
     private String instanceId;
     /**
      * <p>
-     * The tenancy of the instance that you are modifying.
+     * The tenancy for the instance.
      * </p>
      */
     private String tenancy;
+    /**
+     * <p>
+     * Reserved for future use.
+     * </p>
+     */
+    private Integer partitionNumber;
 
     /**
      * <p>
-     * The new affinity setting for the instance.
+     * The affinity setting for the instance.
      * </p>
      * 
      * @param affinity
-     *        The new affinity setting for the instance.
+     *        The affinity setting for the instance.
      * @see Affinity
      */
 
@@ -69,10 +84,10 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The new affinity setting for the instance.
+     * The affinity setting for the instance.
      * </p>
      * 
-     * @return The new affinity setting for the instance.
+     * @return The affinity setting for the instance.
      * @see Affinity
      */
 
@@ -82,11 +97,11 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The new affinity setting for the instance.
+     * The affinity setting for the instance.
      * </p>
      * 
      * @param affinity
-     *        The new affinity setting for the instance.
+     *        The affinity setting for the instance.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see Affinity
      */
@@ -98,11 +113,11 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The new affinity setting for the instance.
+     * The affinity setting for the instance.
      * </p>
      * 
      * @param affinity
-     *        The new affinity setting for the instance.
+     *        The affinity setting for the instance.
      * @see Affinity
      */
 
@@ -112,11 +127,11 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The new affinity setting for the instance.
+     * The affinity setting for the instance.
      * </p>
      * 
      * @param affinity
-     *        The new affinity setting for the instance.
+     *        The affinity setting for the instance.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see Affinity
      */
@@ -128,11 +143,78 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The ID of the Dedicated Host that the instance will have affinity with.
+     * The name of the placement group in which to place the instance. For spread placement groups, the instance must
+     * have a tenancy of <code>default</code>. For cluster and partition placement groups, the instance must have a
+     * tenancy of <code>default</code> or <code>dedicated</code>.
+     * </p>
+     * <p>
+     * To remove an instance from a placement group, specify an empty string ("").
+     * </p>
+     * 
+     * @param groupName
+     *        The name of the placement group in which to place the instance. For spread placement groups, the instance
+     *        must have a tenancy of <code>default</code>. For cluster and partition placement groups, the instance must
+     *        have a tenancy of <code>default</code> or <code>dedicated</code>.</p>
+     *        <p>
+     *        To remove an instance from a placement group, specify an empty string ("").
+     */
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    /**
+     * <p>
+     * The name of the placement group in which to place the instance. For spread placement groups, the instance must
+     * have a tenancy of <code>default</code>. For cluster and partition placement groups, the instance must have a
+     * tenancy of <code>default</code> or <code>dedicated</code>.
+     * </p>
+     * <p>
+     * To remove an instance from a placement group, specify an empty string ("").
+     * </p>
+     * 
+     * @return The name of the placement group in which to place the instance. For spread placement groups, the instance
+     *         must have a tenancy of <code>default</code>. For cluster and partition placement groups, the instance
+     *         must have a tenancy of <code>default</code> or <code>dedicated</code>.</p>
+     *         <p>
+     *         To remove an instance from a placement group, specify an empty string ("").
+     */
+
+    public String getGroupName() {
+        return this.groupName;
+    }
+
+    /**
+     * <p>
+     * The name of the placement group in which to place the instance. For spread placement groups, the instance must
+     * have a tenancy of <code>default</code>. For cluster and partition placement groups, the instance must have a
+     * tenancy of <code>default</code> or <code>dedicated</code>.
+     * </p>
+     * <p>
+     * To remove an instance from a placement group, specify an empty string ("").
+     * </p>
+     * 
+     * @param groupName
+     *        The name of the placement group in which to place the instance. For spread placement groups, the instance
+     *        must have a tenancy of <code>default</code>. For cluster and partition placement groups, the instance must
+     *        have a tenancy of <code>default</code> or <code>dedicated</code>.</p>
+     *        <p>
+     *        To remove an instance from a placement group, specify an empty string ("").
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public ModifyInstancePlacementRequest withGroupName(String groupName) {
+        setGroupName(groupName);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The ID of the Dedicated Host with which to associate the instance.
      * </p>
      * 
      * @param hostId
-     *        The ID of the Dedicated Host that the instance will have affinity with.
+     *        The ID of the Dedicated Host with which to associate the instance.
      */
 
     public void setHostId(String hostId) {
@@ -141,10 +223,10 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The ID of the Dedicated Host that the instance will have affinity with.
+     * The ID of the Dedicated Host with which to associate the instance.
      * </p>
      * 
-     * @return The ID of the Dedicated Host that the instance will have affinity with.
+     * @return The ID of the Dedicated Host with which to associate the instance.
      */
 
     public String getHostId() {
@@ -153,11 +235,11 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The ID of the Dedicated Host that the instance will have affinity with.
+     * The ID of the Dedicated Host with which to associate the instance.
      * </p>
      * 
      * @param hostId
-     *        The ID of the Dedicated Host that the instance will have affinity with.
+     *        The ID of the Dedicated Host with which to associate the instance.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -208,11 +290,11 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The tenancy of the instance that you are modifying.
+     * The tenancy for the instance.
      * </p>
      * 
      * @param tenancy
-     *        The tenancy of the instance that you are modifying.
+     *        The tenancy for the instance.
      * @see HostTenancy
      */
 
@@ -222,10 +304,10 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The tenancy of the instance that you are modifying.
+     * The tenancy for the instance.
      * </p>
      * 
-     * @return The tenancy of the instance that you are modifying.
+     * @return The tenancy for the instance.
      * @see HostTenancy
      */
 
@@ -235,11 +317,11 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The tenancy of the instance that you are modifying.
+     * The tenancy for the instance.
      * </p>
      * 
      * @param tenancy
-     *        The tenancy of the instance that you are modifying.
+     *        The tenancy for the instance.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see HostTenancy
      */
@@ -251,11 +333,11 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The tenancy of the instance that you are modifying.
+     * The tenancy for the instance.
      * </p>
      * 
      * @param tenancy
-     *        The tenancy of the instance that you are modifying.
+     *        The tenancy for the instance.
      * @see HostTenancy
      */
 
@@ -265,17 +347,57 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The tenancy of the instance that you are modifying.
+     * The tenancy for the instance.
      * </p>
      * 
      * @param tenancy
-     *        The tenancy of the instance that you are modifying.
+     *        The tenancy for the instance.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see HostTenancy
      */
 
     public ModifyInstancePlacementRequest withTenancy(HostTenancy tenancy) {
         this.tenancy = tenancy.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * Reserved for future use.
+     * </p>
+     * 
+     * @param partitionNumber
+     *        Reserved for future use.
+     */
+
+    public void setPartitionNumber(Integer partitionNumber) {
+        this.partitionNumber = partitionNumber;
+    }
+
+    /**
+     * <p>
+     * Reserved for future use.
+     * </p>
+     * 
+     * @return Reserved for future use.
+     */
+
+    public Integer getPartitionNumber() {
+        return this.partitionNumber;
+    }
+
+    /**
+     * <p>
+     * Reserved for future use.
+     * </p>
+     * 
+     * @param partitionNumber
+     *        Reserved for future use.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public ModifyInstancePlacementRequest withPartitionNumber(Integer partitionNumber) {
+        setPartitionNumber(partitionNumber);
         return this;
     }
 
@@ -291,7 +413,8 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -303,12 +426,16 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
         sb.append("{");
         if (getAffinity() != null)
             sb.append("Affinity: ").append(getAffinity()).append(",");
+        if (getGroupName() != null)
+            sb.append("GroupName: ").append(getGroupName()).append(",");
         if (getHostId() != null)
             sb.append("HostId: ").append(getHostId()).append(",");
         if (getInstanceId() != null)
             sb.append("InstanceId: ").append(getInstanceId()).append(",");
         if (getTenancy() != null)
-            sb.append("Tenancy: ").append(getTenancy());
+            sb.append("Tenancy: ").append(getTenancy()).append(",");
+        if (getPartitionNumber() != null)
+            sb.append("PartitionNumber: ").append(getPartitionNumber());
         sb.append("}");
         return sb.toString();
     }
@@ -327,6 +454,10 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
             return false;
         if (other.getAffinity() != null && other.getAffinity().equals(this.getAffinity()) == false)
             return false;
+        if (other.getGroupName() == null ^ this.getGroupName() == null)
+            return false;
+        if (other.getGroupName() != null && other.getGroupName().equals(this.getGroupName()) == false)
+            return false;
         if (other.getHostId() == null ^ this.getHostId() == null)
             return false;
         if (other.getHostId() != null && other.getHostId().equals(this.getHostId()) == false)
@@ -339,6 +470,10 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
             return false;
         if (other.getTenancy() != null && other.getTenancy().equals(this.getTenancy()) == false)
             return false;
+        if (other.getPartitionNumber() == null ^ this.getPartitionNumber() == null)
+            return false;
+        if (other.getPartitionNumber() != null && other.getPartitionNumber().equals(this.getPartitionNumber()) == false)
+            return false;
         return true;
     }
 
@@ -348,9 +483,11 @@ public class ModifyInstancePlacementRequest extends AmazonWebServiceRequest impl
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getAffinity() == null) ? 0 : getAffinity().hashCode());
+        hashCode = prime * hashCode + ((getGroupName() == null) ? 0 : getGroupName().hashCode());
         hashCode = prime * hashCode + ((getHostId() == null) ? 0 : getHostId().hashCode());
         hashCode = prime * hashCode + ((getInstanceId() == null) ? 0 : getInstanceId().hashCode());
         hashCode = prime * hashCode + ((getTenancy() == null) ? 0 : getTenancy().hashCode());
+        hashCode = prime * hashCode + ((getPartitionNumber() == null) ? 0 : getPartitionNumber().hashCode());
         return hashCode;
     }
 

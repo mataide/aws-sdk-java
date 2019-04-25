@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -55,7 +55,8 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
     private java.util.Date createdAt;
     /**
      * <p>
-     * The AWS Region and Availability Zone where your load balancer was created (e.g., <code>us-east-2a</code>).
+     * The AWS Region where your load balancer was created (e.g., <code>us-east-2a</code>). Lightsail automatically
+     * creates your load balancer across Availability Zones.
      * </p>
      */
     private ResourceLocation location;
@@ -65,6 +66,13 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
      * </p>
      */
     private String resourceType;
+    /**
+     * <p>
+     * The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a
+     * href="https://lightsail.aws.amazon.com/ls/docs/en/articles/amazon-lightsail-tags">Lightsail Dev Guide</a>.
+     * </p>
+     */
+    private java.util.List<Tag> tags;
     /**
      * <p>
      * The DNS name of your Lightsail load balancer.
@@ -81,11 +89,14 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * The protocol you have enabled for your load balancer. Valid values are below.
      * </p>
+     * <p>
+     * You can't just have <code>HTTP_HTTPS</code>, but you can have just <code>HTTP</code>.
+     * </p>
      */
     private String protocol;
     /**
      * <p>
-     * An array of public port settings for your load balancer.
+     * An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
      * </p>
      */
     private java.util.List<Integer> publicPorts;
@@ -98,7 +109,8 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
     private String healthCheckPath;
     /**
      * <p>
-     * The instance port where the load balancer is listening.
+     * The port where the load balancer will direct traffic to your Lightsail instances. For HTTP traffic, it's port 80.
+     * For HTTPS traffic, it's port 443.
      * </p>
      */
     private Integer instancePort;
@@ -110,8 +122,8 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
     private java.util.List<InstanceHealthSummary> instanceHealthSummary;
     /**
      * <p>
-     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the TLS/SSL
-     * certificates.
+     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the SSL/TLS
+     * certificates. For example, if <code>true</code>, the certificate is attached to the load balancer.
      * </p>
      */
     private java.util.List<LoadBalancerTlsCertificateSummary> tlsCertificateSummaries;
@@ -290,11 +302,13 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The AWS Region and Availability Zone where your load balancer was created (e.g., <code>us-east-2a</code>).
+     * The AWS Region where your load balancer was created (e.g., <code>us-east-2a</code>). Lightsail automatically
+     * creates your load balancer across Availability Zones.
      * </p>
      * 
      * @param location
-     *        The AWS Region and Availability Zone where your load balancer was created (e.g., <code>us-east-2a</code>).
+     *        The AWS Region where your load balancer was created (e.g., <code>us-east-2a</code>). Lightsail
+     *        automatically creates your load balancer across Availability Zones.
      */
 
     public void setLocation(ResourceLocation location) {
@@ -303,11 +317,12 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The AWS Region and Availability Zone where your load balancer was created (e.g., <code>us-east-2a</code>).
+     * The AWS Region where your load balancer was created (e.g., <code>us-east-2a</code>). Lightsail automatically
+     * creates your load balancer across Availability Zones.
      * </p>
      * 
-     * @return The AWS Region and Availability Zone where your load balancer was created (e.g., <code>us-east-2a</code>
-     *         ).
+     * @return The AWS Region where your load balancer was created (e.g., <code>us-east-2a</code>). Lightsail
+     *         automatically creates your load balancer across Availability Zones.
      */
 
     public ResourceLocation getLocation() {
@@ -316,11 +331,13 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The AWS Region and Availability Zone where your load balancer was created (e.g., <code>us-east-2a</code>).
+     * The AWS Region where your load balancer was created (e.g., <code>us-east-2a</code>). Lightsail automatically
+     * creates your load balancer across Availability Zones.
      * </p>
      * 
      * @param location
-     *        The AWS Region and Availability Zone where your load balancer was created (e.g., <code>us-east-2a</code>).
+     *        The AWS Region where your load balancer was created (e.g., <code>us-east-2a</code>). Lightsail
+     *        automatically creates your load balancer across Availability Zones.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -385,6 +402,88 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     public LoadBalancer withResourceType(ResourceType resourceType) {
         this.resourceType = resourceType.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a
+     * href="https://lightsail.aws.amazon.com/ls/docs/en/articles/amazon-lightsail-tags">Lightsail Dev Guide</a>.
+     * </p>
+     * 
+     * @return The tag keys and optional values for the resource. For more information about tags in Lightsail, see the
+     *         <a href="https://lightsail.aws.amazon.com/ls/docs/en/articles/amazon-lightsail-tags">Lightsail Dev
+     *         Guide</a>.
+     */
+
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a
+     * href="https://lightsail.aws.amazon.com/ls/docs/en/articles/amazon-lightsail-tags">Lightsail Dev Guide</a>.
+     * </p>
+     * 
+     * @param tags
+     *        The tag keys and optional values for the resource. For more information about tags in Lightsail, see the
+     *        <a href="https://lightsail.aws.amazon.com/ls/docs/en/articles/amazon-lightsail-tags">Lightsail Dev
+     *        Guide</a>.
+     */
+
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a
+     * href="https://lightsail.aws.amazon.com/ls/docs/en/articles/amazon-lightsail-tags">Lightsail Dev Guide</a>.
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setTags(java.util.Collection)} or {@link #withTags(java.util.Collection)} if you want to override the
+     * existing values.
+     * </p>
+     * 
+     * @param tags
+     *        The tag keys and optional values for the resource. For more information about tags in Lightsail, see the
+     *        <a href="https://lightsail.aws.amazon.com/ls/docs/en/articles/amazon-lightsail-tags">Lightsail Dev
+     *        Guide</a>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public LoadBalancer withTags(Tag... tags) {
+        if (this.tags == null) {
+            setTags(new java.util.ArrayList<Tag>(tags.length));
+        }
+        for (Tag ele : tags) {
+            this.tags.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * The tag keys and optional values for the resource. For more information about tags in Lightsail, see the <a
+     * href="https://lightsail.aws.amazon.com/ls/docs/en/articles/amazon-lightsail-tags">Lightsail Dev Guide</a>.
+     * </p>
+     * 
+     * @param tags
+     *        The tag keys and optional values for the resource. For more information about tags in Lightsail, see the
+     *        <a href="https://lightsail.aws.amazon.com/ls/docs/en/articles/amazon-lightsail-tags">Lightsail Dev
+     *        Guide</a>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public LoadBalancer withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
         return this;
     }
 
@@ -491,9 +590,14 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * The protocol you have enabled for your load balancer. Valid values are below.
      * </p>
+     * <p>
+     * You can't just have <code>HTTP_HTTPS</code>, but you can have just <code>HTTP</code>.
+     * </p>
      * 
      * @param protocol
-     *        The protocol you have enabled for your load balancer. Valid values are below.
+     *        The protocol you have enabled for your load balancer. Valid values are below.</p>
+     *        <p>
+     *        You can't just have <code>HTTP_HTTPS</code>, but you can have just <code>HTTP</code>.
      * @see LoadBalancerProtocol
      */
 
@@ -505,8 +609,13 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * The protocol you have enabled for your load balancer. Valid values are below.
      * </p>
+     * <p>
+     * You can't just have <code>HTTP_HTTPS</code>, but you can have just <code>HTTP</code>.
+     * </p>
      * 
-     * @return The protocol you have enabled for your load balancer. Valid values are below.
+     * @return The protocol you have enabled for your load balancer. Valid values are below.</p>
+     *         <p>
+     *         You can't just have <code>HTTP_HTTPS</code>, but you can have just <code>HTTP</code>.
      * @see LoadBalancerProtocol
      */
 
@@ -518,9 +627,14 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * The protocol you have enabled for your load balancer. Valid values are below.
      * </p>
+     * <p>
+     * You can't just have <code>HTTP_HTTPS</code>, but you can have just <code>HTTP</code>.
+     * </p>
      * 
      * @param protocol
-     *        The protocol you have enabled for your load balancer. Valid values are below.
+     *        The protocol you have enabled for your load balancer. Valid values are below.</p>
+     *        <p>
+     *        You can't just have <code>HTTP_HTTPS</code>, but you can have just <code>HTTP</code>.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see LoadBalancerProtocol
      */
@@ -534,9 +648,14 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * The protocol you have enabled for your load balancer. Valid values are below.
      * </p>
+     * <p>
+     * You can't just have <code>HTTP_HTTPS</code>, but you can have just <code>HTTP</code>.
+     * </p>
      * 
      * @param protocol
-     *        The protocol you have enabled for your load balancer. Valid values are below.
+     *        The protocol you have enabled for your load balancer. Valid values are below.</p>
+     *        <p>
+     *        You can't just have <code>HTTP_HTTPS</code>, but you can have just <code>HTTP</code>.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see LoadBalancerProtocol
      */
@@ -548,10 +667,10 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * An array of public port settings for your load balancer.
+     * An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
      * </p>
      * 
-     * @return An array of public port settings for your load balancer.
+     * @return An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
      */
 
     public java.util.List<Integer> getPublicPorts() {
@@ -560,11 +679,11 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * An array of public port settings for your load balancer.
+     * An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
      * </p>
      * 
      * @param publicPorts
-     *        An array of public port settings for your load balancer.
+     *        An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
      */
 
     public void setPublicPorts(java.util.Collection<Integer> publicPorts) {
@@ -578,7 +697,7 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * An array of public port settings for your load balancer.
+     * An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
@@ -587,7 +706,7 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
      * </p>
      * 
      * @param publicPorts
-     *        An array of public port settings for your load balancer.
+     *        An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -603,11 +722,11 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * An array of public port settings for your load balancer.
+     * An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
      * </p>
      * 
      * @param publicPorts
-     *        An array of public port settings for your load balancer.
+     *        An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -664,11 +783,13 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The instance port where the load balancer is listening.
+     * The port where the load balancer will direct traffic to your Lightsail instances. For HTTP traffic, it's port 80.
+     * For HTTPS traffic, it's port 443.
      * </p>
      * 
      * @param instancePort
-     *        The instance port where the load balancer is listening.
+     *        The port where the load balancer will direct traffic to your Lightsail instances. For HTTP traffic, it's
+     *        port 80. For HTTPS traffic, it's port 443.
      */
 
     public void setInstancePort(Integer instancePort) {
@@ -677,10 +798,12 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The instance port where the load balancer is listening.
+     * The port where the load balancer will direct traffic to your Lightsail instances. For HTTP traffic, it's port 80.
+     * For HTTPS traffic, it's port 443.
      * </p>
      * 
-     * @return The instance port where the load balancer is listening.
+     * @return The port where the load balancer will direct traffic to your Lightsail instances. For HTTP traffic, it's
+     *         port 80. For HTTPS traffic, it's port 443.
      */
 
     public Integer getInstancePort() {
@@ -689,11 +812,13 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The instance port where the load balancer is listening.
+     * The port where the load balancer will direct traffic to your Lightsail instances. For HTTP traffic, it's port 80.
+     * For HTTPS traffic, it's port 443.
      * </p>
      * 
      * @param instancePort
-     *        The instance port where the load balancer is listening.
+     *        The port where the load balancer will direct traffic to your Lightsail instances. For HTTP traffic, it's
+     *        port 80. For HTTPS traffic, it's port 443.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -774,12 +899,13 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the TLS/SSL
-     * certificates.
+     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the SSL/TLS
+     * certificates. For example, if <code>true</code>, the certificate is attached to the load balancer.
      * </p>
      * 
      * @return An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the
-     *         TLS/SSL certificates.
+     *         SSL/TLS certificates. For example, if <code>true</code>, the certificate is attached to the load
+     *         balancer.
      */
 
     public java.util.List<LoadBalancerTlsCertificateSummary> getTlsCertificateSummaries() {
@@ -788,13 +914,13 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the TLS/SSL
-     * certificates.
+     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the SSL/TLS
+     * certificates. For example, if <code>true</code>, the certificate is attached to the load balancer.
      * </p>
      * 
      * @param tlsCertificateSummaries
      *        An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the
-     *        TLS/SSL certificates.
+     *        SSL/TLS certificates. For example, if <code>true</code>, the certificate is attached to the load balancer.
      */
 
     public void setTlsCertificateSummaries(java.util.Collection<LoadBalancerTlsCertificateSummary> tlsCertificateSummaries) {
@@ -808,8 +934,8 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the TLS/SSL
-     * certificates.
+     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the SSL/TLS
+     * certificates. For example, if <code>true</code>, the certificate is attached to the load balancer.
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
@@ -819,7 +945,7 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
      * 
      * @param tlsCertificateSummaries
      *        An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the
-     *        TLS/SSL certificates.
+     *        SSL/TLS certificates. For example, if <code>true</code>, the certificate is attached to the load balancer.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -835,13 +961,13 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the TLS/SSL
-     * certificates.
+     * An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the SSL/TLS
+     * certificates. For example, if <code>true</code>, the certificate is attached to the load balancer.
      * </p>
      * 
      * @param tlsCertificateSummaries
      *        An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the
-     *        TLS/SSL certificates.
+     *        SSL/TLS certificates. For example, if <code>true</code>, the certificate is attached to the load balancer.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -913,7 +1039,8 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -935,6 +1062,8 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
             sb.append("Location: ").append(getLocation()).append(",");
         if (getResourceType() != null)
             sb.append("ResourceType: ").append(getResourceType()).append(",");
+        if (getTags() != null)
+            sb.append("Tags: ").append(getTags()).append(",");
         if (getDnsName() != null)
             sb.append("DnsName: ").append(getDnsName()).append(",");
         if (getState() != null)
@@ -991,6 +1120,10 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
             return false;
         if (other.getResourceType() != null && other.getResourceType().equals(this.getResourceType()) == false)
             return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
+            return false;
         if (other.getDnsName() == null ^ this.getDnsName() == null)
             return false;
         if (other.getDnsName() != null && other.getDnsName().equals(this.getDnsName()) == false)
@@ -1041,6 +1174,7 @@ public class LoadBalancer implements Serializable, Cloneable, StructuredPojo {
         hashCode = prime * hashCode + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         hashCode = prime * hashCode + ((getLocation() == null) ? 0 : getLocation().hashCode());
         hashCode = prime * hashCode + ((getResourceType() == null) ? 0 : getResourceType().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         hashCode = prime * hashCode + ((getDnsName() == null) ? 0 : getDnsName().hashCode());
         hashCode = prime * hashCode + ((getState() == null) ? 0 : getState().hashCode());
         hashCode = prime * hashCode + ((getProtocol() == null) ? 0 : getProtocol().hashCode());

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -29,6 +29,12 @@ public class CreateScriptResult extends com.amazonaws.AmazonWebServiceResult<com
      * </p>
      */
     private String pythonScript;
+    /**
+     * <p>
+     * The Scala code generated from the DAG.
+     * </p>
+     */
+    private String scalaCode;
 
     /**
      * <p>
@@ -71,7 +77,48 @@ public class CreateScriptResult extends com.amazonaws.AmazonWebServiceResult<com
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The Scala code generated from the DAG.
+     * </p>
+     * 
+     * @param scalaCode
+     *        The Scala code generated from the DAG.
+     */
+
+    public void setScalaCode(String scalaCode) {
+        this.scalaCode = scalaCode;
+    }
+
+    /**
+     * <p>
+     * The Scala code generated from the DAG.
+     * </p>
+     * 
+     * @return The Scala code generated from the DAG.
+     */
+
+    public String getScalaCode() {
+        return this.scalaCode;
+    }
+
+    /**
+     * <p>
+     * The Scala code generated from the DAG.
+     * </p>
+     * 
+     * @param scalaCode
+     *        The Scala code generated from the DAG.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateScriptResult withScalaCode(String scalaCode) {
+        setScalaCode(scalaCode);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -82,7 +129,9 @@ public class CreateScriptResult extends com.amazonaws.AmazonWebServiceResult<com
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         if (getPythonScript() != null)
-            sb.append("PythonScript: ").append(getPythonScript());
+            sb.append("PythonScript: ").append(getPythonScript()).append(",");
+        if (getScalaCode() != null)
+            sb.append("ScalaCode: ").append(getScalaCode());
         sb.append("}");
         return sb.toString();
     }
@@ -101,6 +150,10 @@ public class CreateScriptResult extends com.amazonaws.AmazonWebServiceResult<com
             return false;
         if (other.getPythonScript() != null && other.getPythonScript().equals(this.getPythonScript()) == false)
             return false;
+        if (other.getScalaCode() == null ^ this.getScalaCode() == null)
+            return false;
+        if (other.getScalaCode() != null && other.getScalaCode().equals(this.getScalaCode()) == false)
+            return false;
         return true;
     }
 
@@ -110,6 +163,7 @@ public class CreateScriptResult extends com.amazonaws.AmazonWebServiceResult<com
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getPythonScript() == null) ? 0 : getPythonScript().hashCode());
+        hashCode = prime * hashCode + ((getScalaCode() == null) ? 0 : getScalaCode().hashCode());
         return hashCode;
     }
 

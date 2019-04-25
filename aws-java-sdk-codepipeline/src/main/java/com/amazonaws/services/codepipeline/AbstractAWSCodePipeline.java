@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -68,6 +68,16 @@ public class AbstractAWSCodePipeline implements AWSCodePipeline {
     }
 
     @Override
+    public DeleteWebhookResult deleteWebhook(DeleteWebhookRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public DeregisterWebhookWithThirdPartyResult deregisterWebhookWithThirdParty(DeregisterWebhookWithThirdPartyRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public DisableStageTransitionResult disableStageTransition(DisableStageTransitionRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
@@ -103,6 +113,11 @@ public class AbstractAWSCodePipeline implements AWSCodePipeline {
     }
 
     @Override
+    public ListActionExecutionsResult listActionExecutions(ListActionExecutionsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public ListActionTypesResult listActionTypes(ListActionTypesRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
@@ -114,6 +129,11 @@ public class AbstractAWSCodePipeline implements AWSCodePipeline {
 
     @Override
     public ListPipelinesResult listPipelines(ListPipelinesRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public ListWebhooksResult listWebhooks(ListWebhooksRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -154,6 +174,16 @@ public class AbstractAWSCodePipeline implements AWSCodePipeline {
 
     @Override
     public PutThirdPartyJobSuccessResultResult putThirdPartyJobSuccessResult(PutThirdPartyJobSuccessResultRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public PutWebhookResult putWebhook(PutWebhookRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public RegisterWebhookWithThirdPartyResult registerWebhookWithThirdParty(RegisterWebhookWithThirdPartyRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 

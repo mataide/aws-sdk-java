@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -33,16 +33,26 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      * The Linux capabilities for the container that are added to or dropped from the default configuration provided by
      * Docker.
      * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, <code>capabilities</code> is supported but the
+     * <code>add</code> parameter is not supported.
+     * </p>
+     * </note>
      */
     private KernelCapabilities capabilities;
     /**
      * <p>
      * Any host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/#create-a-container">Create a
-     * container</a> section of the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/">Docker Remote API</a> and the
-     * <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section of the
+     * <a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the <code>--device</code> option to
+     * <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>devices</code> parameter is not supported.
+     * </p>
+     * </note>
      */
     private com.amazonaws.internal.SdkInternalList<Device> devices;
     /**
@@ -51,20 +61,55 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      * maps to the <code>--init</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * This parameter requires version 1.25 of the Docker Remote API or greater on your container instance. To check the
      * Docker Remote API version on your container instance, log in to your container instance and run the following
-     * command: <code>sudo docker version | grep "Server API version"</code>
+     * command: <code>sudo docker version --format '{{.Server.APIVersion}}'</code>
      * </p>
      */
     private Boolean initProcessEnabled;
+    /**
+     * <p>
+     * The value for the size (in MiB) of the <code>/dev/shm</code> volume. This parameter maps to the
+     * <code>--shm-size</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>sharedMemorySize</code> parameter is not
+     * supported.
+     * </p>
+     * </note>
+     */
+    private Integer sharedMemorySize;
+    /**
+     * <p>
+     * The container path, mount options, and size (in MiB) of the tmpfs mount. This parameter maps to the
+     * <code>--tmpfs</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>tmpfs</code> parameter is not supported.
+     * </p>
+     * </note>
+     */
+    private com.amazonaws.internal.SdkInternalList<Tmpfs> tmpfs;
 
     /**
      * <p>
      * The Linux capabilities for the container that are added to or dropped from the default configuration provided by
      * Docker.
      * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, <code>capabilities</code> is supported but the
+     * <code>add</code> parameter is not supported.
+     * </p>
+     * </note>
      * 
      * @param capabilities
      *        The Linux capabilities for the container that are added to or dropped from the default configuration
-     *        provided by Docker.
+     *        provided by Docker.</p> <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, <code>capabilities</code> is supported but the
+     *        <code>add</code> parameter is not supported.
+     *        </p>
      */
 
     public void setCapabilities(KernelCapabilities capabilities) {
@@ -76,9 +121,19 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      * The Linux capabilities for the container that are added to or dropped from the default configuration provided by
      * Docker.
      * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, <code>capabilities</code> is supported but the
+     * <code>add</code> parameter is not supported.
+     * </p>
+     * </note>
      * 
      * @return The Linux capabilities for the container that are added to or dropped from the default configuration
-     *         provided by Docker.
+     *         provided by Docker.</p> <note>
+     *         <p>
+     *         If you are using tasks that use the Fargate launch type, <code>capabilities</code> is supported but the
+     *         <code>add</code> parameter is not supported.
+     *         </p>
      */
 
     public KernelCapabilities getCapabilities() {
@@ -90,10 +145,20 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      * The Linux capabilities for the container that are added to or dropped from the default configuration provided by
      * Docker.
      * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, <code>capabilities</code> is supported but the
+     * <code>add</code> parameter is not supported.
+     * </p>
+     * </note>
      * 
      * @param capabilities
      *        The Linux capabilities for the container that are added to or dropped from the default configuration
-     *        provided by Docker.
+     *        provided by Docker.</p> <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, <code>capabilities</code> is supported but the
+     *        <code>add</code> parameter is not supported.
+     *        </p>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -105,18 +170,25 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
     /**
      * <p>
      * Any host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/#create-a-container">Create a
-     * container</a> section of the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/">Docker Remote API</a> and the
-     * <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section of the
+     * <a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the <code>--device</code> option to
+     * <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>devices</code> parameter is not supported.
+     * </p>
+     * </note>
      * 
      * @return Any host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a
-     *         href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/#create-a-container">Create a
-     *         container</a> section of the <a
-     *         href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/">Docker Remote API</a> and
-     *         the <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker
-     *         run</a>.
+     *         href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section
+     *         of the <a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the
+     *         <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker
+     *         run</a>.</p> <note>
+     *         <p>
+     *         If you are using tasks that use the Fargate launch type, the <code>devices</code> parameter is not
+     *         supported.
+     *         </p>
      */
 
     public java.util.List<Device> getDevices() {
@@ -129,18 +201,26 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
     /**
      * <p>
      * Any host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/#create-a-container">Create a
-     * container</a> section of the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/">Docker Remote API</a> and the
-     * <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section of the
+     * <a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the <code>--device</code> option to
+     * <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>devices</code> parameter is not supported.
+     * </p>
+     * </note>
      * 
      * @param devices
      *        Any host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a
-     *        href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/#create-a-container">Create a
-     *        container</a> section of the <a
-     *        href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/">Docker Remote API</a> and the
-     *        <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     *        href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section
+     *        of the <a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the
+     *        <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker
+     *        run</a>.</p> <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, the <code>devices</code> parameter is not
+     *        supported.
+     *        </p>
      */
 
     public void setDevices(java.util.Collection<Device> devices) {
@@ -155,11 +235,15 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
     /**
      * <p>
      * Any host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/#create-a-container">Create a
-     * container</a> section of the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/">Docker Remote API</a> and the
-     * <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section of the
+     * <a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the <code>--device</code> option to
+     * <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>devices</code> parameter is not supported.
+     * </p>
+     * </note>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setDevices(java.util.Collection)} or {@link #withDevices(java.util.Collection)} if you want to override
@@ -168,10 +252,14 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      * 
      * @param devices
      *        Any host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a
-     *        href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/#create-a-container">Create a
-     *        container</a> section of the <a
-     *        href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/">Docker Remote API</a> and the
-     *        <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     *        href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section
+     *        of the <a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the
+     *        <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker
+     *        run</a>.</p> <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, the <code>devices</code> parameter is not
+     *        supported.
+     *        </p>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -188,18 +276,26 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
     /**
      * <p>
      * Any host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/#create-a-container">Create a
-     * container</a> section of the <a
-     * href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/">Docker Remote API</a> and the
-     * <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section of the
+     * <a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the <code>--device</code> option to
+     * <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>devices</code> parameter is not supported.
+     * </p>
+     * </note>
      * 
      * @param devices
      *        Any host devices to expose to the container. This parameter maps to <code>Devices</code> in the <a
-     *        href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/#create-a-container">Create a
-     *        container</a> section of the <a
-     *        href="https://docs.docker.com/engine/reference/api/docker_remote_api_v1.27/">Docker Remote API</a> and the
-     *        <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     *        href="https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate">Create a container</a> section
+     *        of the <a href="https://docs.docker.com/engine/api/v1.35/">Docker Remote API</a> and the
+     *        <code>--device</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker
+     *        run</a>.</p> <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, the <code>devices</code> parameter is not
+     *        supported.
+     *        </p>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -214,7 +310,7 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      * maps to the <code>--init</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * This parameter requires version 1.25 of the Docker Remote API or greater on your container instance. To check the
      * Docker Remote API version on your container instance, log in to your container instance and run the following
-     * command: <code>sudo docker version | grep "Server API version"</code>
+     * command: <code>sudo docker version --format '{{.Server.APIVersion}}'</code>
      * </p>
      * 
      * @param initProcessEnabled
@@ -223,7 +319,7 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      *        href="https://docs.docker.com/engine/reference/run/">docker run</a>. This parameter requires version 1.25
      *        of the Docker Remote API or greater on your container instance. To check the Docker Remote API version on
      *        your container instance, log in to your container instance and run the following command:
-     *        <code>sudo docker version | grep "Server API version"</code>
+     *        <code>sudo docker version --format '{{.Server.APIVersion}}'</code>
      */
 
     public void setInitProcessEnabled(Boolean initProcessEnabled) {
@@ -236,7 +332,7 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      * maps to the <code>--init</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * This parameter requires version 1.25 of the Docker Remote API or greater on your container instance. To check the
      * Docker Remote API version on your container instance, log in to your container instance and run the following
-     * command: <code>sudo docker version | grep "Server API version"</code>
+     * command: <code>sudo docker version --format '{{.Server.APIVersion}}'</code>
      * </p>
      * 
      * @return Run an <code>init</code> process inside the container that forwards signals and reaps processes. This
@@ -244,7 +340,7 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      *         href="https://docs.docker.com/engine/reference/run/">docker run</a>. This parameter requires version 1.25
      *         of the Docker Remote API or greater on your container instance. To check the Docker Remote API version on
      *         your container instance, log in to your container instance and run the following command:
-     *         <code>sudo docker version | grep "Server API version"</code>
+     *         <code>sudo docker version --format '{{.Server.APIVersion}}'</code>
      */
 
     public Boolean getInitProcessEnabled() {
@@ -257,7 +353,7 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      * maps to the <code>--init</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * This parameter requires version 1.25 of the Docker Remote API or greater on your container instance. To check the
      * Docker Remote API version on your container instance, log in to your container instance and run the following
-     * command: <code>sudo docker version | grep "Server API version"</code>
+     * command: <code>sudo docker version --format '{{.Server.APIVersion}}'</code>
      * </p>
      * 
      * @param initProcessEnabled
@@ -266,7 +362,7 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      *        href="https://docs.docker.com/engine/reference/run/">docker run</a>. This parameter requires version 1.25
      *        of the Docker Remote API or greater on your container instance. To check the Docker Remote API version on
      *        your container instance, log in to your container instance and run the following command:
-     *        <code>sudo docker version | grep "Server API version"</code>
+     *        <code>sudo docker version --format '{{.Server.APIVersion}}'</code>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -281,7 +377,7 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      * maps to the <code>--init</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
      * This parameter requires version 1.25 of the Docker Remote API or greater on your container instance. To check the
      * Docker Remote API version on your container instance, log in to your container instance and run the following
-     * command: <code>sudo docker version | grep "Server API version"</code>
+     * command: <code>sudo docker version --format '{{.Server.APIVersion}}'</code>
      * </p>
      * 
      * @return Run an <code>init</code> process inside the container that forwards signals and reaps processes. This
@@ -289,7 +385,7 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
      *         href="https://docs.docker.com/engine/reference/run/">docker run</a>. This parameter requires version 1.25
      *         of the Docker Remote API or greater on your container instance. To check the Docker Remote API version on
      *         your container instance, log in to your container instance and run the following command:
-     *         <code>sudo docker version | grep "Server API version"</code>
+     *         <code>sudo docker version --format '{{.Server.APIVersion}}'</code>
      */
 
     public Boolean isInitProcessEnabled() {
@@ -297,7 +393,208 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The value for the size (in MiB) of the <code>/dev/shm</code> volume. This parameter maps to the
+     * <code>--shm-size</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>sharedMemorySize</code> parameter is not
+     * supported.
+     * </p>
+     * </note>
+     * 
+     * @param sharedMemorySize
+     *        The value for the size (in MiB) of the <code>/dev/shm</code> volume. This parameter maps to the
+     *        <code>--shm-size</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker
+     *        run</a>.</p> <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, the <code>sharedMemorySize</code> parameter is
+     *        not supported.
+     *        </p>
+     */
+
+    public void setSharedMemorySize(Integer sharedMemorySize) {
+        this.sharedMemorySize = sharedMemorySize;
+    }
+
+    /**
+     * <p>
+     * The value for the size (in MiB) of the <code>/dev/shm</code> volume. This parameter maps to the
+     * <code>--shm-size</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>sharedMemorySize</code> parameter is not
+     * supported.
+     * </p>
+     * </note>
+     * 
+     * @return The value for the size (in MiB) of the <code>/dev/shm</code> volume. This parameter maps to the
+     *         <code>--shm-size</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker
+     *         run</a>.</p> <note>
+     *         <p>
+     *         If you are using tasks that use the Fargate launch type, the <code>sharedMemorySize</code> parameter is
+     *         not supported.
+     *         </p>
+     */
+
+    public Integer getSharedMemorySize() {
+        return this.sharedMemorySize;
+    }
+
+    /**
+     * <p>
+     * The value for the size (in MiB) of the <code>/dev/shm</code> volume. This parameter maps to the
+     * <code>--shm-size</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>sharedMemorySize</code> parameter is not
+     * supported.
+     * </p>
+     * </note>
+     * 
+     * @param sharedMemorySize
+     *        The value for the size (in MiB) of the <code>/dev/shm</code> volume. This parameter maps to the
+     *        <code>--shm-size</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker
+     *        run</a>.</p> <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, the <code>sharedMemorySize</code> parameter is
+     *        not supported.
+     *        </p>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public LinuxParameters withSharedMemorySize(Integer sharedMemorySize) {
+        setSharedMemorySize(sharedMemorySize);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The container path, mount options, and size (in MiB) of the tmpfs mount. This parameter maps to the
+     * <code>--tmpfs</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>tmpfs</code> parameter is not supported.
+     * </p>
+     * </note>
+     * 
+     * @return The container path, mount options, and size (in MiB) of the tmpfs mount. This parameter maps to the
+     *         <code>--tmpfs</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker
+     *         run</a>.</p> <note>
+     *         <p>
+     *         If you are using tasks that use the Fargate launch type, the <code>tmpfs</code> parameter is not
+     *         supported.
+     *         </p>
+     */
+
+    public java.util.List<Tmpfs> getTmpfs() {
+        if (tmpfs == null) {
+            tmpfs = new com.amazonaws.internal.SdkInternalList<Tmpfs>();
+        }
+        return tmpfs;
+    }
+
+    /**
+     * <p>
+     * The container path, mount options, and size (in MiB) of the tmpfs mount. This parameter maps to the
+     * <code>--tmpfs</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>tmpfs</code> parameter is not supported.
+     * </p>
+     * </note>
+     * 
+     * @param tmpfs
+     *        The container path, mount options, and size (in MiB) of the tmpfs mount. This parameter maps to the
+     *        <code>--tmpfs</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.</p>
+     *        <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, the <code>tmpfs</code> parameter is not
+     *        supported.
+     *        </p>
+     */
+
+    public void setTmpfs(java.util.Collection<Tmpfs> tmpfs) {
+        if (tmpfs == null) {
+            this.tmpfs = null;
+            return;
+        }
+
+        this.tmpfs = new com.amazonaws.internal.SdkInternalList<Tmpfs>(tmpfs);
+    }
+
+    /**
+     * <p>
+     * The container path, mount options, and size (in MiB) of the tmpfs mount. This parameter maps to the
+     * <code>--tmpfs</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>tmpfs</code> parameter is not supported.
+     * </p>
+     * </note>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setTmpfs(java.util.Collection)} or {@link #withTmpfs(java.util.Collection)} if you want to override the
+     * existing values.
+     * </p>
+     * 
+     * @param tmpfs
+     *        The container path, mount options, and size (in MiB) of the tmpfs mount. This parameter maps to the
+     *        <code>--tmpfs</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.</p>
+     *        <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, the <code>tmpfs</code> parameter is not
+     *        supported.
+     *        </p>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public LinuxParameters withTmpfs(Tmpfs... tmpfs) {
+        if (this.tmpfs == null) {
+            setTmpfs(new com.amazonaws.internal.SdkInternalList<Tmpfs>(tmpfs.length));
+        }
+        for (Tmpfs ele : tmpfs) {
+            this.tmpfs.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * The container path, mount options, and size (in MiB) of the tmpfs mount. This parameter maps to the
+     * <code>--tmpfs</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.
+     * </p>
+     * <note>
+     * <p>
+     * If you are using tasks that use the Fargate launch type, the <code>tmpfs</code> parameter is not supported.
+     * </p>
+     * </note>
+     * 
+     * @param tmpfs
+     *        The container path, mount options, and size (in MiB) of the tmpfs mount. This parameter maps to the
+     *        <code>--tmpfs</code> option to <a href="https://docs.docker.com/engine/reference/run/">docker run</a>.</p>
+     *        <note>
+     *        <p>
+     *        If you are using tasks that use the Fargate launch type, the <code>tmpfs</code> parameter is not
+     *        supported.
+     *        </p>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public LinuxParameters withTmpfs(java.util.Collection<Tmpfs> tmpfs) {
+        setTmpfs(tmpfs);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -312,7 +609,11 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
         if (getDevices() != null)
             sb.append("Devices: ").append(getDevices()).append(",");
         if (getInitProcessEnabled() != null)
-            sb.append("InitProcessEnabled: ").append(getInitProcessEnabled());
+            sb.append("InitProcessEnabled: ").append(getInitProcessEnabled()).append(",");
+        if (getSharedMemorySize() != null)
+            sb.append("SharedMemorySize: ").append(getSharedMemorySize()).append(",");
+        if (getTmpfs() != null)
+            sb.append("Tmpfs: ").append(getTmpfs());
         sb.append("}");
         return sb.toString();
     }
@@ -339,6 +640,14 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
             return false;
         if (other.getInitProcessEnabled() != null && other.getInitProcessEnabled().equals(this.getInitProcessEnabled()) == false)
             return false;
+        if (other.getSharedMemorySize() == null ^ this.getSharedMemorySize() == null)
+            return false;
+        if (other.getSharedMemorySize() != null && other.getSharedMemorySize().equals(this.getSharedMemorySize()) == false)
+            return false;
+        if (other.getTmpfs() == null ^ this.getTmpfs() == null)
+            return false;
+        if (other.getTmpfs() != null && other.getTmpfs().equals(this.getTmpfs()) == false)
+            return false;
         return true;
     }
 
@@ -350,6 +659,8 @@ public class LinuxParameters implements Serializable, Cloneable, StructuredPojo 
         hashCode = prime * hashCode + ((getCapabilities() == null) ? 0 : getCapabilities().hashCode());
         hashCode = prime * hashCode + ((getDevices() == null) ? 0 : getDevices().hashCode());
         hashCode = prime * hashCode + ((getInitProcessEnabled() == null) ? 0 : getInitProcessEnabled().hashCode());
+        hashCode = prime * hashCode + ((getSharedMemorySize() == null) ? 0 : getSharedMemorySize().hashCode());
+        hashCode = prime * hashCode + ((getTmpfs() == null) ? 0 : getTmpfs().hashCode());
         return hashCode;
     }
 

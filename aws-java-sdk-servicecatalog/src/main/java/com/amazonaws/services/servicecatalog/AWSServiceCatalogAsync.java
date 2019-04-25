@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -140,6 +140,43 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
+     * Associates a self-service action with a provisioning artifact.
+     * </p>
+     * 
+     * @param associateServiceActionWithProvisioningArtifactRequest
+     * @return A Java Future containing the result of the AssociateServiceActionWithProvisioningArtifact operation
+     *         returned by the service.
+     * @sample AWSServiceCatalogAsync.AssociateServiceActionWithProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/AssociateServiceActionWithProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<AssociateServiceActionWithProvisioningArtifactResult> associateServiceActionWithProvisioningArtifactAsync(
+            AssociateServiceActionWithProvisioningArtifactRequest associateServiceActionWithProvisioningArtifactRequest);
+
+    /**
+     * <p>
+     * Associates a self-service action with a provisioning artifact.
+     * </p>
+     * 
+     * @param associateServiceActionWithProvisioningArtifactRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the AssociateServiceActionWithProvisioningArtifact operation
+     *         returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.AssociateServiceActionWithProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/AssociateServiceActionWithProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<AssociateServiceActionWithProvisioningArtifactResult> associateServiceActionWithProvisioningArtifactAsync(
+            AssociateServiceActionWithProvisioningArtifactRequest associateServiceActionWithProvisioningArtifactRequest,
+            com.amazonaws.handlers.AsyncHandler<AssociateServiceActionWithProvisioningArtifactRequest, AssociateServiceActionWithProvisioningArtifactResult> asyncHandler);
+
+    /**
+     * <p>
      * Associate the specified TagOption with the specified portfolio or product.
      * </p>
      * 
@@ -172,6 +209,80 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
     java.util.concurrent.Future<AssociateTagOptionWithResourceResult> associateTagOptionWithResourceAsync(
             AssociateTagOptionWithResourceRequest associateTagOptionWithResourceRequest,
             com.amazonaws.handlers.AsyncHandler<AssociateTagOptionWithResourceRequest, AssociateTagOptionWithResourceResult> asyncHandler);
+
+    /**
+     * <p>
+     * Associates multiple self-service actions with provisioning artifacts.
+     * </p>
+     * 
+     * @param batchAssociateServiceActionWithProvisioningArtifactRequest
+     * @return A Java Future containing the result of the BatchAssociateServiceActionWithProvisioningArtifact operation
+     *         returned by the service.
+     * @sample AWSServiceCatalogAsync.BatchAssociateServiceActionWithProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/BatchAssociateServiceActionWithProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<BatchAssociateServiceActionWithProvisioningArtifactResult> batchAssociateServiceActionWithProvisioningArtifactAsync(
+            BatchAssociateServiceActionWithProvisioningArtifactRequest batchAssociateServiceActionWithProvisioningArtifactRequest);
+
+    /**
+     * <p>
+     * Associates multiple self-service actions with provisioning artifacts.
+     * </p>
+     * 
+     * @param batchAssociateServiceActionWithProvisioningArtifactRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the BatchAssociateServiceActionWithProvisioningArtifact operation
+     *         returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.BatchAssociateServiceActionWithProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/BatchAssociateServiceActionWithProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<BatchAssociateServiceActionWithProvisioningArtifactResult> batchAssociateServiceActionWithProvisioningArtifactAsync(
+            BatchAssociateServiceActionWithProvisioningArtifactRequest batchAssociateServiceActionWithProvisioningArtifactRequest,
+            com.amazonaws.handlers.AsyncHandler<BatchAssociateServiceActionWithProvisioningArtifactRequest, BatchAssociateServiceActionWithProvisioningArtifactResult> asyncHandler);
+
+    /**
+     * <p>
+     * Disassociates a batch of self-service actions from the specified provisioning artifact.
+     * </p>
+     * 
+     * @param batchDisassociateServiceActionFromProvisioningArtifactRequest
+     * @return A Java Future containing the result of the BatchDisassociateServiceActionFromProvisioningArtifact
+     *         operation returned by the service.
+     * @sample AWSServiceCatalogAsync.BatchDisassociateServiceActionFromProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/BatchDisassociateServiceActionFromProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<BatchDisassociateServiceActionFromProvisioningArtifactResult> batchDisassociateServiceActionFromProvisioningArtifactAsync(
+            BatchDisassociateServiceActionFromProvisioningArtifactRequest batchDisassociateServiceActionFromProvisioningArtifactRequest);
+
+    /**
+     * <p>
+     * Disassociates a batch of self-service actions from the specified provisioning artifact.
+     * </p>
+     * 
+     * @param batchDisassociateServiceActionFromProvisioningArtifactRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the BatchDisassociateServiceActionFromProvisioningArtifact
+     *         operation returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.BatchDisassociateServiceActionFromProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/BatchDisassociateServiceActionFromProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<BatchDisassociateServiceActionFromProvisioningArtifactResult> batchDisassociateServiceActionFromProvisioningArtifactAsync(
+            BatchDisassociateServiceActionFromProvisioningArtifactRequest batchDisassociateServiceActionFromProvisioningArtifactRequest,
+            com.amazonaws.handlers.AsyncHandler<BatchDisassociateServiceActionFromProvisioningArtifactRequest, BatchDisassociateServiceActionFromProvisioningArtifactResult> asyncHandler);
 
     /**
      * <p>
@@ -284,7 +395,9 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
-     * Shares the specified portfolio with the specified account.
+     * Shares the specified portfolio with the specified account or organization node. Shares to an organization node
+     * can only be created by the master account of an Organization. AWSOrganizationsAccess must be enabled in order to
+     * create a portfolio share to an organization node.
      * </p>
      * 
      * @param createPortfolioShareRequest
@@ -297,7 +410,9 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
-     * Shares the specified portfolio with the specified account.
+     * Shares the specified portfolio with the specified account or organization node. Shares to an organization node
+     * can only be created by the master account of an Organization. AWSOrganizationsAccess must be enabled in order to
+     * create a portfolio share to an organization node.
      * </p>
      * 
      * @param createPortfolioShareRequest
@@ -346,6 +461,59 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
+     * Creates a plan. A plan includes the list of resources to be created (when provisioning a new product) or modified
+     * (when updating a provisioned product) when the plan is executed.
+     * </p>
+     * <p>
+     * You can create one plan per provisioned product. To create a plan for an existing provisioned product, the
+     * product status must be AVAILBLE or TAINTED.
+     * </p>
+     * <p>
+     * To view the resource changes in the change set, use <a>DescribeProvisionedProductPlan</a>. To create or modify
+     * the provisioned product, use <a>ExecuteProvisionedProductPlan</a>.
+     * </p>
+     * 
+     * @param createProvisionedProductPlanRequest
+     * @return A Java Future containing the result of the CreateProvisionedProductPlan operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsync.CreateProvisionedProductPlan
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/CreateProvisionedProductPlan"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateProvisionedProductPlanResult> createProvisionedProductPlanAsync(
+            CreateProvisionedProductPlanRequest createProvisionedProductPlanRequest);
+
+    /**
+     * <p>
+     * Creates a plan. A plan includes the list of resources to be created (when provisioning a new product) or modified
+     * (when updating a provisioned product) when the plan is executed.
+     * </p>
+     * <p>
+     * You can create one plan per provisioned product. To create a plan for an existing provisioned product, the
+     * product status must be AVAILBLE or TAINTED.
+     * </p>
+     * <p>
+     * To view the resource changes in the change set, use <a>DescribeProvisionedProductPlan</a>. To create or modify
+     * the provisioned product, use <a>ExecuteProvisionedProductPlan</a>.
+     * </p>
+     * 
+     * @param createProvisionedProductPlanRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the CreateProvisionedProductPlan operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsyncHandler.CreateProvisionedProductPlan
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/CreateProvisionedProductPlan"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateProvisionedProductPlanResult> createProvisionedProductPlanAsync(
+            CreateProvisionedProductPlanRequest createProvisionedProductPlanRequest,
+            com.amazonaws.handlers.AsyncHandler<CreateProvisionedProductPlanRequest, CreateProvisionedProductPlanResult> asyncHandler);
+
+    /**
+     * <p>
      * Creates a provisioning artifact (also known as a version) for the specified product.
      * </p>
      * <p>
@@ -382,6 +550,37 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
     java.util.concurrent.Future<CreateProvisioningArtifactResult> createProvisioningArtifactAsync(
             CreateProvisioningArtifactRequest createProvisioningArtifactRequest,
             com.amazonaws.handlers.AsyncHandler<CreateProvisioningArtifactRequest, CreateProvisioningArtifactResult> asyncHandler);
+
+    /**
+     * <p>
+     * Creates a self-service action.
+     * </p>
+     * 
+     * @param createServiceActionRequest
+     * @return A Java Future containing the result of the CreateServiceAction operation returned by the service.
+     * @sample AWSServiceCatalogAsync.CreateServiceAction
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/CreateServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateServiceActionResult> createServiceActionAsync(CreateServiceActionRequest createServiceActionRequest);
+
+    /**
+     * <p>
+     * Creates a self-service action.
+     * </p>
+     * 
+     * @param createServiceActionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the CreateServiceAction operation returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.CreateServiceAction
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/CreateServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateServiceActionResult> createServiceActionAsync(CreateServiceActionRequest createServiceActionRequest,
+            com.amazonaws.handlers.AsyncHandler<CreateServiceActionRequest, CreateServiceActionResult> asyncHandler);
 
     /**
      * <p>
@@ -486,7 +685,8 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
-     * Stops sharing the specified portfolio with the specified account.
+     * Stops sharing the specified portfolio with the specified account or organization node. Shares to an organization
+     * node can only be deleted by the master account of an Organization.
      * </p>
      * 
      * @param deletePortfolioShareRequest
@@ -499,7 +699,8 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
-     * Stops sharing the specified portfolio with the specified account.
+     * Stops sharing the specified portfolio with the specified account or organization node. Shares to an organization
+     * node can only be deleted by the master account of an Organization.
      * </p>
      * 
      * @param deletePortfolioShareRequest
@@ -554,6 +755,41 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
+     * Deletes the specified plan.
+     * </p>
+     * 
+     * @param deleteProvisionedProductPlanRequest
+     * @return A Java Future containing the result of the DeleteProvisionedProductPlan operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsync.DeleteProvisionedProductPlan
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DeleteProvisionedProductPlan"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteProvisionedProductPlanResult> deleteProvisionedProductPlanAsync(
+            DeleteProvisionedProductPlanRequest deleteProvisionedProductPlanRequest);
+
+    /**
+     * <p>
+     * Deletes the specified plan.
+     * </p>
+     * 
+     * @param deleteProvisionedProductPlanRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteProvisionedProductPlan operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsyncHandler.DeleteProvisionedProductPlan
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DeleteProvisionedProductPlan"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteProvisionedProductPlanResult> deleteProvisionedProductPlanAsync(
+            DeleteProvisionedProductPlanRequest deleteProvisionedProductPlanRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteProvisionedProductPlanRequest, DeleteProvisionedProductPlanResult> asyncHandler);
+
+    /**
+     * <p>
      * Deletes the specified provisioning artifact (also known as a version) for the specified product.
      * </p>
      * <p>
@@ -592,6 +828,74 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
     java.util.concurrent.Future<DeleteProvisioningArtifactResult> deleteProvisioningArtifactAsync(
             DeleteProvisioningArtifactRequest deleteProvisioningArtifactRequest,
             com.amazonaws.handlers.AsyncHandler<DeleteProvisioningArtifactRequest, DeleteProvisioningArtifactResult> asyncHandler);
+
+    /**
+     * <p>
+     * Deletes a self-service action.
+     * </p>
+     * 
+     * @param deleteServiceActionRequest
+     * @return A Java Future containing the result of the DeleteServiceAction operation returned by the service.
+     * @sample AWSServiceCatalogAsync.DeleteServiceAction
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DeleteServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteServiceActionResult> deleteServiceActionAsync(DeleteServiceActionRequest deleteServiceActionRequest);
+
+    /**
+     * <p>
+     * Deletes a self-service action.
+     * </p>
+     * 
+     * @param deleteServiceActionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteServiceAction operation returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.DeleteServiceAction
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DeleteServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteServiceActionResult> deleteServiceActionAsync(DeleteServiceActionRequest deleteServiceActionRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteServiceActionRequest, DeleteServiceActionResult> asyncHandler);
+
+    /**
+     * <p>
+     * Deletes the specified TagOption.
+     * </p>
+     * <p>
+     * You cannot delete a TagOption if it is associated with a product or portfolio.
+     * </p>
+     * 
+     * @param deleteTagOptionRequest
+     * @return A Java Future containing the result of the DeleteTagOption operation returned by the service.
+     * @sample AWSServiceCatalogAsync.DeleteTagOption
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DeleteTagOption" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteTagOptionResult> deleteTagOptionAsync(DeleteTagOptionRequest deleteTagOptionRequest);
+
+    /**
+     * <p>
+     * Deletes the specified TagOption.
+     * </p>
+     * <p>
+     * You cannot delete a TagOption if it is associated with a product or portfolio.
+     * </p>
+     * 
+     * @param deleteTagOptionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteTagOption operation returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.DeleteTagOption
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DeleteTagOption" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteTagOptionResult> deleteTagOptionAsync(DeleteTagOptionRequest deleteTagOptionRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteTagOptionRequest, DeleteTagOptionResult> asyncHandler);
 
     /**
      * <p>
@@ -687,6 +991,43 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
      */
     java.util.concurrent.Future<DescribePortfolioResult> describePortfolioAsync(DescribePortfolioRequest describePortfolioRequest,
             com.amazonaws.handlers.AsyncHandler<DescribePortfolioRequest, DescribePortfolioResult> asyncHandler);
+
+    /**
+     * <p>
+     * Gets the status of the specified portfolio share operation. This API can only be called by the master account in
+     * the organization.
+     * </p>
+     * 
+     * @param describePortfolioShareStatusRequest
+     * @return A Java Future containing the result of the DescribePortfolioShareStatus operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsync.DescribePortfolioShareStatus
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DescribePortfolioShareStatus"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DescribePortfolioShareStatusResult> describePortfolioShareStatusAsync(
+            DescribePortfolioShareStatusRequest describePortfolioShareStatusRequest);
+
+    /**
+     * <p>
+     * Gets the status of the specified portfolio share operation. This API can only be called by the master account in
+     * the organization.
+     * </p>
+     * 
+     * @param describePortfolioShareStatusRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DescribePortfolioShareStatus operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsyncHandler.DescribePortfolioShareStatus
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DescribePortfolioShareStatus"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DescribePortfolioShareStatusResult> describePortfolioShareStatusAsync(
+            DescribePortfolioShareStatusRequest describePortfolioShareStatusRequest,
+            com.amazonaws.handlers.AsyncHandler<DescribePortfolioShareStatusRequest, DescribePortfolioShareStatusResult> asyncHandler);
 
     /**
      * <p>
@@ -816,6 +1157,41 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
+     * Gets information about the resource changes for the specified plan.
+     * </p>
+     * 
+     * @param describeProvisionedProductPlanRequest
+     * @return A Java Future containing the result of the DescribeProvisionedProductPlan operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsync.DescribeProvisionedProductPlan
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DescribeProvisionedProductPlan"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DescribeProvisionedProductPlanResult> describeProvisionedProductPlanAsync(
+            DescribeProvisionedProductPlanRequest describeProvisionedProductPlanRequest);
+
+    /**
+     * <p>
+     * Gets information about the resource changes for the specified plan.
+     * </p>
+     * 
+     * @param describeProvisionedProductPlanRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DescribeProvisionedProductPlan operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsyncHandler.DescribeProvisionedProductPlan
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DescribeProvisionedProductPlan"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DescribeProvisionedProductPlanResult> describeProvisionedProductPlanAsync(
+            DescribeProvisionedProductPlanRequest describeProvisionedProductPlanRequest,
+            com.amazonaws.handlers.AsyncHandler<DescribeProvisionedProductPlanRequest, DescribeProvisionedProductPlanResult> asyncHandler);
+
+    /**
+     * <p>
      * Gets information about the specified provisioning artifact (also known as a version) for the specified product.
      * </p>
      * 
@@ -857,8 +1233,8 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
      * <p>
      * If the output contains a TagOption key with an empty list of values, there is a TagOption conflict for that key.
      * The end user cannot take action to fix the conflict, and launch is not blocked. In subsequent calls to
-     * <a>ProvisionProduct</a>, do not include conflicted TagOption keys as tags, or this will cause the error
-     * "Parameter validation failed: Missing required parameter in Tags[<i>N</i>]:<i>Value</i>" and tag the provisioned
+     * <a>ProvisionProduct</a>, do not include conflicted TagOption keys as tags, or this causes the error
+     * "Parameter validation failed: Missing required parameter in Tags[<i>N</i>]:<i>Value</i>". Tag the provisioned
      * product with the value <code>sc-tagoption-conflict-portfolioId-productId</code>.
      * </p>
      * 
@@ -880,8 +1256,8 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
      * <p>
      * If the output contains a TagOption key with an empty list of values, there is a TagOption conflict for that key.
      * The end user cannot take action to fix the conflict, and launch is not blocked. In subsequent calls to
-     * <a>ProvisionProduct</a>, do not include conflicted TagOption keys as tags, or this will cause the error
-     * "Parameter validation failed: Missing required parameter in Tags[<i>N</i>]:<i>Value</i>" and tag the provisioned
+     * <a>ProvisionProduct</a>, do not include conflicted TagOption keys as tags, or this causes the error
+     * "Parameter validation failed: Missing required parameter in Tags[<i>N</i>]:<i>Value</i>". Tag the provisioned
      * product with the value <code>sc-tagoption-conflict-portfolioId-productId</code>.
      * </p>
      * 
@@ -941,6 +1317,37 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
+     * Describes a self-service action.
+     * </p>
+     * 
+     * @param describeServiceActionRequest
+     * @return A Java Future containing the result of the DescribeServiceAction operation returned by the service.
+     * @sample AWSServiceCatalogAsync.DescribeServiceAction
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DescribeServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DescribeServiceActionResult> describeServiceActionAsync(DescribeServiceActionRequest describeServiceActionRequest);
+
+    /**
+     * <p>
+     * Describes a self-service action.
+     * </p>
+     * 
+     * @param describeServiceActionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DescribeServiceAction operation returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.DescribeServiceAction
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DescribeServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DescribeServiceActionResult> describeServiceActionAsync(DescribeServiceActionRequest describeServiceActionRequest,
+            com.amazonaws.handlers.AsyncHandler<DescribeServiceActionRequest, DescribeServiceActionResult> asyncHandler);
+
+    /**
+     * <p>
      * Gets information about the specified TagOption.
      * </p>
      * 
@@ -969,6 +1376,47 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
      */
     java.util.concurrent.Future<DescribeTagOptionResult> describeTagOptionAsync(DescribeTagOptionRequest describeTagOptionRequest,
             com.amazonaws.handlers.AsyncHandler<DescribeTagOptionRequest, DescribeTagOptionResult> asyncHandler);
+
+    /**
+     * <p>
+     * Disable portfolio sharing through AWS Organizations feature. This feature will not delete your current shares but
+     * it will prevent you from creating new shares throughout your organization. Current shares will not be in sync
+     * with your organization structure if it changes after calling this API. This API can only be called by the master
+     * account in the organization.
+     * </p>
+     * 
+     * @param disableAWSOrganizationsAccessRequest
+     * @return A Java Future containing the result of the DisableAWSOrganizationsAccess operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsync.DisableAWSOrganizationsAccess
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DisableAWSOrganizationsAccess"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DisableAWSOrganizationsAccessResult> disableAWSOrganizationsAccessAsync(
+            DisableAWSOrganizationsAccessRequest disableAWSOrganizationsAccessRequest);
+
+    /**
+     * <p>
+     * Disable portfolio sharing through AWS Organizations feature. This feature will not delete your current shares but
+     * it will prevent you from creating new shares throughout your organization. Current shares will not be in sync
+     * with your organization structure if it changes after calling this API. This API can only be called by the master
+     * account in the organization.
+     * </p>
+     * 
+     * @param disableAWSOrganizationsAccessRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DisableAWSOrganizationsAccess operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsyncHandler.DisableAWSOrganizationsAccess
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DisableAWSOrganizationsAccess"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DisableAWSOrganizationsAccessResult> disableAWSOrganizationsAccessAsync(
+            DisableAWSOrganizationsAccessRequest disableAWSOrganizationsAccessRequest,
+            com.amazonaws.handlers.AsyncHandler<DisableAWSOrganizationsAccessRequest, DisableAWSOrganizationsAccessResult> asyncHandler);
 
     /**
      * <p>
@@ -1044,6 +1492,43 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
+     * Disassociates the specified self-service action association from the specified provisioning artifact.
+     * </p>
+     * 
+     * @param disassociateServiceActionFromProvisioningArtifactRequest
+     * @return A Java Future containing the result of the DisassociateServiceActionFromProvisioningArtifact operation
+     *         returned by the service.
+     * @sample AWSServiceCatalogAsync.DisassociateServiceActionFromProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DisassociateServiceActionFromProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DisassociateServiceActionFromProvisioningArtifactResult> disassociateServiceActionFromProvisioningArtifactAsync(
+            DisassociateServiceActionFromProvisioningArtifactRequest disassociateServiceActionFromProvisioningArtifactRequest);
+
+    /**
+     * <p>
+     * Disassociates the specified self-service action association from the specified provisioning artifact.
+     * </p>
+     * 
+     * @param disassociateServiceActionFromProvisioningArtifactRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DisassociateServiceActionFromProvisioningArtifact operation
+     *         returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.DisassociateServiceActionFromProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/DisassociateServiceActionFromProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DisassociateServiceActionFromProvisioningArtifactResult> disassociateServiceActionFromProvisioningArtifactAsync(
+            DisassociateServiceActionFromProvisioningArtifactRequest disassociateServiceActionFromProvisioningArtifactRequest,
+            com.amazonaws.handlers.AsyncHandler<DisassociateServiceActionFromProvisioningArtifactRequest, DisassociateServiceActionFromProvisioningArtifactResult> asyncHandler);
+
+    /**
+     * <p>
      * Disassociates the specified TagOption from the specified resource.
      * </p>
      * 
@@ -1076,6 +1561,162 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
     java.util.concurrent.Future<DisassociateTagOptionFromResourceResult> disassociateTagOptionFromResourceAsync(
             DisassociateTagOptionFromResourceRequest disassociateTagOptionFromResourceRequest,
             com.amazonaws.handlers.AsyncHandler<DisassociateTagOptionFromResourceRequest, DisassociateTagOptionFromResourceResult> asyncHandler);
+
+    /**
+     * <p>
+     * Enable portfolio sharing feature through AWS Organizations. This API will allow Service Catalog to receive
+     * updates on your organization in order to sync your shares with the current structure. This API can only be called
+     * by the master account in the organization.
+     * </p>
+     * <p>
+     * By calling this API Service Catalog will make a call to organizations:EnableAWSServiceAccess on your behalf so
+     * that your shares can be in sync with any changes in your AWS Organizations structure.
+     * </p>
+     * 
+     * @param enableAWSOrganizationsAccessRequest
+     * @return A Java Future containing the result of the EnableAWSOrganizationsAccess operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsync.EnableAWSOrganizationsAccess
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/EnableAWSOrganizationsAccess"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<EnableAWSOrganizationsAccessResult> enableAWSOrganizationsAccessAsync(
+            EnableAWSOrganizationsAccessRequest enableAWSOrganizationsAccessRequest);
+
+    /**
+     * <p>
+     * Enable portfolio sharing feature through AWS Organizations. This API will allow Service Catalog to receive
+     * updates on your organization in order to sync your shares with the current structure. This API can only be called
+     * by the master account in the organization.
+     * </p>
+     * <p>
+     * By calling this API Service Catalog will make a call to organizations:EnableAWSServiceAccess on your behalf so
+     * that your shares can be in sync with any changes in your AWS Organizations structure.
+     * </p>
+     * 
+     * @param enableAWSOrganizationsAccessRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the EnableAWSOrganizationsAccess operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsyncHandler.EnableAWSOrganizationsAccess
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/EnableAWSOrganizationsAccess"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<EnableAWSOrganizationsAccessResult> enableAWSOrganizationsAccessAsync(
+            EnableAWSOrganizationsAccessRequest enableAWSOrganizationsAccessRequest,
+            com.amazonaws.handlers.AsyncHandler<EnableAWSOrganizationsAccessRequest, EnableAWSOrganizationsAccessResult> asyncHandler);
+
+    /**
+     * <p>
+     * Provisions or modifies a product based on the resource changes for the specified plan.
+     * </p>
+     * 
+     * @param executeProvisionedProductPlanRequest
+     * @return A Java Future containing the result of the ExecuteProvisionedProductPlan operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsync.ExecuteProvisionedProductPlan
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ExecuteProvisionedProductPlan"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ExecuteProvisionedProductPlanResult> executeProvisionedProductPlanAsync(
+            ExecuteProvisionedProductPlanRequest executeProvisionedProductPlanRequest);
+
+    /**
+     * <p>
+     * Provisions or modifies a product based on the resource changes for the specified plan.
+     * </p>
+     * 
+     * @param executeProvisionedProductPlanRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ExecuteProvisionedProductPlan operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsyncHandler.ExecuteProvisionedProductPlan
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ExecuteProvisionedProductPlan"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ExecuteProvisionedProductPlanResult> executeProvisionedProductPlanAsync(
+            ExecuteProvisionedProductPlanRequest executeProvisionedProductPlanRequest,
+            com.amazonaws.handlers.AsyncHandler<ExecuteProvisionedProductPlanRequest, ExecuteProvisionedProductPlanResult> asyncHandler);
+
+    /**
+     * <p>
+     * Executes a self-service action against a provisioned product.
+     * </p>
+     * 
+     * @param executeProvisionedProductServiceActionRequest
+     * @return A Java Future containing the result of the ExecuteProvisionedProductServiceAction operation returned by
+     *         the service.
+     * @sample AWSServiceCatalogAsync.ExecuteProvisionedProductServiceAction
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ExecuteProvisionedProductServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ExecuteProvisionedProductServiceActionResult> executeProvisionedProductServiceActionAsync(
+            ExecuteProvisionedProductServiceActionRequest executeProvisionedProductServiceActionRequest);
+
+    /**
+     * <p>
+     * Executes a self-service action against a provisioned product.
+     * </p>
+     * 
+     * @param executeProvisionedProductServiceActionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ExecuteProvisionedProductServiceAction operation returned by
+     *         the service.
+     * @sample AWSServiceCatalogAsyncHandler.ExecuteProvisionedProductServiceAction
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ExecuteProvisionedProductServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ExecuteProvisionedProductServiceActionResult> executeProvisionedProductServiceActionAsync(
+            ExecuteProvisionedProductServiceActionRequest executeProvisionedProductServiceActionRequest,
+            com.amazonaws.handlers.AsyncHandler<ExecuteProvisionedProductServiceActionRequest, ExecuteProvisionedProductServiceActionResult> asyncHandler);
+
+    /**
+     * <p>
+     * Get the Access Status for AWS Organization portfolio share feature. This API can only be called by the master
+     * account in the organization.
+     * </p>
+     * 
+     * @param getAWSOrganizationsAccessStatusRequest
+     * @return A Java Future containing the result of the GetAWSOrganizationsAccessStatus operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsync.GetAWSOrganizationsAccessStatus
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/GetAWSOrganizationsAccessStatus"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetAWSOrganizationsAccessStatusResult> getAWSOrganizationsAccessStatusAsync(
+            GetAWSOrganizationsAccessStatusRequest getAWSOrganizationsAccessStatusRequest);
+
+    /**
+     * <p>
+     * Get the Access Status for AWS Organization portfolio share feature. This API can only be called by the master
+     * account in the organization.
+     * </p>
+     * 
+     * @param getAWSOrganizationsAccessStatusRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetAWSOrganizationsAccessStatus operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsyncHandler.GetAWSOrganizationsAccessStatus
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/GetAWSOrganizationsAccessStatus"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetAWSOrganizationsAccessStatusResult> getAWSOrganizationsAccessStatusAsync(
+            GetAWSOrganizationsAccessStatusRequest getAWSOrganizationsAccessStatusRequest,
+            com.amazonaws.handlers.AsyncHandler<GetAWSOrganizationsAccessStatusRequest, GetAWSOrganizationsAccessStatusResult> asyncHandler);
 
     /**
      * <p>
@@ -1175,6 +1816,43 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
      */
     java.util.concurrent.Future<ListLaunchPathsResult> listLaunchPathsAsync(ListLaunchPathsRequest listLaunchPathsRequest,
             com.amazonaws.handlers.AsyncHandler<ListLaunchPathsRequest, ListLaunchPathsResult> asyncHandler);
+
+    /**
+     * <p>
+     * Lists the organization nodes that have access to the specified portfolio. This API can only be called by the
+     * master account in the organization.
+     * </p>
+     * 
+     * @param listOrganizationPortfolioAccessRequest
+     * @return A Java Future containing the result of the ListOrganizationPortfolioAccess operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsync.ListOrganizationPortfolioAccess
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListOrganizationPortfolioAccess"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListOrganizationPortfolioAccessResult> listOrganizationPortfolioAccessAsync(
+            ListOrganizationPortfolioAccessRequest listOrganizationPortfolioAccessRequest);
+
+    /**
+     * <p>
+     * Lists the organization nodes that have access to the specified portfolio. This API can only be called by the
+     * master account in the organization.
+     * </p>
+     * 
+     * @param listOrganizationPortfolioAccessRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListOrganizationPortfolioAccess operation returned by the
+     *         service.
+     * @sample AWSServiceCatalogAsyncHandler.ListOrganizationPortfolioAccess
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListOrganizationPortfolioAccess"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListOrganizationPortfolioAccessResult> listOrganizationPortfolioAccessAsync(
+            ListOrganizationPortfolioAccessRequest listOrganizationPortfolioAccessRequest,
+            com.amazonaws.handlers.AsyncHandler<ListOrganizationPortfolioAccessRequest, ListOrganizationPortfolioAccessResult> asyncHandler);
 
     /**
      * <p>
@@ -1304,6 +1982,39 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
+     * Lists the plans for the specified provisioned product or all plans to which the user has access.
+     * </p>
+     * 
+     * @param listProvisionedProductPlansRequest
+     * @return A Java Future containing the result of the ListProvisionedProductPlans operation returned by the service.
+     * @sample AWSServiceCatalogAsync.ListProvisionedProductPlans
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListProvisionedProductPlans"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListProvisionedProductPlansResult> listProvisionedProductPlansAsync(
+            ListProvisionedProductPlansRequest listProvisionedProductPlansRequest);
+
+    /**
+     * <p>
+     * Lists the plans for the specified provisioned product or all plans to which the user has access.
+     * </p>
+     * 
+     * @param listProvisionedProductPlansRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListProvisionedProductPlans operation returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.ListProvisionedProductPlans
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListProvisionedProductPlans"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListProvisionedProductPlansResult> listProvisionedProductPlansAsync(
+            ListProvisionedProductPlansRequest listProvisionedProductPlansRequest,
+            com.amazonaws.handlers.AsyncHandler<ListProvisionedProductPlansRequest, ListProvisionedProductPlansResult> asyncHandler);
+
+    /**
+     * <p>
      * Lists all provisioning artifacts (also known as versions) for the specified product.
      * </p>
      * 
@@ -1334,6 +2045,43 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
     java.util.concurrent.Future<ListProvisioningArtifactsResult> listProvisioningArtifactsAsync(
             ListProvisioningArtifactsRequest listProvisioningArtifactsRequest,
             com.amazonaws.handlers.AsyncHandler<ListProvisioningArtifactsRequest, ListProvisioningArtifactsResult> asyncHandler);
+
+    /**
+     * <p>
+     * Lists all provisioning artifacts (also known as versions) for the specified self-service action.
+     * </p>
+     * 
+     * @param listProvisioningArtifactsForServiceActionRequest
+     * @return A Java Future containing the result of the ListProvisioningArtifactsForServiceAction operation returned
+     *         by the service.
+     * @sample AWSServiceCatalogAsync.ListProvisioningArtifactsForServiceAction
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListProvisioningArtifactsForServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListProvisioningArtifactsForServiceActionResult> listProvisioningArtifactsForServiceActionAsync(
+            ListProvisioningArtifactsForServiceActionRequest listProvisioningArtifactsForServiceActionRequest);
+
+    /**
+     * <p>
+     * Lists all provisioning artifacts (also known as versions) for the specified self-service action.
+     * </p>
+     * 
+     * @param listProvisioningArtifactsForServiceActionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListProvisioningArtifactsForServiceAction operation returned
+     *         by the service.
+     * @sample AWSServiceCatalogAsyncHandler.ListProvisioningArtifactsForServiceAction
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListProvisioningArtifactsForServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListProvisioningArtifactsForServiceActionResult> listProvisioningArtifactsForServiceActionAsync(
+            ListProvisioningArtifactsForServiceActionRequest listProvisioningArtifactsForServiceActionRequest,
+            com.amazonaws.handlers.AsyncHandler<ListProvisioningArtifactsForServiceActionRequest, ListProvisioningArtifactsForServiceActionResult> asyncHandler);
 
     /**
      * <p>
@@ -1401,6 +2149,76 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
 
     /**
      * <p>
+     * Lists all self-service actions.
+     * </p>
+     * 
+     * @param listServiceActionsRequest
+     * @return A Java Future containing the result of the ListServiceActions operation returned by the service.
+     * @sample AWSServiceCatalogAsync.ListServiceActions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListServiceActions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListServiceActionsResult> listServiceActionsAsync(ListServiceActionsRequest listServiceActionsRequest);
+
+    /**
+     * <p>
+     * Lists all self-service actions.
+     * </p>
+     * 
+     * @param listServiceActionsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListServiceActions operation returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.ListServiceActions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListServiceActions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListServiceActionsResult> listServiceActionsAsync(ListServiceActionsRequest listServiceActionsRequest,
+            com.amazonaws.handlers.AsyncHandler<ListServiceActionsRequest, ListServiceActionsResult> asyncHandler);
+
+    /**
+     * <p>
+     * Returns a paginated list of self-service actions associated with the specified Product ID and Provisioning
+     * Artifact ID.
+     * </p>
+     * 
+     * @param listServiceActionsForProvisioningArtifactRequest
+     * @return A Java Future containing the result of the ListServiceActionsForProvisioningArtifact operation returned
+     *         by the service.
+     * @sample AWSServiceCatalogAsync.ListServiceActionsForProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListServiceActionsForProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListServiceActionsForProvisioningArtifactResult> listServiceActionsForProvisioningArtifactAsync(
+            ListServiceActionsForProvisioningArtifactRequest listServiceActionsForProvisioningArtifactRequest);
+
+    /**
+     * <p>
+     * Returns a paginated list of self-service actions associated with the specified Product ID and Provisioning
+     * Artifact ID.
+     * </p>
+     * 
+     * @param listServiceActionsForProvisioningArtifactRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListServiceActionsForProvisioningArtifact operation returned
+     *         by the service.
+     * @sample AWSServiceCatalogAsyncHandler.ListServiceActionsForProvisioningArtifact
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/ListServiceActionsForProvisioningArtifact"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListServiceActionsForProvisioningArtifactResult> listServiceActionsForProvisioningArtifactAsync(
+            ListServiceActionsForProvisioningArtifactRequest listServiceActionsForProvisioningArtifactRequest,
+            com.amazonaws.handlers.AsyncHandler<ListServiceActionsForProvisioningArtifactRequest, ListServiceActionsForProvisioningArtifactResult> asyncHandler);
+
+    /**
+     * <p>
      * Lists the specified TagOptions or all TagOptions.
      * </p>
      * 
@@ -1441,7 +2259,7 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
      * </p>
      * <p>
      * If the request contains a tag key with an empty list of values, there is a tag conflict for that key. Do not
-     * include conflicted keys as tags, or this will cause the error
+     * include conflicted keys as tags, or this causes the error
      * "Parameter validation failed: Missing required parameter in Tags[<i>N</i>]:<i>Value</i>".
      * </p>
      * 
@@ -1464,7 +2282,7 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
      * </p>
      * <p>
      * If the request contains a tag key with an empty list of values, there is a tag conflict for that key. Do not
-     * include conflicted keys as tags, or this will cause the error
+     * include conflicted keys as tags, or this causes the error
      * "Parameter validation failed: Missing required parameter in Tags[<i>N</i>]:<i>Value</i>".
      * </p>
      * 
@@ -1516,6 +2334,9 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
      * <p>
      * Lists the provisioned products that are available (not terminated).
      * </p>
+     * <p>
+     * To use additional filtering, see <a>SearchProvisionedProducts</a>.
+     * </p>
      * 
      * @param scanProvisionedProductsRequest
      * @return A Java Future containing the result of the ScanProvisionedProducts operation returned by the service.
@@ -1528,6 +2349,9 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
     /**
      * <p>
      * Lists the provisioned products that are available (not terminated).
+     * </p>
+     * <p>
+     * To use additional filtering, see <a>SearchProvisionedProducts</a>.
      * </p>
      * 
      * @param scanProvisionedProductsRequest
@@ -1604,6 +2428,39 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
      */
     java.util.concurrent.Future<SearchProductsAsAdminResult> searchProductsAsAdminAsync(SearchProductsAsAdminRequest searchProductsAsAdminRequest,
             com.amazonaws.handlers.AsyncHandler<SearchProductsAsAdminRequest, SearchProductsAsAdminResult> asyncHandler);
+
+    /**
+     * <p>
+     * Gets information about the provisioned products that meet the specified criteria.
+     * </p>
+     * 
+     * @param searchProvisionedProductsRequest
+     * @return A Java Future containing the result of the SearchProvisionedProducts operation returned by the service.
+     * @sample AWSServiceCatalogAsync.SearchProvisionedProducts
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/SearchProvisionedProducts"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<SearchProvisionedProductsResult> searchProvisionedProductsAsync(
+            SearchProvisionedProductsRequest searchProvisionedProductsRequest);
+
+    /**
+     * <p>
+     * Gets information about the provisioned products that meet the specified criteria.
+     * </p>
+     * 
+     * @param searchProvisionedProductsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the SearchProvisionedProducts operation returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.SearchProvisionedProducts
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/SearchProvisionedProducts"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<SearchProvisionedProductsResult> searchProvisionedProductsAsync(
+            SearchProvisionedProductsRequest searchProvisionedProductsRequest,
+            com.amazonaws.handlers.AsyncHandler<SearchProvisionedProductsRequest, SearchProvisionedProductsResult> asyncHandler);
 
     /**
      * <p>
@@ -1834,6 +2691,37 @@ public interface AWSServiceCatalogAsync extends AWSServiceCatalog {
     java.util.concurrent.Future<UpdateProvisioningArtifactResult> updateProvisioningArtifactAsync(
             UpdateProvisioningArtifactRequest updateProvisioningArtifactRequest,
             com.amazonaws.handlers.AsyncHandler<UpdateProvisioningArtifactRequest, UpdateProvisioningArtifactResult> asyncHandler);
+
+    /**
+     * <p>
+     * Updates a self-service action.
+     * </p>
+     * 
+     * @param updateServiceActionRequest
+     * @return A Java Future containing the result of the UpdateServiceAction operation returned by the service.
+     * @sample AWSServiceCatalogAsync.UpdateServiceAction
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/UpdateServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<UpdateServiceActionResult> updateServiceActionAsync(UpdateServiceActionRequest updateServiceActionRequest);
+
+    /**
+     * <p>
+     * Updates a self-service action.
+     * </p>
+     * 
+     * @param updateServiceActionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the UpdateServiceAction operation returned by the service.
+     * @sample AWSServiceCatalogAsyncHandler.UpdateServiceAction
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/servicecatalog-2015-12-10/UpdateServiceAction"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<UpdateServiceActionResult> updateServiceActionAsync(UpdateServiceActionRequest updateServiceActionRequest,
+            com.amazonaws.handlers.AsyncHandler<UpdateServiceActionRequest, UpdateServiceActionResult> asyncHandler);
 
     /**
      * <p>

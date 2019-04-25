@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -30,52 +30,49 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     private Integer audioFramesPerPes;
     /**
      * Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are accepted,
-     * and can be entered in ranges and/or by comma separation. Can be entered as decimal or hexadecimal values.
+     * and can be entered in ranges and/or by comma separation.
      */
     private java.util.List<Integer> audioPids;
+    /**
+     * If INSERT, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3
+     * tag will be inserted in the output.
+     */
+    private String nielsenId3;
     /** The number of milliseconds between instances of this table in the output transport stream. */
     private Integer patInterval;
-
+    /**
+     * When set to PCR_EVERY_PES_PACKET a Program Clock Reference value is inserted for every Packetized Elementary
+     * Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video or audio
+     * elementary stream.
+     */
     private String pcrControl;
     /**
      * Packet Identifier (PID) of the Program Clock Reference (PCR) in the transport stream. When no value is given, the
-     * encoder will assign the same value as the Video PID. Can be entered as a decimal or hexadecimal value.
+     * encoder will assign the same value as the Video PID.
      */
     private Integer pcrPid;
     /** The number of milliseconds between instances of this table in the output transport stream. */
     private Integer pmtInterval;
-    /**
-     * Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
-     */
+    /** Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream. */
     private Integer pmtPid;
-    /**
-     * Packet Identifier (PID) of the private metadata stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
-     */
+    /** Packet Identifier (PID) of the private metadata stream in the transport stream. */
     private Integer privateMetadataPid;
     /** The value of the program number field in the Program Map Table. */
     private Integer programNumber;
-    /**
-     * Packet Identifier (PID) of the SCTE-35 stream in the transport stream. Can be entered as a decimal or hexadecimal
-     * value.
-     */
+    /** Packet Identifier (PID) of the SCTE-35 stream in the transport stream. */
     private Integer scte35Pid;
-
+    /** Enables SCTE-35 passthrough (scte35Source) to pass any SCTE-35 signals from input to output. */
     private String scte35Source;
-
-    private String timedMetadata;
     /**
-     * Packet Identifier (PID) of the timed metadata stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Applies only to HLS outputs. Use this setting to specify whether the service inserts the ID3 timed metadata from
+     * the input in this output.
      */
+    private String timedMetadata;
+    /** Packet Identifier (PID) of the timed metadata stream in the transport stream. */
     private Integer timedMetadataPid;
     /** The value of the transport stream ID field in the Program Map Table. */
     private Integer transportStreamId;
-    /**
-     * Packet Identifier (PID) of the elementary video stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
-     */
+    /** Packet Identifier (PID) of the elementary video stream in the transport stream. */
     private Integer videoPid;
 
     /**
@@ -114,11 +111,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are accepted,
-     * and can be entered in ranges and/or by comma separation. Can be entered as decimal or hexadecimal values.
+     * and can be entered in ranges and/or by comma separation.
      * 
      * @return Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are
-     *         accepted, and can be entered in ranges and/or by comma separation. Can be entered as decimal or
-     *         hexadecimal values.
+     *         accepted, and can be entered in ranges and/or by comma separation.
      */
 
     public java.util.List<Integer> getAudioPids() {
@@ -127,12 +123,11 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are accepted,
-     * and can be entered in ranges and/or by comma separation. Can be entered as decimal or hexadecimal values.
+     * and can be entered in ranges and/or by comma separation.
      * 
      * @param audioPids
      *        Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are
-     *        accepted, and can be entered in ranges and/or by comma separation. Can be entered as decimal or
-     *        hexadecimal values.
+     *        accepted, and can be entered in ranges and/or by comma separation.
      */
 
     public void setAudioPids(java.util.Collection<Integer> audioPids) {
@@ -146,7 +141,7 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are accepted,
-     * and can be entered in ranges and/or by comma separation. Can be entered as decimal or hexadecimal values.
+     * and can be entered in ranges and/or by comma separation.
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setAudioPids(java.util.Collection)} or {@link #withAudioPids(java.util.Collection)} if you want to
@@ -155,8 +150,7 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
      * 
      * @param audioPids
      *        Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are
-     *        accepted, and can be entered in ranges and/or by comma separation. Can be entered as decimal or
-     *        hexadecimal values.
+     *        accepted, and can be entered in ranges and/or by comma separation.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -172,17 +166,75 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are accepted,
-     * and can be entered in ranges and/or by comma separation. Can be entered as decimal or hexadecimal values.
+     * and can be entered in ranges and/or by comma separation.
      * 
      * @param audioPids
      *        Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are
-     *        accepted, and can be entered in ranges and/or by comma separation. Can be entered as decimal or
-     *        hexadecimal values.
+     *        accepted, and can be entered in ranges and/or by comma separation.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
     public M3u8Settings withAudioPids(java.util.Collection<Integer> audioPids) {
         setAudioPids(audioPids);
+        return this;
+    }
+
+    /**
+     * If INSERT, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3
+     * tag will be inserted in the output.
+     * 
+     * @param nielsenId3
+     *        If INSERT, Nielsen inaudible tones for media tracking will be detected in the input audio and an
+     *        equivalent ID3 tag will be inserted in the output.
+     * @see M3u8NielsenId3
+     */
+
+    public void setNielsenId3(String nielsenId3) {
+        this.nielsenId3 = nielsenId3;
+    }
+
+    /**
+     * If INSERT, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3
+     * tag will be inserted in the output.
+     * 
+     * @return If INSERT, Nielsen inaudible tones for media tracking will be detected in the input audio and an
+     *         equivalent ID3 tag will be inserted in the output.
+     * @see M3u8NielsenId3
+     */
+
+    public String getNielsenId3() {
+        return this.nielsenId3;
+    }
+
+    /**
+     * If INSERT, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3
+     * tag will be inserted in the output.
+     * 
+     * @param nielsenId3
+     *        If INSERT, Nielsen inaudible tones for media tracking will be detected in the input audio and an
+     *        equivalent ID3 tag will be inserted in the output.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see M3u8NielsenId3
+     */
+
+    public M3u8Settings withNielsenId3(String nielsenId3) {
+        setNielsenId3(nielsenId3);
+        return this;
+    }
+
+    /**
+     * If INSERT, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3
+     * tag will be inserted in the output.
+     * 
+     * @param nielsenId3
+     *        If INSERT, Nielsen inaudible tones for media tracking will be detected in the input audio and an
+     *        equivalent ID3 tag will be inserted in the output.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see M3u8NielsenId3
+     */
+
+    public M3u8Settings withNielsenId3(M3u8NielsenId3 nielsenId3) {
+        this.nielsenId3 = nielsenId3.toString();
         return this;
     }
 
@@ -221,7 +273,14 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * When set to PCR_EVERY_PES_PACKET a Program Clock Reference value is inserted for every Packetized Elementary
+     * Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video or audio
+     * elementary stream.
+     * 
      * @param pcrControl
+     *        When set to PCR_EVERY_PES_PACKET a Program Clock Reference value is inserted for every Packetized
+     *        Elementary Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video
+     *        or audio elementary stream.
      * @see M3u8PcrControl
      */
 
@@ -230,7 +289,13 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * @return
+     * When set to PCR_EVERY_PES_PACKET a Program Clock Reference value is inserted for every Packetized Elementary
+     * Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video or audio
+     * elementary stream.
+     * 
+     * @return When set to PCR_EVERY_PES_PACKET a Program Clock Reference value is inserted for every Packetized
+     *         Elementary Stream (PES) header. This parameter is effective only when the PCR PID is the same as the
+     *         video or audio elementary stream.
      * @see M3u8PcrControl
      */
 
@@ -239,7 +304,14 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * When set to PCR_EVERY_PES_PACKET a Program Clock Reference value is inserted for every Packetized Elementary
+     * Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video or audio
+     * elementary stream.
+     * 
      * @param pcrControl
+     *        When set to PCR_EVERY_PES_PACKET a Program Clock Reference value is inserted for every Packetized
+     *        Elementary Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video
+     *        or audio elementary stream.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see M3u8PcrControl
      */
@@ -250,7 +322,14 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * When set to PCR_EVERY_PES_PACKET a Program Clock Reference value is inserted for every Packetized Elementary
+     * Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video or audio
+     * elementary stream.
+     * 
      * @param pcrControl
+     *        When set to PCR_EVERY_PES_PACKET a Program Clock Reference value is inserted for every Packetized
+     *        Elementary Stream (PES) header. This parameter is effective only when the PCR PID is the same as the video
+     *        or audio elementary stream.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see M3u8PcrControl
      */
@@ -262,12 +341,11 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * Packet Identifier (PID) of the Program Clock Reference (PCR) in the transport stream. When no value is given, the
-     * encoder will assign the same value as the Video PID. Can be entered as a decimal or hexadecimal value.
+     * encoder will assign the same value as the Video PID.
      * 
      * @param pcrPid
      *        Packet Identifier (PID) of the Program Clock Reference (PCR) in the transport stream. When no value is
-     *        given, the encoder will assign the same value as the Video PID. Can be entered as a decimal or hexadecimal
-     *        value.
+     *        given, the encoder will assign the same value as the Video PID.
      */
 
     public void setPcrPid(Integer pcrPid) {
@@ -276,11 +354,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * Packet Identifier (PID) of the Program Clock Reference (PCR) in the transport stream. When no value is given, the
-     * encoder will assign the same value as the Video PID. Can be entered as a decimal or hexadecimal value.
+     * encoder will assign the same value as the Video PID.
      * 
      * @return Packet Identifier (PID) of the Program Clock Reference (PCR) in the transport stream. When no value is
-     *         given, the encoder will assign the same value as the Video PID. Can be entered as a decimal or
-     *         hexadecimal value.
+     *         given, the encoder will assign the same value as the Video PID.
      */
 
     public Integer getPcrPid() {
@@ -289,12 +366,11 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * Packet Identifier (PID) of the Program Clock Reference (PCR) in the transport stream. When no value is given, the
-     * encoder will assign the same value as the Video PID. Can be entered as a decimal or hexadecimal value.
+     * encoder will assign the same value as the Video PID.
      * 
      * @param pcrPid
      *        Packet Identifier (PID) of the Program Clock Reference (PCR) in the transport stream. When no value is
-     *        given, the encoder will assign the same value as the Video PID. Can be entered as a decimal or hexadecimal
-     *        value.
+     *        given, the encoder will assign the same value as the Video PID.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -338,12 +414,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream.
      * 
      * @param pmtPid
-     *        Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream. Can be entered as a
-     *        decimal or hexadecimal value.
+     *        Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream.
      */
 
     public void setPmtPid(Integer pmtPid) {
@@ -351,11 +425,9 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream.
      * 
-     * @return Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream. Can be entered as a
-     *         decimal or hexadecimal value.
+     * @return Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream.
      */
 
     public Integer getPmtPid() {
@@ -363,12 +435,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream.
      * 
      * @param pmtPid
-     *        Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream. Can be entered as a
-     *        decimal or hexadecimal value.
+     *        Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -378,12 +448,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the private metadata stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) of the private metadata stream in the transport stream.
      * 
      * @param privateMetadataPid
-     *        Packet Identifier (PID) of the private metadata stream in the transport stream. Can be entered as a
-     *        decimal or hexadecimal value.
+     *        Packet Identifier (PID) of the private metadata stream in the transport stream.
      */
 
     public void setPrivateMetadataPid(Integer privateMetadataPid) {
@@ -391,11 +459,9 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the private metadata stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) of the private metadata stream in the transport stream.
      * 
-     * @return Packet Identifier (PID) of the private metadata stream in the transport stream. Can be entered as a
-     *         decimal or hexadecimal value.
+     * @return Packet Identifier (PID) of the private metadata stream in the transport stream.
      */
 
     public Integer getPrivateMetadataPid() {
@@ -403,12 +469,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the private metadata stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) of the private metadata stream in the transport stream.
      * 
      * @param privateMetadataPid
-     *        Packet Identifier (PID) of the private metadata stream in the transport stream. Can be entered as a
-     *        decimal or hexadecimal value.
+     *        Packet Identifier (PID) of the private metadata stream in the transport stream.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -452,12 +516,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the SCTE-35 stream in the transport stream. Can be entered as a decimal or hexadecimal
-     * value.
+     * Packet Identifier (PID) of the SCTE-35 stream in the transport stream.
      * 
      * @param scte35Pid
-     *        Packet Identifier (PID) of the SCTE-35 stream in the transport stream. Can be entered as a decimal or
-     *        hexadecimal value.
+     *        Packet Identifier (PID) of the SCTE-35 stream in the transport stream.
      */
 
     public void setScte35Pid(Integer scte35Pid) {
@@ -465,11 +527,9 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the SCTE-35 stream in the transport stream. Can be entered as a decimal or hexadecimal
-     * value.
+     * Packet Identifier (PID) of the SCTE-35 stream in the transport stream.
      * 
-     * @return Packet Identifier (PID) of the SCTE-35 stream in the transport stream. Can be entered as a decimal or
-     *         hexadecimal value.
+     * @return Packet Identifier (PID) of the SCTE-35 stream in the transport stream.
      */
 
     public Integer getScte35Pid() {
@@ -477,12 +537,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the SCTE-35 stream in the transport stream. Can be entered as a decimal or hexadecimal
-     * value.
+     * Packet Identifier (PID) of the SCTE-35 stream in the transport stream.
      * 
      * @param scte35Pid
-     *        Packet Identifier (PID) of the SCTE-35 stream in the transport stream. Can be entered as a decimal or
-     *        hexadecimal value.
+     *        Packet Identifier (PID) of the SCTE-35 stream in the transport stream.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -492,7 +550,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Enables SCTE-35 passthrough (scte35Source) to pass any SCTE-35 signals from input to output.
+     * 
      * @param scte35Source
+     *        Enables SCTE-35 passthrough (scte35Source) to pass any SCTE-35 signals from input to output.
      * @see M3u8Scte35Source
      */
 
@@ -501,7 +562,9 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * @return
+     * Enables SCTE-35 passthrough (scte35Source) to pass any SCTE-35 signals from input to output.
+     * 
+     * @return Enables SCTE-35 passthrough (scte35Source) to pass any SCTE-35 signals from input to output.
      * @see M3u8Scte35Source
      */
 
@@ -510,7 +573,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Enables SCTE-35 passthrough (scte35Source) to pass any SCTE-35 signals from input to output.
+     * 
      * @param scte35Source
+     *        Enables SCTE-35 passthrough (scte35Source) to pass any SCTE-35 signals from input to output.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see M3u8Scte35Source
      */
@@ -521,7 +587,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Enables SCTE-35 passthrough (scte35Source) to pass any SCTE-35 signals from input to output.
+     * 
      * @param scte35Source
+     *        Enables SCTE-35 passthrough (scte35Source) to pass any SCTE-35 signals from input to output.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see M3u8Scte35Source
      */
@@ -532,7 +601,12 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Applies only to HLS outputs. Use this setting to specify whether the service inserts the ID3 timed metadata from
+     * the input in this output.
+     * 
      * @param timedMetadata
+     *        Applies only to HLS outputs. Use this setting to specify whether the service inserts the ID3 timed
+     *        metadata from the input in this output.
      * @see TimedMetadata
      */
 
@@ -541,7 +615,11 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * @return
+     * Applies only to HLS outputs. Use this setting to specify whether the service inserts the ID3 timed metadata from
+     * the input in this output.
+     * 
+     * @return Applies only to HLS outputs. Use this setting to specify whether the service inserts the ID3 timed
+     *         metadata from the input in this output.
      * @see TimedMetadata
      */
 
@@ -550,7 +628,12 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Applies only to HLS outputs. Use this setting to specify whether the service inserts the ID3 timed metadata from
+     * the input in this output.
+     * 
      * @param timedMetadata
+     *        Applies only to HLS outputs. Use this setting to specify whether the service inserts the ID3 timed
+     *        metadata from the input in this output.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see TimedMetadata
      */
@@ -561,7 +644,12 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Applies only to HLS outputs. Use this setting to specify whether the service inserts the ID3 timed metadata from
+     * the input in this output.
+     * 
      * @param timedMetadata
+     *        Applies only to HLS outputs. Use this setting to specify whether the service inserts the ID3 timed
+     *        metadata from the input in this output.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see TimedMetadata
      */
@@ -572,12 +660,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the timed metadata stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) of the timed metadata stream in the transport stream.
      * 
      * @param timedMetadataPid
-     *        Packet Identifier (PID) of the timed metadata stream in the transport stream. Can be entered as a decimal
-     *        or hexadecimal value.
+     *        Packet Identifier (PID) of the timed metadata stream in the transport stream.
      */
 
     public void setTimedMetadataPid(Integer timedMetadataPid) {
@@ -585,11 +671,9 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the timed metadata stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) of the timed metadata stream in the transport stream.
      * 
-     * @return Packet Identifier (PID) of the timed metadata stream in the transport stream. Can be entered as a decimal
-     *         or hexadecimal value.
+     * @return Packet Identifier (PID) of the timed metadata stream in the transport stream.
      */
 
     public Integer getTimedMetadataPid() {
@@ -597,12 +681,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the timed metadata stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) of the timed metadata stream in the transport stream.
      * 
      * @param timedMetadataPid
-     *        Packet Identifier (PID) of the timed metadata stream in the transport stream. Can be entered as a decimal
-     *        or hexadecimal value.
+     *        Packet Identifier (PID) of the timed metadata stream in the transport stream.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -646,12 +728,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the elementary video stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) of the elementary video stream in the transport stream.
      * 
      * @param videoPid
-     *        Packet Identifier (PID) of the elementary video stream in the transport stream. Can be entered as a
-     *        decimal or hexadecimal value.
+     *        Packet Identifier (PID) of the elementary video stream in the transport stream.
      */
 
     public void setVideoPid(Integer videoPid) {
@@ -659,11 +739,9 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the elementary video stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) of the elementary video stream in the transport stream.
      * 
-     * @return Packet Identifier (PID) of the elementary video stream in the transport stream. Can be entered as a
-     *         decimal or hexadecimal value.
+     * @return Packet Identifier (PID) of the elementary video stream in the transport stream.
      */
 
     public Integer getVideoPid() {
@@ -671,12 +749,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Packet Identifier (PID) of the elementary video stream in the transport stream. Can be entered as a decimal or
-     * hexadecimal value.
+     * Packet Identifier (PID) of the elementary video stream in the transport stream.
      * 
      * @param videoPid
-     *        Packet Identifier (PID) of the elementary video stream in the transport stream. Can be entered as a
-     *        decimal or hexadecimal value.
+     *        Packet Identifier (PID) of the elementary video stream in the transport stream.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -686,7 +762,8 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -700,6 +777,8 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
             sb.append("AudioFramesPerPes: ").append(getAudioFramesPerPes()).append(",");
         if (getAudioPids() != null)
             sb.append("AudioPids: ").append(getAudioPids()).append(",");
+        if (getNielsenId3() != null)
+            sb.append("NielsenId3: ").append(getNielsenId3()).append(",");
         if (getPatInterval() != null)
             sb.append("PatInterval: ").append(getPatInterval()).append(",");
         if (getPcrControl() != null)
@@ -747,6 +826,10 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
         if (other.getAudioPids() == null ^ this.getAudioPids() == null)
             return false;
         if (other.getAudioPids() != null && other.getAudioPids().equals(this.getAudioPids()) == false)
+            return false;
+        if (other.getNielsenId3() == null ^ this.getNielsenId3() == null)
+            return false;
+        if (other.getNielsenId3() != null && other.getNielsenId3().equals(this.getNielsenId3()) == false)
             return false;
         if (other.getPatInterval() == null ^ this.getPatInterval() == null)
             return false;
@@ -810,6 +893,7 @@ public class M3u8Settings implements Serializable, Cloneable, StructuredPojo {
 
         hashCode = prime * hashCode + ((getAudioFramesPerPes() == null) ? 0 : getAudioFramesPerPes().hashCode());
         hashCode = prime * hashCode + ((getAudioPids() == null) ? 0 : getAudioPids().hashCode());
+        hashCode = prime * hashCode + ((getNielsenId3() == null) ? 0 : getNielsenId3().hashCode());
         hashCode = prime * hashCode + ((getPatInterval() == null) ? 0 : getPatInterval().hashCode());
         hashCode = prime * hashCode + ((getPcrControl() == null) ? 0 : getPcrControl().hashCode());
         hashCode = prime * hashCode + ((getPcrPid() == null) ? 0 : getPcrPid().hashCode());

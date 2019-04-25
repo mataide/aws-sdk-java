@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -45,12 +45,14 @@ public class CreateStackInstancesRequestMarshaller implements Marshaller<Request
             request.addParameter("StackSetName", StringUtils.fromString(createStackInstancesRequest.getStackSetName()));
         }
 
-        com.amazonaws.internal.SdkInternalList<String> accountsList = (com.amazonaws.internal.SdkInternalList<String>) createStackInstancesRequest
-                .getAccounts();
-        if (accountsList.isEmpty() && !accountsList.isAutoConstruct()) {
+        if (createStackInstancesRequest.getAccounts().isEmpty()
+                && !((com.amazonaws.internal.SdkInternalList<String>) createStackInstancesRequest.getAccounts()).isAutoConstruct()) {
             request.addParameter("Accounts", "");
         }
-        if (!accountsList.isEmpty() || !accountsList.isAutoConstruct()) {
+        if (!createStackInstancesRequest.getAccounts().isEmpty()
+                || !((com.amazonaws.internal.SdkInternalList<String>) createStackInstancesRequest.getAccounts()).isAutoConstruct()) {
+            com.amazonaws.internal.SdkInternalList<String> accountsList = (com.amazonaws.internal.SdkInternalList<String>) createStackInstancesRequest
+                    .getAccounts();
             int accountsListIndex = 1;
 
             for (String accountsListValue : accountsList) {
@@ -61,11 +63,14 @@ public class CreateStackInstancesRequestMarshaller implements Marshaller<Request
             }
         }
 
-        com.amazonaws.internal.SdkInternalList<String> regionsList = (com.amazonaws.internal.SdkInternalList<String>) createStackInstancesRequest.getRegions();
-        if (regionsList.isEmpty() && !regionsList.isAutoConstruct()) {
+        if (createStackInstancesRequest.getRegions().isEmpty()
+                && !((com.amazonaws.internal.SdkInternalList<String>) createStackInstancesRequest.getRegions()).isAutoConstruct()) {
             request.addParameter("Regions", "");
         }
-        if (!regionsList.isEmpty() || !regionsList.isAutoConstruct()) {
+        if (!createStackInstancesRequest.getRegions().isEmpty()
+                || !((com.amazonaws.internal.SdkInternalList<String>) createStackInstancesRequest.getRegions()).isAutoConstruct()) {
+            com.amazonaws.internal.SdkInternalList<String> regionsList = (com.amazonaws.internal.SdkInternalList<String>) createStackInstancesRequest
+                    .getRegions();
             int regionsListIndex = 1;
 
             for (String regionsListValue : regionsList) {
@@ -76,12 +81,14 @@ public class CreateStackInstancesRequestMarshaller implements Marshaller<Request
             }
         }
 
-        com.amazonaws.internal.SdkInternalList<Parameter> parameterOverridesList = (com.amazonaws.internal.SdkInternalList<Parameter>) createStackInstancesRequest
-                .getParameterOverrides();
-        if (parameterOverridesList.isEmpty() && !parameterOverridesList.isAutoConstruct()) {
+        if (createStackInstancesRequest.getParameterOverrides().isEmpty()
+                && !((com.amazonaws.internal.SdkInternalList<Parameter>) createStackInstancesRequest.getParameterOverrides()).isAutoConstruct()) {
             request.addParameter("ParameterOverrides", "");
         }
-        if (!parameterOverridesList.isEmpty() || !parameterOverridesList.isAutoConstruct()) {
+        if (!createStackInstancesRequest.getParameterOverrides().isEmpty()
+                || !((com.amazonaws.internal.SdkInternalList<Parameter>) createStackInstancesRequest.getParameterOverrides()).isAutoConstruct()) {
+            com.amazonaws.internal.SdkInternalList<Parameter> parameterOverridesList = (com.amazonaws.internal.SdkInternalList<Parameter>) createStackInstancesRequest
+                    .getParameterOverrides();
             int parameterOverridesListIndex = 1;
 
             for (Parameter parameterOverridesListValue : parameterOverridesList) {
@@ -109,40 +116,46 @@ public class CreateStackInstancesRequestMarshaller implements Marshaller<Request
             }
         }
 
-        StackSetOperationPreferences operationPreferences = createStackInstancesRequest.getOperationPreferences();
-        if (operationPreferences != null) {
+        {
+            StackSetOperationPreferences operationPreferences = createStackInstancesRequest.getOperationPreferences();
+            if (operationPreferences != null) {
 
-            com.amazonaws.internal.SdkInternalList<String> regionOrderList = (com.amazonaws.internal.SdkInternalList<String>) operationPreferences
-                    .getRegionOrder();
-            if (regionOrderList.isEmpty() && !regionOrderList.isAutoConstruct()) {
-                request.addParameter("OperationPreferences.RegionOrder", "");
-            }
-            if (!regionOrderList.isEmpty() || !regionOrderList.isAutoConstruct()) {
-                int regionOrderListIndex = 1;
-
-                for (String regionOrderListValue : regionOrderList) {
-                    if (regionOrderListValue != null) {
-                        request.addParameter("OperationPreferences.RegionOrder.member." + regionOrderListIndex, StringUtils.fromString(regionOrderListValue));
-                    }
-                    regionOrderListIndex++;
+                if (operationPreferences.getRegionOrder().isEmpty()
+                        && !((com.amazonaws.internal.SdkInternalList<String>) operationPreferences.getRegionOrder()).isAutoConstruct()) {
+                    request.addParameter("OperationPreferences.RegionOrder", "");
                 }
-            }
+                if (!operationPreferences.getRegionOrder().isEmpty()
+                        || !((com.amazonaws.internal.SdkInternalList<String>) operationPreferences.getRegionOrder()).isAutoConstruct()) {
+                    com.amazonaws.internal.SdkInternalList<String> regionOrderList = (com.amazonaws.internal.SdkInternalList<String>) operationPreferences
+                            .getRegionOrder();
+                    int regionOrderListIndex = 1;
 
-            if (operationPreferences.getFailureToleranceCount() != null) {
-                request.addParameter("OperationPreferences.FailureToleranceCount", StringUtils.fromInteger(operationPreferences.getFailureToleranceCount()));
-            }
+                    for (String regionOrderListValue : regionOrderList) {
+                        if (regionOrderListValue != null) {
+                            request.addParameter("OperationPreferences.RegionOrder.member." + regionOrderListIndex,
+                                    StringUtils.fromString(regionOrderListValue));
+                        }
+                        regionOrderListIndex++;
+                    }
+                }
 
-            if (operationPreferences.getFailureTolerancePercentage() != null) {
-                request.addParameter("OperationPreferences.FailureTolerancePercentage",
-                        StringUtils.fromInteger(operationPreferences.getFailureTolerancePercentage()));
-            }
+                if (operationPreferences.getFailureToleranceCount() != null) {
+                    request.addParameter("OperationPreferences.FailureToleranceCount", StringUtils.fromInteger(operationPreferences.getFailureToleranceCount()));
+                }
 
-            if (operationPreferences.getMaxConcurrentCount() != null) {
-                request.addParameter("OperationPreferences.MaxConcurrentCount", StringUtils.fromInteger(operationPreferences.getMaxConcurrentCount()));
-            }
+                if (operationPreferences.getFailureTolerancePercentage() != null) {
+                    request.addParameter("OperationPreferences.FailureTolerancePercentage",
+                            StringUtils.fromInteger(operationPreferences.getFailureTolerancePercentage()));
+                }
 
-            if (operationPreferences.getMaxConcurrentPercentage() != null) {
-                request.addParameter("OperationPreferences.MaxConcurrentPercentage", StringUtils.fromInteger(operationPreferences.getMaxConcurrentPercentage()));
+                if (operationPreferences.getMaxConcurrentCount() != null) {
+                    request.addParameter("OperationPreferences.MaxConcurrentCount", StringUtils.fromInteger(operationPreferences.getMaxConcurrentCount()));
+                }
+
+                if (operationPreferences.getMaxConcurrentPercentage() != null) {
+                    request.addParameter("OperationPreferences.MaxConcurrentPercentage",
+                            StringUtils.fromInteger(operationPreferences.getMaxConcurrentPercentage()));
+                }
             }
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -102,6 +102,46 @@ public class DBEngineVersionStaxUnmarshaller implements Unmarshaller<DBEngineVer
 
                 if (context.testExpression("SupportedTimezones/Timezone", targetDepth)) {
                     dBEngineVersion.withSupportedTimezones(TimezoneStaxUnmarshaller.getInstance().unmarshall(context));
+                    continue;
+                }
+
+                if (context.testExpression("ExportableLogTypes", targetDepth)) {
+                    dBEngineVersion.withExportableLogTypes(new ArrayList<String>());
+                    continue;
+                }
+
+                if (context.testExpression("ExportableLogTypes/member", targetDepth)) {
+                    dBEngineVersion.withExportableLogTypes(StringStaxUnmarshaller.getInstance().unmarshall(context));
+                    continue;
+                }
+
+                if (context.testExpression("SupportsLogExportsToCloudwatchLogs", targetDepth)) {
+                    dBEngineVersion.setSupportsLogExportsToCloudwatchLogs(BooleanStaxUnmarshaller.getInstance().unmarshall(context));
+                    continue;
+                }
+
+                if (context.testExpression("SupportsReadReplica", targetDepth)) {
+                    dBEngineVersion.setSupportsReadReplica(BooleanStaxUnmarshaller.getInstance().unmarshall(context));
+                    continue;
+                }
+
+                if (context.testExpression("SupportedEngineModes", targetDepth)) {
+                    dBEngineVersion.withSupportedEngineModes(new ArrayList<String>());
+                    continue;
+                }
+
+                if (context.testExpression("SupportedEngineModes/member", targetDepth)) {
+                    dBEngineVersion.withSupportedEngineModes(StringStaxUnmarshaller.getInstance().unmarshall(context));
+                    continue;
+                }
+
+                if (context.testExpression("SupportedFeatureNames", targetDepth)) {
+                    dBEngineVersion.withSupportedFeatureNames(new ArrayList<String>());
+                    continue;
+                }
+
+                if (context.testExpression("SupportedFeatureNames/member", targetDepth)) {
+                    dBEngineVersion.withSupportedFeatureNames(StringStaxUnmarshaller.getInstance().unmarshall(context));
                     continue;
                 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,7 +18,9 @@ import com.amazonaws.protocol.StructuredPojo;
 import com.amazonaws.protocol.ProtocolMarshaller;
 
 /**
+ * <p>
  * Summary of details about the application.
+ * </p>
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/serverlessrepo-2017-09-08/ApplicationSummary" target="_top">AWS
  *      API Documentation</a>
@@ -26,32 +28,84 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class ApplicationSummary implements Serializable, Cloneable, StructuredPojo {
 
-    /** The application ARN. */
+    /**
+     * <p>
+     * The application Amazon Resource Name (ARN).
+     * </p>
+     */
     private String applicationId;
     /**
-     * The name of the author publishing the app\nMin Length=1. Max Length=127.\nPattern
-     * "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     * <p>
+     * The name of the author publishing the app.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=127.
+     * </p>
+     * <p>
+     * Pattern "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     * </p>
      */
     private String author;
-    /** The date/time this resource was created. */
+    /**
+     * <p>
+     * The date and time this resource was created.
+     * </p>
+     */
     private String creationTime;
-    /** The description of the application.\nMin Length=1. Max Length=256 */
+    /**
+     * <p>
+     * The description of the application.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=256
+     * </p>
+     */
     private String description;
     /**
-     * Labels to improve discovery of apps in search results.\nMin Length=1. Max Length=127. Maximum number of labels:
-     * 10\nPattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * <p>
+     * A URL with more information about the application, for example the location of your GitHub repository for the
+     * application.
+     * </p>
+     */
+    private String homePageUrl;
+    /**
+     * <p>
+     * Labels to improve discovery of apps in search results.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=127. Maximum number of labels: 10
+     * </p>
+     * <p>
+     * Pattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * </p>
      */
     private java.util.List<String> labels;
-    /** The name of the application.\nMin Length=1. Max Length=140\nPattern: "[a-zA-Z0-9\\-]+"; */
+    /**
+     * <p>
+     * The name of the application.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=140
+     * </p>
+     * <p>
+     * Pattern: "[a-zA-Z0-9\\-]+";
+     * </p>
+     */
     private String name;
-    /** A valid identifier from https://spdx.org/licenses/ . */
+    /**
+     * <p>
+     * A valid identifier from <a href="https://spdx.org/licenses/">https://spdx.org/licenses/</a>.
+     * </p>
+     */
     private String spdxLicenseId;
 
     /**
-     * The application ARN.
+     * <p>
+     * The application Amazon Resource Name (ARN).
+     * </p>
      * 
      * @param applicationId
-     *        The application ARN.
+     *        The application Amazon Resource Name (ARN).
      */
 
     public void setApplicationId(String applicationId) {
@@ -59,9 +113,11 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The application ARN.
+     * <p>
+     * The application Amazon Resource Name (ARN).
+     * </p>
      * 
-     * @return The application ARN.
+     * @return The application Amazon Resource Name (ARN).
      */
 
     public String getApplicationId() {
@@ -69,10 +125,12 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The application ARN.
+     * <p>
+     * The application Amazon Resource Name (ARN).
+     * </p>
      * 
      * @param applicationId
-     *        The application ARN.
+     *        The application Amazon Resource Name (ARN).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -82,12 +140,23 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The name of the author publishing the app\nMin Length=1. Max Length=127.\nPattern
-     * "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     * <p>
+     * The name of the author publishing the app.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=127.
+     * </p>
+     * <p>
+     * Pattern "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     * </p>
      * 
      * @param author
-     *        The name of the author publishing the app\nMin Length=1. Max Length=127.\nPattern
-     *        "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     *        The name of the author publishing the app.</p>
+     *        <p>
+     *        Minimum length=1. Maximum length=127.
+     *        </p>
+     *        <p>
+     *        Pattern "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
      */
 
     public void setAuthor(String author) {
@@ -95,11 +164,22 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The name of the author publishing the app\nMin Length=1. Max Length=127.\nPattern
-     * "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     * <p>
+     * The name of the author publishing the app.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=127.
+     * </p>
+     * <p>
+     * Pattern "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     * </p>
      * 
-     * @return The name of the author publishing the app\nMin Length=1. Max Length=127.\nPattern
-     *         "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     * @return The name of the author publishing the app.</p>
+     *         <p>
+     *         Minimum length=1. Maximum length=127.
+     *         </p>
+     *         <p>
+     *         Pattern "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
      */
 
     public String getAuthor() {
@@ -107,12 +187,23 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The name of the author publishing the app\nMin Length=1. Max Length=127.\nPattern
-     * "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     * <p>
+     * The name of the author publishing the app.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=127.
+     * </p>
+     * <p>
+     * Pattern "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     * </p>
      * 
      * @param author
-     *        The name of the author publishing the app\nMin Length=1. Max Length=127.\nPattern
-     *        "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
+     *        The name of the author publishing the app.</p>
+     *        <p>
+     *        Minimum length=1. Maximum length=127.
+     *        </p>
+     *        <p>
+     *        Pattern "^[a-z0-9](([a-z0-9]|-(?!-))*[a-z0-9])?$";
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -122,10 +213,12 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The date/time this resource was created.
+     * <p>
+     * The date and time this resource was created.
+     * </p>
      * 
      * @param creationTime
-     *        The date/time this resource was created.
+     *        The date and time this resource was created.
      */
 
     public void setCreationTime(String creationTime) {
@@ -133,9 +226,11 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The date/time this resource was created.
+     * <p>
+     * The date and time this resource was created.
+     * </p>
      * 
-     * @return The date/time this resource was created.
+     * @return The date and time this resource was created.
      */
 
     public String getCreationTime() {
@@ -143,10 +238,12 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The date/time this resource was created.
+     * <p>
+     * The date and time this resource was created.
+     * </p>
      * 
      * @param creationTime
-     *        The date/time this resource was created.
+     *        The date and time this resource was created.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -156,10 +253,17 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The description of the application.\nMin Length=1. Max Length=256
+     * <p>
+     * The description of the application.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=256
+     * </p>
      * 
      * @param description
-     *        The description of the application.\nMin Length=1. Max Length=256
+     *        The description of the application.</p>
+     *        <p>
+     *        Minimum length=1. Maximum length=256
      */
 
     public void setDescription(String description) {
@@ -167,9 +271,16 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The description of the application.\nMin Length=1. Max Length=256
+     * <p>
+     * The description of the application.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=256
+     * </p>
      * 
-     * @return The description of the application.\nMin Length=1. Max Length=256
+     * @return The description of the application.</p>
+     *         <p>
+     *         Minimum length=1. Maximum length=256
      */
 
     public String getDescription() {
@@ -177,10 +288,17 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The description of the application.\nMin Length=1. Max Length=256
+     * <p>
+     * The description of the application.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=256
+     * </p>
      * 
      * @param description
-     *        The description of the application.\nMin Length=1. Max Length=256
+     *        The description of the application.</p>
+     *        <p>
+     *        Minimum length=1. Maximum length=256
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -190,11 +308,68 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * Labels to improve discovery of apps in search results.\nMin Length=1. Max Length=127. Maximum number of labels:
-     * 10\nPattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * <p>
+     * A URL with more information about the application, for example the location of your GitHub repository for the
+     * application.
+     * </p>
      * 
-     * @return Labels to improve discovery of apps in search results.\nMin Length=1. Max Length=127. Maximum number of
-     *         labels: 10\nPattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * @param homePageUrl
+     *        A URL with more information about the application, for example the location of your GitHub repository for
+     *        the application.
+     */
+
+    public void setHomePageUrl(String homePageUrl) {
+        this.homePageUrl = homePageUrl;
+    }
+
+    /**
+     * <p>
+     * A URL with more information about the application, for example the location of your GitHub repository for the
+     * application.
+     * </p>
+     * 
+     * @return A URL with more information about the application, for example the location of your GitHub repository for
+     *         the application.
+     */
+
+    public String getHomePageUrl() {
+        return this.homePageUrl;
+    }
+
+    /**
+     * <p>
+     * A URL with more information about the application, for example the location of your GitHub repository for the
+     * application.
+     * </p>
+     * 
+     * @param homePageUrl
+     *        A URL with more information about the application, for example the location of your GitHub repository for
+     *        the application.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public ApplicationSummary withHomePageUrl(String homePageUrl) {
+        setHomePageUrl(homePageUrl);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Labels to improve discovery of apps in search results.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=127. Maximum number of labels: 10
+     * </p>
+     * <p>
+     * Pattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * </p>
+     * 
+     * @return Labels to improve discovery of apps in search results.</p>
+     *         <p>
+     *         Minimum length=1. Maximum length=127. Maximum number of labels: 10
+     *         </p>
+     *         <p>
+     *         Pattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
      */
 
     public java.util.List<String> getLabels() {
@@ -202,12 +377,23 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * Labels to improve discovery of apps in search results.\nMin Length=1. Max Length=127. Maximum number of labels:
-     * 10\nPattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * <p>
+     * Labels to improve discovery of apps in search results.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=127. Maximum number of labels: 10
+     * </p>
+     * <p>
+     * Pattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * </p>
      * 
      * @param labels
-     *        Labels to improve discovery of apps in search results.\nMin Length=1. Max Length=127. Maximum number of
-     *        labels: 10\nPattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     *        Labels to improve discovery of apps in search results.</p>
+     *        <p>
+     *        Minimum length=1. Maximum length=127. Maximum number of labels: 10
+     *        </p>
+     *        <p>
+     *        Pattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
      */
 
     public void setLabels(java.util.Collection<String> labels) {
@@ -220,8 +406,15 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * Labels to improve discovery of apps in search results.\nMin Length=1. Max Length=127. Maximum number of labels:
-     * 10\nPattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * <p>
+     * Labels to improve discovery of apps in search results.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=127. Maximum number of labels: 10
+     * </p>
+     * <p>
+     * Pattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setLabels(java.util.Collection)} or {@link #withLabels(java.util.Collection)} if you want to override the
@@ -229,8 +422,12 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
      * </p>
      * 
      * @param labels
-     *        Labels to improve discovery of apps in search results.\nMin Length=1. Max Length=127. Maximum number of
-     *        labels: 10\nPattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     *        Labels to improve discovery of apps in search results.</p>
+     *        <p>
+     *        Minimum length=1. Maximum length=127. Maximum number of labels: 10
+     *        </p>
+     *        <p>
+     *        Pattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -245,12 +442,23 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * Labels to improve discovery of apps in search results.\nMin Length=1. Max Length=127. Maximum number of labels:
-     * 10\nPattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * <p>
+     * Labels to improve discovery of apps in search results.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=127. Maximum number of labels: 10
+     * </p>
+     * <p>
+     * Pattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     * </p>
      * 
      * @param labels
-     *        Labels to improve discovery of apps in search results.\nMin Length=1. Max Length=127. Maximum number of
-     *        labels: 10\nPattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
+     *        Labels to improve discovery of apps in search results.</p>
+     *        <p>
+     *        Minimum length=1. Maximum length=127. Maximum number of labels: 10
+     *        </p>
+     *        <p>
+     *        Pattern: "^[a-zA-Z0-9+\\-_:\\/@]+$";
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -260,10 +468,23 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The name of the application.\nMin Length=1. Max Length=140\nPattern: "[a-zA-Z0-9\\-]+";
+     * <p>
+     * The name of the application.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=140
+     * </p>
+     * <p>
+     * Pattern: "[a-zA-Z0-9\\-]+";
+     * </p>
      * 
      * @param name
-     *        The name of the application.\nMin Length=1. Max Length=140\nPattern: "[a-zA-Z0-9\\-]+";
+     *        The name of the application.</p>
+     *        <p>
+     *        Minimum length=1. Maximum length=140
+     *        </p>
+     *        <p>
+     *        Pattern: "[a-zA-Z0-9\\-]+";
      */
 
     public void setName(String name) {
@@ -271,9 +492,22 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The name of the application.\nMin Length=1. Max Length=140\nPattern: "[a-zA-Z0-9\\-]+";
+     * <p>
+     * The name of the application.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=140
+     * </p>
+     * <p>
+     * Pattern: "[a-zA-Z0-9\\-]+";
+     * </p>
      * 
-     * @return The name of the application.\nMin Length=1. Max Length=140\nPattern: "[a-zA-Z0-9\\-]+";
+     * @return The name of the application.</p>
+     *         <p>
+     *         Minimum length=1. Maximum length=140
+     *         </p>
+     *         <p>
+     *         Pattern: "[a-zA-Z0-9\\-]+";
      */
 
     public String getName() {
@@ -281,10 +515,23 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * The name of the application.\nMin Length=1. Max Length=140\nPattern: "[a-zA-Z0-9\\-]+";
+     * <p>
+     * The name of the application.
+     * </p>
+     * <p>
+     * Minimum length=1. Maximum length=140
+     * </p>
+     * <p>
+     * Pattern: "[a-zA-Z0-9\\-]+";
+     * </p>
      * 
      * @param name
-     *        The name of the application.\nMin Length=1. Max Length=140\nPattern: "[a-zA-Z0-9\\-]+";
+     *        The name of the application.</p>
+     *        <p>
+     *        Minimum length=1. Maximum length=140
+     *        </p>
+     *        <p>
+     *        Pattern: "[a-zA-Z0-9\\-]+";
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -294,10 +541,12 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * A valid identifier from https://spdx.org/licenses/ .
+     * <p>
+     * A valid identifier from <a href="https://spdx.org/licenses/">https://spdx.org/licenses/</a>.
+     * </p>
      * 
      * @param spdxLicenseId
-     *        A valid identifier from https://spdx.org/licenses/ .
+     *        A valid identifier from <a href="https://spdx.org/licenses/">https://spdx.org/licenses/</a>.
      */
 
     public void setSpdxLicenseId(String spdxLicenseId) {
@@ -305,9 +554,11 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * A valid identifier from https://spdx.org/licenses/ .
+     * <p>
+     * A valid identifier from <a href="https://spdx.org/licenses/">https://spdx.org/licenses/</a>.
+     * </p>
      * 
-     * @return A valid identifier from https://spdx.org/licenses/ .
+     * @return A valid identifier from <a href="https://spdx.org/licenses/">https://spdx.org/licenses/</a>.
      */
 
     public String getSpdxLicenseId() {
@@ -315,10 +566,12 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * A valid identifier from https://spdx.org/licenses/ .
+     * <p>
+     * A valid identifier from <a href="https://spdx.org/licenses/">https://spdx.org/licenses/</a>.
+     * </p>
      * 
      * @param spdxLicenseId
-     *        A valid identifier from https://spdx.org/licenses/ .
+     *        A valid identifier from <a href="https://spdx.org/licenses/">https://spdx.org/licenses/</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -328,7 +581,8 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -346,6 +600,8 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
             sb.append("CreationTime: ").append(getCreationTime()).append(",");
         if (getDescription() != null)
             sb.append("Description: ").append(getDescription()).append(",");
+        if (getHomePageUrl() != null)
+            sb.append("HomePageUrl: ").append(getHomePageUrl()).append(",");
         if (getLabels() != null)
             sb.append("Labels: ").append(getLabels()).append(",");
         if (getName() != null)
@@ -382,6 +638,10 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
             return false;
         if (other.getDescription() != null && other.getDescription().equals(this.getDescription()) == false)
             return false;
+        if (other.getHomePageUrl() == null ^ this.getHomePageUrl() == null)
+            return false;
+        if (other.getHomePageUrl() != null && other.getHomePageUrl().equals(this.getHomePageUrl()) == false)
+            return false;
         if (other.getLabels() == null ^ this.getLabels() == null)
             return false;
         if (other.getLabels() != null && other.getLabels().equals(this.getLabels()) == false)
@@ -406,6 +666,7 @@ public class ApplicationSummary implements Serializable, Cloneable, StructuredPo
         hashCode = prime * hashCode + ((getAuthor() == null) ? 0 : getAuthor().hashCode());
         hashCode = prime * hashCode + ((getCreationTime() == null) ? 0 : getCreationTime().hashCode());
         hashCode = prime * hashCode + ((getDescription() == null) ? 0 : getDescription().hashCode());
+        hashCode = prime * hashCode + ((getHomePageUrl() == null) ? 0 : getHomePageUrl().hashCode());
         hashCode = prime * hashCode + ((getLabels() == null) ? 0 : getLabels().hashCode());
         hashCode = prime * hashCode + ((getName() == null) ? 0 : getName().hashCode());
         hashCode = prime * hashCode + ((getSpdxLicenseId() == null) ? 0 : getSpdxLicenseId().hashCode());

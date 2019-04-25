@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -28,6 +28,8 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
     /** The ID of the Channel the OriginEndpoint is associated with. */
     private String channelId;
 
+    private CmafPackage cmafPackage;
+
     private DashPackage dashPackage;
     /** A short text description of the OriginEndpoint. */
     private String description;
@@ -44,6 +46,8 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
      * be disabled for the OriginEndpoint.
      */
     private Integer startoverWindowSeconds;
+
+    private java.util.Map<String, String> tags;
     /**
      * Amount of delay (seconds) to enforce on the playback of live content. If not specified, there will be no time
      * delay in effect for the OriginEndpoint.
@@ -119,6 +123,32 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
 
     public CreateOriginEndpointResult withChannelId(String channelId) {
         setChannelId(channelId);
+        return this;
+    }
+
+    /**
+     * @param cmafPackage
+     */
+
+    public void setCmafPackage(CmafPackage cmafPackage) {
+        this.cmafPackage = cmafPackage;
+    }
+
+    /**
+     * @return
+     */
+
+    public CmafPackage getCmafPackage() {
+        return this.cmafPackage;
+    }
+
+    /**
+     * @param cmafPackage
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateOriginEndpointResult withCmafPackage(CmafPackage cmafPackage) {
+        setCmafPackage(cmafPackage);
         return this;
     }
 
@@ -343,6 +373,53 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
     }
 
     /**
+     * @return
+     */
+
+    public java.util.Map<String, String> getTags() {
+        return tags;
+    }
+
+    /**
+     * @param tags
+     */
+
+    public void setTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+    }
+
+    /**
+     * @param tags
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateOriginEndpointResult withTags(java.util.Map<String, String> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    public CreateOriginEndpointResult addTagsEntry(String key, String value) {
+        if (null == this.tags) {
+            this.tags = new java.util.HashMap<String, String>();
+        }
+        if (this.tags.containsKey(key))
+            throw new IllegalArgumentException("Duplicated keys (" + key.toString() + ") are provided.");
+        this.tags.put(key, value);
+        return this;
+    }
+
+    /**
+     * Removes all the entries added into Tags.
+     *
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateOriginEndpointResult clearTagsEntries() {
+        this.tags = null;
+        return this;
+    }
+
+    /**
      * Amount of delay (seconds) to enforce on the playback of live content. If not specified, there will be no time
      * delay in effect for the OriginEndpoint.
      * 
@@ -479,7 +556,8 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -493,6 +571,8 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
             sb.append("Arn: ").append(getArn()).append(",");
         if (getChannelId() != null)
             sb.append("ChannelId: ").append(getChannelId()).append(",");
+        if (getCmafPackage() != null)
+            sb.append("CmafPackage: ").append(getCmafPackage()).append(",");
         if (getDashPackage() != null)
             sb.append("DashPackage: ").append(getDashPackage()).append(",");
         if (getDescription() != null)
@@ -507,6 +587,8 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
             sb.append("MssPackage: ").append(getMssPackage()).append(",");
         if (getStartoverWindowSeconds() != null)
             sb.append("StartoverWindowSeconds: ").append(getStartoverWindowSeconds()).append(",");
+        if (getTags() != null)
+            sb.append("Tags: ").append(getTags()).append(",");
         if (getTimeDelaySeconds() != null)
             sb.append("TimeDelaySeconds: ").append(getTimeDelaySeconds()).append(",");
         if (getUrl() != null)
@@ -534,6 +616,10 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
         if (other.getChannelId() == null ^ this.getChannelId() == null)
             return false;
         if (other.getChannelId() != null && other.getChannelId().equals(this.getChannelId()) == false)
+            return false;
+        if (other.getCmafPackage() == null ^ this.getCmafPackage() == null)
+            return false;
+        if (other.getCmafPackage() != null && other.getCmafPackage().equals(this.getCmafPackage()) == false)
             return false;
         if (other.getDashPackage() == null ^ this.getDashPackage() == null)
             return false;
@@ -563,6 +649,10 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
             return false;
         if (other.getStartoverWindowSeconds() != null && other.getStartoverWindowSeconds().equals(this.getStartoverWindowSeconds()) == false)
             return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
+            return false;
         if (other.getTimeDelaySeconds() == null ^ this.getTimeDelaySeconds() == null)
             return false;
         if (other.getTimeDelaySeconds() != null && other.getTimeDelaySeconds().equals(this.getTimeDelaySeconds()) == false)
@@ -585,6 +675,7 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
 
         hashCode = prime * hashCode + ((getArn() == null) ? 0 : getArn().hashCode());
         hashCode = prime * hashCode + ((getChannelId() == null) ? 0 : getChannelId().hashCode());
+        hashCode = prime * hashCode + ((getCmafPackage() == null) ? 0 : getCmafPackage().hashCode());
         hashCode = prime * hashCode + ((getDashPackage() == null) ? 0 : getDashPackage().hashCode());
         hashCode = prime * hashCode + ((getDescription() == null) ? 0 : getDescription().hashCode());
         hashCode = prime * hashCode + ((getHlsPackage() == null) ? 0 : getHlsPackage().hashCode());
@@ -592,6 +683,7 @@ public class CreateOriginEndpointResult extends com.amazonaws.AmazonWebServiceRe
         hashCode = prime * hashCode + ((getManifestName() == null) ? 0 : getManifestName().hashCode());
         hashCode = prime * hashCode + ((getMssPackage() == null) ? 0 : getMssPackage().hashCode());
         hashCode = prime * hashCode + ((getStartoverWindowSeconds() == null) ? 0 : getStartoverWindowSeconds().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         hashCode = prime * hashCode + ((getTimeDelaySeconds() == null) ? 0 : getTimeDelaySeconds().hashCode());
         hashCode = prime * hashCode + ((getUrl() == null) ? 0 : getUrl().hashCode());
         hashCode = prime * hashCode + ((getWhitelist() == null) ? 0 : getWhitelist().hashCode());

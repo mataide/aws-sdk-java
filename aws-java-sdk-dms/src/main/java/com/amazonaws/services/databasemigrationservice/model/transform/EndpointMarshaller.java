@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -33,6 +33,8 @@ public class EndpointMarshaller {
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("EndpointType").build();
     private static final MarshallingInfo<String> ENGINENAME_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("EngineName").build();
+    private static final MarshallingInfo<String> ENGINEDISPLAYNAME_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("EngineDisplayName").build();
     private static final MarshallingInfo<String> USERNAME_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
             .marshallLocationName("Username").build();
     private static final MarshallingInfo<String> SERVERNAME_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
@@ -53,14 +55,26 @@ public class EndpointMarshaller {
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("CertificateArn").build();
     private static final MarshallingInfo<String> SSLMODE_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
             .marshallLocationName("SslMode").build();
+    private static final MarshallingInfo<String> SERVICEACCESSROLEARN_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("ServiceAccessRoleArn").build();
+    private static final MarshallingInfo<String> EXTERNALTABLEDEFINITION_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("ExternalTableDefinition").build();
     private static final MarshallingInfo<String> EXTERNALID_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("ExternalId").build();
     private static final MarshallingInfo<StructuredPojo> DYNAMODBSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("DynamoDbSettings").build();
     private static final MarshallingInfo<StructuredPojo> S3SETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("S3Settings").build();
+    private static final MarshallingInfo<StructuredPojo> DMSTRANSFERSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("DmsTransferSettings").build();
     private static final MarshallingInfo<StructuredPojo> MONGODBSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("MongoDbSettings").build();
+    private static final MarshallingInfo<StructuredPojo> KINESISSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("KinesisSettings").build();
+    private static final MarshallingInfo<StructuredPojo> ELASTICSEARCHSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("ElasticsearchSettings").build();
+    private static final MarshallingInfo<StructuredPojo> REDSHIFTSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("RedshiftSettings").build();
 
     private static final EndpointMarshaller instance = new EndpointMarshaller();
 
@@ -81,6 +95,7 @@ public class EndpointMarshaller {
             protocolMarshaller.marshall(endpoint.getEndpointIdentifier(), ENDPOINTIDENTIFIER_BINDING);
             protocolMarshaller.marshall(endpoint.getEndpointType(), ENDPOINTTYPE_BINDING);
             protocolMarshaller.marshall(endpoint.getEngineName(), ENGINENAME_BINDING);
+            protocolMarshaller.marshall(endpoint.getEngineDisplayName(), ENGINEDISPLAYNAME_BINDING);
             protocolMarshaller.marshall(endpoint.getUsername(), USERNAME_BINDING);
             protocolMarshaller.marshall(endpoint.getServerName(), SERVERNAME_BINDING);
             protocolMarshaller.marshall(endpoint.getPort(), PORT_BINDING);
@@ -91,10 +106,16 @@ public class EndpointMarshaller {
             protocolMarshaller.marshall(endpoint.getEndpointArn(), ENDPOINTARN_BINDING);
             protocolMarshaller.marshall(endpoint.getCertificateArn(), CERTIFICATEARN_BINDING);
             protocolMarshaller.marshall(endpoint.getSslMode(), SSLMODE_BINDING);
+            protocolMarshaller.marshall(endpoint.getServiceAccessRoleArn(), SERVICEACCESSROLEARN_BINDING);
+            protocolMarshaller.marshall(endpoint.getExternalTableDefinition(), EXTERNALTABLEDEFINITION_BINDING);
             protocolMarshaller.marshall(endpoint.getExternalId(), EXTERNALID_BINDING);
             protocolMarshaller.marshall(endpoint.getDynamoDbSettings(), DYNAMODBSETTINGS_BINDING);
             protocolMarshaller.marshall(endpoint.getS3Settings(), S3SETTINGS_BINDING);
+            protocolMarshaller.marshall(endpoint.getDmsTransferSettings(), DMSTRANSFERSETTINGS_BINDING);
             protocolMarshaller.marshall(endpoint.getMongoDbSettings(), MONGODBSETTINGS_BINDING);
+            protocolMarshaller.marshall(endpoint.getKinesisSettings(), KINESISSETTINGS_BINDING);
+            protocolMarshaller.marshall(endpoint.getElasticsearchSettings(), ELASTICSEARCHSETTINGS_BINDING);
+            protocolMarshaller.marshall(endpoint.getRedshiftSettings(), REDSHIFTSETTINGS_BINDING);
         } catch (Exception e) {
             throw new SdkClientException("Unable to marshall request to JSON: " + e.getMessage(), e);
         }

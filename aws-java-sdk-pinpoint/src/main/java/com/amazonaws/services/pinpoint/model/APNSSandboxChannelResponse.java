@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -26,7 +26,7 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class APNSSandboxChannelResponse implements Serializable, Cloneable, StructuredPojo {
 
-    /** Application id */
+    /** The ID of the application to which the channel applies. */
     private String applicationId;
     /** When was this segment created */
     private String creationDate;
@@ -34,9 +34,12 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     private String defaultAuthenticationMethod;
     /** If the channel is enabled for sending messages. */
     private Boolean enabled;
-    /** If the channel is registered with a credential for authentication. */
+    /** Not used. Retained for backwards compatibility. */
     private Boolean hasCredential;
-    /** If the channel is registered with a token key for authentication. */
+    /**
+     * Indicates whether the channel is configured with a key for APNs token authentication. Provide a token key by
+     * setting the TokenKey attribute.
+     */
     private Boolean hasTokenKey;
     /** Channel ID. Not used, only for backwards compatibility. */
     private String id;
@@ -52,10 +55,10 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     private Integer version;
 
     /**
-     * Application id
+     * The ID of the application to which the channel applies.
      * 
      * @param applicationId
-     *        Application id
+     *        The ID of the application to which the channel applies.
      */
 
     public void setApplicationId(String applicationId) {
@@ -63,9 +66,9 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * Application id
+     * The ID of the application to which the channel applies.
      * 
-     * @return Application id
+     * @return The ID of the application to which the channel applies.
      */
 
     public String getApplicationId() {
@@ -73,10 +76,10 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * Application id
+     * The ID of the application to which the channel applies.
      * 
      * @param applicationId
-     *        Application id
+     *        The ID of the application to which the channel applies.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -198,10 +201,10 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * If the channel is registered with a credential for authentication.
+     * Not used. Retained for backwards compatibility.
      * 
      * @param hasCredential
-     *        If the channel is registered with a credential for authentication.
+     *        Not used. Retained for backwards compatibility.
      */
 
     public void setHasCredential(Boolean hasCredential) {
@@ -209,9 +212,9 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * If the channel is registered with a credential for authentication.
+     * Not used. Retained for backwards compatibility.
      * 
-     * @return If the channel is registered with a credential for authentication.
+     * @return Not used. Retained for backwards compatibility.
      */
 
     public Boolean getHasCredential() {
@@ -219,10 +222,10 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * If the channel is registered with a credential for authentication.
+     * Not used. Retained for backwards compatibility.
      * 
      * @param hasCredential
-     *        If the channel is registered with a credential for authentication.
+     *        Not used. Retained for backwards compatibility.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -232,9 +235,9 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * If the channel is registered with a credential for authentication.
+     * Not used. Retained for backwards compatibility.
      * 
-     * @return If the channel is registered with a credential for authentication.
+     * @return Not used. Retained for backwards compatibility.
      */
 
     public Boolean isHasCredential() {
@@ -242,10 +245,12 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * If the channel is registered with a token key for authentication.
+     * Indicates whether the channel is configured with a key for APNs token authentication. Provide a token key by
+     * setting the TokenKey attribute.
      * 
      * @param hasTokenKey
-     *        If the channel is registered with a token key for authentication.
+     *        Indicates whether the channel is configured with a key for APNs token authentication. Provide a token key
+     *        by setting the TokenKey attribute.
      */
 
     public void setHasTokenKey(Boolean hasTokenKey) {
@@ -253,9 +258,11 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * If the channel is registered with a token key for authentication.
+     * Indicates whether the channel is configured with a key for APNs token authentication. Provide a token key by
+     * setting the TokenKey attribute.
      * 
-     * @return If the channel is registered with a token key for authentication.
+     * @return Indicates whether the channel is configured with a key for APNs token authentication. Provide a token key
+     *         by setting the TokenKey attribute.
      */
 
     public Boolean getHasTokenKey() {
@@ -263,10 +270,12 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * If the channel is registered with a token key for authentication.
+     * Indicates whether the channel is configured with a key for APNs token authentication. Provide a token key by
+     * setting the TokenKey attribute.
      * 
      * @param hasTokenKey
-     *        If the channel is registered with a token key for authentication.
+     *        Indicates whether the channel is configured with a key for APNs token authentication. Provide a token key
+     *        by setting the TokenKey attribute.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -276,9 +285,11 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * If the channel is registered with a token key for authentication.
+     * Indicates whether the channel is configured with a key for APNs token authentication. Provide a token key by
+     * setting the TokenKey attribute.
      * 
-     * @return If the channel is registered with a token key for authentication.
+     * @return Indicates whether the channel is configured with a key for APNs token authentication. Provide a token key
+     *         by setting the TokenKey attribute.
      */
 
     public Boolean isHasTokenKey() {
@@ -500,7 +511,8 @@ public class APNSSandboxChannelResponse implements Serializable, Cloneable, Stru
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -48,7 +48,32 @@ public class AbstractAWSGlue implements AWSGlue {
     }
 
     @Override
+    public BatchDeleteTableVersionResult batchDeleteTableVersion(BatchDeleteTableVersionRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public BatchGetCrawlersResult batchGetCrawlers(BatchGetCrawlersRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public BatchGetDevEndpointsResult batchGetDevEndpoints(BatchGetDevEndpointsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public BatchGetJobsResult batchGetJobs(BatchGetJobsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public BatchGetPartitionResult batchGetPartition(BatchGetPartitionRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public BatchGetTriggersResult batchGetTriggers(BatchGetTriggersRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -94,6 +119,11 @@ public class AbstractAWSGlue implements AWSGlue {
 
     @Override
     public CreateScriptResult createScript(CreateScriptRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public CreateSecurityConfigurationResult createSecurityConfiguration(CreateSecurityConfigurationRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -148,7 +178,22 @@ public class AbstractAWSGlue implements AWSGlue {
     }
 
     @Override
+    public DeleteResourcePolicyResult deleteResourcePolicy(DeleteResourcePolicyRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public DeleteSecurityConfigurationResult deleteSecurityConfiguration(DeleteSecurityConfigurationRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public DeleteTableResult deleteTable(DeleteTableRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public DeleteTableVersionResult deleteTableVersion(DeleteTableVersionRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -199,6 +244,11 @@ public class AbstractAWSGlue implements AWSGlue {
 
     @Override
     public GetCrawlersResult getCrawlers(GetCrawlersRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public GetDataCatalogEncryptionSettingsResult getDataCatalogEncryptionSettings(GetDataCatalogEncryptionSettingsRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -268,7 +318,27 @@ public class AbstractAWSGlue implements AWSGlue {
     }
 
     @Override
+    public GetResourcePolicyResult getResourcePolicy(GetResourcePolicyRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public GetSecurityConfigurationResult getSecurityConfiguration(GetSecurityConfigurationRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public GetSecurityConfigurationsResult getSecurityConfigurations(GetSecurityConfigurationsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public GetTableResult getTable(GetTableRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public GetTableVersionResult getTableVersion(GetTableVersionRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -279,6 +349,11 @@ public class AbstractAWSGlue implements AWSGlue {
 
     @Override
     public GetTablesResult getTables(GetTablesRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public GetTagsResult getTags(GetTagsRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -304,6 +379,36 @@ public class AbstractAWSGlue implements AWSGlue {
 
     @Override
     public ImportCatalogToGlueResult importCatalogToGlue(ImportCatalogToGlueRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public ListCrawlersResult listCrawlers(ListCrawlersRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public ListDevEndpointsResult listDevEndpoints(ListDevEndpointsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public ListJobsResult listJobs(ListJobsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public ListTriggersResult listTriggers(ListTriggersRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public PutDataCatalogEncryptionSettingsResult putDataCatalogEncryptionSettings(PutDataCatalogEncryptionSettingsRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public PutResourcePolicyResult putResourcePolicy(PutResourcePolicyRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 
@@ -344,6 +449,16 @@ public class AbstractAWSGlue implements AWSGlue {
 
     @Override
     public StopTriggerResult stopTrigger(StopTriggerRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public TagResourceResult tagResource(TagResourceRequest request) {
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public UntagResourceResult untagResource(UntagResourceRequest request) {
         throw new java.lang.UnsupportedOperationException();
     }
 

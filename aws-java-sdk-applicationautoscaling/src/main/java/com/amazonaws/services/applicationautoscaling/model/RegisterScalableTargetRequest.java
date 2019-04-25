@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -27,8 +27,9 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The namespace of the AWS service. For more information, see <a
-     * href="http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     * The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     * provided by your own application or service. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      * >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * </p>
      */
@@ -79,6 +80,20 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * <p>
      * Aurora DB cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster name.
      * Example: <code>cluster:my-db-cluster</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon SageMaker endpoint variants - The resource type is <code>variant</code> and the unique identifier is the
+     * resource ID. Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Custom resources are not supported with a resource type. This parameter must specify the <code>OutputValue</code>
+     * from the CloudFormation template stack used to access the resources. The unique identifier is defined by the
+     * service provider. More information is available in our <a
+     * href="https://github.com/aws/aws-auto-scaling-custom-resource">GitHub repository</a>.
      * </p>
      * </li>
      * </ul>
@@ -135,7 +150,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * <li>
      * <p>
      * <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster. Available for
-     * Aurora MySQL-compatible edition.
+     * Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker model
+     * endpoint variant.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided by
+     * your own application or service.
      * </p>
      * </li>
      * </ul>
@@ -143,45 +170,44 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
     private String scalableDimension;
     /**
      * <p>
-     * The minimum value to scale to in response to a scale in event. This parameter is required if you are registering
-     * a scalable target and optional if you are updating one.
+     * The minimum value to scale to in response to a scale-in event. This parameter is required to register a scalable
+     * target.
      * </p>
      */
     private Integer minCapacity;
     /**
      * <p>
-     * The maximum value to scale to in response to a scale out event. This parameter is required if you are registering
-     * a scalable target and optional if you are updating one.
+     * The maximum value to scale to in response to a scale-out event. This parameter is required to register a scalable
+     * target.
      * </p>
      */
     private Integer maxCapacity;
     /**
      * <p>
-     * The ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your behalf.
-     * </p>
-     * <p>
-     * With Amazon RDS resources, permissions are granted using a service-linked role. For more information, see <a
-     * href=
-     * "http://docs.aws.amazon.com/ApplicationAutoScaling/latest/APIReference/application-autoscaling-service-linked-roles.html"
+     * Application Auto Scaling creates a service-linked role that grants it permissions to modify the scalable target
+     * on your behalf. For more information, see <a href=
+     * "https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-service-linked-roles.html"
      * >Service-Linked Roles for Application Auto Scaling</a>.
      * </p>
      * <p>
-     * For resources that are not supported using a service-linked role, this parameter is required when you register a
-     * scalable target and optional when you update one.
+     * For resources that are not supported using a service-linked role, this parameter is required and must specify the
+     * ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your behalf.
      * </p>
      */
     private String roleARN;
 
     /**
      * <p>
-     * The namespace of the AWS service. For more information, see <a
-     * href="http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     * The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     * provided by your own application or service. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      * >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * </p>
      * 
      * @param serviceNamespace
-     *        The namespace of the AWS service. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     *        The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     *        provided by your own application or service. For more information, see <a href=
+     *        "https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      *        >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * @see ServiceNamespace
      */
@@ -192,13 +218,15 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The namespace of the AWS service. For more information, see <a
-     * href="http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     * The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     * provided by your own application or service. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      * >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * </p>
      * 
-     * @return The namespace of the AWS service. For more information, see <a
-     *         href="http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     * @return The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a
+     *         resource provided by your own application or service. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      *         >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * @see ServiceNamespace
      */
@@ -209,14 +237,16 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The namespace of the AWS service. For more information, see <a
-     * href="http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     * The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     * provided by your own application or service. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      * >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * </p>
      * 
      * @param serviceNamespace
-     *        The namespace of the AWS service. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     *        The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     *        provided by your own application or service. For more information, see <a href=
+     *        "https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      *        >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see ServiceNamespace
@@ -229,14 +259,16 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The namespace of the AWS service. For more information, see <a
-     * href="http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     * The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     * provided by your own application or service. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      * >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * </p>
      * 
      * @param serviceNamespace
-     *        The namespace of the AWS service. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     *        The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     *        provided by your own application or service. For more information, see <a href=
+     *        "https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      *        >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * @see ServiceNamespace
      */
@@ -247,14 +279,16 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The namespace of the AWS service. For more information, see <a
-     * href="http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     * The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     * provided by your own application or service. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      * >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * </p>
      * 
      * @param serviceNamespace
-     *        The namespace of the AWS service. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
+     *        The namespace of the AWS service that provides the resource or <code>custom-resource</code> for a resource
+     *        provided by your own application or service. For more information, see <a href=
+     *        "https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces"
      *        >AWS Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see ServiceNamespace
@@ -313,6 +347,20 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * Example: <code>cluster:my-db-cluster</code>.
      * </p>
      * </li>
+     * <li>
+     * <p>
+     * Amazon SageMaker endpoint variants - The resource type is <code>variant</code> and the unique identifier is the
+     * resource ID. Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Custom resources are not supported with a resource type. This parameter must specify the <code>OutputValue</code>
+     * from the CloudFormation template stack used to access the resources. The unique identifier is defined by the
+     * service provider. More information is available in our <a
+     * href="https://github.com/aws/aws-auto-scaling-custom-resource">GitHub repository</a>.
+     * </p>
+     * </li>
      * </ul>
      * 
      * @param resourceId
@@ -359,6 +407,20 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      *        <p>
      *        Aurora DB cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster
      *        name. Example: <code>cluster:my-db-cluster</code>.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        Amazon SageMaker endpoint variants - The resource type is <code>variant</code> and the unique identifier
+     *        is the resource ID. Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        Custom resources are not supported with a resource type. This parameter must specify the
+     *        <code>OutputValue</code> from the CloudFormation template stack used to access the resources. The unique
+     *        identifier is defined by the service provider. More information is available in our <a
+     *        href="https://github.com/aws/aws-auto-scaling-custom-resource">GitHub repository</a>.
      *        </p>
      *        </li>
      */
@@ -415,6 +477,20 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * Example: <code>cluster:my-db-cluster</code>.
      * </p>
      * </li>
+     * <li>
+     * <p>
+     * Amazon SageMaker endpoint variants - The resource type is <code>variant</code> and the unique identifier is the
+     * resource ID. Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Custom resources are not supported with a resource type. This parameter must specify the <code>OutputValue</code>
+     * from the CloudFormation template stack used to access the resources. The unique identifier is defined by the
+     * service provider. More information is available in our <a
+     * href="https://github.com/aws/aws-auto-scaling-custom-resource">GitHub repository</a>.
+     * </p>
+     * </li>
      * </ul>
      * 
      * @return The identifier of the resource associated with the scalable target. This string consists of the resource
@@ -461,6 +537,20 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      *         <p>
      *         Aurora DB cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster
      *         name. Example: <code>cluster:my-db-cluster</code>.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon SageMaker endpoint variants - The resource type is <code>variant</code> and the unique identifier
+     *         is the resource ID. Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Custom resources are not supported with a resource type. This parameter must specify the
+     *         <code>OutputValue</code> from the CloudFormation template stack used to access the resources. The unique
+     *         identifier is defined by the service provider. More information is available in our <a
+     *         href="https://github.com/aws/aws-auto-scaling-custom-resource">GitHub repository</a>.
      *         </p>
      *         </li>
      */
@@ -517,6 +607,20 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * Example: <code>cluster:my-db-cluster</code>.
      * </p>
      * </li>
+     * <li>
+     * <p>
+     * Amazon SageMaker endpoint variants - The resource type is <code>variant</code> and the unique identifier is the
+     * resource ID. Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Custom resources are not supported with a resource type. This parameter must specify the <code>OutputValue</code>
+     * from the CloudFormation template stack used to access the resources. The unique identifier is defined by the
+     * service provider. More information is available in our <a
+     * href="https://github.com/aws/aws-auto-scaling-custom-resource">GitHub repository</a>.
+     * </p>
+     * </li>
      * </ul>
      * 
      * @param resourceId
@@ -563,6 +667,20 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      *        <p>
      *        Aurora DB cluster - The resource type is <code>cluster</code> and the unique identifier is the cluster
      *        name. Example: <code>cluster:my-db-cluster</code>.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        Amazon SageMaker endpoint variants - The resource type is <code>variant</code> and the unique identifier
+     *        is the resource ID. Example: <code>endpoint/my-end-point/variant/KMeansClustering</code>.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        Custom resources are not supported with a resource type. This parameter must specify the
+     *        <code>OutputValue</code> from the CloudFormation template stack used to access the resources. The unique
+     *        identifier is defined by the service provider. More information is available in our <a
+     *        href="https://github.com/aws/aws-auto-scaling-custom-resource">GitHub repository</a>.
      *        </p>
      *        </li>
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -624,7 +742,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * <li>
      * <p>
      * <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster. Available for
-     * Aurora MySQL-compatible edition.
+     * Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker model
+     * endpoint variant.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided by
+     * your own application or service.
      * </p>
      * </li>
      * </ul>
@@ -678,7 +808,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      *        <li>
      *        <p>
      *        <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster.
-     *        Available for Aurora MySQL-compatible edition.
+     *        Available for Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker
+     *        model endpoint variant.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided
+     *        by your own application or service.
      *        </p>
      *        </li>
      * @see ScalableDimension
@@ -739,7 +881,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * <li>
      * <p>
      * <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster. Available for
-     * Aurora MySQL-compatible edition.
+     * Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker model
+     * endpoint variant.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided by
+     * your own application or service.
      * </p>
      * </li>
      * </ul>
@@ -792,7 +946,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      *         <li>
      *         <p>
      *         <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster.
-     *         Available for Aurora MySQL-compatible edition.
+     *         Available for Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker
+     *         model endpoint variant.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource
+     *         provided by your own application or service.
      *         </p>
      *         </li>
      * @see ScalableDimension
@@ -853,7 +1019,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * <li>
      * <p>
      * <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster. Available for
-     * Aurora MySQL-compatible edition.
+     * Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker model
+     * endpoint variant.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided by
+     * your own application or service.
      * </p>
      * </li>
      * </ul>
@@ -907,7 +1085,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      *        <li>
      *        <p>
      *        <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster.
-     *        Available for Aurora MySQL-compatible edition.
+     *        Available for Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker
+     *        model endpoint variant.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided
+     *        by your own application or service.
      *        </p>
      *        </li>
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -970,7 +1160,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * <li>
      * <p>
      * <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster. Available for
-     * Aurora MySQL-compatible edition.
+     * Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker model
+     * endpoint variant.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided by
+     * your own application or service.
      * </p>
      * </li>
      * </ul>
@@ -1024,7 +1226,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      *        <li>
      *        <p>
      *        <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster.
-     *        Available for Aurora MySQL-compatible edition.
+     *        Available for Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker
+     *        model endpoint variant.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided
+     *        by your own application or service.
      *        </p>
      *        </li>
      * @see ScalableDimension
@@ -1085,7 +1299,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      * <li>
      * <p>
      * <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster. Available for
-     * Aurora MySQL-compatible edition.
+     * Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker model
+     * endpoint variant.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided by
+     * your own application or service.
      * </p>
      * </li>
      * </ul>
@@ -1139,7 +1365,19 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
      *        <li>
      *        <p>
      *        <code>rds:cluster:ReadReplicaCount</code> - The count of Aurora Replicas in an Aurora DB cluster.
-     *        Available for Aurora MySQL-compatible edition.
+     *        Available for Aurora MySQL-compatible edition and Aurora PostgreSQL-compatible edition.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>sagemaker:variant:DesiredInstanceCount</code> - The number of EC2 instances for an Amazon SageMaker
+     *        model endpoint variant.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>custom-resource:ResourceType:Property</code> - The scalable dimension for a custom resource provided
+     *        by your own application or service.
      *        </p>
      *        </li>
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -1153,13 +1391,13 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The minimum value to scale to in response to a scale in event. This parameter is required if you are registering
-     * a scalable target and optional if you are updating one.
+     * The minimum value to scale to in response to a scale-in event. This parameter is required to register a scalable
+     * target.
      * </p>
      * 
      * @param minCapacity
-     *        The minimum value to scale to in response to a scale in event. This parameter is required if you are
-     *        registering a scalable target and optional if you are updating one.
+     *        The minimum value to scale to in response to a scale-in event. This parameter is required to register a
+     *        scalable target.
      */
 
     public void setMinCapacity(Integer minCapacity) {
@@ -1168,12 +1406,12 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The minimum value to scale to in response to a scale in event. This parameter is required if you are registering
-     * a scalable target and optional if you are updating one.
+     * The minimum value to scale to in response to a scale-in event. This parameter is required to register a scalable
+     * target.
      * </p>
      * 
-     * @return The minimum value to scale to in response to a scale in event. This parameter is required if you are
-     *         registering a scalable target and optional if you are updating one.
+     * @return The minimum value to scale to in response to a scale-in event. This parameter is required to register a
+     *         scalable target.
      */
 
     public Integer getMinCapacity() {
@@ -1182,13 +1420,13 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The minimum value to scale to in response to a scale in event. This parameter is required if you are registering
-     * a scalable target and optional if you are updating one.
+     * The minimum value to scale to in response to a scale-in event. This parameter is required to register a scalable
+     * target.
      * </p>
      * 
      * @param minCapacity
-     *        The minimum value to scale to in response to a scale in event. This parameter is required if you are
-     *        registering a scalable target and optional if you are updating one.
+     *        The minimum value to scale to in response to a scale-in event. This parameter is required to register a
+     *        scalable target.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1199,13 +1437,13 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The maximum value to scale to in response to a scale out event. This parameter is required if you are registering
-     * a scalable target and optional if you are updating one.
+     * The maximum value to scale to in response to a scale-out event. This parameter is required to register a scalable
+     * target.
      * </p>
      * 
      * @param maxCapacity
-     *        The maximum value to scale to in response to a scale out event. This parameter is required if you are
-     *        registering a scalable target and optional if you are updating one.
+     *        The maximum value to scale to in response to a scale-out event. This parameter is required to register a
+     *        scalable target.
      */
 
     public void setMaxCapacity(Integer maxCapacity) {
@@ -1214,12 +1452,12 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The maximum value to scale to in response to a scale out event. This parameter is required if you are registering
-     * a scalable target and optional if you are updating one.
+     * The maximum value to scale to in response to a scale-out event. This parameter is required to register a scalable
+     * target.
      * </p>
      * 
-     * @return The maximum value to scale to in response to a scale out event. This parameter is required if you are
-     *         registering a scalable target and optional if you are updating one.
+     * @return The maximum value to scale to in response to a scale-out event. This parameter is required to register a
+     *         scalable target.
      */
 
     public Integer getMaxCapacity() {
@@ -1228,13 +1466,13 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The maximum value to scale to in response to a scale out event. This parameter is required if you are registering
-     * a scalable target and optional if you are updating one.
+     * The maximum value to scale to in response to a scale-out event. This parameter is required to register a scalable
+     * target.
      * </p>
      * 
      * @param maxCapacity
-     *        The maximum value to scale to in response to a scale out event. This parameter is required if you are
-     *        registering a scalable target and optional if you are updating one.
+     *        The maximum value to scale to in response to a scale-out event. This parameter is required to register a
+     *        scalable target.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1245,31 +1483,25 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your behalf.
-     * </p>
-     * <p>
-     * With Amazon RDS resources, permissions are granted using a service-linked role. For more information, see <a
-     * href=
-     * "http://docs.aws.amazon.com/ApplicationAutoScaling/latest/APIReference/application-autoscaling-service-linked-roles.html"
+     * Application Auto Scaling creates a service-linked role that grants it permissions to modify the scalable target
+     * on your behalf. For more information, see <a href=
+     * "https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-service-linked-roles.html"
      * >Service-Linked Roles for Application Auto Scaling</a>.
      * </p>
      * <p>
-     * For resources that are not supported using a service-linked role, this parameter is required when you register a
-     * scalable target and optional when you update one.
+     * For resources that are not supported using a service-linked role, this parameter is required and must specify the
+     * ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your behalf.
      * </p>
      * 
      * @param roleARN
-     *        The ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your
-     *        behalf.</p>
+     *        Application Auto Scaling creates a service-linked role that grants it permissions to modify the scalable
+     *        target on your behalf. For more information, see <a href=
+     *        "https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-service-linked-roles.html"
+     *        >Service-Linked Roles for Application Auto Scaling</a>.</p>
      *        <p>
-     *        With Amazon RDS resources, permissions are granted using a service-linked role. For more information, see
-     *        <a href=
-     *        "http://docs.aws.amazon.com/ApplicationAutoScaling/latest/APIReference/application-autoscaling-service-linked-roles.html"
-     *        >Service-Linked Roles for Application Auto Scaling</a>.
-     *        </p>
-     *        <p>
-     *        For resources that are not supported using a service-linked role, this parameter is required when you
-     *        register a scalable target and optional when you update one.
+     *        For resources that are not supported using a service-linked role, this parameter is required and must
+     *        specify the ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your
+     *        behalf.
      */
 
     public void setRoleARN(String roleARN) {
@@ -1278,30 +1510,24 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your behalf.
-     * </p>
-     * <p>
-     * With Amazon RDS resources, permissions are granted using a service-linked role. For more information, see <a
-     * href=
-     * "http://docs.aws.amazon.com/ApplicationAutoScaling/latest/APIReference/application-autoscaling-service-linked-roles.html"
+     * Application Auto Scaling creates a service-linked role that grants it permissions to modify the scalable target
+     * on your behalf. For more information, see <a href=
+     * "https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-service-linked-roles.html"
      * >Service-Linked Roles for Application Auto Scaling</a>.
      * </p>
      * <p>
-     * For resources that are not supported using a service-linked role, this parameter is required when you register a
-     * scalable target and optional when you update one.
+     * For resources that are not supported using a service-linked role, this parameter is required and must specify the
+     * ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your behalf.
      * </p>
      * 
-     * @return The ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your
-     *         behalf.</p>
+     * @return Application Auto Scaling creates a service-linked role that grants it permissions to modify the scalable
+     *         target on your behalf. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-service-linked-roles.html"
+     *         >Service-Linked Roles for Application Auto Scaling</a>.</p>
      *         <p>
-     *         With Amazon RDS resources, permissions are granted using a service-linked role. For more information, see
-     *         <a href=
-     *         "http://docs.aws.amazon.com/ApplicationAutoScaling/latest/APIReference/application-autoscaling-service-linked-roles.html"
-     *         >Service-Linked Roles for Application Auto Scaling</a>.
-     *         </p>
-     *         <p>
-     *         For resources that are not supported using a service-linked role, this parameter is required when you
-     *         register a scalable target and optional when you update one.
+     *         For resources that are not supported using a service-linked role, this parameter is required and must
+     *         specify the ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your
+     *         behalf.
      */
 
     public String getRoleARN() {
@@ -1310,31 +1536,25 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
 
     /**
      * <p>
-     * The ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your behalf.
-     * </p>
-     * <p>
-     * With Amazon RDS resources, permissions are granted using a service-linked role. For more information, see <a
-     * href=
-     * "http://docs.aws.amazon.com/ApplicationAutoScaling/latest/APIReference/application-autoscaling-service-linked-roles.html"
+     * Application Auto Scaling creates a service-linked role that grants it permissions to modify the scalable target
+     * on your behalf. For more information, see <a href=
+     * "https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-service-linked-roles.html"
      * >Service-Linked Roles for Application Auto Scaling</a>.
      * </p>
      * <p>
-     * For resources that are not supported using a service-linked role, this parameter is required when you register a
-     * scalable target and optional when you update one.
+     * For resources that are not supported using a service-linked role, this parameter is required and must specify the
+     * ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your behalf.
      * </p>
      * 
      * @param roleARN
-     *        The ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your
-     *        behalf.</p>
+     *        Application Auto Scaling creates a service-linked role that grants it permissions to modify the scalable
+     *        target on your behalf. For more information, see <a href=
+     *        "https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-service-linked-roles.html"
+     *        >Service-Linked Roles for Application Auto Scaling</a>.</p>
      *        <p>
-     *        With Amazon RDS resources, permissions are granted using a service-linked role. For more information, see
-     *        <a href=
-     *        "http://docs.aws.amazon.com/ApplicationAutoScaling/latest/APIReference/application-autoscaling-service-linked-roles.html"
-     *        >Service-Linked Roles for Application Auto Scaling</a>.
-     *        </p>
-     *        <p>
-     *        For resources that are not supported using a service-linked role, this parameter is required when you
-     *        register a scalable target and optional when you update one.
+     *        For resources that are not supported using a service-linked role, this parameter is required and must
+     *        specify the ARN of an IAM role that allows Application Auto Scaling to modify the scalable target on your
+     *        behalf.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1344,7 +1564,8 @@ public class RegisterScalableTargetRequest extends com.amazonaws.AmazonWebServic
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

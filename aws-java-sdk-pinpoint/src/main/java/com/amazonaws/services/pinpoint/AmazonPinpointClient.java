@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,8 @@ import com.amazonaws.protocol.json.*;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.annotation.ThreadSafe;
 import com.amazonaws.client.AwsSyncClientParams;
+import com.amazonaws.client.builder.AdvancedConfig;
+
 import com.amazonaws.services.pinpoint.AmazonPinpointClientBuilder;
 
 import com.amazonaws.AmazonServiceException;
@@ -48,11 +50,12 @@ import com.amazonaws.services.pinpoint.model.transform.*;
  * Client for accessing Amazon Pinpoint. All service calls made using this client are blocking, and will not return
  * until the service call completes.
  * <p>
- * 
+ * Amazon Pinpoint
  */
 @ThreadSafe
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class AmazonPinpointClient extends AmazonWebServiceClient implements AmazonPinpoint {
+
     /** Provider for AWS credentials. */
     private final AWSCredentialsProvider awsCredentialsProvider;
 
@@ -63,6 +66,8 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
     /** Client configuration factory providing ClientConfigurations tailored to this client */
     protected static final ClientConfigurationFactory configFactory = new ClientConfigurationFactory();
+
+    private final AdvancedConfig advancedConfig;
 
     private static final com.amazonaws.protocol.json.SdkJsonProtocolFactory protocolFactory = new com.amazonaws.protocol.json.SdkJsonProtocolFactory(
             new JsonClientMetadata()
@@ -173,6 +178,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     public AmazonPinpointClient(AWSCredentials awsCredentials, ClientConfiguration clientConfiguration) {
         super(clientConfiguration);
         this.awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -238,6 +244,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
             RequestMetricCollector requestMetricCollector) {
         super(clientConfiguration, requestMetricCollector);
         this.awsCredentialsProvider = awsCredentialsProvider;
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -256,8 +263,23 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      *        Object providing client parameters.
      */
     AmazonPinpointClient(AwsSyncClientParams clientParams) {
+        this(clientParams, false);
+    }
+
+    /**
+     * Constructs a new client to invoke service methods on Amazon Pinpoint using the specified parameters.
+     *
+     * <p>
+     * All service calls made using this new client object are blocking, and will not return until the service call
+     * completes.
+     *
+     * @param clientParams
+     *        Object providing client parameters.
+     */
+    AmazonPinpointClient(AwsSyncClientParams clientParams, boolean endpointDiscoveryEnabled) {
         super(clientParams);
         this.awsCredentialsProvider = clientParams.getCredentialsProvider();
+        this.advancedConfig = clientParams.getAdvancedConfig();
         init();
     }
 
@@ -278,17 +300,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param createAppRequest
      * @return Result of the CreateApp operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.CreateApp
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/CreateApp" target="_top">AWS API
      *      Documentation</a>
@@ -314,6 +336,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new CreateAppRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createAppRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateApp");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -336,17 +362,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param createCampaignRequest
      * @return Result of the CreateCampaign operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.CreateCampaign
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/CreateCampaign" target="_top">AWS API
      *      Documentation</a>
@@ -372,6 +398,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new CreateCampaignRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createCampaignRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateCampaign");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -389,22 +419,84 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
+     * Creates an export job.
+     * 
+     * @param createExportJobRequest
+     * @return Result of the CreateExportJob operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.CreateExportJob
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/CreateExportJob" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public CreateExportJobResult createExportJob(CreateExportJobRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateExportJob(request);
+    }
+
+    @SdkInternalApi
+    final CreateExportJobResult executeCreateExportJob(CreateExportJobRequest createExportJobRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createExportJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateExportJobRequest> request = null;
+        Response<CreateExportJobResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateExportJobRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createExportJobRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateExportJob");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<CreateExportJobResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new CreateExportJobResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
      * Creates or updates an import job.
      * 
      * @param createImportJobRequest
      * @return Result of the CreateImportJob operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.CreateImportJob
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/CreateImportJob" target="_top">AWS API
      *      Documentation</a>
@@ -430,6 +522,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new CreateImportJobRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createImportJobRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateImportJob");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -452,17 +548,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param createSegmentRequest
      * @return Result of the CreateSegment operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.CreateSegment
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/CreateSegment" target="_top">AWS API
      *      Documentation</a>
@@ -488,6 +584,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new CreateSegmentRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createSegmentRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateSegment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -505,22 +605,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Delete an ADM channel
+     * Delete an ADM channel.
      * 
      * @param deleteAdmChannelRequest
      * @return Result of the DeleteAdmChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteAdmChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteAdmChannel" target="_top">AWS API
      *      Documentation</a>
@@ -546,6 +646,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteAdmChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteAdmChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteAdmChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -568,17 +672,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param deleteApnsChannelRequest
      * @return Result of the DeleteApnsChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteApnsChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteApnsChannel" target="_top">AWS API
      *      Documentation</a>
@@ -604,6 +708,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteApnsChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteApnsChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteApnsChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -621,22 +729,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Delete an APNS sandbox channel
+     * Delete an APNS sandbox channel.
      * 
      * @param deleteApnsSandboxChannelRequest
      * @return Result of the DeleteApnsSandboxChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteApnsSandboxChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteApnsSandboxChannel"
      *      target="_top">AWS API Documentation</a>
@@ -663,6 +771,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                         .beforeMarshalling(deleteApnsSandboxChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteApnsSandboxChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -686,17 +798,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param deleteApnsVoipChannelRequest
      * @return Result of the DeleteApnsVoipChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteApnsVoipChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteApnsVoipChannel" target="_top">AWS
      *      API Documentation</a>
@@ -722,6 +834,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteApnsVoipChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteApnsVoipChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteApnsVoipChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -745,17 +861,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param deleteApnsVoipSandboxChannelRequest
      * @return Result of the DeleteApnsVoipSandboxChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteApnsVoipSandboxChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteApnsVoipSandboxChannel"
      *      target="_top">AWS API Documentation</a>
@@ -782,6 +898,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                         .beforeMarshalling(deleteApnsVoipSandboxChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteApnsVoipSandboxChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -805,17 +925,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param deleteAppRequest
      * @return Result of the DeleteApp operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteApp
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteApp" target="_top">AWS API
      *      Documentation</a>
@@ -841,6 +961,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteAppRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteAppRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteApp");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -863,17 +987,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param deleteBaiduChannelRequest
      * @return Result of the DeleteBaiduChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteBaiduChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteBaiduChannel" target="_top">AWS
      *      API Documentation</a>
@@ -899,6 +1023,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteBaiduChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteBaiduChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteBaiduChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -921,17 +1049,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param deleteCampaignRequest
      * @return Result of the DeleteCampaign operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteCampaign
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteCampaign" target="_top">AWS API
      *      Documentation</a>
@@ -957,6 +1085,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteCampaignRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteCampaignRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteCampaign");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -974,22 +1106,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Delete an email channel
+     * Delete an email channel.
      * 
      * @param deleteEmailChannelRequest
      * @return Result of the DeleteEmailChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteEmailChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteEmailChannel" target="_top">AWS
      *      API Documentation</a>
@@ -1015,6 +1147,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteEmailChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteEmailChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteEmailChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1032,23 +1168,84 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
+     * Deletes an endpoint.
+     * 
+     * @param deleteEndpointRequest
+     * @return Result of the DeleteEndpoint operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.DeleteEndpoint
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteEndpoint" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public DeleteEndpointResult deleteEndpoint(DeleteEndpointRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteEndpoint(request);
+    }
+
+    @SdkInternalApi
+    final DeleteEndpointResult executeDeleteEndpoint(DeleteEndpointRequest deleteEndpointRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteEndpointRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteEndpointRequest> request = null;
+        Response<DeleteEndpointResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteEndpointRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteEndpointRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteEndpoint");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<DeleteEndpointResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new DeleteEndpointResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
      * Deletes the event stream for an app.
      * 
      * @param deleteEventStreamRequest
-     *        DeleteEventStream Request
      * @return Result of the DeleteEventStream operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteEventStream
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteEventStream" target="_top">AWS API
      *      Documentation</a>
@@ -1074,6 +1271,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteEventStreamRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteEventStreamRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteEventStream");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1096,17 +1297,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param deleteGcmChannelRequest
      * @return Result of the DeleteGcmChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteGcmChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteGcmChannel" target="_top">AWS API
      *      Documentation</a>
@@ -1132,6 +1333,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteGcmChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteGcmChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteGcmChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1154,17 +1359,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param deleteSegmentRequest
      * @return Result of the DeleteSegment operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteSegment
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteSegment" target="_top">AWS API
      *      Documentation</a>
@@ -1190,6 +1395,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteSegmentRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteSegmentRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteSegment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1207,22 +1416,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Delete an SMS channel
+     * Delete an SMS channel.
      * 
      * @param deleteSmsChannelRequest
      * @return Result of the DeleteSmsChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.DeleteSmsChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteSmsChannel" target="_top">AWS API
      *      Documentation</a>
@@ -1248,6 +1457,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new DeleteSmsChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteSmsChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteSmsChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1265,22 +1478,146 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Get an ADM channel
+     * Deletes endpoints that are associated with a User ID.
+     * 
+     * @param deleteUserEndpointsRequest
+     * @return Result of the DeleteUserEndpoints operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.DeleteUserEndpoints
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteUserEndpoints" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DeleteUserEndpointsResult deleteUserEndpoints(DeleteUserEndpointsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteUserEndpoints(request);
+    }
+
+    @SdkInternalApi
+    final DeleteUserEndpointsResult executeDeleteUserEndpoints(DeleteUserEndpointsRequest deleteUserEndpointsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteUserEndpointsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteUserEndpointsRequest> request = null;
+        Response<DeleteUserEndpointsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteUserEndpointsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteUserEndpointsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteUserEndpoints");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<DeleteUserEndpointsResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new DeleteUserEndpointsResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Delete an Voice channel
+     * 
+     * @param deleteVoiceChannelRequest
+     * @return Result of the DeleteVoiceChannel operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.DeleteVoiceChannel
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/DeleteVoiceChannel" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DeleteVoiceChannelResult deleteVoiceChannel(DeleteVoiceChannelRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteVoiceChannel(request);
+    }
+
+    @SdkInternalApi
+    final DeleteVoiceChannelResult executeDeleteVoiceChannel(DeleteVoiceChannelRequest deleteVoiceChannelRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteVoiceChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteVoiceChannelRequest> request = null;
+        Response<DeleteVoiceChannelResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteVoiceChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteVoiceChannelRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVoiceChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<DeleteVoiceChannelResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new DeleteVoiceChannelResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Get an ADM channel.
      * 
      * @param getAdmChannelRequest
      * @return Result of the GetAdmChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetAdmChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetAdmChannel" target="_top">AWS API
      *      Documentation</a>
@@ -1306,6 +1643,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetAdmChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getAdmChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetAdmChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1328,17 +1669,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getApnsChannelRequest
      * @return Result of the GetApnsChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetApnsChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetApnsChannel" target="_top">AWS API
      *      Documentation</a>
@@ -1364,6 +1705,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetApnsChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getApnsChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetApnsChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1381,22 +1726,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Get an APNS sandbox channel
+     * Get an APNS sandbox channel.
      * 
      * @param getApnsSandboxChannelRequest
      * @return Result of the GetApnsSandboxChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetApnsSandboxChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetApnsSandboxChannel" target="_top">AWS
      *      API Documentation</a>
@@ -1422,6 +1767,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetApnsSandboxChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getApnsSandboxChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetApnsSandboxChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1445,17 +1794,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getApnsVoipChannelRequest
      * @return Result of the GetApnsVoipChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetApnsVoipChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetApnsVoipChannel" target="_top">AWS
      *      API Documentation</a>
@@ -1481,6 +1830,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetApnsVoipChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getApnsVoipChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetApnsVoipChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1498,22 +1851,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Get an APNS VoipSandbox channel
+     * Get an APNS VoIPSandbox channel
      * 
      * @param getApnsVoipSandboxChannelRequest
      * @return Result of the GetApnsVoipSandboxChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetApnsVoipSandboxChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetApnsVoipSandboxChannel"
      *      target="_top">AWS API Documentation</a>
@@ -1540,6 +1893,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                         .beforeMarshalling(getApnsVoipSandboxChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetApnsVoipSandboxChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1563,17 +1920,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getAppRequest
      * @return Result of the GetApp operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetApp
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetApp" target="_top">AWS API
      *      Documentation</a>
@@ -1599,6 +1956,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetAppRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getAppRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetApp");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1621,17 +1982,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getApplicationSettingsRequest
      * @return Result of the GetApplicationSettings operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetApplicationSettings
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetApplicationSettings"
      *      target="_top">AWS API Documentation</a>
@@ -1657,6 +2018,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetApplicationSettingsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getApplicationSettingsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetApplicationSettings");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1680,17 +2045,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getAppsRequest
      * @return Result of the GetApps operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetApps
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetApps" target="_top">AWS API
      *      Documentation</a>
@@ -1716,6 +2081,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetAppsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getAppsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetApps");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1738,17 +2107,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getBaiduChannelRequest
      * @return Result of the GetBaiduChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetBaiduChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetBaiduChannel" target="_top">AWS API
      *      Documentation</a>
@@ -1774,6 +2143,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetBaiduChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getBaiduChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetBaiduChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1796,17 +2169,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getCampaignRequest
      * @return Result of the GetCampaign operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetCampaign
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetCampaign" target="_top">AWS API
      *      Documentation</a>
@@ -1832,6 +2205,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetCampaignRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getCampaignRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetCampaign");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1854,17 +2231,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getCampaignActivitiesRequest
      * @return Result of the GetCampaignActivities operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetCampaignActivities
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetCampaignActivities" target="_top">AWS
      *      API Documentation</a>
@@ -1890,6 +2267,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetCampaignActivitiesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getCampaignActivitiesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetCampaignActivities");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1913,17 +2294,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getCampaignVersionRequest
      * @return Result of the GetCampaignVersion operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetCampaignVersion
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetCampaignVersion" target="_top">AWS
      *      API Documentation</a>
@@ -1949,6 +2330,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetCampaignVersionRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getCampaignVersionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetCampaignVersion");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1971,17 +2356,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getCampaignVersionsRequest
      * @return Result of the GetCampaignVersions operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetCampaignVersions
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetCampaignVersions" target="_top">AWS
      *      API Documentation</a>
@@ -2007,6 +2392,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetCampaignVersionsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getCampaignVersionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetCampaignVersions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2029,17 +2418,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getCampaignsRequest
      * @return Result of the GetCampaigns operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetCampaigns
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetCampaigns" target="_top">AWS API
      *      Documentation</a>
@@ -2065,6 +2454,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetCampaignsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getCampaignsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetCampaigns");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2082,22 +2475,84 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Get an email channel
+     * Get all channels.
+     * 
+     * @param getChannelsRequest
+     * @return Result of the GetChannels operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.GetChannels
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetChannels" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public GetChannelsResult getChannels(GetChannelsRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetChannels(request);
+    }
+
+    @SdkInternalApi
+    final GetChannelsResult executeGetChannels(GetChannelsRequest getChannelsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getChannelsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetChannelsRequest> request = null;
+        Response<GetChannelsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetChannelsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getChannelsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetChannels");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<GetChannelsResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new GetChannelsResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Get an email channel.
      * 
      * @param getEmailChannelRequest
      * @return Result of the GetEmailChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetEmailChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetEmailChannel" target="_top">AWS API
      *      Documentation</a>
@@ -2123,6 +2578,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetEmailChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getEmailChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetEmailChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2145,17 +2604,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getEndpointRequest
      * @return Result of the GetEndpoint operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetEndpoint
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetEndpoint" target="_top">AWS API
      *      Documentation</a>
@@ -2181,6 +2640,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetEndpointRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getEndpointRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetEndpoint");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2201,20 +2664,19 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * Returns the event stream for an app.
      * 
      * @param getEventStreamRequest
-     *        GetEventStreamRequest
      * @return Result of the GetEventStream operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetEventStream
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetEventStream" target="_top">AWS API
      *      Documentation</a>
@@ -2240,6 +2702,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetEventStreamRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getEventStreamRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetEventStream");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2257,22 +2723,146 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
+     * Returns information about an export job.
+     * 
+     * @param getExportJobRequest
+     * @return Result of the GetExportJob operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.GetExportJob
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetExportJob" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public GetExportJobResult getExportJob(GetExportJobRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetExportJob(request);
+    }
+
+    @SdkInternalApi
+    final GetExportJobResult executeGetExportJob(GetExportJobRequest getExportJobRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getExportJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetExportJobRequest> request = null;
+        Response<GetExportJobResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetExportJobRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getExportJobRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetExportJob");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<GetExportJobResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new GetExportJobResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Returns information about your export jobs.
+     * 
+     * @param getExportJobsRequest
+     * @return Result of the GetExportJobs operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.GetExportJobs
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetExportJobs" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public GetExportJobsResult getExportJobs(GetExportJobsRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetExportJobs(request);
+    }
+
+    @SdkInternalApi
+    final GetExportJobsResult executeGetExportJobs(GetExportJobsRequest getExportJobsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getExportJobsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetExportJobsRequest> request = null;
+        Response<GetExportJobsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetExportJobsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getExportJobsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetExportJobs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<GetExportJobsResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new GetExportJobsResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
      * Returns information about the GCM channel for an app.
      * 
      * @param getGcmChannelRequest
      * @return Result of the GetGcmChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetGcmChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetGcmChannel" target="_top">AWS API
      *      Documentation</a>
@@ -2298,6 +2888,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetGcmChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getGcmChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetGcmChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2320,17 +2914,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getImportJobRequest
      * @return Result of the GetImportJob operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetImportJob
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetImportJob" target="_top">AWS API
      *      Documentation</a>
@@ -2356,6 +2950,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetImportJobRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getImportJobRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetImportJob");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2378,17 +2976,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getImportJobsRequest
      * @return Result of the GetImportJobs operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetImportJobs
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetImportJobs" target="_top">AWS API
      *      Documentation</a>
@@ -2414,6 +3012,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetImportJobsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getImportJobsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetImportJobs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2436,17 +3038,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getSegmentRequest
      * @return Result of the GetSegment operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetSegment
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetSegment" target="_top">AWS API
      *      Documentation</a>
@@ -2472,6 +3074,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetSegmentRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getSegmentRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetSegment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2489,22 +3095,84 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
+     * Returns a list of export jobs for a specific segment.
+     * 
+     * @param getSegmentExportJobsRequest
+     * @return Result of the GetSegmentExportJobs operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.GetSegmentExportJobs
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetSegmentExportJobs" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public GetSegmentExportJobsResult getSegmentExportJobs(GetSegmentExportJobsRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetSegmentExportJobs(request);
+    }
+
+    @SdkInternalApi
+    final GetSegmentExportJobsResult executeGetSegmentExportJobs(GetSegmentExportJobsRequest getSegmentExportJobsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getSegmentExportJobsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetSegmentExportJobsRequest> request = null;
+        Response<GetSegmentExportJobsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetSegmentExportJobsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getSegmentExportJobsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetSegmentExportJobs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<GetSegmentExportJobsResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new GetSegmentExportJobsResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
      * Returns a list of import jobs for a specific segment.
      * 
      * @param getSegmentImportJobsRequest
      * @return Result of the GetSegmentImportJobs operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetSegmentImportJobs
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetSegmentImportJobs" target="_top">AWS
      *      API Documentation</a>
@@ -2530,6 +3198,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetSegmentImportJobsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getSegmentImportJobsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetSegmentImportJobs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2552,17 +3224,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getSegmentVersionRequest
      * @return Result of the GetSegmentVersion operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetSegmentVersion
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetSegmentVersion" target="_top">AWS API
      *      Documentation</a>
@@ -2588,6 +3260,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetSegmentVersionRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getSegmentVersionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetSegmentVersion");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2610,17 +3286,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getSegmentVersionsRequest
      * @return Result of the GetSegmentVersions operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetSegmentVersions
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetSegmentVersions" target="_top">AWS
      *      API Documentation</a>
@@ -2646,6 +3322,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetSegmentVersionsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getSegmentVersionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetSegmentVersions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2668,17 +3348,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param getSegmentsRequest
      * @return Result of the GetSegments operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetSegments
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetSegments" target="_top">AWS API
      *      Documentation</a>
@@ -2704,6 +3384,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetSegmentsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getSegmentsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetSegments");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2721,22 +3405,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Get an SMS channel
+     * Get an SMS channel.
      * 
      * @param getSmsChannelRequest
      * @return Result of the GetSmsChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.GetSmsChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetSmsChannel" target="_top">AWS API
      *      Documentation</a>
@@ -2762,6 +3446,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new GetSmsChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getSmsChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetSmsChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2779,22 +3467,256 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
+     * Returns information about the endpoints that are associated with a User ID.
+     * 
+     * @param getUserEndpointsRequest
+     * @return Result of the GetUserEndpoints operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.GetUserEndpoints
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetUserEndpoints" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public GetUserEndpointsResult getUserEndpoints(GetUserEndpointsRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetUserEndpoints(request);
+    }
+
+    @SdkInternalApi
+    final GetUserEndpointsResult executeGetUserEndpoints(GetUserEndpointsRequest getUserEndpointsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getUserEndpointsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetUserEndpointsRequest> request = null;
+        Response<GetUserEndpointsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetUserEndpointsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getUserEndpointsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetUserEndpoints");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<GetUserEndpointsResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new GetUserEndpointsResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Get a Voice Channel
+     * 
+     * @param getVoiceChannelRequest
+     * @return Result of the GetVoiceChannel operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.GetVoiceChannel
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/GetVoiceChannel" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public GetVoiceChannelResult getVoiceChannel(GetVoiceChannelRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetVoiceChannel(request);
+    }
+
+    @SdkInternalApi
+    final GetVoiceChannelResult executeGetVoiceChannel(GetVoiceChannelRequest getVoiceChannelRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getVoiceChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetVoiceChannelRequest> request = null;
+        Response<GetVoiceChannelResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetVoiceChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getVoiceChannelRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetVoiceChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<GetVoiceChannelResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new GetVoiceChannelResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * @param listTagsForResourceRequest
+     * @return Result of the ListTagsForResource operation returned by the service.
+     * @sample AmazonPinpoint.ListTagsForResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/ListTagsForResource" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public ListTagsForResourceResult listTagsForResource(ListTagsForResourceRequest request) {
+        request = beforeClientExecution(request);
+        return executeListTagsForResource(request);
+    }
+
+    @SdkInternalApi
+    final ListTagsForResourceResult executeListTagsForResource(ListTagsForResourceRequest listTagsForResourceRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(listTagsForResourceRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListTagsForResourceRequest> request = null;
+        Response<ListTagsForResourceResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListTagsForResourceRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listTagsForResourceRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListTagsForResource");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<ListTagsForResourceResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new ListTagsForResourceResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Returns information about the specified phone number.
+     * 
+     * @param phoneNumberValidateRequest
+     * @return Result of the PhoneNumberValidate operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.PhoneNumberValidate
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/PhoneNumberValidate" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public PhoneNumberValidateResult phoneNumberValidate(PhoneNumberValidateRequest request) {
+        request = beforeClientExecution(request);
+        return executePhoneNumberValidate(request);
+    }
+
+    @SdkInternalApi
+    final PhoneNumberValidateResult executePhoneNumberValidate(PhoneNumberValidateRequest phoneNumberValidateRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(phoneNumberValidateRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<PhoneNumberValidateRequest> request = null;
+        Response<PhoneNumberValidateResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new PhoneNumberValidateRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(phoneNumberValidateRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "PhoneNumberValidate");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<PhoneNumberValidateResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new PhoneNumberValidateResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
      * Use to create or update the event stream for an app.
      * 
      * @param putEventStreamRequest
      * @return Result of the PutEventStream operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.PutEventStream
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/PutEventStream" target="_top">AWS API
      *      Documentation</a>
@@ -2820,6 +3742,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new PutEventStreamRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(putEventStreamRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "PutEventStream");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2837,22 +3763,147 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Send a batch of messages
+     * Use to record events for endpoints. This method creates events and creates or updates the endpoints that those
+     * events are associated with.
+     * 
+     * @param putEventsRequest
+     * @return Result of the PutEvents operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.PutEvents
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/PutEvents" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public PutEventsResult putEvents(PutEventsRequest request) {
+        request = beforeClientExecution(request);
+        return executePutEvents(request);
+    }
+
+    @SdkInternalApi
+    final PutEventsResult executePutEvents(PutEventsRequest putEventsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(putEventsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<PutEventsRequest> request = null;
+        Response<PutEventsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new PutEventsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(putEventsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "PutEvents");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<PutEventsResult>> responseHandler = protocolFactory.createResponseHandler(new JsonOperationMetadata()
+                    .withPayloadJson(true).withHasStreamingSuccessResponse(false), new PutEventsResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Used to remove the attributes for an app
+     * 
+     * @param removeAttributesRequest
+     * @return Result of the RemoveAttributes operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.RemoveAttributes
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/RemoveAttributes" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public RemoveAttributesResult removeAttributes(RemoveAttributesRequest request) {
+        request = beforeClientExecution(request);
+        return executeRemoveAttributes(request);
+    }
+
+    @SdkInternalApi
+    final RemoveAttributesResult executeRemoveAttributes(RemoveAttributesRequest removeAttributesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(removeAttributesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<RemoveAttributesRequest> request = null;
+        Response<RemoveAttributesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new RemoveAttributesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(removeAttributesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RemoveAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<RemoveAttributesResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new RemoveAttributesResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Used to send a direct message.
      * 
      * @param sendMessagesRequest
      * @return Result of the SendMessages operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.SendMessages
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/SendMessages" target="_top">AWS API
      *      Documentation</a>
@@ -2878,6 +3929,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new SendMessagesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(sendMessagesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "SendMessages");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2895,22 +3950,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Send a batch of messages to users
+     * Used to send a message to a list of users.
      * 
      * @param sendUsersMessagesRequest
      * @return Result of the SendUsersMessages operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.SendUsersMessages
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/SendUsersMessages" target="_top">AWS API
      *      Documentation</a>
@@ -2936,6 +3991,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new SendUsersMessagesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(sendUsersMessagesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "SendUsersMessages");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2953,22 +4012,118 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Update an ADM channel
+     * @param tagResourceRequest
+     * @return Result of the TagResource operation returned by the service.
+     * @sample AmazonPinpoint.TagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/TagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public TagResourceResult tagResource(TagResourceRequest request) {
+        request = beforeClientExecution(request);
+        return executeTagResource(request);
+    }
+
+    @SdkInternalApi
+    final TagResourceResult executeTagResource(TagResourceRequest tagResourceRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(tagResourceRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<TagResourceRequest> request = null;
+        Response<TagResourceResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new TagResourceRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(tagResourceRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "TagResource");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<TagResourceResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new TagResourceResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * @param untagResourceRequest
+     * @return Result of the UntagResource operation returned by the service.
+     * @sample AmazonPinpoint.UntagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UntagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public UntagResourceResult untagResource(UntagResourceRequest request) {
+        request = beforeClientExecution(request);
+        return executeUntagResource(request);
+    }
+
+    @SdkInternalApi
+    final UntagResourceResult executeUntagResource(UntagResourceRequest untagResourceRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(untagResourceRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UntagResourceRequest> request = null;
+        Response<UntagResourceResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UntagResourceRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(untagResourceRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UntagResource");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<UntagResourceResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new UntagResourceResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Update an ADM channel.
      * 
      * @param updateAdmChannelRequest
      * @return Result of the UpdateAdmChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateAdmChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateAdmChannel" target="_top">AWS API
      *      Documentation</a>
@@ -2994,6 +4149,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateAdmChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateAdmChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateAdmChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3016,17 +4175,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param updateApnsChannelRequest
      * @return Result of the UpdateApnsChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateApnsChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateApnsChannel" target="_top">AWS API
      *      Documentation</a>
@@ -3052,6 +4211,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateApnsChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateApnsChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateApnsChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3069,22 +4232,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Update an APNS sandbox channel
+     * Update an APNS sandbox channel.
      * 
      * @param updateApnsSandboxChannelRequest
      * @return Result of the UpdateApnsSandboxChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateApnsSandboxChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateApnsSandboxChannel"
      *      target="_top">AWS API Documentation</a>
@@ -3111,6 +4274,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                         .beforeMarshalling(updateApnsSandboxChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateApnsSandboxChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3134,17 +4301,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param updateApnsVoipChannelRequest
      * @return Result of the UpdateApnsVoipChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateApnsVoipChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateApnsVoipChannel" target="_top">AWS
      *      API Documentation</a>
@@ -3170,6 +4337,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateApnsVoipChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateApnsVoipChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateApnsVoipChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3193,17 +4364,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param updateApnsVoipSandboxChannelRequest
      * @return Result of the UpdateApnsVoipSandboxChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateApnsVoipSandboxChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateApnsVoipSandboxChannel"
      *      target="_top">AWS API Documentation</a>
@@ -3230,6 +4401,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                         .beforeMarshalling(updateApnsVoipSandboxChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateApnsVoipSandboxChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3253,17 +4428,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param updateApplicationSettingsRequest
      * @return Result of the UpdateApplicationSettings operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateApplicationSettings
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateApplicationSettings"
      *      target="_top">AWS API Documentation</a>
@@ -3290,6 +4465,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                         .beforeMarshalling(updateApplicationSettingsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateApplicationSettings");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3313,17 +4492,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param updateBaiduChannelRequest
      * @return Result of the UpdateBaiduChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateBaiduChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateBaiduChannel" target="_top">AWS
      *      API Documentation</a>
@@ -3349,6 +4528,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateBaiduChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateBaiduChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateBaiduChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3371,17 +4554,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param updateCampaignRequest
      * @return Result of the UpdateCampaign operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateCampaign
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateCampaign" target="_top">AWS API
      *      Documentation</a>
@@ -3407,6 +4590,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateCampaignRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateCampaignRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateCampaign");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3424,22 +4611,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Update an email channel
+     * Update an email channel.
      * 
      * @param updateEmailChannelRequest
      * @return Result of the UpdateEmailChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateEmailChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateEmailChannel" target="_top">AWS
      *      API Documentation</a>
@@ -3465,6 +4652,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateEmailChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateEmailChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateEmailChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3482,22 +4673,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Use to update an endpoint.
+     * Creates or updates an endpoint.
      * 
      * @param updateEndpointRequest
      * @return Result of the UpdateEndpoint operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateEndpoint
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateEndpoint" target="_top">AWS API
      *      Documentation</a>
@@ -3523,6 +4714,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateEndpointRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateEndpointRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateEndpoint");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3545,17 +4740,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param updateEndpointsBatchRequest
      * @return Result of the UpdateEndpointsBatch operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateEndpointsBatch
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateEndpointsBatch" target="_top">AWS
      *      API Documentation</a>
@@ -3581,6 +4776,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateEndpointsBatchRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateEndpointsBatchRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateEndpointsBatch");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3603,17 +4802,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * @param updateGcmChannelRequest
      * @return Result of the UpdateGcmChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateGcmChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateGcmChannel" target="_top">AWS API
      *      Documentation</a>
@@ -3639,6 +4838,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateGcmChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateGcmChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateGcmChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3656,22 +4859,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Use to update a segment.
+     * Used to update a segment.
      * 
      * @param updateSegmentRequest
      * @return Result of the UpdateSegment operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateSegment
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateSegment" target="_top">AWS API
      *      Documentation</a>
@@ -3697,6 +4900,10 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateSegmentRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateSegmentRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateSegment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3714,22 +4921,22 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
-     * Update an SMS channel
+     * Update an SMS channel.
      * 
      * @param updateSmsChannelRequest
      * @return Result of the UpdateSmsChannel operation returned by the service.
      * @throws BadRequestException
-     *         Simple message object.
+     *         400 response
      * @throws InternalServerErrorException
-     *         Simple message object.
+     *         500 response
      * @throws ForbiddenException
-     *         Simple message object.
+     *         403 response
      * @throws NotFoundException
-     *         Simple message object.
+     *         404 response
      * @throws MethodNotAllowedException
-     *         Simple message object.
+     *         405 response
      * @throws TooManyRequestsException
-     *         Simple message object.
+     *         429 response
      * @sample AmazonPinpoint.UpdateSmsChannel
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateSmsChannel" target="_top">AWS API
      *      Documentation</a>
@@ -3755,12 +4962,78 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
                 request = new UpdateSmsChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateSmsChannelRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateSmsChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             HttpResponseHandler<AmazonWebServiceResponse<UpdateSmsChannelResult>> responseHandler = protocolFactory.createResponseHandler(
                     new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new UpdateSmsChannelResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * Update an Voice channel
+     * 
+     * @param updateVoiceChannelRequest
+     * @return Result of the UpdateVoiceChannel operation returned by the service.
+     * @throws BadRequestException
+     *         400 response
+     * @throws InternalServerErrorException
+     *         500 response
+     * @throws ForbiddenException
+     *         403 response
+     * @throws NotFoundException
+     *         404 response
+     * @throws MethodNotAllowedException
+     *         405 response
+     * @throws TooManyRequestsException
+     *         429 response
+     * @sample AmazonPinpoint.UpdateVoiceChannel
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/UpdateVoiceChannel" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public UpdateVoiceChannelResult updateVoiceChannel(UpdateVoiceChannelRequest request) {
+        request = beforeClientExecution(request);
+        return executeUpdateVoiceChannel(request);
+    }
+
+    @SdkInternalApi
+    final UpdateVoiceChannelResult executeUpdateVoiceChannel(UpdateVoiceChannelRequest updateVoiceChannelRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(updateVoiceChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateVoiceChannelRequest> request = null;
+        Response<UpdateVoiceChannelResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateVoiceChannelRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateVoiceChannelRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Pinpoint");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateVoiceChannel");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<UpdateVoiceChannelResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false), new UpdateVoiceChannelResultJsonUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -3795,9 +5068,18 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
             ExecutionContext executionContext) {
 
+        return invoke(request, responseHandler, executionContext, null, null);
+    }
+
+    /**
+     * Normal invoke with authentication. Credentials are required and may be overriden at the request level.
+     **/
+    private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
+            ExecutionContext executionContext, URI cachedEndpoint, URI uriFromEndpointTrait) {
+
         executionContext.setCredentialsProvider(CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, cachedEndpoint, uriFromEndpointTrait);
     }
 
     /**
@@ -3807,7 +5089,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     private <X, Y extends AmazonWebServiceRequest> Response<X> anonymousInvoke(Request<Y> request,
             HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler, ExecutionContext executionContext) {
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, null, null);
     }
 
     /**
@@ -3815,8 +5097,17 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
      * ExecutionContext beforehand.
      **/
     private <X, Y extends AmazonWebServiceRequest> Response<X> doInvoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
-            ExecutionContext executionContext) {
-        request.setEndpoint(endpoint);
+            ExecutionContext executionContext, URI discoveredEndpoint, URI uriFromEndpointTrait) {
+
+        if (discoveredEndpoint != null) {
+            request.setEndpoint(discoveredEndpoint);
+            request.getOriginalRequest().getRequestClientOptions().appendUserAgent("endpoint-discovery");
+        } else if (uriFromEndpointTrait != null) {
+            request.setEndpoint(uriFromEndpointTrait);
+        } else {
+            request.setEndpoint(endpoint);
+        }
+
         request.setTimeOffset(timeOffset);
 
         HttpResponseHandler<AmazonServiceException> errorResponseHandler = protocolFactory.createErrorResponseHandler(new JsonErrorResponseMetadata());

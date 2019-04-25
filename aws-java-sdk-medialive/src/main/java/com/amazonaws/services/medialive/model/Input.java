@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -26,30 +26,44 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class Input implements Serializable, Cloneable, StructuredPojo {
 
-    /** Unique ARN of input (generated, immutable) */
+    /** The Unique ARN of the input (generated, immutable). */
     private String arn;
-    /** List of channel IDs that that input is attached to (currently an input can only be attached to one channel) */
+    /** A list of channel IDs that that input is attached to (currently an input can only be attached to one channel). */
     private java.util.List<String> attachedChannels;
-    /** List of destinations of input (PULL-type) */
+    /** A list of the destinations of the input (PUSH-type). */
     private java.util.List<InputDestination> destinations;
-    /** generated ID of input (unique for user account, immutable) */
+    /** The generated ID of the input (unique for user account, immutable). */
     private String id;
-    /** user-assigned name (mutable) */
+    /**
+     * STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD, both
+     * sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested; the second
+     * source will always be ignored, even if the first source fails. SINGLE_PIPELINE - You can connect only one source
+     * to this input. If the ChannelClass is also SINGLE_PIPELINE, this value is valid. If the ChannelClass is STANDARD,
+     * this value is not valid because the channel requires two sources in the input.
+     */
+    private String inputClass;
+    /** A list of MediaConnect Flows for this input. */
+    private java.util.List<MediaConnectFlow> mediaConnectFlows;
+    /** The user-assigned name (This is a mutable value). */
     private String name;
-    /** List of IDs for all the security groups attached to the input. */
+    /** The Amazon Resource Name (ARN) of the role this input assumes during and after creation. */
+    private String roleArn;
+    /** A list of IDs for all the Input Security Groups attached to the input. */
     private java.util.List<String> securityGroups;
-    /** List of sources of input (PULL-type) */
+    /** A list of the sources of the input (PULL-type). */
     private java.util.List<InputSource> sources;
 
     private String state;
+    /** A collection of key-value pairs. */
+    private java.util.Map<String, String> tags;
 
     private String type;
 
     /**
-     * Unique ARN of input (generated, immutable)
+     * The Unique ARN of the input (generated, immutable).
      * 
      * @param arn
-     *        Unique ARN of input (generated, immutable)
+     *        The Unique ARN of the input (generated, immutable).
      */
 
     public void setArn(String arn) {
@@ -57,9 +71,9 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Unique ARN of input (generated, immutable)
+     * The Unique ARN of the input (generated, immutable).
      * 
-     * @return Unique ARN of input (generated, immutable)
+     * @return The Unique ARN of the input (generated, immutable).
      */
 
     public String getArn() {
@@ -67,10 +81,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Unique ARN of input (generated, immutable)
+     * The Unique ARN of the input (generated, immutable).
      * 
      * @param arn
-     *        Unique ARN of input (generated, immutable)
+     *        The Unique ARN of the input (generated, immutable).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -80,10 +94,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of channel IDs that that input is attached to (currently an input can only be attached to one channel)
+     * A list of channel IDs that that input is attached to (currently an input can only be attached to one channel).
      * 
-     * @return List of channel IDs that that input is attached to (currently an input can only be attached to one
-     *         channel)
+     * @return A list of channel IDs that that input is attached to (currently an input can only be attached to one
+     *         channel).
      */
 
     public java.util.List<String> getAttachedChannels() {
@@ -91,11 +105,11 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of channel IDs that that input is attached to (currently an input can only be attached to one channel)
+     * A list of channel IDs that that input is attached to (currently an input can only be attached to one channel).
      * 
      * @param attachedChannels
-     *        List of channel IDs that that input is attached to (currently an input can only be attached to one
-     *        channel)
+     *        A list of channel IDs that that input is attached to (currently an input can only be attached to one
+     *        channel).
      */
 
     public void setAttachedChannels(java.util.Collection<String> attachedChannels) {
@@ -108,7 +122,7 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of channel IDs that that input is attached to (currently an input can only be attached to one channel)
+     * A list of channel IDs that that input is attached to (currently an input can only be attached to one channel).
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setAttachedChannels(java.util.Collection)} or {@link #withAttachedChannels(java.util.Collection)} if you
@@ -116,8 +130,8 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
      * </p>
      * 
      * @param attachedChannels
-     *        List of channel IDs that that input is attached to (currently an input can only be attached to one
-     *        channel)
+     *        A list of channel IDs that that input is attached to (currently an input can only be attached to one
+     *        channel).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -132,11 +146,11 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of channel IDs that that input is attached to (currently an input can only be attached to one channel)
+     * A list of channel IDs that that input is attached to (currently an input can only be attached to one channel).
      * 
      * @param attachedChannels
-     *        List of channel IDs that that input is attached to (currently an input can only be attached to one
-     *        channel)
+     *        A list of channel IDs that that input is attached to (currently an input can only be attached to one
+     *        channel).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -146,9 +160,9 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of destinations of input (PULL-type)
+     * A list of the destinations of the input (PUSH-type).
      * 
-     * @return List of destinations of input (PULL-type)
+     * @return A list of the destinations of the input (PUSH-type).
      */
 
     public java.util.List<InputDestination> getDestinations() {
@@ -156,10 +170,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of destinations of input (PULL-type)
+     * A list of the destinations of the input (PUSH-type).
      * 
      * @param destinations
-     *        List of destinations of input (PULL-type)
+     *        A list of the destinations of the input (PUSH-type).
      */
 
     public void setDestinations(java.util.Collection<InputDestination> destinations) {
@@ -172,7 +186,7 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of destinations of input (PULL-type)
+     * A list of the destinations of the input (PUSH-type).
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setDestinations(java.util.Collection)} or {@link #withDestinations(java.util.Collection)} if you want to
@@ -180,7 +194,7 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
      * </p>
      * 
      * @param destinations
-     *        List of destinations of input (PULL-type)
+     *        A list of the destinations of the input (PUSH-type).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -195,10 +209,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of destinations of input (PULL-type)
+     * A list of the destinations of the input (PUSH-type).
      * 
      * @param destinations
-     *        List of destinations of input (PULL-type)
+     *        A list of the destinations of the input (PUSH-type).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -208,10 +222,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * generated ID of input (unique for user account, immutable)
+     * The generated ID of the input (unique for user account, immutable).
      * 
      * @param id
-     *        generated ID of input (unique for user account, immutable)
+     *        The generated ID of the input (unique for user account, immutable).
      */
 
     public void setId(String id) {
@@ -219,9 +233,9 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * generated ID of input (unique for user account, immutable)
+     * The generated ID of the input (unique for user account, immutable).
      * 
-     * @return generated ID of input (unique for user account, immutable)
+     * @return The generated ID of the input (unique for user account, immutable).
      */
 
     public String getId() {
@@ -229,10 +243,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * generated ID of input (unique for user account, immutable)
+     * The generated ID of the input (unique for user account, immutable).
      * 
      * @param id
-     *        generated ID of input (unique for user account, immutable)
+     *        The generated ID of the input (unique for user account, immutable).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -242,10 +256,159 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * user-assigned name (mutable)
+     * STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD, both
+     * sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested; the second
+     * source will always be ignored, even if the first source fails. SINGLE_PIPELINE - You can connect only one source
+     * to this input. If the ChannelClass is also SINGLE_PIPELINE, this value is valid. If the ChannelClass is STANDARD,
+     * this value is not valid because the channel requires two sources in the input.
+     * 
+     * @param inputClass
+     *        STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD,
+     *        both sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested;
+     *        the second source will always be ignored, even if the first source fails. SINGLE_PIPELINE - You can
+     *        connect only one source to this input. If the ChannelClass is also SINGLE_PIPELINE, this value is valid.
+     *        If the ChannelClass is STANDARD, this value is not valid because the channel requires two sources in the
+     *        input.
+     * @see InputClass
+     */
+
+    public void setInputClass(String inputClass) {
+        this.inputClass = inputClass;
+    }
+
+    /**
+     * STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD, both
+     * sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested; the second
+     * source will always be ignored, even if the first source fails. SINGLE_PIPELINE - You can connect only one source
+     * to this input. If the ChannelClass is also SINGLE_PIPELINE, this value is valid. If the ChannelClass is STANDARD,
+     * this value is not valid because the channel requires two sources in the input.
+     * 
+     * @return STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD,
+     *         both sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested;
+     *         the second source will always be ignored, even if the first source fails. SINGLE_PIPELINE - You can
+     *         connect only one source to this input. If the ChannelClass is also SINGLE_PIPELINE, this value is valid.
+     *         If the ChannelClass is STANDARD, this value is not valid because the channel requires two sources in the
+     *         input.
+     * @see InputClass
+     */
+
+    public String getInputClass() {
+        return this.inputClass;
+    }
+
+    /**
+     * STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD, both
+     * sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested; the second
+     * source will always be ignored, even if the first source fails. SINGLE_PIPELINE - You can connect only one source
+     * to this input. If the ChannelClass is also SINGLE_PIPELINE, this value is valid. If the ChannelClass is STANDARD,
+     * this value is not valid because the channel requires two sources in the input.
+     * 
+     * @param inputClass
+     *        STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD,
+     *        both sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested;
+     *        the second source will always be ignored, even if the first source fails. SINGLE_PIPELINE - You can
+     *        connect only one source to this input. If the ChannelClass is also SINGLE_PIPELINE, this value is valid.
+     *        If the ChannelClass is STANDARD, this value is not valid because the channel requires two sources in the
+     *        input.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see InputClass
+     */
+
+    public Input withInputClass(String inputClass) {
+        setInputClass(inputClass);
+        return this;
+    }
+
+    /**
+     * STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD, both
+     * sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested; the second
+     * source will always be ignored, even if the first source fails. SINGLE_PIPELINE - You can connect only one source
+     * to this input. If the ChannelClass is also SINGLE_PIPELINE, this value is valid. If the ChannelClass is STANDARD,
+     * this value is not valid because the channel requires two sources in the input.
+     * 
+     * @param inputClass
+     *        STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD,
+     *        both sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested;
+     *        the second source will always be ignored, even if the first source fails. SINGLE_PIPELINE - You can
+     *        connect only one source to this input. If the ChannelClass is also SINGLE_PIPELINE, this value is valid.
+     *        If the ChannelClass is STANDARD, this value is not valid because the channel requires two sources in the
+     *        input.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see InputClass
+     */
+
+    public Input withInputClass(InputClass inputClass) {
+        this.inputClass = inputClass.toString();
+        return this;
+    }
+
+    /**
+     * A list of MediaConnect Flows for this input.
+     * 
+     * @return A list of MediaConnect Flows for this input.
+     */
+
+    public java.util.List<MediaConnectFlow> getMediaConnectFlows() {
+        return mediaConnectFlows;
+    }
+
+    /**
+     * A list of MediaConnect Flows for this input.
+     * 
+     * @param mediaConnectFlows
+     *        A list of MediaConnect Flows for this input.
+     */
+
+    public void setMediaConnectFlows(java.util.Collection<MediaConnectFlow> mediaConnectFlows) {
+        if (mediaConnectFlows == null) {
+            this.mediaConnectFlows = null;
+            return;
+        }
+
+        this.mediaConnectFlows = new java.util.ArrayList<MediaConnectFlow>(mediaConnectFlows);
+    }
+
+    /**
+     * A list of MediaConnect Flows for this input.
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setMediaConnectFlows(java.util.Collection)} or {@link #withMediaConnectFlows(java.util.Collection)} if
+     * you want to override the existing values.
+     * </p>
+     * 
+     * @param mediaConnectFlows
+     *        A list of MediaConnect Flows for this input.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Input withMediaConnectFlows(MediaConnectFlow... mediaConnectFlows) {
+        if (this.mediaConnectFlows == null) {
+            setMediaConnectFlows(new java.util.ArrayList<MediaConnectFlow>(mediaConnectFlows.length));
+        }
+        for (MediaConnectFlow ele : mediaConnectFlows) {
+            this.mediaConnectFlows.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * A list of MediaConnect Flows for this input.
+     * 
+     * @param mediaConnectFlows
+     *        A list of MediaConnect Flows for this input.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Input withMediaConnectFlows(java.util.Collection<MediaConnectFlow> mediaConnectFlows) {
+        setMediaConnectFlows(mediaConnectFlows);
+        return this;
+    }
+
+    /**
+     * The user-assigned name (This is a mutable value).
      * 
      * @param name
-     *        user-assigned name (mutable)
+     *        The user-assigned name (This is a mutable value).
      */
 
     public void setName(String name) {
@@ -253,9 +416,9 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * user-assigned name (mutable)
+     * The user-assigned name (This is a mutable value).
      * 
-     * @return user-assigned name (mutable)
+     * @return The user-assigned name (This is a mutable value).
      */
 
     public String getName() {
@@ -263,10 +426,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * user-assigned name (mutable)
+     * The user-assigned name (This is a mutable value).
      * 
      * @param name
-     *        user-assigned name (mutable)
+     *        The user-assigned name (This is a mutable value).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -276,9 +439,43 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of IDs for all the security groups attached to the input.
+     * The Amazon Resource Name (ARN) of the role this input assumes during and after creation.
      * 
-     * @return List of IDs for all the security groups attached to the input.
+     * @param roleArn
+     *        The Amazon Resource Name (ARN) of the role this input assumes during and after creation.
+     */
+
+    public void setRoleArn(String roleArn) {
+        this.roleArn = roleArn;
+    }
+
+    /**
+     * The Amazon Resource Name (ARN) of the role this input assumes during and after creation.
+     * 
+     * @return The Amazon Resource Name (ARN) of the role this input assumes during and after creation.
+     */
+
+    public String getRoleArn() {
+        return this.roleArn;
+    }
+
+    /**
+     * The Amazon Resource Name (ARN) of the role this input assumes during and after creation.
+     * 
+     * @param roleArn
+     *        The Amazon Resource Name (ARN) of the role this input assumes during and after creation.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Input withRoleArn(String roleArn) {
+        setRoleArn(roleArn);
+        return this;
+    }
+
+    /**
+     * A list of IDs for all the Input Security Groups attached to the input.
+     * 
+     * @return A list of IDs for all the Input Security Groups attached to the input.
      */
 
     public java.util.List<String> getSecurityGroups() {
@@ -286,10 +483,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of IDs for all the security groups attached to the input.
+     * A list of IDs for all the Input Security Groups attached to the input.
      * 
      * @param securityGroups
-     *        List of IDs for all the security groups attached to the input.
+     *        A list of IDs for all the Input Security Groups attached to the input.
      */
 
     public void setSecurityGroups(java.util.Collection<String> securityGroups) {
@@ -302,7 +499,7 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of IDs for all the security groups attached to the input.
+     * A list of IDs for all the Input Security Groups attached to the input.
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setSecurityGroups(java.util.Collection)} or {@link #withSecurityGroups(java.util.Collection)} if you want
@@ -310,7 +507,7 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
      * </p>
      * 
      * @param securityGroups
-     *        List of IDs for all the security groups attached to the input.
+     *        A list of IDs for all the Input Security Groups attached to the input.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -325,10 +522,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of IDs for all the security groups attached to the input.
+     * A list of IDs for all the Input Security Groups attached to the input.
      * 
      * @param securityGroups
-     *        List of IDs for all the security groups attached to the input.
+     *        A list of IDs for all the Input Security Groups attached to the input.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -338,9 +535,9 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of sources of input (PULL-type)
+     * A list of the sources of the input (PULL-type).
      * 
-     * @return List of sources of input (PULL-type)
+     * @return A list of the sources of the input (PULL-type).
      */
 
     public java.util.List<InputSource> getSources() {
@@ -348,10 +545,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of sources of input (PULL-type)
+     * A list of the sources of the input (PULL-type).
      * 
      * @param sources
-     *        List of sources of input (PULL-type)
+     *        A list of the sources of the input (PULL-type).
      */
 
     public void setSources(java.util.Collection<InputSource> sources) {
@@ -364,7 +561,7 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of sources of input (PULL-type)
+     * A list of the sources of the input (PULL-type).
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setSources(java.util.Collection)} or {@link #withSources(java.util.Collection)} if you want to override
@@ -372,7 +569,7 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
      * </p>
      * 
      * @param sources
-     *        List of sources of input (PULL-type)
+     *        A list of the sources of the input (PULL-type).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -387,10 +584,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * List of sources of input (PULL-type)
+     * A list of the sources of the input (PULL-type).
      * 
      * @param sources
-     *        List of sources of input (PULL-type)
+     *        A list of the sources of the input (PULL-type).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -440,6 +637,61 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * A collection of key-value pairs.
+     * 
+     * @return A collection of key-value pairs.
+     */
+
+    public java.util.Map<String, String> getTags() {
+        return tags;
+    }
+
+    /**
+     * A collection of key-value pairs.
+     * 
+     * @param tags
+     *        A collection of key-value pairs.
+     */
+
+    public void setTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+    }
+
+    /**
+     * A collection of key-value pairs.
+     * 
+     * @param tags
+     *        A collection of key-value pairs.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Input withTags(java.util.Map<String, String> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    public Input addTagsEntry(String key, String value) {
+        if (null == this.tags) {
+            this.tags = new java.util.HashMap<String, String>();
+        }
+        if (this.tags.containsKey(key))
+            throw new IllegalArgumentException("Duplicated keys (" + key.toString() + ") are provided.");
+        this.tags.put(key, value);
+        return this;
+    }
+
+    /**
+     * Removes all the entries added into Tags.
+     *
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Input clearTagsEntries() {
+        this.tags = null;
+        return this;
+    }
+
+    /**
      * @param type
      * @see InputType
      */
@@ -480,7 +732,8 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -498,14 +751,22 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
             sb.append("Destinations: ").append(getDestinations()).append(",");
         if (getId() != null)
             sb.append("Id: ").append(getId()).append(",");
+        if (getInputClass() != null)
+            sb.append("InputClass: ").append(getInputClass()).append(",");
+        if (getMediaConnectFlows() != null)
+            sb.append("MediaConnectFlows: ").append(getMediaConnectFlows()).append(",");
         if (getName() != null)
             sb.append("Name: ").append(getName()).append(",");
+        if (getRoleArn() != null)
+            sb.append("RoleArn: ").append(getRoleArn()).append(",");
         if (getSecurityGroups() != null)
             sb.append("SecurityGroups: ").append(getSecurityGroups()).append(",");
         if (getSources() != null)
             sb.append("Sources: ").append(getSources()).append(",");
         if (getState() != null)
             sb.append("State: ").append(getState()).append(",");
+        if (getTags() != null)
+            sb.append("Tags: ").append(getTags()).append(",");
         if (getType() != null)
             sb.append("Type: ").append(getType());
         sb.append("}");
@@ -538,9 +799,21 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
             return false;
         if (other.getId() != null && other.getId().equals(this.getId()) == false)
             return false;
+        if (other.getInputClass() == null ^ this.getInputClass() == null)
+            return false;
+        if (other.getInputClass() != null && other.getInputClass().equals(this.getInputClass()) == false)
+            return false;
+        if (other.getMediaConnectFlows() == null ^ this.getMediaConnectFlows() == null)
+            return false;
+        if (other.getMediaConnectFlows() != null && other.getMediaConnectFlows().equals(this.getMediaConnectFlows()) == false)
+            return false;
         if (other.getName() == null ^ this.getName() == null)
             return false;
         if (other.getName() != null && other.getName().equals(this.getName()) == false)
+            return false;
+        if (other.getRoleArn() == null ^ this.getRoleArn() == null)
+            return false;
+        if (other.getRoleArn() != null && other.getRoleArn().equals(this.getRoleArn()) == false)
             return false;
         if (other.getSecurityGroups() == null ^ this.getSecurityGroups() == null)
             return false;
@@ -553,6 +826,10 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
         if (other.getState() == null ^ this.getState() == null)
             return false;
         if (other.getState() != null && other.getState().equals(this.getState()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         if (other.getType() == null ^ this.getType() == null)
             return false;
@@ -570,10 +847,14 @@ public class Input implements Serializable, Cloneable, StructuredPojo {
         hashCode = prime * hashCode + ((getAttachedChannels() == null) ? 0 : getAttachedChannels().hashCode());
         hashCode = prime * hashCode + ((getDestinations() == null) ? 0 : getDestinations().hashCode());
         hashCode = prime * hashCode + ((getId() == null) ? 0 : getId().hashCode());
+        hashCode = prime * hashCode + ((getInputClass() == null) ? 0 : getInputClass().hashCode());
+        hashCode = prime * hashCode + ((getMediaConnectFlows() == null) ? 0 : getMediaConnectFlows().hashCode());
         hashCode = prime * hashCode + ((getName() == null) ? 0 : getName().hashCode());
+        hashCode = prime * hashCode + ((getRoleArn() == null) ? 0 : getRoleArn().hashCode());
         hashCode = prime * hashCode + ((getSecurityGroups() == null) ? 0 : getSecurityGroups().hashCode());
         hashCode = prime * hashCode + ((getSources() == null) ? 0 : getSources().hashCode());
         hashCode = prime * hashCode + ((getState() == null) ? 0 : getState().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         hashCode = prime * hashCode + ((getType() == null) ? 0 : getType().hashCode());
         return hashCode;
     }

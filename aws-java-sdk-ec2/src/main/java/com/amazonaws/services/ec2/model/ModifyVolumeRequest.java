@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,13 +25,17 @@ import com.amazonaws.services.ec2.model.transform.ModifyVolumeRequestMarshaller;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Serializable, Cloneable, DryRunSupportedRequest<ModifyVolumeRequest> {
 
+    /**
+     * <p>
+     * The ID of the volume.
+     * </p>
+     */
     private String volumeId;
     /**
      * <p>
-     * Target size in GiB of the volume to be modified. Target volume size must be greater than or equal to than the
-     * existing size of the volume. For information about available EBS volume sizes, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html"
-     * >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html</a>.
+     * The target size of the volume, in GiB. The target volume size must be greater than or equal to than the existing
+     * size of the volume. For information about available EBS volume sizes, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html">Amazon EBS Volume Types</a>.
      * </p>
      * <p>
      * Default: If no size is specified, the existing size is retained.
@@ -40,11 +44,7 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
     private Integer size;
     /**
      * <p>
-     * Target EBS volume type of the volume to be modified
-     * </p>
-     * <p>
-     * The API does not support modifications for volume type <code>standard</code>. You also cannot change the type of
-     * a volume to <code>standard</code>.
+     * The target EBS volume type of the volume.
      * </p>
      * <p>
      * Default: If no type is specified, the existing type is retained.
@@ -53,13 +53,12 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
     private String volumeType;
     /**
      * <p>
-     * Target IOPS rate of the volume to be modified.
+     * The target IOPS rate of the volume.
      * </p>
      * <p>
-     * Only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information about <code>io1</code> IOPS
-     * configuration, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops"
-     * >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops</a>.
+     * This is only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops">Provisioned
+     * IOPS SSD (io1) Volumes</a>.
      * </p>
      * <p>
      * Default: If no IOPS value is specified, the existing value is retained.
@@ -68,7 +67,12 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
     private Integer iops;
 
     /**
+     * <p>
+     * The ID of the volume.
+     * </p>
+     * 
      * @param volumeId
+     *        The ID of the volume.
      */
 
     public void setVolumeId(String volumeId) {
@@ -76,7 +80,11 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
     }
 
     /**
-     * @return
+     * <p>
+     * The ID of the volume.
+     * </p>
+     * 
+     * @return The ID of the volume.
      */
 
     public String getVolumeId() {
@@ -84,7 +92,12 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
     }
 
     /**
+     * <p>
+     * The ID of the volume.
+     * </p>
+     * 
      * @param volumeId
+     *        The ID of the volume.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -95,20 +108,19 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target size in GiB of the volume to be modified. Target volume size must be greater than or equal to than the
-     * existing size of the volume. For information about available EBS volume sizes, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html"
-     * >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html</a>.
+     * The target size of the volume, in GiB. The target volume size must be greater than or equal to than the existing
+     * size of the volume. For information about available EBS volume sizes, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html">Amazon EBS Volume Types</a>.
      * </p>
      * <p>
      * Default: If no size is specified, the existing size is retained.
      * </p>
      * 
      * @param size
-     *        Target size in GiB of the volume to be modified. Target volume size must be greater than or equal to than
-     *        the existing size of the volume. For information about available EBS volume sizes, see <a
-     *        href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html"
-     *        >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html</a>.</p>
+     *        The target size of the volume, in GiB. The target volume size must be greater than or equal to than the
+     *        existing size of the volume. For information about available EBS volume sizes, see <a
+     *        href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html">Amazon EBS Volume
+     *        Types</a>.</p>
      *        <p>
      *        Default: If no size is specified, the existing size is retained.
      */
@@ -119,19 +131,18 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target size in GiB of the volume to be modified. Target volume size must be greater than or equal to than the
-     * existing size of the volume. For information about available EBS volume sizes, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html"
-     * >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html</a>.
+     * The target size of the volume, in GiB. The target volume size must be greater than or equal to than the existing
+     * size of the volume. For information about available EBS volume sizes, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html">Amazon EBS Volume Types</a>.
      * </p>
      * <p>
      * Default: If no size is specified, the existing size is retained.
      * </p>
      * 
-     * @return Target size in GiB of the volume to be modified. Target volume size must be greater than or equal to than
-     *         the existing size of the volume. For information about available EBS volume sizes, see <a
-     *         href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html"
-     *         >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html</a>.</p>
+     * @return The target size of the volume, in GiB. The target volume size must be greater than or equal to than the
+     *         existing size of the volume. For information about available EBS volume sizes, see <a
+     *         href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html">Amazon EBS Volume
+     *         Types</a>.</p>
      *         <p>
      *         Default: If no size is specified, the existing size is retained.
      */
@@ -142,20 +153,19 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target size in GiB of the volume to be modified. Target volume size must be greater than or equal to than the
-     * existing size of the volume. For information about available EBS volume sizes, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html"
-     * >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html</a>.
+     * The target size of the volume, in GiB. The target volume size must be greater than or equal to than the existing
+     * size of the volume. For information about available EBS volume sizes, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html">Amazon EBS Volume Types</a>.
      * </p>
      * <p>
      * Default: If no size is specified, the existing size is retained.
      * </p>
      * 
      * @param size
-     *        Target size in GiB of the volume to be modified. Target volume size must be greater than or equal to than
-     *        the existing size of the volume. For information about available EBS volume sizes, see <a
-     *        href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html"
-     *        >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html</a>.</p>
+     *        The target size of the volume, in GiB. The target volume size must be greater than or equal to than the
+     *        existing size of the volume. For information about available EBS volume sizes, see <a
+     *        href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html">Amazon EBS Volume
+     *        Types</a>.</p>
      *        <p>
      *        Default: If no size is specified, the existing size is retained.
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -168,22 +178,14 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target EBS volume type of the volume to be modified
-     * </p>
-     * <p>
-     * The API does not support modifications for volume type <code>standard</code>. You also cannot change the type of
-     * a volume to <code>standard</code>.
+     * The target EBS volume type of the volume.
      * </p>
      * <p>
      * Default: If no type is specified, the existing type is retained.
      * </p>
      * 
      * @param volumeType
-     *        Target EBS volume type of the volume to be modified</p>
-     *        <p>
-     *        The API does not support modifications for volume type <code>standard</code>. You also cannot change the
-     *        type of a volume to <code>standard</code>.
-     *        </p>
+     *        The target EBS volume type of the volume.</p>
      *        <p>
      *        Default: If no type is specified, the existing type is retained.
      * @see VolumeType
@@ -195,21 +197,13 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target EBS volume type of the volume to be modified
-     * </p>
-     * <p>
-     * The API does not support modifications for volume type <code>standard</code>. You also cannot change the type of
-     * a volume to <code>standard</code>.
+     * The target EBS volume type of the volume.
      * </p>
      * <p>
      * Default: If no type is specified, the existing type is retained.
      * </p>
      * 
-     * @return Target EBS volume type of the volume to be modified</p>
-     *         <p>
-     *         The API does not support modifications for volume type <code>standard</code>. You also cannot change the
-     *         type of a volume to <code>standard</code>.
-     *         </p>
+     * @return The target EBS volume type of the volume.</p>
      *         <p>
      *         Default: If no type is specified, the existing type is retained.
      * @see VolumeType
@@ -221,22 +215,14 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target EBS volume type of the volume to be modified
-     * </p>
-     * <p>
-     * The API does not support modifications for volume type <code>standard</code>. You also cannot change the type of
-     * a volume to <code>standard</code>.
+     * The target EBS volume type of the volume.
      * </p>
      * <p>
      * Default: If no type is specified, the existing type is retained.
      * </p>
      * 
      * @param volumeType
-     *        Target EBS volume type of the volume to be modified</p>
-     *        <p>
-     *        The API does not support modifications for volume type <code>standard</code>. You also cannot change the
-     *        type of a volume to <code>standard</code>.
-     *        </p>
+     *        The target EBS volume type of the volume.</p>
      *        <p>
      *        Default: If no type is specified, the existing type is retained.
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -250,22 +236,14 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target EBS volume type of the volume to be modified
-     * </p>
-     * <p>
-     * The API does not support modifications for volume type <code>standard</code>. You also cannot change the type of
-     * a volume to <code>standard</code>.
+     * The target EBS volume type of the volume.
      * </p>
      * <p>
      * Default: If no type is specified, the existing type is retained.
      * </p>
      * 
      * @param volumeType
-     *        Target EBS volume type of the volume to be modified</p>
-     *        <p>
-     *        The API does not support modifications for volume type <code>standard</code>. You also cannot change the
-     *        type of a volume to <code>standard</code>.
-     *        </p>
+     *        The target EBS volume type of the volume.</p>
      *        <p>
      *        Default: If no type is specified, the existing type is retained.
      * @see VolumeType
@@ -277,22 +255,14 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target EBS volume type of the volume to be modified
-     * </p>
-     * <p>
-     * The API does not support modifications for volume type <code>standard</code>. You also cannot change the type of
-     * a volume to <code>standard</code>.
+     * The target EBS volume type of the volume.
      * </p>
      * <p>
      * Default: If no type is specified, the existing type is retained.
      * </p>
      * 
      * @param volumeType
-     *        Target EBS volume type of the volume to be modified</p>
-     *        <p>
-     *        The API does not support modifications for volume type <code>standard</code>. You also cannot change the
-     *        type of a volume to <code>standard</code>.
-     *        </p>
+     *        The target EBS volume type of the volume.</p>
      *        <p>
      *        Default: If no type is specified, the existing type is retained.
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -306,25 +276,23 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target IOPS rate of the volume to be modified.
+     * The target IOPS rate of the volume.
      * </p>
      * <p>
-     * Only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information about <code>io1</code> IOPS
-     * configuration, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops"
-     * >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops</a>.
+     * This is only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops">Provisioned
+     * IOPS SSD (io1) Volumes</a>.
      * </p>
      * <p>
      * Default: If no IOPS value is specified, the existing value is retained.
      * </p>
      * 
      * @param iops
-     *        Target IOPS rate of the volume to be modified.</p>
+     *        The target IOPS rate of the volume.</p>
      *        <p>
-     *        Only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information about
-     *        <code>io1</code> IOPS configuration, see <a
-     *        href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops"
-     *        >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops</a>.
+     *        This is only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information, see <a
+     *        href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops"
+     *        >Provisioned IOPS SSD (io1) Volumes</a>.
      *        </p>
      *        <p>
      *        Default: If no IOPS value is specified, the existing value is retained.
@@ -336,24 +304,22 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target IOPS rate of the volume to be modified.
+     * The target IOPS rate of the volume.
      * </p>
      * <p>
-     * Only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information about <code>io1</code> IOPS
-     * configuration, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops"
-     * >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops</a>.
+     * This is only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops">Provisioned
+     * IOPS SSD (io1) Volumes</a>.
      * </p>
      * <p>
      * Default: If no IOPS value is specified, the existing value is retained.
      * </p>
      * 
-     * @return Target IOPS rate of the volume to be modified.</p>
+     * @return The target IOPS rate of the volume.</p>
      *         <p>
-     *         Only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information about
-     *         <code>io1</code> IOPS configuration, see <a
-     *         href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops"
-     *         >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops</a>.
+     *         This is only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information, see <a
+     *         href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops">
+     *         Provisioned IOPS SSD (io1) Volumes</a>.
      *         </p>
      *         <p>
      *         Default: If no IOPS value is specified, the existing value is retained.
@@ -365,25 +331,23 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Target IOPS rate of the volume to be modified.
+     * The target IOPS rate of the volume.
      * </p>
      * <p>
-     * Only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information about <code>io1</code> IOPS
-     * configuration, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops"
-     * >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops</a>.
+     * This is only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops">Provisioned
+     * IOPS SSD (io1) Volumes</a>.
      * </p>
      * <p>
      * Default: If no IOPS value is specified, the existing value is retained.
      * </p>
      * 
      * @param iops
-     *        Target IOPS rate of the volume to be modified.</p>
+     *        The target IOPS rate of the volume.</p>
      *        <p>
-     *        Only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information about
-     *        <code>io1</code> IOPS configuration, see <a
-     *        href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops"
-     *        >http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops</a>.
+     *        This is only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information, see <a
+     *        href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops"
+     *        >Provisioned IOPS SSD (io1) Volumes</a>.
      *        </p>
      *        <p>
      *        Default: If no IOPS value is specified, the existing value is retained.
@@ -407,7 +371,8 @@ public class ModifyVolumeRequest extends AmazonWebServiceRequest implements Seri
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

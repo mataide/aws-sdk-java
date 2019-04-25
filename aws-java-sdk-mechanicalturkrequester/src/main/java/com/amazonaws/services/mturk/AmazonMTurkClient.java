@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,8 @@ import com.amazonaws.protocol.json.*;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.annotation.ThreadSafe;
 import com.amazonaws.client.AwsSyncClientParams;
+import com.amazonaws.client.builder.AdvancedConfig;
+
 import com.amazonaws.services.mturk.AmazonMTurkClientBuilder;
 
 import com.amazonaws.AmazonServiceException;
@@ -53,6 +55,7 @@ import com.amazonaws.services.mturk.model.transform.*;
 @ThreadSafe
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonMTurk {
+
     /** Provider for AWS credentials. */
     private final AWSCredentialsProvider awsCredentialsProvider;
 
@@ -63,6 +66,8 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
 
     /** Client configuration factory providing ClientConfigurations tailored to this client */
     protected static final ClientConfigurationFactory configFactory = new ClientConfigurationFactory();
+
+    private final AdvancedConfig advancedConfig;
 
     private static final com.amazonaws.protocol.json.SdkJsonProtocolFactory protocolFactory = new com.amazonaws.protocol.json.SdkJsonProtocolFactory(
             new JsonClientMetadata()
@@ -92,8 +97,23 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
      *        Object providing client parameters.
      */
     AmazonMTurkClient(AwsSyncClientParams clientParams) {
+        this(clientParams, false);
+    }
+
+    /**
+     * Constructs a new client to invoke service methods on Amazon MTurk using the specified parameters.
+     *
+     * <p>
+     * All service calls made using this new client object are blocking, and will not return until the service call
+     * completes.
+     *
+     * @param clientParams
+     *        Object providing client parameters.
+     */
+    AmazonMTurkClient(AwsSyncClientParams clientParams, boolean endpointDiscoveryEnabled) {
         super(clientParams);
         this.awsCredentialsProvider = clientParams.getCredentialsProvider();
+        this.advancedConfig = clientParams.getAdvancedConfig();
         init();
     }
 
@@ -152,6 +172,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(acceptQualificationRequestRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AcceptQualificationRequest");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -230,6 +254,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new ApproveAssignmentRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(approveAssignmentRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ApproveAssignment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -299,6 +327,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(associateQualificationWithWorkerRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssociateQualificationWithWorker");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -377,6 +409,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(createAdditionalAssignmentsForHITRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateAdditionalAssignmentsForHIT");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -453,6 +489,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new CreateHITRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createHITRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateHIT");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -507,6 +547,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new CreateHITTypeRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createHITTypeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateHITType");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -575,6 +619,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new CreateHITWithHITTypeRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createHITWithHITTypeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateHITWithHITType");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -629,6 +677,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(createQualificationTypeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateQualificationType");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -683,6 +735,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new CreateWorkerBlockRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createWorkerBlockRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateWorkerBlock");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -767,6 +823,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new DeleteHITRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteHITRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteHIT");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -834,6 +894,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(deleteQualificationTypeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteQualificationType");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -890,6 +954,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new DeleteWorkerBlockRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteWorkerBlockRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteWorkerBlock");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -949,6 +1017,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(disassociateQualificationFromWorkerRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisassociateQualificationFromWorker");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1003,6 +1075,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new GetAccountBalanceRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getAccountBalanceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetAccountBalance");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1055,6 +1131,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new GetAssignmentRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getAssignmentRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetAssignment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1077,7 +1157,9 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
      * retrieve a file uploaded by a Worker as an answer to a FileUploadAnswer question for a HIT. The temporary URL is
      * generated the instant the GetFileUploadURL operation is called, and is valid for 60 seconds. You can get a
      * temporary file upload URL any time until the HIT is disposed. After the HIT is disposed, any uploaded files are
-     * deleted, and cannot be retrieved.
+     * deleted, and cannot be retrieved. Pending Deprecation on December 12, 2017. The Answer Specification structure
+     * will no longer support the <code>FileUploadAnswer</code> element to be used for the QuestionForm data structure.
+     * Instead, we recommend that Requesters who want to create HITs asking Workers to upload files to use Amazon S3.
      * </p>
      * 
      * @param getFileUploadURLRequest
@@ -1111,6 +1193,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new GetFileUploadURLRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getFileUploadURLRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetFileUploadURL");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1163,6 +1249,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new GetHITRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getHITRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetHIT");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1223,6 +1313,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new GetQualificationScoreRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getQualificationScoreRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetQualificationScore");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1276,6 +1370,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new GetQualificationTypeRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getQualificationTypeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetQualificationType");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1347,6 +1445,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new ListAssignmentsForHITRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listAssignmentsForHITRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListAssignmentsForHIT");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1401,6 +1503,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new ListBonusPaymentsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listBonusPaymentsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListBonusPayments");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1454,6 +1560,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new ListHITsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listHITsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListHITs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1509,6 +1619,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(listHITsForQualificationTypeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListHITsForQualificationType");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1565,6 +1679,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(listQualificationRequestsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListQualificationRequests");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1584,9 +1702,8 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
 
     /**
      * <p>
-     * The <code>ListQualificationRequests</code> operation retrieves requests for Qualifications of a particular
-     * Qualification type. The owner of the Qualification type calls this operation to poll for pending requests, and
-     * accepts them using the AcceptQualification operation.
+     * The <code>ListQualificationTypes</code> operation returns a list of Qualification types, filtered by an optional
+     * search term.
      * </p>
      * 
      * @param listQualificationTypesRequest
@@ -1620,6 +1737,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new ListQualificationTypesRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listQualificationTypesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListQualificationTypes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1677,6 +1798,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(listReviewPolicyResultsForHITRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListReviewPolicyResultsForHIT");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1731,6 +1856,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new ListReviewableHITsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listReviewableHITsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListReviewableHITs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1784,6 +1913,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new ListWorkerBlocksRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listWorkerBlocksRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListWorkerBlocks");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1839,6 +1972,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(listWorkersWithQualificationTypeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListWorkersWithQualificationType");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1895,6 +2032,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new NotifyWorkersRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(notifyWorkersRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "NotifyWorkers");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1955,6 +2096,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new RejectAssignmentRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(rejectAssignmentRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RejectAssignment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2012,6 +2157,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(rejectQualificationRequestRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RejectQualificationRequest");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2070,6 +2219,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new SendBonusRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(sendBonusRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "SendBonus");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2126,6 +2279,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(sendTestEventNotificationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "SendTestEventNotification");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2180,6 +2337,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new UpdateExpirationForHITRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateExpirationForHITRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateExpirationForHIT");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2234,6 +2395,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new UpdateHITReviewStatusRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateHITReviewStatusRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateHITReviewStatus");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2289,6 +2454,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                 request = new UpdateHITTypeOfHITRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateHITTypeOfHITRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateHITTypeOfHIT");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2349,6 +2518,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(updateNotificationSettingsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateNotificationSettings");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2433,6 +2606,10 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
                         .beforeMarshalling(updateQualificationTypeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "MTurk");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateQualificationType");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2474,9 +2651,18 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
     private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
             ExecutionContext executionContext) {
 
+        return invoke(request, responseHandler, executionContext, null, null);
+    }
+
+    /**
+     * Normal invoke with authentication. Credentials are required and may be overriden at the request level.
+     **/
+    private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
+            ExecutionContext executionContext, URI cachedEndpoint, URI uriFromEndpointTrait) {
+
         executionContext.setCredentialsProvider(CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, cachedEndpoint, uriFromEndpointTrait);
     }
 
     /**
@@ -2486,7 +2672,7 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
     private <X, Y extends AmazonWebServiceRequest> Response<X> anonymousInvoke(Request<Y> request,
             HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler, ExecutionContext executionContext) {
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, null, null);
     }
 
     /**
@@ -2494,8 +2680,17 @@ public class AmazonMTurkClient extends AmazonWebServiceClient implements AmazonM
      * ExecutionContext beforehand.
      **/
     private <X, Y extends AmazonWebServiceRequest> Response<X> doInvoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
-            ExecutionContext executionContext) {
-        request.setEndpoint(endpoint);
+            ExecutionContext executionContext, URI discoveredEndpoint, URI uriFromEndpointTrait) {
+
+        if (discoveredEndpoint != null) {
+            request.setEndpoint(discoveredEndpoint);
+            request.getOriginalRequest().getRequestClientOptions().appendUserAgent("endpoint-discovery");
+        } else if (uriFromEndpointTrait != null) {
+            request.setEndpoint(uriFromEndpointTrait);
+        } else {
+            request.setEndpoint(endpoint);
+        }
+
         request.setTimeOffset(timeOffset);
 
         HttpResponseHandler<AmazonServiceException> errorResponseHandler = protocolFactory.createErrorResponseHandler(new JsonErrorResponseMetadata());

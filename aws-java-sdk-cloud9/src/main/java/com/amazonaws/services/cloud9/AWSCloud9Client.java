@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,8 @@ import com.amazonaws.protocol.json.*;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.annotation.ThreadSafe;
 import com.amazonaws.client.AwsSyncClientParams;
+import com.amazonaws.client.builder.AdvancedConfig;
+
 import com.amazonaws.services.cloud9.AWSCloud9ClientBuilder;
 
 import com.amazonaws.AmazonServiceException;
@@ -54,13 +56,8 @@ import com.amazonaws.services.cloud9.model.transform.*;
  * cloud.
  * </p>
  * <p>
- * In the background, these tools are available through development environments running on Amazon Elastic Compute Cloud
- * (Amazon EC2) instances (known as <i>Amazon EC2 environments</i>), your own servers (known as <i>SSH
- * environments</i>), or a combination. This enables you to create and switch between multiple environments, with each
- * environment set up for a specific development project.
- * </p>
- * <p>
- * For more information about AWS Cloud9, see the <i>AWS Cloud9 User Guide</i>.
+ * For more information about AWS Cloud9, see the <a href="https://docs.aws.amazon.com/cloud9/latest/user-guide">AWS
+ * Cloud9 User Guide</a>.
  * </p>
  * <p>
  * AWS Cloud9 supports these operations:
@@ -69,7 +66,7 @@ import com.amazonaws.services.cloud9.model.transform.*;
  * <li>
  * <p>
  * <code>CreateEnvironmentEC2</code>: Creates an AWS Cloud9 development environment, launches an Amazon EC2 instance,
- * and then hosts the environment on the instance.
+ * and then connects from the instance to the environment.
  * </p>
  * </li>
  * <li>
@@ -79,8 +76,8 @@ import com.amazonaws.services.cloud9.model.transform.*;
  * </li>
  * <li>
  * <p>
- * <code>DeleteEnvironment</code>: Deletes an environment. If the environment is hosted on an Amazon EC2 instance, also
- * terminates the instance.
+ * <code>DeleteEnvironment</code>: Deletes an environment. If an Amazon EC2 instance is connected to the environment,
+ * also terminates the instance.
  * </p>
  * </li>
  * <li>
@@ -123,6 +120,7 @@ import com.amazonaws.services.cloud9.model.transform.*;
 @ThreadSafe
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9 {
+
     /** Provider for AWS credentials. */
     private final AWSCredentialsProvider awsCredentialsProvider;
 
@@ -133,6 +131,8 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
 
     /** Client configuration factory providing ClientConfigurations tailored to this client */
     protected static final ClientConfigurationFactory configFactory = new ClientConfigurationFactory();
+
+    private final AdvancedConfig advancedConfig;
 
     private static final com.amazonaws.protocol.json.SdkJsonProtocolFactory protocolFactory = new com.amazonaws.protocol.json.SdkJsonProtocolFactory(
             new JsonClientMetadata()
@@ -177,8 +177,23 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
      *        Object providing client parameters.
      */
     AWSCloud9Client(AwsSyncClientParams clientParams) {
+        this(clientParams, false);
+    }
+
+    /**
+     * Constructs a new client to invoke service methods on AWS Cloud9 using the specified parameters.
+     *
+     * <p>
+     * All service calls made using this new client object are blocking, and will not return until the service call
+     * completes.
+     *
+     * @param clientParams
+     *        Object providing client parameters.
+     */
+    AWSCloud9Client(AwsSyncClientParams clientParams, boolean endpointDiscoveryEnabled) {
         super(clientParams);
         this.awsCredentialsProvider = clientParams.getCredentialsProvider();
+        this.advancedConfig = clientParams.getAdvancedConfig();
         init();
     }
 
@@ -196,7 +211,7 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
     /**
      * <p>
      * Creates an AWS Cloud9 development environment, launches an Amazon Elastic Compute Cloud (Amazon EC2) instance,
-     * and then hosts the environment on the instance.
+     * and then connects from the instance to the environment.
      * </p>
      * 
      * @param createEnvironmentEC2Request
@@ -240,6 +255,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                 request = new CreateEnvironmentEC2RequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createEnvironmentEC2Request));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateEnvironmentEC2");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -303,6 +322,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                         .beforeMarshalling(createEnvironmentMembershipRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateEnvironmentMembership");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -322,8 +345,8 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
 
     /**
      * <p>
-     * Deletes an AWS Cloud9 development environment. If the environment is hosted on an Amazon Elastic Compute Cloud
-     * (Amazon EC2) instance, also terminates the instance.
+     * Deletes an AWS Cloud9 development environment. If an Amazon EC2 instance is connected to the environment, also
+     * terminates the instance.
      * </p>
      * 
      * @param deleteEnvironmentRequest
@@ -367,6 +390,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                 request = new DeleteEnvironmentRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteEnvironmentRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteEnvironment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -430,6 +457,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                         .beforeMarshalling(deleteEnvironmentMembershipRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteEnvironmentMembership");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -494,6 +525,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                         .beforeMarshalling(describeEnvironmentMembershipsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeEnvironmentMemberships");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -558,6 +593,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                         .beforeMarshalling(describeEnvironmentStatusRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeEnvironmentStatus");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -621,6 +660,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                 request = new DescribeEnvironmentsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(describeEnvironmentsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeEnvironments");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -683,6 +726,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                 request = new ListEnvironmentsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listEnvironmentsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListEnvironments");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -745,6 +792,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                 request = new UpdateEnvironmentRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateEnvironmentRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateEnvironment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -808,6 +859,10 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
                         .beforeMarshalling(updateEnvironmentMembershipRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Cloud9");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateEnvironmentMembership");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -849,9 +904,18 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
     private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
             ExecutionContext executionContext) {
 
+        return invoke(request, responseHandler, executionContext, null, null);
+    }
+
+    /**
+     * Normal invoke with authentication. Credentials are required and may be overriden at the request level.
+     **/
+    private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
+            ExecutionContext executionContext, URI cachedEndpoint, URI uriFromEndpointTrait) {
+
         executionContext.setCredentialsProvider(CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, cachedEndpoint, uriFromEndpointTrait);
     }
 
     /**
@@ -861,7 +925,7 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
     private <X, Y extends AmazonWebServiceRequest> Response<X> anonymousInvoke(Request<Y> request,
             HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler, ExecutionContext executionContext) {
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, null, null);
     }
 
     /**
@@ -869,8 +933,17 @@ public class AWSCloud9Client extends AmazonWebServiceClient implements AWSCloud9
      * ExecutionContext beforehand.
      **/
     private <X, Y extends AmazonWebServiceRequest> Response<X> doInvoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
-            ExecutionContext executionContext) {
-        request.setEndpoint(endpoint);
+            ExecutionContext executionContext, URI discoveredEndpoint, URI uriFromEndpointTrait) {
+
+        if (discoveredEndpoint != null) {
+            request.setEndpoint(discoveredEndpoint);
+            request.getOriginalRequest().getRequestClientOptions().appendUserAgent("endpoint-discovery");
+        } else if (uriFromEndpointTrait != null) {
+            request.setEndpoint(uriFromEndpointTrait);
+        } else {
+            request.setEndpoint(endpoint);
+        }
+
         request.setTimeOffset(timeOffset);
 
         HttpResponseHandler<AmazonServiceException> errorResponseHandler = protocolFactory.createErrorResponseHandler(new JsonErrorResponseMetadata());

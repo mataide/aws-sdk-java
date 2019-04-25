@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -51,7 +51,7 @@ public class BlueInstanceTerminationOption implements Serializable, Cloneable, S
     /**
      * <p>
      * The number of minutes to wait after a successful blue/green deployment before terminating instances from the
-     * original environment.
+     * original environment. The maximum setting is 2880 minutes (2 days).
      * </p>
      */
     private Integer terminationWaitTimeInMinutes;
@@ -257,12 +257,12 @@ public class BlueInstanceTerminationOption implements Serializable, Cloneable, S
     /**
      * <p>
      * The number of minutes to wait after a successful blue/green deployment before terminating instances from the
-     * original environment.
+     * original environment. The maximum setting is 2880 minutes (2 days).
      * </p>
      * 
      * @param terminationWaitTimeInMinutes
      *        The number of minutes to wait after a successful blue/green deployment before terminating instances from
-     *        the original environment.
+     *        the original environment. The maximum setting is 2880 minutes (2 days).
      */
 
     public void setTerminationWaitTimeInMinutes(Integer terminationWaitTimeInMinutes) {
@@ -272,11 +272,11 @@ public class BlueInstanceTerminationOption implements Serializable, Cloneable, S
     /**
      * <p>
      * The number of minutes to wait after a successful blue/green deployment before terminating instances from the
-     * original environment.
+     * original environment. The maximum setting is 2880 minutes (2 days).
      * </p>
      * 
      * @return The number of minutes to wait after a successful blue/green deployment before terminating instances from
-     *         the original environment.
+     *         the original environment. The maximum setting is 2880 minutes (2 days).
      */
 
     public Integer getTerminationWaitTimeInMinutes() {
@@ -286,12 +286,12 @@ public class BlueInstanceTerminationOption implements Serializable, Cloneable, S
     /**
      * <p>
      * The number of minutes to wait after a successful blue/green deployment before terminating instances from the
-     * original environment.
+     * original environment. The maximum setting is 2880 minutes (2 days).
      * </p>
      * 
      * @param terminationWaitTimeInMinutes
      *        The number of minutes to wait after a successful blue/green deployment before terminating instances from
-     *        the original environment.
+     *        the original environment. The maximum setting is 2880 minutes (2 days).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -301,7 +301,8 @@ public class BlueInstanceTerminationOption implements Serializable, Cloneable, S
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

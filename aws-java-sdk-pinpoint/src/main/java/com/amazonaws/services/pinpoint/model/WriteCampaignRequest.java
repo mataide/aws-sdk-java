@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -32,6 +32,8 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
     private String description;
     /** The allocated percentage of end users who will not receive messages from this campaign. */
     private Integer holdoutPercent;
+    /** Campaign hook information. */
+    private CampaignHook hook;
     /**
      * Indicates whether the campaign is paused. A paused campaign does not send messages unless you resume it by
      * setting IsPaused to false.
@@ -49,6 +51,8 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
     private String segmentId;
     /** The version of the segment to which the campaign sends messages. */
     private Integer segmentVersion;
+    /** The Tags for the campaign. */
+    private java.util.Map<String, String> tags;
     /** A custom description for the treatment. */
     private String treatmentDescription;
     /** The custom name of a variation of the campaign used for A/B testing. */
@@ -181,6 +185,40 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
 
     public WriteCampaignRequest withHoldoutPercent(Integer holdoutPercent) {
         setHoldoutPercent(holdoutPercent);
+        return this;
+    }
+
+    /**
+     * Campaign hook information.
+     * 
+     * @param hook
+     *        Campaign hook information.
+     */
+
+    public void setHook(CampaignHook hook) {
+        this.hook = hook;
+    }
+
+    /**
+     * Campaign hook information.
+     * 
+     * @return Campaign hook information.
+     */
+
+    public CampaignHook getHook() {
+        return this.hook;
+    }
+
+    /**
+     * Campaign hook information.
+     * 
+     * @param hook
+     *        Campaign hook information.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public WriteCampaignRequest withHook(CampaignHook hook) {
+        setHook(hook);
         return this;
     }
 
@@ -441,6 +479,61 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
     }
 
     /**
+     * The Tags for the campaign.
+     * 
+     * @return The Tags for the campaign.
+     */
+
+    public java.util.Map<String, String> getTags() {
+        return tags;
+    }
+
+    /**
+     * The Tags for the campaign.
+     * 
+     * @param tags
+     *        The Tags for the campaign.
+     */
+
+    public void setTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+    }
+
+    /**
+     * The Tags for the campaign.
+     * 
+     * @param tags
+     *        The Tags for the campaign.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public WriteCampaignRequest withTags(java.util.Map<String, String> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    public WriteCampaignRequest addTagsEntry(String key, String value) {
+        if (null == this.tags) {
+            this.tags = new java.util.HashMap<String, String>();
+        }
+        if (this.tags.containsKey(key))
+            throw new IllegalArgumentException("Duplicated keys (" + key.toString() + ") are provided.");
+        this.tags.put(key, value);
+        return this;
+    }
+
+    /**
+     * Removes all the entries added into Tags.
+     *
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public WriteCampaignRequest clearTagsEntries() {
+        this.tags = null;
+        return this;
+    }
+
+    /**
      * A custom description for the treatment.
      * 
      * @param treatmentDescription
@@ -509,7 +602,8 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -525,6 +619,8 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
             sb.append("Description: ").append(getDescription()).append(",");
         if (getHoldoutPercent() != null)
             sb.append("HoldoutPercent: ").append(getHoldoutPercent()).append(",");
+        if (getHook() != null)
+            sb.append("Hook: ").append(getHook()).append(",");
         if (getIsPaused() != null)
             sb.append("IsPaused: ").append(getIsPaused()).append(",");
         if (getLimits() != null)
@@ -539,6 +635,8 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
             sb.append("SegmentId: ").append(getSegmentId()).append(",");
         if (getSegmentVersion() != null)
             sb.append("SegmentVersion: ").append(getSegmentVersion()).append(",");
+        if (getTags() != null)
+            sb.append("Tags: ").append(getTags()).append(",");
         if (getTreatmentDescription() != null)
             sb.append("TreatmentDescription: ").append(getTreatmentDescription()).append(",");
         if (getTreatmentName() != null)
@@ -569,6 +667,10 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
             return false;
         if (other.getHoldoutPercent() != null && other.getHoldoutPercent().equals(this.getHoldoutPercent()) == false)
             return false;
+        if (other.getHook() == null ^ this.getHook() == null)
+            return false;
+        if (other.getHook() != null && other.getHook().equals(this.getHook()) == false)
+            return false;
         if (other.getIsPaused() == null ^ this.getIsPaused() == null)
             return false;
         if (other.getIsPaused() != null && other.getIsPaused().equals(this.getIsPaused()) == false)
@@ -597,6 +699,10 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
             return false;
         if (other.getSegmentVersion() != null && other.getSegmentVersion().equals(this.getSegmentVersion()) == false)
             return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
+            return false;
         if (other.getTreatmentDescription() == null ^ this.getTreatmentDescription() == null)
             return false;
         if (other.getTreatmentDescription() != null && other.getTreatmentDescription().equals(this.getTreatmentDescription()) == false)
@@ -616,6 +722,7 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
         hashCode = prime * hashCode + ((getAdditionalTreatments() == null) ? 0 : getAdditionalTreatments().hashCode());
         hashCode = prime * hashCode + ((getDescription() == null) ? 0 : getDescription().hashCode());
         hashCode = prime * hashCode + ((getHoldoutPercent() == null) ? 0 : getHoldoutPercent().hashCode());
+        hashCode = prime * hashCode + ((getHook() == null) ? 0 : getHook().hashCode());
         hashCode = prime * hashCode + ((getIsPaused() == null) ? 0 : getIsPaused().hashCode());
         hashCode = prime * hashCode + ((getLimits() == null) ? 0 : getLimits().hashCode());
         hashCode = prime * hashCode + ((getMessageConfiguration() == null) ? 0 : getMessageConfiguration().hashCode());
@@ -623,6 +730,7 @@ public class WriteCampaignRequest implements Serializable, Cloneable, Structured
         hashCode = prime * hashCode + ((getSchedule() == null) ? 0 : getSchedule().hashCode());
         hashCode = prime * hashCode + ((getSegmentId() == null) ? 0 : getSegmentId().hashCode());
         hashCode = prime * hashCode + ((getSegmentVersion() == null) ? 0 : getSegmentVersion().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         hashCode = prime * hashCode + ((getTreatmentDescription() == null) ? 0 : getTreatmentDescription().hashCode());
         hashCode = prime * hashCode + ((getTreatmentName() == null) ? 0 : getTreatmentName().hashCode());
         return hashCode;

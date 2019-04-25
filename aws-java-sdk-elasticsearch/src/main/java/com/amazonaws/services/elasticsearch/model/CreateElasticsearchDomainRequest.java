@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -72,10 +72,24 @@ public class CreateElasticsearchDomainRequest extends com.amazonaws.AmazonWebSer
     private VPCOptions vPCOptions;
     /**
      * <p>
+     * Options to specify the Cognito user and identity pools for Kibana authentication. For more information, see <a
+     * href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     * target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * </p>
+     */
+    private CognitoOptions cognitoOptions;
+    /**
+     * <p>
      * Specifies the Encryption At Rest Options.
      * </p>
      */
     private EncryptionAtRestOptions encryptionAtRestOptions;
+    /**
+     * <p>
+     * Specifies the NodeToNodeEncryptionOptions.
+     * </p>
+     */
+    private NodeToNodeEncryptionOptions nodeToNodeEncryptionOptions;
     /**
      * <p>
      * Option to allow references to indices in an HTTP request body. Must be <code>false</code> when configuring access
@@ -426,6 +440,58 @@ public class CreateElasticsearchDomainRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
+     * Options to specify the Cognito user and identity pools for Kibana authentication. For more information, see <a
+     * href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     * target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * </p>
+     * 
+     * @param cognitoOptions
+     *        Options to specify the Cognito user and identity pools for Kibana authentication. For more information,
+     *        see <a href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     *        target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     */
+
+    public void setCognitoOptions(CognitoOptions cognitoOptions) {
+        this.cognitoOptions = cognitoOptions;
+    }
+
+    /**
+     * <p>
+     * Options to specify the Cognito user and identity pools for Kibana authentication. For more information, see <a
+     * href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     * target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * </p>
+     * 
+     * @return Options to specify the Cognito user and identity pools for Kibana authentication. For more information,
+     *         see <a href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     *         target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     */
+
+    public CognitoOptions getCognitoOptions() {
+        return this.cognitoOptions;
+    }
+
+    /**
+     * <p>
+     * Options to specify the Cognito user and identity pools for Kibana authentication. For more information, see <a
+     * href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     * target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * </p>
+     * 
+     * @param cognitoOptions
+     *        Options to specify the Cognito user and identity pools for Kibana authentication. For more information,
+     *        see <a href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     *        target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateElasticsearchDomainRequest withCognitoOptions(CognitoOptions cognitoOptions) {
+        setCognitoOptions(cognitoOptions);
+        return this;
+    }
+
+    /**
+     * <p>
      * Specifies the Encryption At Rest Options.
      * </p>
      * 
@@ -461,6 +527,46 @@ public class CreateElasticsearchDomainRequest extends com.amazonaws.AmazonWebSer
 
     public CreateElasticsearchDomainRequest withEncryptionAtRestOptions(EncryptionAtRestOptions encryptionAtRestOptions) {
         setEncryptionAtRestOptions(encryptionAtRestOptions);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies the NodeToNodeEncryptionOptions.
+     * </p>
+     * 
+     * @param nodeToNodeEncryptionOptions
+     *        Specifies the NodeToNodeEncryptionOptions.
+     */
+
+    public void setNodeToNodeEncryptionOptions(NodeToNodeEncryptionOptions nodeToNodeEncryptionOptions) {
+        this.nodeToNodeEncryptionOptions = nodeToNodeEncryptionOptions;
+    }
+
+    /**
+     * <p>
+     * Specifies the NodeToNodeEncryptionOptions.
+     * </p>
+     * 
+     * @return Specifies the NodeToNodeEncryptionOptions.
+     */
+
+    public NodeToNodeEncryptionOptions getNodeToNodeEncryptionOptions() {
+        return this.nodeToNodeEncryptionOptions;
+    }
+
+    /**
+     * <p>
+     * Specifies the NodeToNodeEncryptionOptions.
+     * </p>
+     * 
+     * @param nodeToNodeEncryptionOptions
+     *        Specifies the NodeToNodeEncryptionOptions.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateElasticsearchDomainRequest withNodeToNodeEncryptionOptions(NodeToNodeEncryptionOptions nodeToNodeEncryptionOptions) {
+        setNodeToNodeEncryptionOptions(nodeToNodeEncryptionOptions);
         return this;
     }
 
@@ -611,7 +717,8 @@ public class CreateElasticsearchDomainRequest extends com.amazonaws.AmazonWebSer
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -635,8 +742,12 @@ public class CreateElasticsearchDomainRequest extends com.amazonaws.AmazonWebSer
             sb.append("SnapshotOptions: ").append(getSnapshotOptions()).append(",");
         if (getVPCOptions() != null)
             sb.append("VPCOptions: ").append(getVPCOptions()).append(",");
+        if (getCognitoOptions() != null)
+            sb.append("CognitoOptions: ").append(getCognitoOptions()).append(",");
         if (getEncryptionAtRestOptions() != null)
             sb.append("EncryptionAtRestOptions: ").append(getEncryptionAtRestOptions()).append(",");
+        if (getNodeToNodeEncryptionOptions() != null)
+            sb.append("NodeToNodeEncryptionOptions: ").append(getNodeToNodeEncryptionOptions()).append(",");
         if (getAdvancedOptions() != null)
             sb.append("AdvancedOptions: ").append(getAdvancedOptions()).append(",");
         if (getLogPublishingOptions() != null)
@@ -683,9 +794,17 @@ public class CreateElasticsearchDomainRequest extends com.amazonaws.AmazonWebSer
             return false;
         if (other.getVPCOptions() != null && other.getVPCOptions().equals(this.getVPCOptions()) == false)
             return false;
+        if (other.getCognitoOptions() == null ^ this.getCognitoOptions() == null)
+            return false;
+        if (other.getCognitoOptions() != null && other.getCognitoOptions().equals(this.getCognitoOptions()) == false)
+            return false;
         if (other.getEncryptionAtRestOptions() == null ^ this.getEncryptionAtRestOptions() == null)
             return false;
         if (other.getEncryptionAtRestOptions() != null && other.getEncryptionAtRestOptions().equals(this.getEncryptionAtRestOptions()) == false)
+            return false;
+        if (other.getNodeToNodeEncryptionOptions() == null ^ this.getNodeToNodeEncryptionOptions() == null)
+            return false;
+        if (other.getNodeToNodeEncryptionOptions() != null && other.getNodeToNodeEncryptionOptions().equals(this.getNodeToNodeEncryptionOptions()) == false)
             return false;
         if (other.getAdvancedOptions() == null ^ this.getAdvancedOptions() == null)
             return false;
@@ -710,7 +829,9 @@ public class CreateElasticsearchDomainRequest extends com.amazonaws.AmazonWebSer
         hashCode = prime * hashCode + ((getAccessPolicies() == null) ? 0 : getAccessPolicies().hashCode());
         hashCode = prime * hashCode + ((getSnapshotOptions() == null) ? 0 : getSnapshotOptions().hashCode());
         hashCode = prime * hashCode + ((getVPCOptions() == null) ? 0 : getVPCOptions().hashCode());
+        hashCode = prime * hashCode + ((getCognitoOptions() == null) ? 0 : getCognitoOptions().hashCode());
         hashCode = prime * hashCode + ((getEncryptionAtRestOptions() == null) ? 0 : getEncryptionAtRestOptions().hashCode());
+        hashCode = prime * hashCode + ((getNodeToNodeEncryptionOptions() == null) ? 0 : getNodeToNodeEncryptionOptions().hashCode());
         hashCode = prime * hashCode + ((getAdvancedOptions() == null) ? 0 : getAdvancedOptions().hashCode());
         hashCode = prime * hashCode + ((getLogPublishingOptions() == null) ? 0 : getLogPublishingOptions().hashCode());
         return hashCode;

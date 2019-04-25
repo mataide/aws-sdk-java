@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,16 +25,26 @@ import com.amazonaws.AmazonWebServiceRequest;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class GetApplicationRequest extends com.amazonaws.AmazonWebServiceRequest implements Serializable, Cloneable {
 
-    /** The id of the application to get */
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the application.
+     * </p>
+     */
     private String applicationId;
-    /** The semantic version of the application to get */
+    /**
+     * <p>
+     * The semantic version of the application to get.
+     * </p>
+     */
     private String semanticVersion;
 
     /**
-     * The id of the application to get
+     * <p>
+     * The Amazon Resource Name (ARN) of the application.
+     * </p>
      * 
      * @param applicationId
-     *        The id of the application to get
+     *        The Amazon Resource Name (ARN) of the application.
      */
 
     public void setApplicationId(String applicationId) {
@@ -42,9 +52,11 @@ public class GetApplicationRequest extends com.amazonaws.AmazonWebServiceRequest
     }
 
     /**
-     * The id of the application to get
+     * <p>
+     * The Amazon Resource Name (ARN) of the application.
+     * </p>
      * 
-     * @return The id of the application to get
+     * @return The Amazon Resource Name (ARN) of the application.
      */
 
     public String getApplicationId() {
@@ -52,10 +64,12 @@ public class GetApplicationRequest extends com.amazonaws.AmazonWebServiceRequest
     }
 
     /**
-     * The id of the application to get
+     * <p>
+     * The Amazon Resource Name (ARN) of the application.
+     * </p>
      * 
      * @param applicationId
-     *        The id of the application to get
+     *        The Amazon Resource Name (ARN) of the application.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -65,10 +79,12 @@ public class GetApplicationRequest extends com.amazonaws.AmazonWebServiceRequest
     }
 
     /**
-     * The semantic version of the application to get
+     * <p>
+     * The semantic version of the application to get.
+     * </p>
      * 
      * @param semanticVersion
-     *        The semantic version of the application to get
+     *        The semantic version of the application to get.
      */
 
     public void setSemanticVersion(String semanticVersion) {
@@ -76,9 +92,11 @@ public class GetApplicationRequest extends com.amazonaws.AmazonWebServiceRequest
     }
 
     /**
-     * The semantic version of the application to get
+     * <p>
+     * The semantic version of the application to get.
+     * </p>
      * 
-     * @return The semantic version of the application to get
+     * @return The semantic version of the application to get.
      */
 
     public String getSemanticVersion() {
@@ -86,10 +104,12 @@ public class GetApplicationRequest extends com.amazonaws.AmazonWebServiceRequest
     }
 
     /**
-     * The semantic version of the application to get
+     * <p>
+     * The semantic version of the application to get.
+     * </p>
      * 
      * @param semanticVersion
-     *        The semantic version of the application to get
+     *        The semantic version of the application to get.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -99,7 +119,8 @@ public class GetApplicationRequest extends com.amazonaws.AmazonWebServiceRequest
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

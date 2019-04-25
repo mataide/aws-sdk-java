@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -29,10 +29,16 @@ public class OutputSettingsMarshaller {
 
     private static final MarshallingInfo<StructuredPojo> ARCHIVEOUTPUTSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("archiveOutputSettings").build();
+    private static final MarshallingInfo<StructuredPojo> FRAMECAPTUREOUTPUTSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("frameCaptureOutputSettings").build();
     private static final MarshallingInfo<StructuredPojo> HLSOUTPUTSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("hlsOutputSettings").build();
+    private static final MarshallingInfo<StructuredPojo> MEDIAPACKAGEOUTPUTSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("mediaPackageOutputSettings").build();
     private static final MarshallingInfo<StructuredPojo> MSSMOOTHOUTPUTSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("msSmoothOutputSettings").build();
+    private static final MarshallingInfo<StructuredPojo> RTMPOUTPUTSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("rtmpOutputSettings").build();
     private static final MarshallingInfo<StructuredPojo> UDPOUTPUTSETTINGS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("udpOutputSettings").build();
 
@@ -53,8 +59,11 @@ public class OutputSettingsMarshaller {
 
         try {
             protocolMarshaller.marshall(outputSettings.getArchiveOutputSettings(), ARCHIVEOUTPUTSETTINGS_BINDING);
+            protocolMarshaller.marshall(outputSettings.getFrameCaptureOutputSettings(), FRAMECAPTUREOUTPUTSETTINGS_BINDING);
             protocolMarshaller.marshall(outputSettings.getHlsOutputSettings(), HLSOUTPUTSETTINGS_BINDING);
+            protocolMarshaller.marshall(outputSettings.getMediaPackageOutputSettings(), MEDIAPACKAGEOUTPUTSETTINGS_BINDING);
             protocolMarshaller.marshall(outputSettings.getMsSmoothOutputSettings(), MSSMOOTHOUTPUTSETTINGS_BINDING);
+            protocolMarshaller.marshall(outputSettings.getRtmpOutputSettings(), RTMPOUTPUTSETTINGS_BINDING);
             protocolMarshaller.marshall(outputSettings.getUdpOutputSettings(), UDPOUTPUTSETTINGS_BINDING);
         } catch (Exception e) {
             throw new SdkClientException("Unable to marshall request to JSON: " + e.getMessage(), e);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -33,10 +33,11 @@ public class UpdateDestinationRequest extends com.amazonaws.AmazonWebServiceRequ
     private String deliveryStreamName;
     /**
      * <p>
-     * Obtain this value from the <b>VersionId</b> result of <a>DeliveryStreamDescription</a>. This value is required,
-     * and helps the service to perform conditional operations. For example, if there is an interleaving update and this
-     * value is null, then the update destination fails. After the update is successful, the <b>VersionId</b> value is
-     * updated. The service then performs a merge of the old configuration with the new configuration.
+     * Obtain this value from the <code>VersionId</code> result of <a>DeliveryStreamDescription</a>. This value is
+     * required, and helps the service perform conditional operations. For example, if there is an interleaving update
+     * and this value is null, then the update destination fails. After the update is successful, the
+     * <code>VersionId</code> value is updated. The service then performs a merge of the old configuration with the new
+     * configuration.
      * </p>
      */
     private String currentDeliveryStreamVersionId;
@@ -120,17 +121,18 @@ public class UpdateDestinationRequest extends com.amazonaws.AmazonWebServiceRequ
 
     /**
      * <p>
-     * Obtain this value from the <b>VersionId</b> result of <a>DeliveryStreamDescription</a>. This value is required,
-     * and helps the service to perform conditional operations. For example, if there is an interleaving update and this
-     * value is null, then the update destination fails. After the update is successful, the <b>VersionId</b> value is
-     * updated. The service then performs a merge of the old configuration with the new configuration.
+     * Obtain this value from the <code>VersionId</code> result of <a>DeliveryStreamDescription</a>. This value is
+     * required, and helps the service perform conditional operations. For example, if there is an interleaving update
+     * and this value is null, then the update destination fails. After the update is successful, the
+     * <code>VersionId</code> value is updated. The service then performs a merge of the old configuration with the new
+     * configuration.
      * </p>
      * 
      * @param currentDeliveryStreamVersionId
-     *        Obtain this value from the <b>VersionId</b> result of <a>DeliveryStreamDescription</a>. This value is
-     *        required, and helps the service to perform conditional operations. For example, if there is an
+     *        Obtain this value from the <code>VersionId</code> result of <a>DeliveryStreamDescription</a>. This value
+     *        is required, and helps the service perform conditional operations. For example, if there is an
      *        interleaving update and this value is null, then the update destination fails. After the update is
-     *        successful, the <b>VersionId</b> value is updated. The service then performs a merge of the old
+     *        successful, the <code>VersionId</code> value is updated. The service then performs a merge of the old
      *        configuration with the new configuration.
      */
 
@@ -140,16 +142,17 @@ public class UpdateDestinationRequest extends com.amazonaws.AmazonWebServiceRequ
 
     /**
      * <p>
-     * Obtain this value from the <b>VersionId</b> result of <a>DeliveryStreamDescription</a>. This value is required,
-     * and helps the service to perform conditional operations. For example, if there is an interleaving update and this
-     * value is null, then the update destination fails. After the update is successful, the <b>VersionId</b> value is
-     * updated. The service then performs a merge of the old configuration with the new configuration.
+     * Obtain this value from the <code>VersionId</code> result of <a>DeliveryStreamDescription</a>. This value is
+     * required, and helps the service perform conditional operations. For example, if there is an interleaving update
+     * and this value is null, then the update destination fails. After the update is successful, the
+     * <code>VersionId</code> value is updated. The service then performs a merge of the old configuration with the new
+     * configuration.
      * </p>
      * 
-     * @return Obtain this value from the <b>VersionId</b> result of <a>DeliveryStreamDescription</a>. This value is
-     *         required, and helps the service to perform conditional operations. For example, if there is an
+     * @return Obtain this value from the <code>VersionId</code> result of <a>DeliveryStreamDescription</a>. This value
+     *         is required, and helps the service perform conditional operations. For example, if there is an
      *         interleaving update and this value is null, then the update destination fails. After the update is
-     *         successful, the <b>VersionId</b> value is updated. The service then performs a merge of the old
+     *         successful, the <code>VersionId</code> value is updated. The service then performs a merge of the old
      *         configuration with the new configuration.
      */
 
@@ -159,17 +162,18 @@ public class UpdateDestinationRequest extends com.amazonaws.AmazonWebServiceRequ
 
     /**
      * <p>
-     * Obtain this value from the <b>VersionId</b> result of <a>DeliveryStreamDescription</a>. This value is required,
-     * and helps the service to perform conditional operations. For example, if there is an interleaving update and this
-     * value is null, then the update destination fails. After the update is successful, the <b>VersionId</b> value is
-     * updated. The service then performs a merge of the old configuration with the new configuration.
+     * Obtain this value from the <code>VersionId</code> result of <a>DeliveryStreamDescription</a>. This value is
+     * required, and helps the service perform conditional operations. For example, if there is an interleaving update
+     * and this value is null, then the update destination fails. After the update is successful, the
+     * <code>VersionId</code> value is updated. The service then performs a merge of the old configuration with the new
+     * configuration.
      * </p>
      * 
      * @param currentDeliveryStreamVersionId
-     *        Obtain this value from the <b>VersionId</b> result of <a>DeliveryStreamDescription</a>. This value is
-     *        required, and helps the service to perform conditional operations. For example, if there is an
+     *        Obtain this value from the <code>VersionId</code> result of <a>DeliveryStreamDescription</a>. This value
+     *        is required, and helps the service perform conditional operations. For example, if there is an
      *        interleaving update and this value is null, then the update destination fails. After the update is
-     *        successful, the <b>VersionId</b> value is updated. The service then performs a merge of the old
+     *        successful, the <code>VersionId</code> value is updated. The service then performs a merge of the old
      *        configuration with the new configuration.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
@@ -420,7 +424,8 @@ public class UpdateDestinationRequest extends com.amazonaws.AmazonWebServiceRequ
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

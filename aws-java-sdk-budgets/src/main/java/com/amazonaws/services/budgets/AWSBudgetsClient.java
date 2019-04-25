@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,8 @@ import com.amazonaws.protocol.json.*;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.annotation.ThreadSafe;
 import com.amazonaws.client.AwsSyncClientParams;
+import com.amazonaws.client.builder.AdvancedConfig;
+
 import com.amazonaws.services.budgets.AWSBudgetsClientBuilder;
 
 import com.amazonaws.AmazonServiceException;
@@ -48,11 +50,88 @@ import com.amazonaws.services.budgets.model.transform.*;
  * Client for accessing AWSBudgets. All service calls made using this client are blocking, and will not return until the
  * service call completes.
  * <p>
- * All public APIs for AWS Budgets
+ * <p>
+ * The AWS Budgets API enables you to use AWS Budgets to plan your service usage, service costs, and instance
+ * reservations. The API reference provides descriptions, syntax, and usage examples for each of the actions and data
+ * types for AWS Budgets.
+ * </p>
+ * <p>
+ * Budgets provide you with a way to see the following information:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * How close your plan is to your budgeted amount or to the free tier limits
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * Your usage-to-date, including how much you've used of your Reserved Instances (RIs)
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * Your current estimated charges from AWS, and how much your predicted usage will accrue in charges by the end of the
+ * month
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * How much of your budget has been used
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * AWS updates your budget status several times a day. Budgets track your unblended costs, subscriptions, refunds, and
+ * RIs. You can create the following types of budgets:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <b>Cost budgets</b> - Plan how much you want to spend on a service.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <b>Usage budgets</b> - Plan how much you want to use one or more services.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <b>RI utilization budgets</b> - Define a utilization threshold, and receive alerts when your RI usage falls below
+ * that threshold. This lets you see if your RIs are unused or under-utilized.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <b>RI coverage budgets</b> - Define a coverage threshold, and receive alerts when the number of your instance hours
+ * that are covered by RIs fall below that threshold. This lets you see how much of your instance usage is covered by a
+ * reservation.
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * Service Endpoint
+ * </p>
+ * <p>
+ * The AWS Budgets API provides the following endpoint:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * https://budgets.amazonaws.com
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * For information about costs that are associated with the AWS Budgets API, see <a
+ * href="https://aws.amazon.com/aws-cost-management/pricing/">AWS Cost Management Pricing</a>.
+ * </p>
  */
 @ThreadSafe
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudgets {
+
     /** Provider for AWS credentials. */
     private final AWSCredentialsProvider awsCredentialsProvider;
 
@@ -64,17 +143,19 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     /** Client configuration factory providing ClientConfigurations tailored to this client */
     protected static final ClientConfigurationFactory configFactory = new ClientConfigurationFactory();
 
+    private final AdvancedConfig advancedConfig;
+
     private static final com.amazonaws.protocol.json.SdkJsonProtocolFactory protocolFactory = new com.amazonaws.protocol.json.SdkJsonProtocolFactory(
             new JsonClientMetadata()
                     .withProtocolVersion("1.1")
                     .withSupportsCbor(false)
                     .withSupportsIon(false)
                     .addErrorMetadata(
-                            new JsonErrorShapeMetadata().withErrorCode("NotFoundException").withModeledClass(
-                                    com.amazonaws.services.budgets.model.NotFoundException.class))
-                    .addErrorMetadata(
                             new JsonErrorShapeMetadata().withErrorCode("InvalidParameterException").withModeledClass(
                                     com.amazonaws.services.budgets.model.InvalidParameterException.class))
+                    .addErrorMetadata(
+                            new JsonErrorShapeMetadata().withErrorCode("NotFoundException").withModeledClass(
+                                    com.amazonaws.services.budgets.model.NotFoundException.class))
                     .addErrorMetadata(
                             new JsonErrorShapeMetadata().withErrorCode("DuplicateRecordException").withModeledClass(
                                     com.amazonaws.services.budgets.model.DuplicateRecordException.class))
@@ -175,6 +256,7 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     public AWSBudgetsClient(AWSCredentials awsCredentials, ClientConfiguration clientConfiguration) {
         super(clientConfiguration);
         this.awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -240,6 +322,7 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
             RequestMetricCollector requestMetricCollector) {
         super(clientConfiguration, requestMetricCollector);
         this.awsCredentialsProvider = awsCredentialsProvider;
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -258,8 +341,23 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
      *        Object providing client parameters.
      */
     AWSBudgetsClient(AwsSyncClientParams clientParams) {
+        this(clientParams, false);
+    }
+
+    /**
+     * Constructs a new client to invoke service methods on AWSBudgets using the specified parameters.
+     *
+     * <p>
+     * All service calls made using this new client object are blocking, and will not return until the service call
+     * completes.
+     *
+     * @param clientParams
+     *        Object providing client parameters.
+     */
+    AWSBudgetsClient(AwsSyncClientParams clientParams, boolean endpointDiscoveryEnabled) {
         super(clientParams);
         this.awsCredentialsProvider = clientParams.getCredentialsProvider();
+        this.advancedConfig = clientParams.getAdvancedConfig();
         init();
     }
 
@@ -275,21 +373,21 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Create a new budget
+     * <p>
+     * Creates a budget and, if included, notifications and subscribers.
+     * </p>
      * 
      * @param createBudgetRequest
      *        Request of CreateBudget
      * @return Result of the CreateBudget operation returned by the service.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws CreationLimitExceededException
-     *         The exception is thrown when customer tries to create a record (e.g. budget), but the number this record
-     *         already exceeds the limitation.
+     *         You've exceeded the notification or subscriber limit.
      * @throws DuplicateRecordException
-     *         The exception is thrown when customer tries to create a record (e.g. budget) that already exists.
+     *         The budget name already exists. Budget names must be unique within an account.
      * @sample AWSBudgets.CreateBudget
      */
     @Override
@@ -313,6 +411,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new CreateBudgetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createBudgetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateBudget");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -330,24 +432,23 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Create a new Notification with subscribers for a budget
+     * <p>
+     * Creates a notification. You must create the budget before you create the associated notification.
+     * </p>
      * 
      * @param createNotificationRequest
      *        Request of CreateNotification
      * @return Result of the CreateNotification operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @throws CreationLimitExceededException
-     *         The exception is thrown when customer tries to create a record (e.g. budget), but the number this record
-     *         already exceeds the limitation.
+     *         You've exceeded the notification or subscriber limit.
      * @throws DuplicateRecordException
-     *         The exception is thrown when customer tries to create a record (e.g. budget) that already exists.
+     *         The budget name already exists. Budget names must be unique within an account.
      * @sample AWSBudgets.CreateNotification
      */
     @Override
@@ -371,6 +472,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new CreateNotificationRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createNotificationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateNotification");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -388,24 +493,23 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Create a new Subscriber for a notification
+     * <p>
+     * Creates a subscriber. You must create the associated budget and notification before you create the subscriber.
+     * </p>
      * 
      * @param createSubscriberRequest
      *        Request of CreateSubscriber
      * @return Result of the CreateSubscriber operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws CreationLimitExceededException
-     *         The exception is thrown when customer tries to create a record (e.g. budget), but the number this record
-     *         already exceeds the limitation.
+     *         You've exceeded the notification or subscriber limit.
      * @throws DuplicateRecordException
-     *         The exception is thrown when customer tries to create a record (e.g. budget) that already exists.
+     *         The budget name already exists. Budget names must be unique within an account.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @sample AWSBudgets.CreateSubscriber
      */
     @Override
@@ -429,6 +533,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new CreateSubscriberRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createSubscriberRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateSubscriber");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -446,19 +554,24 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Delete a budget and related notifications
+     * <p>
+     * Deletes a budget. You can delete your budget at any time.
+     * </p>
+     * <important>
+     * <p>
+     * Deleting a budget also deletes the notifications and subscribers that are associated with that budget.
+     * </p>
+     * </important>
      * 
      * @param deleteBudgetRequest
      *        Request of DeleteBudget
      * @return Result of the DeleteBudget operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @sample AWSBudgets.DeleteBudget
      */
     @Override
@@ -482,6 +595,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new DeleteBudgetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteBudgetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteBudget");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -499,19 +616,24 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Delete a notification and related subscribers
+     * <p>
+     * Deletes a notification.
+     * </p>
+     * <important>
+     * <p>
+     * Deleting a notification also deletes the subscribers that are associated with the notification.
+     * </p>
+     * </important>
      * 
      * @param deleteNotificationRequest
      *        Request of DeleteNotification
      * @return Result of the DeleteNotification operation returned by the service.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @sample AWSBudgets.DeleteNotification
      */
     @Override
@@ -535,6 +657,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new DeleteNotificationRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteNotificationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteNotification");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -552,19 +678,24 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Delete a Subscriber for a notification
+     * <p>
+     * Deletes a subscriber.
+     * </p>
+     * <important>
+     * <p>
+     * Deleting the last subscriber to a notification also deletes the notification.
+     * </p>
+     * </important>
      * 
      * @param deleteSubscriberRequest
      *        Request of DeleteSubscriber
      * @return Result of the DeleteSubscriber operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @sample AWSBudgets.DeleteSubscriber
      */
     @Override
@@ -588,6 +719,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new DeleteSubscriberRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteSubscriberRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteSubscriber");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -605,19 +740,19 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Get a single budget
+     * <p>
+     * Describes a budget.
+     * </p>
      * 
      * @param describeBudgetRequest
      *        Request of DescribeBudget
      * @return Result of the DescribeBudget operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @sample AWSBudgets.DescribeBudget
      */
     @Override
@@ -641,6 +776,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new DescribeBudgetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(describeBudgetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeBudget");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -658,24 +797,87 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Get all budgets for an account
+     * <p>
+     * Describes the history for <code>DAILY</code>, <code>MONTHLY</code>, and <code>QUARTERLY</code> budgets. Budget
+     * history isn't available for <code>ANNUAL</code> budgets.
+     * </p>
+     * 
+     * @param describeBudgetPerformanceHistoryRequest
+     * @return Result of the DescribeBudgetPerformanceHistory operation returned by the service.
+     * @throws InternalErrorException
+     *         An error on the server occurred during the processing of your request. Try again later.
+     * @throws InvalidParameterException
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
+     * @throws NotFoundException
+     *         We can’t locate the resource that you specified.
+     * @throws InvalidNextTokenException
+     *         The pagination token is invalid.
+     * @throws ExpiredNextTokenException
+     *         The pagination token expired.
+     * @sample AWSBudgets.DescribeBudgetPerformanceHistory
+     */
+    @Override
+    public DescribeBudgetPerformanceHistoryResult describeBudgetPerformanceHistory(DescribeBudgetPerformanceHistoryRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeBudgetPerformanceHistory(request);
+    }
+
+    @SdkInternalApi
+    final DescribeBudgetPerformanceHistoryResult executeDescribeBudgetPerformanceHistory(
+            DescribeBudgetPerformanceHistoryRequest describeBudgetPerformanceHistoryRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeBudgetPerformanceHistoryRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeBudgetPerformanceHistoryRequest> request = null;
+        Response<DescribeBudgetPerformanceHistoryResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeBudgetPerformanceHistoryRequestProtocolMarshaller(protocolFactory).marshall(super
+                        .beforeMarshalling(describeBudgetPerformanceHistoryRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeBudgetPerformanceHistory");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            HttpResponseHandler<AmazonWebServiceResponse<DescribeBudgetPerformanceHistoryResult>> responseHandler = protocolFactory.createResponseHandler(
+                    new JsonOperationMetadata().withPayloadJson(true).withHasStreamingSuccessResponse(false),
+                    new DescribeBudgetPerformanceHistoryResultJsonUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Lists the budgets that are associated with an account.
+     * </p>
      * 
      * @param describeBudgetsRequest
      *        Request of DescribeBudgets
      * @return Result of the DescribeBudgets operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @throws InvalidNextTokenException
-     *         This exception is thrown if paging token signature didn't match the token, or the paging token isn't for
-     *         this request
+     *         The pagination token is invalid.
      * @throws ExpiredNextTokenException
-     *         This exception is thrown if the paging token is expired - past its TTL
+     *         The pagination token expired.
      * @sample AWSBudgets.DescribeBudgets
      */
     @Override
@@ -699,6 +901,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new DescribeBudgetsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(describeBudgetsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeBudgets");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -716,24 +922,23 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Get notifications of a budget
+     * <p>
+     * Lists the notifications that are associated with a budget.
+     * </p>
      * 
      * @param describeNotificationsForBudgetRequest
      *        Request of DescribeNotificationsForBudget
      * @return Result of the DescribeNotificationsForBudget operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @throws InvalidNextTokenException
-     *         This exception is thrown if paging token signature didn't match the token, or the paging token isn't for
-     *         this request
+     *         The pagination token is invalid.
      * @throws ExpiredNextTokenException
-     *         This exception is thrown if the paging token is expired - past its TTL
+     *         The pagination token expired.
      * @sample AWSBudgets.DescribeNotificationsForBudget
      */
     @Override
@@ -758,6 +963,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                         .beforeMarshalling(describeNotificationsForBudgetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeNotificationsForBudget");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -776,24 +985,23 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Get subscribers of a notification
+     * <p>
+     * Lists the subscribers that are associated with a notification.
+     * </p>
      * 
      * @param describeSubscribersForNotificationRequest
      *        Request of DescribeSubscribersForNotification
      * @return Result of the DescribeSubscribersForNotification operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws InvalidNextTokenException
-     *         This exception is thrown if paging token signature didn't match the token, or the paging token isn't for
-     *         this request
+     *         The pagination token is invalid.
      * @throws ExpiredNextTokenException
-     *         This exception is thrown if the paging token is expired - past its TTL
+     *         The pagination token expired.
      * @sample AWSBudgets.DescribeSubscribersForNotification
      */
     @Override
@@ -819,6 +1027,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                         .beforeMarshalling(describeSubscribersForNotificationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSubscribersForNotification");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -837,19 +1049,21 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Update the information of a budget already created
+     * <p>
+     * Updates a budget. You can change every part of a budget except for the <code>budgetName</code> and the
+     * <code>calculatedSpend</code>. When you modify a budget, the <code>calculatedSpend</code> drops to zero until AWS
+     * has new usage data to use for forecasting.
+     * </p>
      * 
      * @param updateBudgetRequest
      *        Request of UpdateBudget
      * @return Result of the UpdateBudget operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @sample AWSBudgets.UpdateBudget
      */
     @Override
@@ -873,6 +1087,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new UpdateBudgetRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateBudgetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateBudget");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -890,21 +1108,21 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Update the information about a notification already created
+     * <p>
+     * Updates a notification.
+     * </p>
      * 
      * @param updateNotificationRequest
      *        Request of UpdateNotification
      * @return Result of the UpdateNotification operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @throws DuplicateRecordException
-     *         The exception is thrown when customer tries to create a record (e.g. budget) that already exists.
+     *         The budget name already exists. Budget names must be unique within an account.
      * @sample AWSBudgets.UpdateNotification
      */
     @Override
@@ -928,6 +1146,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new UpdateNotificationRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateNotificationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateNotification");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -945,21 +1167,21 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     }
 
     /**
-     * Update a subscriber
+     * <p>
+     * Updates a subscriber.
+     * </p>
      * 
      * @param updateSubscriberRequest
      *        Request of UpdateSubscriber
      * @return Result of the UpdateSubscriber operation returned by the service.
      * @throws InternalErrorException
-     *         This exception is thrown on an unknown internal failure.
+     *         An error on the server occurred during the processing of your request. Try again later.
      * @throws InvalidParameterException
-     *         This exception is thrown if any request is given an invalid parameter. E.g., if a required Date field is
-     *         null.
+     *         An error on the client occurred. Typically, the cause is an invalid input value.
      * @throws NotFoundException
-     *         This exception is thrown if a requested entity is not found. E.g., if a budget id doesn't exist for an
-     *         account ID.
+     *         We can’t locate the resource that you specified.
      * @throws DuplicateRecordException
-     *         The exception is thrown when customer tries to create a record (e.g. budget) that already exists.
+     *         The budget name already exists. Budget names must be unique within an account.
      * @sample AWSBudgets.UpdateSubscriber
      */
     @Override
@@ -983,6 +1205,10 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
                 request = new UpdateSubscriberRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateSubscriberRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Budgets");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateSubscriber");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1023,9 +1249,18 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
             ExecutionContext executionContext) {
 
+        return invoke(request, responseHandler, executionContext, null, null);
+    }
+
+    /**
+     * Normal invoke with authentication. Credentials are required and may be overriden at the request level.
+     **/
+    private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
+            ExecutionContext executionContext, URI cachedEndpoint, URI uriFromEndpointTrait) {
+
         executionContext.setCredentialsProvider(CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, cachedEndpoint, uriFromEndpointTrait);
     }
 
     /**
@@ -1035,7 +1270,7 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
     private <X, Y extends AmazonWebServiceRequest> Response<X> anonymousInvoke(Request<Y> request,
             HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler, ExecutionContext executionContext) {
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, null, null);
     }
 
     /**
@@ -1043,8 +1278,17 @@ public class AWSBudgetsClient extends AmazonWebServiceClient implements AWSBudge
      * ExecutionContext beforehand.
      **/
     private <X, Y extends AmazonWebServiceRequest> Response<X> doInvoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
-            ExecutionContext executionContext) {
-        request.setEndpoint(endpoint);
+            ExecutionContext executionContext, URI discoveredEndpoint, URI uriFromEndpointTrait) {
+
+        if (discoveredEndpoint != null) {
+            request.setEndpoint(discoveredEndpoint);
+            request.getOriginalRequest().getRequestClientOptions().appendUserAgent("endpoint-discovery");
+        } else if (uriFromEndpointTrait != null) {
+            request.setEndpoint(uriFromEndpointTrait);
+        } else {
+            request.setEndpoint(endpoint);
+        }
+
         request.setTimeOffset(timeOffset);
 
         HttpResponseHandler<AmazonServiceException> errorResponseHandler = protocolFactory.createErrorResponseHandler(new JsonErrorResponseMetadata());

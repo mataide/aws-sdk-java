@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -20,9 +20,7 @@ import com.amazonaws.Request;
 import com.amazonaws.services.ec2.model.transform.DescribeSecurityGroupsRequestMarshaller;
 
 /**
- * <p>
- * Contains the parameters for DescribeSecurityGroups.
- * </p>
+ * 
  */
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest implements Serializable, Cloneable,
@@ -30,8 +28,8 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * One or more filters. If using multiple filters for rules, the results include security groups for which any
-     * combination of rules - not necessarily a single rule - match all filters.
+     * The filters. If using multiple filters for rules, the results include security groups for which any combination
+     * of rules - not necessarily a single rule - match all filters.
      * </p>
      * <ul>
      * <li>
@@ -160,12 +158,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the security group.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the security group.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -178,7 +180,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
     private com.amazonaws.internal.SdkInternalList<Filter> filters;
     /**
      * <p>
-     * One or more security group IDs. Required for security groups in a nondefault VPC.
+     * The IDs of the security groups. Required for security groups in a nondefault VPC.
      * </p>
      * <p>
      * Default: Describes all your security groups.
@@ -187,7 +189,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
     private com.amazonaws.internal.SdkInternalList<String> groupIds;
     /**
      * <p>
-     * [EC2-Classic and default VPC only] One or more security group names. You can specify either the security group
+     * [EC2-Classic and default VPC only] The names of the security groups. You can specify either the security group
      * name or the security group ID. For security groups in a nondefault VPC, use the <code>group-name</code> filter to
      * describe security groups by name.
      * </p>
@@ -205,15 +207,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
     /**
      * <p>
      * The maximum number of results to return in a single call. To retrieve the remaining results, make another request
-     * with the returned <code>NextToken</code> value. This value can be between 5 and 1000.
+     * with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If this parameter is not
+     * specified, then all results are returned.
      * </p>
      */
     private Integer maxResults;
 
     /**
      * <p>
-     * One or more filters. If using multiple filters for rules, the results include security groups for which any
-     * combination of rules - not necessarily a single rule - match all filters.
+     * The filters. If using multiple filters for rules, the results include security groups for which any combination
+     * of rules - not necessarily a single rule - match all filters.
      * </p>
      * <ul>
      * <li>
@@ -342,12 +345,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the security group.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the security group.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -357,8 +364,8 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </li>
      * </ul>
      * 
-     * @return One or more filters. If using multiple filters for rules, the results include security groups for which
-     *         any combination of rules - not necessarily a single rule - match all filters.</p>
+     * @return The filters. If using multiple filters for rules, the results include security groups for which any
+     *         combination of rules - not necessarily a single rule - match all filters.</p>
      *         <ul>
      *         <li>
      *         <p>
@@ -486,12 +493,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      *         </li>
      *         <li>
      *         <p>
-     *         <code>tag-key</code> - The key of a tag assigned to the security group.
+     *         <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag
+     *         key in the filter name and the tag value as the filter value. For example, to find all resources that
+     *         have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify
+     *         <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         <code>tag-value</code> - The value of a tag assigned to the security group.
+     *         <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources
+     *         assigned a tag with a specific key, regardless of the tag value.
      *         </p>
      *         </li>
      *         <li>
@@ -510,8 +521,8 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * One or more filters. If using multiple filters for rules, the results include security groups for which any
-     * combination of rules - not necessarily a single rule - match all filters.
+     * The filters. If using multiple filters for rules, the results include security groups for which any combination
+     * of rules - not necessarily a single rule - match all filters.
      * </p>
      * <ul>
      * <li>
@@ -640,12 +651,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the security group.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the security group.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -656,8 +671,8 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </ul>
      * 
      * @param filters
-     *        One or more filters. If using multiple filters for rules, the results include security groups for which
-     *        any combination of rules - not necessarily a single rule - match all filters.</p>
+     *        The filters. If using multiple filters for rules, the results include security groups for which any
+     *        combination of rules - not necessarily a single rule - match all filters.</p>
      *        <ul>
      *        <li>
      *        <p>
@@ -785,12 +800,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag-key</code> - The key of a tag assigned to the security group.
+     *        <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag
+     *        key in the filter name and the tag value as the filter value. For example, to find all resources that have
+     *        a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for
+     *        the filter name and <code>TeamA</code> for the filter value.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag-value</code> - The value of a tag assigned to the security group.
+     *        <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources
+     *        assigned a tag with a specific key, regardless of the tag value.
      *        </p>
      *        </li>
      *        <li>
@@ -811,8 +830,8 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * One or more filters. If using multiple filters for rules, the results include security groups for which any
-     * combination of rules - not necessarily a single rule - match all filters.
+     * The filters. If using multiple filters for rules, the results include security groups for which any combination
+     * of rules - not necessarily a single rule - match all filters.
      * </p>
      * <ul>
      * <li>
@@ -941,12 +960,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the security group.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the security group.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -962,8 +985,8 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </p>
      * 
      * @param filters
-     *        One or more filters. If using multiple filters for rules, the results include security groups for which
-     *        any combination of rules - not necessarily a single rule - match all filters.</p>
+     *        The filters. If using multiple filters for rules, the results include security groups for which any
+     *        combination of rules - not necessarily a single rule - match all filters.</p>
      *        <ul>
      *        <li>
      *        <p>
@@ -1091,12 +1114,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag-key</code> - The key of a tag assigned to the security group.
+     *        <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag
+     *        key in the filter name and the tag value as the filter value. For example, to find all resources that have
+     *        a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for
+     *        the filter name and <code>TeamA</code> for the filter value.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag-value</code> - The value of a tag assigned to the security group.
+     *        <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources
+     *        assigned a tag with a specific key, regardless of the tag value.
      *        </p>
      *        </li>
      *        <li>
@@ -1119,8 +1146,8 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * One or more filters. If using multiple filters for rules, the results include security groups for which any
-     * combination of rules - not necessarily a single rule - match all filters.
+     * The filters. If using multiple filters for rules, the results include security groups for which any combination
+     * of rules - not necessarily a single rule - match all filters.
      * </p>
      * <ul>
      * <li>
@@ -1249,12 +1276,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </li>
      * <li>
      * <p>
-     * <code>tag-key</code> - The key of a tag assigned to the security group.
+     * <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in
+     * the filter name and the tag value as the filter value. For example, to find all resources that have a tag with
+     * the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name
+     * and <code>TeamA</code> for the filter value.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <code>tag-value</code> - The value of a tag assigned to the security group.
+     * <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned
+     * a tag with a specific key, regardless of the tag value.
      * </p>
      * </li>
      * <li>
@@ -1265,8 +1296,8 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </ul>
      * 
      * @param filters
-     *        One or more filters. If using multiple filters for rules, the results include security groups for which
-     *        any combination of rules - not necessarily a single rule - match all filters.</p>
+     *        The filters. If using multiple filters for rules, the results include security groups for which any
+     *        combination of rules - not necessarily a single rule - match all filters.</p>
      *        <ul>
      *        <li>
      *        <p>
@@ -1394,12 +1425,16 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag-key</code> - The key of a tag assigned to the security group.
+     *        <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag
+     *        key in the filter name and the tag value as the filter value. For example, to find all resources that have
+     *        a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for
+     *        the filter name and <code>TeamA</code> for the filter value.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        <code>tag-value</code> - The value of a tag assigned to the security group.
+     *        <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources
+     *        assigned a tag with a specific key, regardless of the tag value.
      *        </p>
      *        </li>
      *        <li>
@@ -1417,13 +1452,13 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * One or more security group IDs. Required for security groups in a nondefault VPC.
+     * The IDs of the security groups. Required for security groups in a nondefault VPC.
      * </p>
      * <p>
      * Default: Describes all your security groups.
      * </p>
      * 
-     * @return One or more security group IDs. Required for security groups in a nondefault VPC.</p>
+     * @return The IDs of the security groups. Required for security groups in a nondefault VPC.</p>
      *         <p>
      *         Default: Describes all your security groups.
      */
@@ -1437,14 +1472,14 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * One or more security group IDs. Required for security groups in a nondefault VPC.
+     * The IDs of the security groups. Required for security groups in a nondefault VPC.
      * </p>
      * <p>
      * Default: Describes all your security groups.
      * </p>
      * 
      * @param groupIds
-     *        One or more security group IDs. Required for security groups in a nondefault VPC.</p>
+     *        The IDs of the security groups. Required for security groups in a nondefault VPC.</p>
      *        <p>
      *        Default: Describes all your security groups.
      */
@@ -1460,7 +1495,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * One or more security group IDs. Required for security groups in a nondefault VPC.
+     * The IDs of the security groups. Required for security groups in a nondefault VPC.
      * </p>
      * <p>
      * Default: Describes all your security groups.
@@ -1472,7 +1507,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </p>
      * 
      * @param groupIds
-     *        One or more security group IDs. Required for security groups in a nondefault VPC.</p>
+     *        The IDs of the security groups. Required for security groups in a nondefault VPC.</p>
      *        <p>
      *        Default: Describes all your security groups.
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -1490,14 +1525,14 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * One or more security group IDs. Required for security groups in a nondefault VPC.
+     * The IDs of the security groups. Required for security groups in a nondefault VPC.
      * </p>
      * <p>
      * Default: Describes all your security groups.
      * </p>
      * 
      * @param groupIds
-     *        One or more security group IDs. Required for security groups in a nondefault VPC.</p>
+     *        The IDs of the security groups. Required for security groups in a nondefault VPC.</p>
      *        <p>
      *        Default: Describes all your security groups.
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -1510,7 +1545,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * [EC2-Classic and default VPC only] One or more security group names. You can specify either the security group
+     * [EC2-Classic and default VPC only] The names of the security groups. You can specify either the security group
      * name or the security group ID. For security groups in a nondefault VPC, use the <code>group-name</code> filter to
      * describe security groups by name.
      * </p>
@@ -1518,7 +1553,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * Default: Describes all your security groups.
      * </p>
      * 
-     * @return [EC2-Classic and default VPC only] One or more security group names. You can specify either the security
+     * @return [EC2-Classic and default VPC only] The names of the security groups. You can specify either the security
      *         group name or the security group ID. For security groups in a nondefault VPC, use the
      *         <code>group-name</code> filter to describe security groups by name.</p>
      *         <p>
@@ -1534,7 +1569,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * [EC2-Classic and default VPC only] One or more security group names. You can specify either the security group
+     * [EC2-Classic and default VPC only] The names of the security groups. You can specify either the security group
      * name or the security group ID. For security groups in a nondefault VPC, use the <code>group-name</code> filter to
      * describe security groups by name.
      * </p>
@@ -1543,7 +1578,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </p>
      * 
      * @param groupNames
-     *        [EC2-Classic and default VPC only] One or more security group names. You can specify either the security
+     *        [EC2-Classic and default VPC only] The names of the security groups. You can specify either the security
      *        group name or the security group ID. For security groups in a nondefault VPC, use the
      *        <code>group-name</code> filter to describe security groups by name.</p>
      *        <p>
@@ -1561,7 +1596,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * [EC2-Classic and default VPC only] One or more security group names. You can specify either the security group
+     * [EC2-Classic and default VPC only] The names of the security groups. You can specify either the security group
      * name or the security group ID. For security groups in a nondefault VPC, use the <code>group-name</code> filter to
      * describe security groups by name.
      * </p>
@@ -1575,7 +1610,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </p>
      * 
      * @param groupNames
-     *        [EC2-Classic and default VPC only] One or more security group names. You can specify either the security
+     *        [EC2-Classic and default VPC only] The names of the security groups. You can specify either the security
      *        group name or the security group ID. For security groups in a nondefault VPC, use the
      *        <code>group-name</code> filter to describe security groups by name.</p>
      *        <p>
@@ -1595,7 +1630,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * [EC2-Classic and default VPC only] One or more security group names. You can specify either the security group
+     * [EC2-Classic and default VPC only] The names of the security groups. You can specify either the security group
      * name or the security group ID. For security groups in a nondefault VPC, use the <code>group-name</code> filter to
      * describe security groups by name.
      * </p>
@@ -1604,7 +1639,7 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
      * </p>
      * 
      * @param groupNames
-     *        [EC2-Classic and default VPC only] One or more security group names. You can specify either the security
+     *        [EC2-Classic and default VPC only] The names of the security groups. You can specify either the security
      *        group name or the security group ID. For security groups in a nondefault VPC, use the
      *        <code>group-name</code> filter to describe security groups by name.</p>
      *        <p>
@@ -1660,12 +1695,14 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
     /**
      * <p>
      * The maximum number of results to return in a single call. To retrieve the remaining results, make another request
-     * with the returned <code>NextToken</code> value. This value can be between 5 and 1000.
+     * with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If this parameter is not
+     * specified, then all results are returned.
      * </p>
      * 
      * @param maxResults
      *        The maximum number of results to return in a single call. To retrieve the remaining results, make another
-     *        request with the returned <code>NextToken</code> value. This value can be between 5 and 1000.
+     *        request with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If this
+     *        parameter is not specified, then all results are returned.
      */
 
     public void setMaxResults(Integer maxResults) {
@@ -1675,11 +1712,13 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
     /**
      * <p>
      * The maximum number of results to return in a single call. To retrieve the remaining results, make another request
-     * with the returned <code>NextToken</code> value. This value can be between 5 and 1000.
+     * with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If this parameter is not
+     * specified, then all results are returned.
      * </p>
      * 
      * @return The maximum number of results to return in a single call. To retrieve the remaining results, make another
-     *         request with the returned <code>NextToken</code> value. This value can be between 5 and 1000.
+     *         request with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If this
+     *         parameter is not specified, then all results are returned.
      */
 
     public Integer getMaxResults() {
@@ -1689,12 +1728,14 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
     /**
      * <p>
      * The maximum number of results to return in a single call. To retrieve the remaining results, make another request
-     * with the returned <code>NextToken</code> value. This value can be between 5 and 1000.
+     * with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If this parameter is not
+     * specified, then all results are returned.
      * </p>
      * 
      * @param maxResults
      *        The maximum number of results to return in a single call. To retrieve the remaining results, make another
-     *        request with the returned <code>NextToken</code> value. This value can be between 5 and 1000.
+     *        request with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If this
+     *        parameter is not specified, then all results are returned.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1715,7 +1756,8 @@ public class DescribeSecurityGroupsRequest extends AmazonWebServiceRequest imple
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

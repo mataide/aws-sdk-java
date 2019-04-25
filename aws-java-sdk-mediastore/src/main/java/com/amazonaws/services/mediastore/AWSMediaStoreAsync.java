@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -130,9 +130,81 @@ public interface AWSMediaStoreAsync extends AWSMediaStore {
 
     /**
      * <p>
-     * Retrieves the properties of the requested container. This returns a single <code>Container</code> object based on
-     * <code>ContainerName</code>. To return all <code>Container</code> objects that are associated with a specified AWS
-     * account, use <a>ListContainers</a>.
+     * Deletes the cross-origin resource sharing (CORS) configuration information that is set for the container.
+     * </p>
+     * <p>
+     * To use this operation, you must have permission to perform the <code>MediaStore:DeleteCorsPolicy</code> action.
+     * The container owner has this permission by default and can grant this permission to others.
+     * </p>
+     * 
+     * @param deleteCorsPolicyRequest
+     * @return A Java Future containing the result of the DeleteCorsPolicy operation returned by the service.
+     * @sample AWSMediaStoreAsync.DeleteCorsPolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/DeleteCorsPolicy" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteCorsPolicyResult> deleteCorsPolicyAsync(DeleteCorsPolicyRequest deleteCorsPolicyRequest);
+
+    /**
+     * <p>
+     * Deletes the cross-origin resource sharing (CORS) configuration information that is set for the container.
+     * </p>
+     * <p>
+     * To use this operation, you must have permission to perform the <code>MediaStore:DeleteCorsPolicy</code> action.
+     * The container owner has this permission by default and can grant this permission to others.
+     * </p>
+     * 
+     * @param deleteCorsPolicyRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteCorsPolicy operation returned by the service.
+     * @sample AWSMediaStoreAsyncHandler.DeleteCorsPolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/DeleteCorsPolicy" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteCorsPolicyResult> deleteCorsPolicyAsync(DeleteCorsPolicyRequest deleteCorsPolicyRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteCorsPolicyRequest, DeleteCorsPolicyResult> asyncHandler);
+
+    /**
+     * <p>
+     * Removes an object lifecycle policy from a container. It takes up to 20 minutes for the change to take effect.
+     * </p>
+     * 
+     * @param deleteLifecyclePolicyRequest
+     * @return A Java Future containing the result of the DeleteLifecyclePolicy operation returned by the service.
+     * @sample AWSMediaStoreAsync.DeleteLifecyclePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/DeleteLifecyclePolicy"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteLifecyclePolicyResult> deleteLifecyclePolicyAsync(DeleteLifecyclePolicyRequest deleteLifecyclePolicyRequest);
+
+    /**
+     * <p>
+     * Removes an object lifecycle policy from a container. It takes up to 20 minutes for the change to take effect.
+     * </p>
+     * 
+     * @param deleteLifecyclePolicyRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteLifecyclePolicy operation returned by the service.
+     * @sample AWSMediaStoreAsyncHandler.DeleteLifecyclePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/DeleteLifecyclePolicy"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteLifecyclePolicyResult> deleteLifecyclePolicyAsync(DeleteLifecyclePolicyRequest deleteLifecyclePolicyRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteLifecyclePolicyRequest, DeleteLifecyclePolicyResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves the properties of the requested container. This request is commonly used to retrieve the endpoint of a
+     * container. An endpoint is a value assigned by the service when a new container is created. A container's endpoint
+     * does not change after it has been assigned. The <code>DescribeContainer</code> request returns a single
+     * <code>Container</code> object based on <code>ContainerName</code>. To return all <code>Container</code> objects
+     * that are associated with a specified AWS account, use <a>ListContainers</a>.
      * </p>
      * 
      * @param describeContainerRequest
@@ -145,9 +217,11 @@ public interface AWSMediaStoreAsync extends AWSMediaStore {
 
     /**
      * <p>
-     * Retrieves the properties of the requested container. This returns a single <code>Container</code> object based on
-     * <code>ContainerName</code>. To return all <code>Container</code> objects that are associated with a specified AWS
-     * account, use <a>ListContainers</a>.
+     * Retrieves the properties of the requested container. This request is commonly used to retrieve the endpoint of a
+     * container. An endpoint is a value assigned by the service when a new container is created. A container's endpoint
+     * does not change after it has been assigned. The <code>DescribeContainer</code> request returns a single
+     * <code>Container</code> object based on <code>ContainerName</code>. To return all <code>Container</code> objects
+     * that are associated with a specified AWS account, use <a>ListContainers</a>.
      * </p>
      * 
      * @param describeContainerRequest
@@ -197,6 +271,76 @@ public interface AWSMediaStoreAsync extends AWSMediaStore {
      */
     java.util.concurrent.Future<GetContainerPolicyResult> getContainerPolicyAsync(GetContainerPolicyRequest getContainerPolicyRequest,
             com.amazonaws.handlers.AsyncHandler<GetContainerPolicyRequest, GetContainerPolicyResult> asyncHandler);
+
+    /**
+     * <p>
+     * Returns the cross-origin resource sharing (CORS) configuration information that is set for the container.
+     * </p>
+     * <p>
+     * To use this operation, you must have permission to perform the <code>MediaStore:GetCorsPolicy</code> action. By
+     * default, the container owner has this permission and can grant it to others.
+     * </p>
+     * 
+     * @param getCorsPolicyRequest
+     * @return A Java Future containing the result of the GetCorsPolicy operation returned by the service.
+     * @sample AWSMediaStoreAsync.GetCorsPolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/GetCorsPolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<GetCorsPolicyResult> getCorsPolicyAsync(GetCorsPolicyRequest getCorsPolicyRequest);
+
+    /**
+     * <p>
+     * Returns the cross-origin resource sharing (CORS) configuration information that is set for the container.
+     * </p>
+     * <p>
+     * To use this operation, you must have permission to perform the <code>MediaStore:GetCorsPolicy</code> action. By
+     * default, the container owner has this permission and can grant it to others.
+     * </p>
+     * 
+     * @param getCorsPolicyRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetCorsPolicy operation returned by the service.
+     * @sample AWSMediaStoreAsyncHandler.GetCorsPolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/GetCorsPolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<GetCorsPolicyResult> getCorsPolicyAsync(GetCorsPolicyRequest getCorsPolicyRequest,
+            com.amazonaws.handlers.AsyncHandler<GetCorsPolicyRequest, GetCorsPolicyResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves the object lifecycle policy that is assigned to a container.
+     * </p>
+     * 
+     * @param getLifecyclePolicyRequest
+     * @return A Java Future containing the result of the GetLifecyclePolicy operation returned by the service.
+     * @sample AWSMediaStoreAsync.GetLifecyclePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/GetLifecyclePolicy" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<GetLifecyclePolicyResult> getLifecyclePolicyAsync(GetLifecyclePolicyRequest getLifecyclePolicyRequest);
+
+    /**
+     * <p>
+     * Retrieves the object lifecycle policy that is assigned to a container.
+     * </p>
+     * 
+     * @param getLifecyclePolicyRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetLifecyclePolicy operation returned by the service.
+     * @sample AWSMediaStoreAsyncHandler.GetLifecyclePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/GetLifecyclePolicy" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<GetLifecyclePolicyResult> getLifecyclePolicyAsync(GetLifecyclePolicyRequest getLifecyclePolicyRequest,
+            com.amazonaws.handlers.AsyncHandler<GetLifecyclePolicyRequest, GetLifecyclePolicyResult> asyncHandler);
 
     /**
      * <p>
@@ -291,5 +435,175 @@ public interface AWSMediaStoreAsync extends AWSMediaStore {
      */
     java.util.concurrent.Future<PutContainerPolicyResult> putContainerPolicyAsync(PutContainerPolicyRequest putContainerPolicyRequest,
             com.amazonaws.handlers.AsyncHandler<PutContainerPolicyRequest, PutContainerPolicyResult> asyncHandler);
+
+    /**
+     * <p>
+     * Sets the cross-origin resource sharing (CORS) configuration on a container so that the container can service
+     * cross-origin requests. For example, you might want to enable a request whose origin is http://www.example.com to
+     * access your AWS Elemental MediaStore container at my.example.container.com by using the browser's XMLHttpRequest
+     * capability.
+     * </p>
+     * <p>
+     * To enable CORS on a container, you attach a CORS policy to the container. In the CORS policy, you configure rules
+     * that identify origins and the HTTP methods that can be executed on your container. The policy can contain up to
+     * 398,000 characters. You can add up to 100 rules to a CORS policy. If more than one rule applies, the service uses
+     * the first applicable rule listed.
+     * </p>
+     * <p>
+     * To learn more about CORS, see <a
+     * href="https://docs.aws.amazon.com/mediastore/latest/ug/cors-policy.html">Cross-Origin Resource Sharing (CORS) in
+     * AWS Elemental MediaStore</a>.
+     * </p>
+     * 
+     * @param putCorsPolicyRequest
+     * @return A Java Future containing the result of the PutCorsPolicy operation returned by the service.
+     * @sample AWSMediaStoreAsync.PutCorsPolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/PutCorsPolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<PutCorsPolicyResult> putCorsPolicyAsync(PutCorsPolicyRequest putCorsPolicyRequest);
+
+    /**
+     * <p>
+     * Sets the cross-origin resource sharing (CORS) configuration on a container so that the container can service
+     * cross-origin requests. For example, you might want to enable a request whose origin is http://www.example.com to
+     * access your AWS Elemental MediaStore container at my.example.container.com by using the browser's XMLHttpRequest
+     * capability.
+     * </p>
+     * <p>
+     * To enable CORS on a container, you attach a CORS policy to the container. In the CORS policy, you configure rules
+     * that identify origins and the HTTP methods that can be executed on your container. The policy can contain up to
+     * 398,000 characters. You can add up to 100 rules to a CORS policy. If more than one rule applies, the service uses
+     * the first applicable rule listed.
+     * </p>
+     * <p>
+     * To learn more about CORS, see <a
+     * href="https://docs.aws.amazon.com/mediastore/latest/ug/cors-policy.html">Cross-Origin Resource Sharing (CORS) in
+     * AWS Elemental MediaStore</a>.
+     * </p>
+     * 
+     * @param putCorsPolicyRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the PutCorsPolicy operation returned by the service.
+     * @sample AWSMediaStoreAsyncHandler.PutCorsPolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/PutCorsPolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<PutCorsPolicyResult> putCorsPolicyAsync(PutCorsPolicyRequest putCorsPolicyRequest,
+            com.amazonaws.handlers.AsyncHandler<PutCorsPolicyRequest, PutCorsPolicyResult> asyncHandler);
+
+    /**
+     * <p>
+     * Writes an object lifecycle policy to a container. If the container already has an object lifecycle policy, the
+     * service replaces the existing policy with the new policy. It takes up to 20 minutes for the change to take
+     * effect.
+     * </p>
+     * <p>
+     * For information about how to construct an object lifecycle policy, see <a
+     * href="https://docs.aws.amazon.com/mediastore/latest/ug/policies-object-lifecycle-components.html">Components of
+     * an Object Lifecycle Policy</a>.
+     * </p>
+     * 
+     * @param putLifecyclePolicyRequest
+     * @return A Java Future containing the result of the PutLifecyclePolicy operation returned by the service.
+     * @sample AWSMediaStoreAsync.PutLifecyclePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/PutLifecyclePolicy" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<PutLifecyclePolicyResult> putLifecyclePolicyAsync(PutLifecyclePolicyRequest putLifecyclePolicyRequest);
+
+    /**
+     * <p>
+     * Writes an object lifecycle policy to a container. If the container already has an object lifecycle policy, the
+     * service replaces the existing policy with the new policy. It takes up to 20 minutes for the change to take
+     * effect.
+     * </p>
+     * <p>
+     * For information about how to construct an object lifecycle policy, see <a
+     * href="https://docs.aws.amazon.com/mediastore/latest/ug/policies-object-lifecycle-components.html">Components of
+     * an Object Lifecycle Policy</a>.
+     * </p>
+     * 
+     * @param putLifecyclePolicyRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the PutLifecyclePolicy operation returned by the service.
+     * @sample AWSMediaStoreAsyncHandler.PutLifecyclePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/PutLifecyclePolicy" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<PutLifecyclePolicyResult> putLifecyclePolicyAsync(PutLifecyclePolicyRequest putLifecyclePolicyRequest,
+            com.amazonaws.handlers.AsyncHandler<PutLifecyclePolicyRequest, PutLifecyclePolicyResult> asyncHandler);
+
+    /**
+     * <p>
+     * Starts access logging on the specified container. When you enable access logging on a container, MediaStore
+     * delivers access logs for objects stored in that container to Amazon CloudWatch Logs.
+     * </p>
+     * 
+     * @param startAccessLoggingRequest
+     * @return A Java Future containing the result of the StartAccessLogging operation returned by the service.
+     * @sample AWSMediaStoreAsync.StartAccessLogging
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/StartAccessLogging" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<StartAccessLoggingResult> startAccessLoggingAsync(StartAccessLoggingRequest startAccessLoggingRequest);
+
+    /**
+     * <p>
+     * Starts access logging on the specified container. When you enable access logging on a container, MediaStore
+     * delivers access logs for objects stored in that container to Amazon CloudWatch Logs.
+     * </p>
+     * 
+     * @param startAccessLoggingRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the StartAccessLogging operation returned by the service.
+     * @sample AWSMediaStoreAsyncHandler.StartAccessLogging
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/StartAccessLogging" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<StartAccessLoggingResult> startAccessLoggingAsync(StartAccessLoggingRequest startAccessLoggingRequest,
+            com.amazonaws.handlers.AsyncHandler<StartAccessLoggingRequest, StartAccessLoggingResult> asyncHandler);
+
+    /**
+     * <p>
+     * Stops access logging on the specified container. When you stop access logging on a container, MediaStore stops
+     * sending access logs to Amazon CloudWatch Logs. These access logs are not saved and are not retrievable.
+     * </p>
+     * 
+     * @param stopAccessLoggingRequest
+     * @return A Java Future containing the result of the StopAccessLogging operation returned by the service.
+     * @sample AWSMediaStoreAsync.StopAccessLogging
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/StopAccessLogging" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<StopAccessLoggingResult> stopAccessLoggingAsync(StopAccessLoggingRequest stopAccessLoggingRequest);
+
+    /**
+     * <p>
+     * Stops access logging on the specified container. When you stop access logging on a container, MediaStore stops
+     * sending access logs to Amazon CloudWatch Logs. These access logs are not saved and are not retrievable.
+     * </p>
+     * 
+     * @param stopAccessLoggingRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the StopAccessLogging operation returned by the service.
+     * @sample AWSMediaStoreAsyncHandler.StopAccessLogging
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/mediastore-2017-09-01/StopAccessLogging" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<StopAccessLoggingResult> stopAccessLoggingAsync(StopAccessLoggingRequest stopAccessLoggingRequest,
+            com.amazonaws.handlers.AsyncHandler<StopAccessLoggingRequest, StopAccessLoggingResult> asyncHandler);
 
 }

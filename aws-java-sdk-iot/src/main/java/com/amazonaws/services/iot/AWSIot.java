@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -28,15 +28,20 @@ import com.amazonaws.services.iot.model.*;
  * <p>
  * <fullname>AWS IoT</fullname>
  * <p>
- * AWS IoT provides secure, bi-directional communication between Internet-connected things (such as sensors, actuators,
+ * AWS IoT provides secure, bi-directional communication between Internet-connected devices (such as sensors, actuators,
  * embedded devices, or smart appliances) and the AWS cloud. You can discover your custom IoT-Data endpoint to
  * communicate with, configure rules for data processing and integration with other services, organize resources
- * associated with each thing (Thing Registry), configure logging, and create and manage policies and credentials to
- * authenticate things.
+ * associated with each device (Registry), configure logging, and create and manage policies and credentials to
+ * authenticate devices.
  * </p>
  * <p>
  * For more information about how AWS IoT works, see the <a
- * href="http://docs.aws.amazon.com/iot/latest/developerguide/aws-iot-how-it-works.html">Developer Guide</a>.
+ * href="https://docs.aws.amazon.com/iot/latest/developerguide/aws-iot-how-it-works.html">Developer Guide</a>.
+ * </p>
+ * <p>
+ * For information about how to use the credentials provider for AWS IoT, see <a
+ * href="https://docs.aws.amazon.com/iot/latest/developerguide/authorizing-direct-aws.html">Authorizing Direct Calls to
+ * AWS Services</a>.
  * </p>
  */
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
@@ -59,9 +64,10 @@ public interface AWSIot {
      * this client's {@link ClientConfiguration} will be used, which by default is HTTPS.
      * <p>
      * For more information on using AWS regions with the AWS SDK for Java, and a complete list of all available
-     * endpoints for all AWS services, see: <a
-     * href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3912">
-     * http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3912</a>
+     * endpoints for all AWS services, see: <a href=
+     * "https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-region-selection.html#region-selection-choose-endpoint"
+     * > https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-region-selection.html#region-selection-
+     * choose-endpoint</a>
      * <p>
      * <b>This method is not threadsafe. An endpoint should be configured when the client is created and before any
      * service requests are made. Changing it afterwards creates inevitable race conditions for any service requests in
@@ -132,6 +138,25 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Adds a thing to a billing group.
+     * </p>
+     * 
+     * @param addThingToBillingGroupRequest
+     * @return Result of the AddThingToBillingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @sample AWSIot.AddThingToBillingGroup
+     */
+    AddThingToBillingGroupResult addThingToBillingGroup(AddThingToBillingGroupRequest addThingToBillingGroupRequest);
+
+    /**
+     * <p>
      * Adds a thing to a thing group.
      * </p>
      * 
@@ -178,7 +203,7 @@ public interface AWSIot {
      * @throws ResourceNotFoundException
      *         The specified resource does not exist.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @throws ThrottlingException
      *         The rate exceeds the limit.
      * @throws ServiceUnavailableException
@@ -207,7 +232,7 @@ public interface AWSIot {
      * @throws InternalFailureException
      *         An unexpected error has occurred.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @sample AWSIot.AttachPolicy
      */
     AttachPolicyResult attachPolicy(AttachPolicyRequest attachPolicyRequest);
@@ -236,7 +261,7 @@ public interface AWSIot {
      * @throws InternalFailureException
      *         An unexpected error has occurred.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @sample AWSIot.AttachPrincipalPolicy
      */
     @Deprecated
@@ -244,7 +269,33 @@ public interface AWSIot {
 
     /**
      * <p>
-     * Attaches the specified principal to the specified thing.
+     * Associates a Device Defender security profile with a thing group or with this account. Each thing group or
+     * account can have up to five security profiles associated with it.
+     * </p>
+     * 
+     * @param attachSecurityProfileRequest
+     * @return Result of the AttachSecurityProfile operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws LimitExceededException
+     *         A limit has been exceeded.
+     * @throws VersionConflictException
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.AttachSecurityProfile
+     */
+    AttachSecurityProfileResult attachSecurityProfile(AttachSecurityProfileRequest attachSecurityProfileRequest);
+
+    /**
+     * <p>
+     * Attaches the specified principal to the specified thing. A principal can be X.509 certificates, IAM users,
+     * groups, and roles, Amazon Cognito identities or federated identities.
      * </p>
      * 
      * @param attachThingPrincipalRequest
@@ -265,6 +316,26 @@ public interface AWSIot {
      * @sample AWSIot.AttachThingPrincipal
      */
     AttachThingPrincipalResult attachThingPrincipal(AttachThingPrincipalRequest attachThingPrincipalRequest);
+
+    /**
+     * <p>
+     * Cancels an audit that is in progress. The audit can be either scheduled or on-demand. If the audit is not in
+     * progress, an "InvalidRequestException" occurs.
+     * </p>
+     * 
+     * @param cancelAuditTaskRequest
+     * @return Result of the CancelAuditTask operation returned by the service.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.CancelAuditTask
+     */
+    CancelAuditTaskResult cancelAuditTask(CancelAuditTaskRequest cancelAuditTaskRequest);
 
     /**
      * <p>
@@ -323,6 +394,31 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Cancels the execution of a job for a given thing.
+     * </p>
+     * 
+     * @param cancelJobExecutionRequest
+     * @return Result of the CancelJobExecution operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws InvalidStateTransitionException
+     *         An attempt was made to change to an invalid state, for example by deleting a job or a job execution which
+     *         is "IN_PROGRESS" without setting the <code>force</code> parameter.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @throws VersionConflictException
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
+     * @sample AWSIot.CancelJobExecution
+     */
+    CancelJobExecutionResult cancelJobExecution(CancelJobExecutionRequest cancelJobExecutionRequest);
+
+    /**
+     * <p>
      * Clears the default authorizer.
      * </p>
      * 
@@ -356,7 +452,7 @@ public interface AWSIot {
      * @throws InvalidRequestException
      *         The request is not valid.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @throws ThrottlingException
      *         The rate exceeds the limit.
      * @throws UnauthorizedException
@@ -368,6 +464,25 @@ public interface AWSIot {
      * @sample AWSIot.CreateAuthorizer
      */
     CreateAuthorizerResult createAuthorizer(CreateAuthorizerRequest createAuthorizerRequest);
+
+    /**
+     * <p>
+     * Creates a billing group.
+     * </p>
+     * 
+     * @param createBillingGroupRequest
+     * @return Result of the CreateBillingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceAlreadyExistsException
+     *         The resource already exists.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.CreateBillingGroup
+     */
+    CreateBillingGroupResult createBillingGroup(CreateBillingGroupRequest createBillingGroupRequest);
 
     /**
      * <p>
@@ -441,6 +556,31 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Creates a dynamic thing group.
+     * </p>
+     * 
+     * @param createDynamicThingGroupRequest
+     * @return Result of the CreateDynamicThingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceAlreadyExistsException
+     *         The resource already exists.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws InvalidQueryException
+     *         The query is invalid.
+     * @throws LimitExceededException
+     *         A limit has been exceeded.
+     * @sample AWSIot.CreateDynamicThingGroup
+     */
+    CreateDynamicThingGroupResult createDynamicThingGroup(CreateDynamicThingGroupRequest createDynamicThingGroupRequest);
+
+    /**
+     * <p>
      * Creates a job.
      * </p>
      * 
@@ -453,7 +593,7 @@ public interface AWSIot {
      * @throws ResourceAlreadyExistsException
      *         The resource already exists.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @throws ThrottlingException
      *         The rate exceeds the limit.
      * @throws ServiceUnavailableException
@@ -487,6 +627,33 @@ public interface AWSIot {
      * @sample AWSIot.CreateKeysAndCertificate
      */
     CreateKeysAndCertificateResult createKeysAndCertificate(CreateKeysAndCertificateRequest createKeysAndCertificateRequest);
+
+    /**
+     * <p>
+     * Creates an AWS IoT OTAUpdate on a target group of things or groups.
+     * </p>
+     * 
+     * @param createOTAUpdateRequest
+     * @return Result of the CreateOTAUpdate operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws LimitExceededException
+     *         A limit has been exceeded.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ResourceAlreadyExistsException
+     *         The resource already exists.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @sample AWSIot.CreateOTAUpdate
+     */
+    CreateOTAUpdateResult createOTAUpdate(CreateOTAUpdateRequest createOTAUpdateRequest);
 
     /**
      * <p>
@@ -564,7 +731,7 @@ public interface AWSIot {
      * @throws InvalidRequestException
      *         The request is not valid.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @throws ThrottlingException
      *         The rate exceeds the limit.
      * @throws UnauthorizedException
@@ -579,8 +746,86 @@ public interface AWSIot {
 
     /**
      * <p>
-     * Creates a thing record in the thing registry.
+     * Creates a scheduled audit that is run at a specified time interval.
      * </p>
+     * 
+     * @param createScheduledAuditRequest
+     * @return Result of the CreateScheduledAudit operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws LimitExceededException
+     *         A limit has been exceeded.
+     * @sample AWSIot.CreateScheduledAudit
+     */
+    CreateScheduledAuditResult createScheduledAudit(CreateScheduledAuditRequest createScheduledAuditRequest);
+
+    /**
+     * <p>
+     * Creates a Device Defender security profile.
+     * </p>
+     * 
+     * @param createSecurityProfileRequest
+     * @return Result of the CreateSecurityProfile operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceAlreadyExistsException
+     *         The resource already exists.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.CreateSecurityProfile
+     */
+    CreateSecurityProfileResult createSecurityProfile(CreateSecurityProfileRequest createSecurityProfileRequest);
+
+    /**
+     * <p>
+     * Creates a stream for delivering one or more large files in chunks over MQTT. A stream transports data bytes in
+     * chunks or blocks packaged as MQTT messages from a source like S3. You can have one or more files associated with
+     * a stream. The total size of a file associated with the stream cannot exceed more than 2 MB. The stream will be
+     * created with version 0. If a stream is created with the same streamID as a stream that existed and was deleted
+     * within last 90 days, we will resurrect that old stream by incrementing the version by 1.
+     * </p>
+     * 
+     * @param createStreamRequest
+     * @return Result of the CreateStream operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws LimitExceededException
+     *         A limit has been exceeded.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ResourceAlreadyExistsException
+     *         The resource already exists.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.CreateStream
+     */
+    CreateStreamResult createStream(CreateStreamRequest createStreamRequest);
+
+    /**
+     * <p>
+     * Creates a thing record in the registry. If this call is made multiple times using the same thing name and
+     * configuration, the call will succeed. If this call is made with the same thing name but different configuration a
+     * <code>ResourceAlreadyExistsException</code> is thrown.
+     * </p>
+     * <note>
+     * <p>
+     * This is a control plane operation. See <a
+     * href="https://docs.aws.amazon.com/iot/latest/developerguide/authorization.html">Authorization</a> for information
+     * about authorizing control plane actions.
+     * </p>
+     * </note>
      * 
      * @param createThingRequest
      *        The input for the CreateThing operation.
@@ -607,6 +852,13 @@ public interface AWSIot {
      * <p>
      * Create a thing group.
      * </p>
+     * <note>
+     * <p>
+     * This is a control plane operation. See <a
+     * href="https://docs.aws.amazon.com/iot/latest/developerguide/authorization.html">Authorization</a> for information
+     * about authorizing control plane actions.
+     * </p>
+     * </note>
      * 
      * @param createThingGroupRequest
      * @return Result of the CreateThingGroup operation returned by the service.
@@ -665,9 +917,32 @@ public interface AWSIot {
      *         The resource already exists.
      * @throws ServiceUnavailableException
      *         The service is temporarily unavailable.
+     * @throws ConflictingResourceUpdateException
+     *         A conflicting resource update exception. This exception is thrown when two pending updates cause a
+     *         conflict.
      * @sample AWSIot.CreateTopicRule
      */
     CreateTopicRuleResult createTopicRule(CreateTopicRuleRequest createTopicRuleRequest);
+
+    /**
+     * <p>
+     * Restores the default settings for Device Defender audits for this account. Any configuration data you entered is
+     * deleted and all audit checks are reset to disabled.
+     * </p>
+     * 
+     * @param deleteAccountAuditConfigurationRequest
+     * @return Result of the DeleteAccountAuditConfiguration operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DeleteAccountAuditConfiguration
+     */
+    DeleteAccountAuditConfigurationResult deleteAccountAuditConfiguration(DeleteAccountAuditConfigurationRequest deleteAccountAuditConfigurationRequest);
 
     /**
      * <p>
@@ -693,6 +968,26 @@ public interface AWSIot {
      * @sample AWSIot.DeleteAuthorizer
      */
     DeleteAuthorizerResult deleteAuthorizer(DeleteAuthorizerRequest deleteAuthorizerRequest);
+
+    /**
+     * <p>
+     * Deletes the billing group.
+     * </p>
+     * 
+     * @param deleteBillingGroupRequest
+     * @return Result of the DeleteBillingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws VersionConflictException
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DeleteBillingGroup
+     */
+    DeleteBillingGroupResult deleteBillingGroup(DeleteBillingGroupRequest deleteBillingGroupRequest);
 
     /**
      * <p>
@@ -752,6 +1047,106 @@ public interface AWSIot {
      * @sample AWSIot.DeleteCertificate
      */
     DeleteCertificateResult deleteCertificate(DeleteCertificateRequest deleteCertificateRequest);
+
+    /**
+     * <p>
+     * Deletes a dynamic thing group.
+     * </p>
+     * 
+     * @param deleteDynamicThingGroupRequest
+     * @return Result of the DeleteDynamicThingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws VersionConflictException
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DeleteDynamicThingGroup
+     */
+    DeleteDynamicThingGroupResult deleteDynamicThingGroup(DeleteDynamicThingGroupRequest deleteDynamicThingGroupRequest);
+
+    /**
+     * <p>
+     * Deletes a job and its related job executions.
+     * </p>
+     * <p>
+     * Deleting a job may take time, depending on the number of job executions created for the job and various other
+     * factors. While the job is being deleted, the status of the job will be shown as "DELETION_IN_PROGRESS".
+     * Attempting to delete or cancel a job whose status is already "DELETION_IN_PROGRESS" will result in an error.
+     * </p>
+     * <p>
+     * Only 10 jobs may have status "DELETION_IN_PROGRESS" at the same time, or a LimitExceededException will occur.
+     * </p>
+     * 
+     * @param deleteJobRequest
+     * @return Result of the DeleteJob operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws InvalidStateTransitionException
+     *         An attempt was made to change to an invalid state, for example by deleting a job or a job execution which
+     *         is "IN_PROGRESS" without setting the <code>force</code> parameter.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws LimitExceededException
+     *         A limit has been exceeded.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @sample AWSIot.DeleteJob
+     */
+    DeleteJobResult deleteJob(DeleteJobRequest deleteJobRequest);
+
+    /**
+     * <p>
+     * Deletes a job execution.
+     * </p>
+     * 
+     * @param deleteJobExecutionRequest
+     * @return Result of the DeleteJobExecution operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws InvalidStateTransitionException
+     *         An attempt was made to change to an invalid state, for example by deleting a job or a job execution which
+     *         is "IN_PROGRESS" without setting the <code>force</code> parameter.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @sample AWSIot.DeleteJobExecution
+     */
+    DeleteJobExecutionResult deleteJobExecution(DeleteJobExecutionRequest deleteJobExecutionRequest);
+
+    /**
+     * <p>
+     * Delete an OTA update.
+     * </p>
+     * 
+     * @param deleteOTAUpdateRequest
+     * @return Result of the DeleteOTAUpdate operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @throws VersionConflictException
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
+     * @sample AWSIot.DeleteOTAUpdate
+     */
+    DeleteOTAUpdateResult deleteOTAUpdate(DeleteOTAUpdateRequest deleteOTAUpdateRequest);
 
     /**
      * <p>
@@ -867,7 +1262,72 @@ public interface AWSIot {
 
     /**
      * <p>
-     * Deletes the specified thing.
+     * Deletes a scheduled audit.
+     * </p>
+     * 
+     * @param deleteScheduledAuditRequest
+     * @return Result of the DeleteScheduledAudit operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DeleteScheduledAudit
+     */
+    DeleteScheduledAuditResult deleteScheduledAudit(DeleteScheduledAuditRequest deleteScheduledAuditRequest);
+
+    /**
+     * <p>
+     * Deletes a Device Defender security profile.
+     * </p>
+     * 
+     * @param deleteSecurityProfileRequest
+     * @return Result of the DeleteSecurityProfile operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws VersionConflictException
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
+     * @sample AWSIot.DeleteSecurityProfile
+     */
+    DeleteSecurityProfileResult deleteSecurityProfile(DeleteSecurityProfileRequest deleteSecurityProfileRequest);
+
+    /**
+     * <p>
+     * Deletes a stream.
+     * </p>
+     * 
+     * @param deleteStreamRequest
+     * @return Result of the DeleteStream operation returned by the service.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws DeleteConflictException
+     *         You can't delete the resource because it is attached to one or more resources.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DeleteStream
+     */
+    DeleteStreamResult deleteStream(DeleteStreamRequest deleteStreamRequest);
+
+    /**
+     * <p>
+     * Deletes the specified thing. Returns successfully with no error if the deletion is successful or you specify a
+     * thing that doesn't exist.
      * </p>
      * 
      * @param deleteThingRequest
@@ -876,8 +1336,8 @@ public interface AWSIot {
      * @throws ResourceNotFoundException
      *         The specified resource does not exist.
      * @throws VersionConflictException
-     *         An exception thrown when the version of a thing passed to a command is different than the version
-     *         specified with the --version parameter.
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
      * @throws InvalidRequestException
      *         The request is not valid.
      * @throws ThrottlingException
@@ -902,8 +1362,8 @@ public interface AWSIot {
      * @throws InvalidRequestException
      *         The request is not valid.
      * @throws VersionConflictException
-     *         An exception thrown when the version of a thing passed to a command is different than the version
-     *         specified with the --version parameter.
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
      * @throws ThrottlingException
      *         The rate exceeds the limit.
      * @throws InternalFailureException
@@ -914,8 +1374,8 @@ public interface AWSIot {
 
     /**
      * <p>
-     * Deletes the specified thing type . You cannot delete a thing type if it has things associated with it. To delete
-     * a thing type, first mark it as deprecated by calling <a>DeprecateThingType</a>, then remove any associated things
+     * Deletes the specified thing type. You cannot delete a thing type if it has things associated with it. To delete a
+     * thing type, first mark it as deprecated by calling <a>DeprecateThingType</a>, then remove any associated things
      * by calling <a>UpdateThing</a> to change the thing type on any associated thing, and finally use
      * <a>DeleteThingType</a> to delete the thing type.
      * </p>
@@ -955,6 +1415,9 @@ public interface AWSIot {
      *         The service is temporarily unavailable.
      * @throws UnauthorizedException
      *         You are not authorized to perform this operation.
+     * @throws ConflictingResourceUpdateException
+     *         A conflicting resource update exception. This exception is thrown when two pending updates cause a
+     *         conflict.
      * @sample AWSIot.DeleteTopicRule
      */
     DeleteTopicRuleResult deleteTopicRule(DeleteTopicRuleRequest deleteTopicRuleRequest);
@@ -1002,6 +1465,41 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Gets information about the Device Defender audit settings for this account. Settings include how audit
+     * notifications are sent and which audit checks are enabled or disabled.
+     * </p>
+     * 
+     * @param describeAccountAuditConfigurationRequest
+     * @return Result of the DescribeAccountAuditConfiguration operation returned by the service.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DescribeAccountAuditConfiguration
+     */
+    DescribeAccountAuditConfigurationResult describeAccountAuditConfiguration(DescribeAccountAuditConfigurationRequest describeAccountAuditConfigurationRequest);
+
+    /**
+     * <p>
+     * Gets information about a Device Defender audit.
+     * </p>
+     * 
+     * @param describeAuditTaskRequest
+     * @return Result of the DescribeAuditTask operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DescribeAuditTask
+     */
+    DescribeAuditTaskResult describeAuditTask(DescribeAuditTaskRequest describeAuditTaskRequest);
+
+    /**
+     * <p>
      * Describes an authorizer.
      * </p>
      * 
@@ -1022,6 +1520,25 @@ public interface AWSIot {
      * @sample AWSIot.DescribeAuthorizer
      */
     DescribeAuthorizerResult describeAuthorizer(DescribeAuthorizerRequest describeAuthorizerRequest);
+
+    /**
+     * <p>
+     * Returns information about a billing group.
+     * </p>
+     * 
+     * @param describeBillingGroupRequest
+     * @return Result of the DescribeBillingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @sample AWSIot.DescribeBillingGroup
+     */
+    DescribeBillingGroupResult describeBillingGroup(DescribeBillingGroupRequest describeBillingGroupRequest);
 
     /**
      * <p>
@@ -1215,6 +1732,67 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Gets information about a scheduled audit.
+     * </p>
+     * 
+     * @param describeScheduledAuditRequest
+     * @return Result of the DescribeScheduledAudit operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DescribeScheduledAudit
+     */
+    DescribeScheduledAuditResult describeScheduledAudit(DescribeScheduledAuditRequest describeScheduledAuditRequest);
+
+    /**
+     * <p>
+     * Gets information about a Device Defender security profile.
+     * </p>
+     * 
+     * @param describeSecurityProfileRequest
+     * @return Result of the DescribeSecurityProfile operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DescribeSecurityProfile
+     */
+    DescribeSecurityProfileResult describeSecurityProfile(DescribeSecurityProfileRequest describeSecurityProfileRequest);
+
+    /**
+     * <p>
+     * Gets information about a stream.
+     * </p>
+     * 
+     * @param describeStreamRequest
+     * @return Result of the DescribeStream operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DescribeStream
+     */
+    DescribeStreamResult describeStream(DescribeStreamRequest describeStreamRequest);
+
+    /**
+     * <p>
      * Gets information about the specified thing.
      * </p>
      * 
@@ -1319,7 +1897,7 @@ public interface AWSIot {
      * @throws InternalFailureException
      *         An unexpected error has occurred.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @sample AWSIot.DetachPolicy
      */
     DetachPolicyResult detachPolicy(DetachPolicyRequest detachPolicyRequest);
@@ -1354,8 +1932,33 @@ public interface AWSIot {
 
     /**
      * <p>
-     * Detaches the specified principal from the specified thing.
+     * Disassociates a Device Defender security profile from a thing group or from this account.
      * </p>
+     * 
+     * @param detachSecurityProfileRequest
+     * @return Result of the DetachSecurityProfile operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.DetachSecurityProfile
+     */
+    DetachSecurityProfileResult detachSecurityProfile(DetachSecurityProfileRequest detachSecurityProfileRequest);
+
+    /**
+     * <p>
+     * Detaches the specified principal from the specified thing. A principal can be X.509 certificates, IAM users,
+     * groups, and roles, Amazon Cognito identities or federated identities.
+     * </p>
+     * <note>
+     * <p>
+     * This call is asynchronous. It might take several seconds for the detachment to propagate.
+     * </p>
+     * </note>
      * 
      * @param detachThingPrincipalRequest
      *        The input for the DetachThingPrincipal operation.
@@ -1392,6 +1995,9 @@ public interface AWSIot {
      *         The service is temporarily unavailable.
      * @throws UnauthorizedException
      *         You are not authorized to perform this operation.
+     * @throws ConflictingResourceUpdateException
+     *         A conflicting resource update exception. This exception is thrown when two pending updates cause a
+     *         conflict.
      * @sample AWSIot.DisableTopicRule
      */
     DisableTopicRuleResult disableTopicRule(DisableTopicRuleRequest disableTopicRuleRequest);
@@ -1412,13 +2018,17 @@ public interface AWSIot {
      *         The service is temporarily unavailable.
      * @throws UnauthorizedException
      *         You are not authorized to perform this operation.
+     * @throws ConflictingResourceUpdateException
+     *         A conflicting resource update exception. This exception is thrown when two pending updates cause a
+     *         conflict.
      * @sample AWSIot.EnableTopicRule
      */
     EnableTopicRuleResult enableTopicRule(EnableTopicRuleRequest enableTopicRuleRequest);
 
     /**
      * <p>
-     * Gets effective policies.
+     * Gets a list of the policies that have an effect on the authorization behavior of the specified device when it
+     * connects to the AWS IoT device gateway.
      * </p>
      * 
      * @param getEffectivePoliciesRequest
@@ -1436,7 +2046,7 @@ public interface AWSIot {
      * @throws InternalFailureException
      *         An unexpected error has occurred.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @sample AWSIot.GetEffectivePolicies
      */
     GetEffectivePoliciesResult getEffectivePolicies(GetEffectivePoliciesRequest getEffectivePoliciesRequest);
@@ -1485,6 +2095,9 @@ public interface AWSIot {
      * <p>
      * Gets the logging options.
      * </p>
+     * <p>
+     * NOTE: use of this command is not recommended. Use <code>GetV2LoggingOptions</code> instead.
+     * </p>
      * 
      * @param getLoggingOptionsRequest
      *        The input for the GetLoggingOptions operation.
@@ -1498,6 +2111,29 @@ public interface AWSIot {
      * @sample AWSIot.GetLoggingOptions
      */
     GetLoggingOptionsResult getLoggingOptions(GetLoggingOptionsRequest getLoggingOptionsRequest);
+
+    /**
+     * <p>
+     * Gets an OTA update.
+     * </p>
+     * 
+     * @param getOTAUpdateRequest
+     * @return Result of the GetOTAUpdate operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @sample AWSIot.GetOTAUpdate
+     */
+    GetOTAUpdateResult getOTAUpdate(GetOTAUpdateRequest getOTAUpdateRequest);
 
     /**
      * <p>
@@ -1571,6 +2207,35 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Gets statistics about things that match the specified query.
+     * </p>
+     * 
+     * @param getStatisticsRequest
+     * @return Result of the GetStatistics operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws InvalidQueryException
+     *         The query is invalid.
+     * @throws InvalidAggregationException
+     *         The aggregation is invalid.
+     * @throws IndexNotReadyException
+     *         The index is not ready.
+     * @sample AWSIot.GetStatistics
+     */
+    GetStatisticsResult getStatistics(GetStatisticsRequest getStatisticsRequest);
+
+    /**
+     * <p>
      * Gets information about the rule.
      * </p>
      * 
@@ -1598,13 +2263,32 @@ public interface AWSIot {
      * @return Result of the GetV2LoggingOptions operation returned by the service.
      * @throws InternalException
      *         An unexpected error has occurred.
-     * @throws InvalidRequestException
-     *         The request is not valid.
+     * @throws NotConfiguredException
+     *         The resource is not configured.
      * @throws ServiceUnavailableException
      *         The service is temporarily unavailable.
      * @sample AWSIot.GetV2LoggingOptions
      */
     GetV2LoggingOptionsResult getV2LoggingOptions(GetV2LoggingOptionsRequest getV2LoggingOptionsRequest);
+
+    /**
+     * <p>
+     * Lists the active violations for a given Device Defender security profile.
+     * </p>
+     * 
+     * @param listActiveViolationsRequest
+     * @return Result of the ListActiveViolations operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.ListActiveViolations
+     */
+    ListActiveViolationsResult listActiveViolations(ListActiveViolationsRequest listActiveViolationsRequest);
 
     /**
      * <p>
@@ -1626,10 +2310,45 @@ public interface AWSIot {
      * @throws InternalFailureException
      *         An unexpected error has occurred.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @sample AWSIot.ListAttachedPolicies
      */
     ListAttachedPoliciesResult listAttachedPolicies(ListAttachedPoliciesRequest listAttachedPoliciesRequest);
+
+    /**
+     * <p>
+     * Lists the findings (results) of a Device Defender audit or of the audits performed during a specified time
+     * period. (Findings are retained for 180 days.)
+     * </p>
+     * 
+     * @param listAuditFindingsRequest
+     * @return Result of the ListAuditFindings operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.ListAuditFindings
+     */
+    ListAuditFindingsResult listAuditFindings(ListAuditFindingsRequest listAuditFindingsRequest);
+
+    /**
+     * <p>
+     * Lists the Device Defender audits that have been performed during a given time period.
+     * </p>
+     * 
+     * @param listAuditTasksRequest
+     * @return Result of the ListAuditTasks operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.ListAuditTasks
+     */
+    ListAuditTasksResult listAuditTasks(ListAuditTasksRequest listAuditTasksRequest);
 
     /**
      * <p>
@@ -1651,6 +2370,25 @@ public interface AWSIot {
      * @sample AWSIot.ListAuthorizers
      */
     ListAuthorizersResult listAuthorizers(ListAuthorizersRequest listAuthorizersRequest);
+
+    /**
+     * <p>
+     * Lists the billing groups you have created.
+     * </p>
+     * 
+     * @param listBillingGroupsRequest
+     * @return Result of the ListBillingGroups operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @sample AWSIot.ListBillingGroups
+     */
+    ListBillingGroupsResult listBillingGroups(ListBillingGroupsRequest listBillingGroupsRequest);
 
     /**
      * <p>
@@ -1806,6 +2544,27 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Lists OTA updates.
+     * </p>
+     * 
+     * @param listOTAUpdatesRequest
+     * @return Result of the ListOTAUpdates operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @sample AWSIot.ListOTAUpdates
+     */
+    ListOTAUpdatesResult listOTAUpdates(ListOTAUpdatesRequest listOTAUpdatesRequest);
+
+    /**
+     * <p>
      * Lists certificates that are being transferred but not yet accepted.
      * </p>
      * 
@@ -1904,7 +2663,7 @@ public interface AWSIot {
      * <p>
      * Lists the policies attached to the specified principal. If you use an Cognito identity, the ID must be in <a
      * href=
-     * "http://docs.aws.amazon.com/cognitoidentity/latest/APIReference/API_GetCredentialsForIdentity.html#API_GetCredentialsForIdentity_RequestSyntax"
+     * "https://docs.aws.amazon.com/cognitoidentity/latest/APIReference/API_GetCredentialsForIdentity.html#API_GetCredentialsForIdentity_RequestSyntax"
      * >AmazonCognito Identity format</a>.
      * </p>
      * <p>
@@ -1933,7 +2692,8 @@ public interface AWSIot {
 
     /**
      * <p>
-     * Lists the things associated with the specified principal.
+     * Lists the things associated with the specified principal. A principal can be X.509 certificates, IAM users,
+     * groups, and roles, Amazon Cognito identities or federated identities.
      * </p>
      * 
      * @param listPrincipalThingsRequest
@@ -1978,6 +2738,100 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Lists all of your scheduled audits.
+     * </p>
+     * 
+     * @param listScheduledAuditsRequest
+     * @return Result of the ListScheduledAudits operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.ListScheduledAudits
+     */
+    ListScheduledAuditsResult listScheduledAudits(ListScheduledAuditsRequest listScheduledAuditsRequest);
+
+    /**
+     * <p>
+     * Lists the Device Defender security profiles you have created. You can use filters to list only those security
+     * profiles associated with a thing group or only those associated with your account.
+     * </p>
+     * 
+     * @param listSecurityProfilesRequest
+     * @return Result of the ListSecurityProfiles operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.ListSecurityProfiles
+     */
+    ListSecurityProfilesResult listSecurityProfiles(ListSecurityProfilesRequest listSecurityProfilesRequest);
+
+    /**
+     * <p>
+     * Lists the Device Defender security profiles attached to a target (thing group).
+     * </p>
+     * 
+     * @param listSecurityProfilesForTargetRequest
+     * @return Result of the ListSecurityProfilesForTarget operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @sample AWSIot.ListSecurityProfilesForTarget
+     */
+    ListSecurityProfilesForTargetResult listSecurityProfilesForTarget(ListSecurityProfilesForTargetRequest listSecurityProfilesForTargetRequest);
+
+    /**
+     * <p>
+     * Lists all of the streams in your AWS account.
+     * </p>
+     * 
+     * @param listStreamsRequest
+     * @return Result of the ListStreams operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.ListStreams
+     */
+    ListStreamsResult listStreams(ListStreamsRequest listStreamsRequest);
+
+    /**
+     * <p>
+     * Lists the tags (metadata) you have assigned to the resource.
+     * </p>
+     * 
+     * @param listTagsForResourceRequest
+     * @return Result of the ListTagsForResource operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @sample AWSIot.ListTagsForResource
+     */
+    ListTagsForResourceResult listTagsForResource(ListTagsForResourceRequest listTagsForResourceRequest);
+
+    /**
+     * <p>
      * List targets for the specified policy.
      * </p>
      * 
@@ -1996,10 +2850,29 @@ public interface AWSIot {
      * @throws InternalFailureException
      *         An unexpected error has occurred.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @sample AWSIot.ListTargetsForPolicy
      */
     ListTargetsForPolicyResult listTargetsForPolicy(ListTargetsForPolicyRequest listTargetsForPolicyRequest);
+
+    /**
+     * <p>
+     * Lists the targets (thing groups) associated with a given Device Defender security profile.
+     * </p>
+     * 
+     * @param listTargetsForSecurityProfileRequest
+     * @return Result of the ListTargetsForSecurityProfile operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.ListTargetsForSecurityProfile
+     */
+    ListTargetsForSecurityProfileResult listTargetsForSecurityProfile(ListTargetsForSecurityProfileRequest listTargetsForSecurityProfileRequest);
 
     /**
      * <p>
@@ -2037,7 +2910,8 @@ public interface AWSIot {
 
     /**
      * <p>
-     * Lists the principals associated with the specified thing.
+     * Lists the principals associated with the specified thing. A principal can be X.509 certificates, IAM users,
+     * groups, and roles, Amazon Cognito identities or federated identities.
      * </p>
      * 
      * @param listThingPrincipalsRequest
@@ -2145,6 +3019,25 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Lists the things you have added to the given billing group.
+     * </p>
+     * 
+     * @param listThingsInBillingGroupRequest
+     * @return Result of the ListThingsInBillingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @sample AWSIot.ListThingsInBillingGroup
+     */
+    ListThingsInBillingGroupResult listThingsInBillingGroup(ListThingsInBillingGroupRequest listThingsInBillingGroupRequest);
+
+    /**
+     * <p>
      * Lists the things in the specified group.
      * </p>
      * 
@@ -2199,6 +3092,25 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Lists the Device Defender security profile violations discovered during the given time period. You can use
+     * filters to limit the results to those alerts issued for a particular security profile, behavior or thing
+     * (device).
+     * </p>
+     * 
+     * @param listViolationEventsRequest
+     * @return Result of the ListViolationEvents operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.ListViolationEvents
+     */
+    ListViolationEventsResult listViolationEvents(ListViolationEventsRequest listViolationEventsRequest);
+
+    /**
+     * <p>
      * Registers a CA certificate with AWS IoT. This CA certificate can then be used to sign device certificates, which
      * can be then registered with AWS IoT. You can register up to 10 CA certificates per AWS account that have the same
      * subject field. This enables you to have up to 10 certificate authorities sign your device certificates. If you
@@ -2220,7 +3132,7 @@ public interface AWSIot {
      * @throws ThrottlingException
      *         The rate exceeds the limit.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @throws UnauthorizedException
      *         You are not authorized to perform this operation.
      * @throws ServiceUnavailableException
@@ -2326,6 +3238,25 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Removes the given thing from the billing group.
+     * </p>
+     * 
+     * @param removeThingFromBillingGroupRequest
+     * @return Result of the RemoveThingFromBillingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @sample AWSIot.RemoveThingFromBillingGroup
+     */
+    RemoveThingFromBillingGroupResult removeThingFromBillingGroup(RemoveThingFromBillingGroupRequest removeThingFromBillingGroupRequest);
+
+    /**
+     * <p>
      * Remove the specified thing from the specified group.
      * </p>
      * 
@@ -2362,6 +3293,9 @@ public interface AWSIot {
      *         The service is temporarily unavailable.
      * @throws UnauthorizedException
      *         You are not authorized to perform this operation.
+     * @throws ConflictingResourceUpdateException
+     *         A conflicting resource update exception. This exception is thrown when two pending updates cause a
+     *         conflict.
      * @sample AWSIot.ReplaceTopicRule
      */
     ReplaceTopicRuleResult replaceTopicRule(ReplaceTopicRuleRequest replaceTopicRuleRequest);
@@ -2413,6 +3347,8 @@ public interface AWSIot {
      *         The service is temporarily unavailable.
      * @throws InternalFailureException
      *         An unexpected error has occurred.
+     * @throws ResourceAlreadyExistsException
+     *         The resource already exists.
      * @sample AWSIot.SetDefaultAuthorizer
      */
     SetDefaultAuthorizerResult setDefaultAuthorizer(SetDefaultAuthorizerRequest setDefaultAuthorizerRequest);
@@ -2446,6 +3382,9 @@ public interface AWSIot {
     /**
      * <p>
      * Sets the logging options.
+     * </p>
+     * <p>
+     * NOTE: use of this command is not recommended. Use <code>SetV2LoggingOptions</code> instead.
      * </p>
      * 
      * @param setLoggingOptionsRequest
@@ -2499,6 +3438,25 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Starts an on-demand Device Defender audit.
+     * </p>
+     * 
+     * @param startOnDemandAuditTaskRequest
+     * @return Result of the StartOnDemandAuditTask operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws LimitExceededException
+     *         A limit has been exceeded.
+     * @sample AWSIot.StartOnDemandAuditTask
+     */
+    StartOnDemandAuditTaskResult startOnDemandAuditTask(StartOnDemandAuditTaskRequest startOnDemandAuditTaskRequest);
+
+    /**
+     * <p>
      * Creates a bulk thing provisioning task.
      * </p>
      * 
@@ -2539,7 +3497,29 @@ public interface AWSIot {
 
     /**
      * <p>
-     * Test custom authorization.
+     * Adds to or modifies the tags of the given resource. Tags are metadata which can be used to manage a resource.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     * @return Result of the TagResource operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws LimitExceededException
+     *         A limit has been exceeded.
+     * @sample AWSIot.TagResource
+     */
+    TagResourceResult tagResource(TagResourceRequest tagResourceRequest);
+
+    /**
+     * <p>
+     * Tests if a specified principal is authorized to perform an AWS IoT action on a specified resource. Use this to
+     * test and debug the authorization behavior of devices that connect to the AWS IoT device gateway.
      * </p>
      * 
      * @param testAuthorizationRequest
@@ -2557,14 +3537,15 @@ public interface AWSIot {
      * @throws InternalFailureException
      *         An unexpected error has occurred.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @sample AWSIot.TestAuthorization
      */
     TestAuthorizationResult testAuthorization(TestAuthorizationRequest testAuthorizationRequest);
 
     /**
      * <p>
-     * Invoke the specified custom authorizer for testing purposes.
+     * Tests a custom authorization behavior by invoking a specified custom authorizer. Use this to test and debug the
+     * custom authorization behavior of devices that connect to the AWS IoT device gateway.
      * </p>
      * 
      * @param testInvokeAuthorizerRequest
@@ -2632,6 +3613,43 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Removes the given tags (metadata) from the resource.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     * @return Result of the UntagResource operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @sample AWSIot.UntagResource
+     */
+    UntagResourceResult untagResource(UntagResourceRequest untagResourceRequest);
+
+    /**
+     * <p>
+     * Configures or reconfigures the Device Defender audit settings for this account. Settings include how audit
+     * notifications are sent and which audit checks are enabled or disabled.
+     * </p>
+     * 
+     * @param updateAccountAuditConfigurationRequest
+     * @return Result of the UpdateAccountAuditConfiguration operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.UpdateAccountAuditConfiguration
+     */
+    UpdateAccountAuditConfigurationResult updateAccountAuditConfiguration(UpdateAccountAuditConfigurationRequest updateAccountAuditConfigurationRequest);
+
+    /**
+     * <p>
      * Updates an authorizer.
      * </p>
      * 
@@ -2642,7 +3660,7 @@ public interface AWSIot {
      * @throws InvalidRequestException
      *         The request is not valid.
      * @throws LimitExceededException
-     *         The number of attached entities exceeds the limit.
+     *         A limit has been exceeded.
      * @throws ThrottlingException
      *         The rate exceeds the limit.
      * @throws UnauthorizedException
@@ -2654,6 +3672,28 @@ public interface AWSIot {
      * @sample AWSIot.UpdateAuthorizer
      */
     UpdateAuthorizerResult updateAuthorizer(UpdateAuthorizerRequest updateAuthorizerRequest);
+
+    /**
+     * <p>
+     * Updates information about the billing group.
+     * </p>
+     * 
+     * @param updateBillingGroupRequest
+     * @return Result of the UpdateBillingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws VersionConflictException
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @sample AWSIot.UpdateBillingGroup
+     */
+    UpdateBillingGroupResult updateBillingGroup(UpdateBillingGroupRequest updateBillingGroupRequest);
 
     /**
      * <p>
@@ -2714,6 +3754,30 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Updates a dynamic thing group.
+     * </p>
+     * 
+     * @param updateDynamicThingGroupRequest
+     * @return Result of the UpdateDynamicThingGroup operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws VersionConflictException
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws InvalidQueryException
+     *         The query is invalid.
+     * @sample AWSIot.UpdateDynamicThingGroup
+     */
+    UpdateDynamicThingGroupResult updateDynamicThingGroup(UpdateDynamicThingGroupRequest updateDynamicThingGroupRequest);
+
+    /**
+     * <p>
      * Updates the event configurations.
      * </p>
      * 
@@ -2752,6 +3816,25 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Updates supported fields of the specified job.
+     * </p>
+     * 
+     * @param updateJobRequest
+     * @return Result of the UpdateJob operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @sample AWSIot.UpdateJob
+     */
+    UpdateJobResult updateJob(UpdateJobRequest updateJobRequest);
+
+    /**
+     * <p>
      * Updates a role alias.
      * </p>
      * 
@@ -2775,6 +3858,70 @@ public interface AWSIot {
 
     /**
      * <p>
+     * Updates a scheduled audit, including what checks are performed and how often the audit takes place.
+     * </p>
+     * 
+     * @param updateScheduledAuditRequest
+     * @return Result of the UpdateScheduledAudit operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.UpdateScheduledAudit
+     */
+    UpdateScheduledAuditResult updateScheduledAudit(UpdateScheduledAuditRequest updateScheduledAuditRequest);
+
+    /**
+     * <p>
+     * Updates a Device Defender security profile.
+     * </p>
+     * 
+     * @param updateSecurityProfileRequest
+     * @return Result of the UpdateSecurityProfile operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws VersionConflictException
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.UpdateSecurityProfile
+     */
+    UpdateSecurityProfileResult updateSecurityProfile(UpdateSecurityProfileRequest updateSecurityProfileRequest);
+
+    /**
+     * <p>
+     * Updates an existing stream. The stream version will be incremented by one.
+     * </p>
+     * 
+     * @param updateStreamRequest
+     * @return Result of the UpdateStream operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ResourceNotFoundException
+     *         The specified resource does not exist.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws UnauthorizedException
+     *         You are not authorized to perform this operation.
+     * @throws ServiceUnavailableException
+     *         The service is temporarily unavailable.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.UpdateStream
+     */
+    UpdateStreamResult updateStream(UpdateStreamRequest updateStreamRequest);
+
+    /**
+     * <p>
      * Updates the data for a thing.
      * </p>
      * 
@@ -2784,8 +3931,8 @@ public interface AWSIot {
      * @throws InvalidRequestException
      *         The request is not valid.
      * @throws VersionConflictException
-     *         An exception thrown when the version of a thing passed to a command is different than the version
-     *         specified with the --version parameter.
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
      * @throws ThrottlingException
      *         The rate exceeds the limit.
      * @throws UnauthorizedException
@@ -2810,8 +3957,8 @@ public interface AWSIot {
      * @throws InvalidRequestException
      *         The request is not valid.
      * @throws VersionConflictException
-     *         An exception thrown when the version of a thing passed to a command is different than the version
-     *         specified with the --version parameter.
+     *         An exception thrown when the version of an entity specified with the <code>expectedVersion</code>
+     *         parameter does not match the latest version in the system.
      * @throws ThrottlingException
      *         The rate exceeds the limit.
      * @throws InternalFailureException
@@ -2840,6 +3987,23 @@ public interface AWSIot {
      * @sample AWSIot.UpdateThingGroupsForThing
      */
     UpdateThingGroupsForThingResult updateThingGroupsForThing(UpdateThingGroupsForThingRequest updateThingGroupsForThingRequest);
+
+    /**
+     * <p>
+     * Validates a Device Defender security profile behaviors specification.
+     * </p>
+     * 
+     * @param validateSecurityProfileBehaviorsRequest
+     * @return Result of the ValidateSecurityProfileBehaviors operation returned by the service.
+     * @throws InvalidRequestException
+     *         The request is not valid.
+     * @throws ThrottlingException
+     *         The rate exceeds the limit.
+     * @throws InternalFailureException
+     *         An unexpected error has occurred.
+     * @sample AWSIot.ValidateSecurityProfileBehaviors
+     */
+    ValidateSecurityProfileBehaviorsResult validateSecurityProfileBehaviors(ValidateSecurityProfileBehaviorsRequest validateSecurityProfileBehaviorsRequest);
 
     /**
      * Shuts down this client object, releasing any resources that might be held open. This is an optional method, and

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,8 @@ import com.amazonaws.protocol.json.*;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.annotation.ThreadSafe;
 import com.amazonaws.client.AwsSyncClientParams;
+import com.amazonaws.client.builder.AdvancedConfig;
+
 import com.amazonaws.services.dax.AmazonDaxClientBuilder;
 
 import com.amazonaws.AmazonServiceException;
@@ -58,6 +60,7 @@ import com.amazonaws.services.dax.model.transform.*;
 @ThreadSafe
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax {
+
     /** Provider for AWS credentials. */
     private final AWSCredentialsProvider awsCredentialsProvider;
 
@@ -68,6 +71,8 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
 
     /** Client configuration factory providing ClientConfigurations tailored to this client */
     protected static final ClientConfigurationFactory configFactory = new ClientConfigurationFactory();
+
+    private final AdvancedConfig advancedConfig;
 
     private static final com.amazonaws.protocol.json.SdkJsonProtocolFactory protocolFactory = new com.amazonaws.protocol.json.SdkJsonProtocolFactory(
             new JsonClientMetadata()
@@ -141,6 +146,9 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                             new JsonErrorShapeMetadata().withErrorCode("ClusterAlreadyExistsFault").withModeledClass(
                                     com.amazonaws.services.dax.model.ClusterAlreadyExistsException.class))
                     .addErrorMetadata(
+                            new JsonErrorShapeMetadata().withErrorCode("ServiceLinkedRoleNotFoundFault").withModeledClass(
+                                    com.amazonaws.services.dax.model.ServiceLinkedRoleNotFoundException.class))
+                    .addErrorMetadata(
                             new JsonErrorShapeMetadata().withErrorCode("NodeQuotaForClusterExceededFault").withModeledClass(
                                     com.amazonaws.services.dax.model.NodeQuotaForClusterExceededException.class))
                     .addErrorMetadata(
@@ -166,8 +174,23 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *        Object providing client parameters.
      */
     AmazonDaxClient(AwsSyncClientParams clientParams) {
+        this(clientParams, false);
+    }
+
+    /**
+     * Constructs a new client to invoke service methods on Amazon DAX using the specified parameters.
+     *
+     * <p>
+     * All service calls made using this new client object are blocking, and will not return until the service call
+     * completes.
+     *
+     * @param clientParams
+     *        Object providing client parameters.
+     */
+    AmazonDaxClient(AwsSyncClientParams clientParams, boolean endpointDiscoveryEnabled) {
         super(clientParams);
         this.awsCredentialsProvider = clientParams.getCredentialsProvider();
+        this.advancedConfig = clientParams.getAdvancedConfig();
         init();
     }
 
@@ -212,6 +235,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         The VPC network is in an invalid state.
      * @throws TagQuotaPerResourceExceededException
      *         You have exceeded the maximum number of tags for this DAX cluster.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -241,6 +265,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new CreateClusterRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createClusterRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateCluster");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -271,6 +299,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         The specified parameter group already exists.
      * @throws InvalidParameterGroupStateException
      *         One or more parameters in a parameter group are in an invalid state.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -300,6 +329,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new CreateParameterGroupRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createParameterGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateParameterGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -331,6 +364,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         The request cannot be processed because it would exceed the allowed number of subnets in a subnet group.
      * @throws InvalidSubnetException
      *         An invalid subnet identifier was specified.
+     * @throws ServiceLinkedRoleNotFoundException
      * @sample AmazonDax.CreateSubnetGroup
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dax-2017-04-19/CreateSubnetGroup" target="_top">AWS API
      *      Documentation</a>
@@ -356,6 +390,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new CreateSubnetGroupRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(createSubnetGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateSubnetGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -391,6 +429,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         None of the nodes in the cluster have the given node ID.
      * @throws InvalidClusterStateException
      *         The requested DAX cluster is not in the <i>available</i> state.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -421,6 +460,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                         .beforeMarshalling(decreaseReplicationFactorRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DecreaseReplicationFactor");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -451,6 +494,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         The requested cluster ID does not refer to an existing DAX cluster.
      * @throws InvalidClusterStateException
      *         The requested DAX cluster is not in the <i>available</i> state.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -480,6 +524,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new DeleteClusterRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteClusterRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteCluster");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -508,6 +556,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         One or more parameters in a parameter group are in an invalid state.
      * @throws ParameterGroupNotFoundException
      *         The specified parameter group does not exist.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -537,6 +586,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new DeleteParameterGroupRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteParameterGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteParameterGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -569,6 +622,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         The specified subnet group is currently in use.
      * @throws SubnetGroupNotFoundException
      *         The requested subnet group name does not refer to an existing subnet group.
+     * @throws ServiceLinkedRoleNotFoundException
      * @sample AmazonDax.DeleteSubnetGroup
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dax-2017-04-19/DeleteSubnetGroup" target="_top">AWS API
      *      Documentation</a>
@@ -594,6 +648,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new DeleteSubnetGroupRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteSubnetGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteSubnetGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -636,6 +694,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      * @return Result of the DescribeClusters operation returned by the service.
      * @throws ClusterNotFoundException
      *         The requested cluster ID does not refer to an existing DAX cluster.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -665,6 +724,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new DescribeClustersRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(describeClustersRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeClusters");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -688,6 +751,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      * 
      * @param describeDefaultParametersRequest
      * @return Result of the DescribeDefaultParameters operation returned by the service.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -718,6 +782,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                         .beforeMarshalling(describeDefaultParametersRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeDefaultParameters");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -747,6 +815,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      * 
      * @param describeEventsRequest
      * @return Result of the DescribeEvents operation returned by the service.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -776,6 +845,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new DescribeEventsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(describeEventsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeEvents");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -802,6 +875,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      * @return Result of the DescribeParameterGroups operation returned by the service.
      * @throws ParameterGroupNotFoundException
      *         The specified parameter group does not exist.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -832,6 +906,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                         .beforeMarshalling(describeParameterGroupsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeParameterGroups");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -858,6 +936,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      * @return Result of the DescribeParameters operation returned by the service.
      * @throws ParameterGroupNotFoundException
      *         The specified parameter group does not exist.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -887,6 +966,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new DescribeParametersRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(describeParametersRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeParameters");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -913,6 +996,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      * @return Result of the DescribeSubnetGroups operation returned by the service.
      * @throws SubnetGroupNotFoundException
      *         The requested subnet group name does not refer to an existing subnet group.
+     * @throws ServiceLinkedRoleNotFoundException
      * @sample AmazonDax.DescribeSubnetGroups
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dax-2017-04-19/DescribeSubnetGroups" target="_top">AWS API
      *      Documentation</a>
@@ -938,6 +1022,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new DescribeSubnetGroupsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(describeSubnetGroupsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSubnetGroups");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -974,6 +1062,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         You have attempted to exceed the maximum number of nodes for a DAX cluster.
      * @throws NodeQuotaForCustomerExceededException
      *         You have attempted to exceed the maximum number of nodes for your AWS account.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -1004,6 +1093,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                         .beforeMarshalling(increaseReplicationFactorRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "IncreaseReplicationFactor");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1035,6 +1128,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         The Amazon Resource Name (ARN) supplied in the request is not valid.
      * @throws InvalidClusterStateException
      *         The requested DAX cluster is not in the <i>available</i> state.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -1064,6 +1158,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new ListTagsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listTagsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListTags");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1094,6 +1192,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         None of the nodes in the cluster have the given node ID.
      * @throws InvalidClusterStateException
      *         The requested DAX cluster is not in the <i>available</i> state.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -1123,6 +1222,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new RebootNodeRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(rebootNodeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RebootNode");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1155,6 +1258,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         The Amazon Resource Name (ARN) supplied in the request is not valid.
      * @throws InvalidClusterStateException
      *         The requested DAX cluster is not in the <i>available</i> state.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -1184,6 +1288,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new TagResourceRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(tagResourceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "TagResource");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1216,6 +1324,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         The tag does not exist.
      * @throws InvalidClusterStateException
      *         The requested DAX cluster is not in the <i>available</i> state.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -1245,6 +1354,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new UntagResourceRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(untagResourceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UntagResource");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1277,6 +1390,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         One or more parameters in a parameter group are in an invalid state.
      * @throws ParameterGroupNotFoundException
      *         The specified parameter group does not exist.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -1306,6 +1420,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new UpdateClusterRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateClusterRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateCluster");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1334,6 +1452,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         One or more parameters in a parameter group are in an invalid state.
      * @throws ParameterGroupNotFoundException
      *         The specified parameter group does not exist.
+     * @throws ServiceLinkedRoleNotFoundException
      * @throws InvalidParameterValueException
      *         The value for a parameter is invalid.
      * @throws InvalidParameterCombinationException
@@ -1363,6 +1482,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new UpdateParameterGroupRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateParameterGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateParameterGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1394,6 +1517,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      *         The requested subnet is being used by another subnet group.
      * @throws InvalidSubnetException
      *         An invalid subnet identifier was specified.
+     * @throws ServiceLinkedRoleNotFoundException
      * @sample AmazonDax.UpdateSubnetGroup
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/dax-2017-04-19/UpdateSubnetGroup" target="_top">AWS API
      *      Documentation</a>
@@ -1419,6 +1543,10 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
                 request = new UpdateSubnetGroupRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateSubnetGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "DAX");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateSubnetGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1459,9 +1587,18 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
     private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
             ExecutionContext executionContext) {
 
+        return invoke(request, responseHandler, executionContext, null, null);
+    }
+
+    /**
+     * Normal invoke with authentication. Credentials are required and may be overriden at the request level.
+     **/
+    private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
+            ExecutionContext executionContext, URI cachedEndpoint, URI uriFromEndpointTrait) {
+
         executionContext.setCredentialsProvider(CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, cachedEndpoint, uriFromEndpointTrait);
     }
 
     /**
@@ -1471,7 +1608,7 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
     private <X, Y extends AmazonWebServiceRequest> Response<X> anonymousInvoke(Request<Y> request,
             HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler, ExecutionContext executionContext) {
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, null, null);
     }
 
     /**
@@ -1479,8 +1616,17 @@ public class AmazonDaxClient extends AmazonWebServiceClient implements AmazonDax
      * ExecutionContext beforehand.
      **/
     private <X, Y extends AmazonWebServiceRequest> Response<X> doInvoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
-            ExecutionContext executionContext) {
-        request.setEndpoint(endpoint);
+            ExecutionContext executionContext, URI discoveredEndpoint, URI uriFromEndpointTrait) {
+
+        if (discoveredEndpoint != null) {
+            request.setEndpoint(discoveredEndpoint);
+            request.getOriginalRequest().getRequestClientOptions().appendUserAgent("endpoint-discovery");
+        } else if (uriFromEndpointTrait != null) {
+            request.setEndpoint(uriFromEndpointTrait);
+        } else {
+            request.setEndpoint(endpoint);
+        }
+
         request.setTimeOffset(timeOffset);
 
         HttpResponseHandler<AmazonServiceException> errorResponseHandler = protocolFactory.createErrorResponseHandler(new JsonErrorResponseMetadata());

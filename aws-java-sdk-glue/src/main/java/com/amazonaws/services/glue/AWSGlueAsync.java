@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -130,6 +130,18 @@ public interface AWSGlueAsync extends AWSGlue {
      * <p>
      * Deletes multiple tables at once.
      * </p>
+     * <note>
+     * <p>
+     * After completing this operation, you will no longer have access to the table versions and partitions that belong
+     * to the deleted table. AWS Glue deletes these "orphaned" resources asynchronously in a timely manner, at the
+     * discretion of the service.
+     * </p>
+     * <p>
+     * To ensure immediate deletion of all related resources, before calling <code>BatchDeleteTable</code>, use
+     * <code>DeleteTableVersion</code> or <code>BatchDeleteTableVersion</code>, and <code>DeletePartition</code> or
+     * <code>BatchDeletePartition</code>, to delete any resources that belong to the table.
+     * </p>
+     * </note>
      * 
      * @param batchDeleteTableRequest
      * @return A Java Future containing the result of the BatchDeleteTable operation returned by the service.
@@ -143,6 +155,18 @@ public interface AWSGlueAsync extends AWSGlue {
      * <p>
      * Deletes multiple tables at once.
      * </p>
+     * <note>
+     * <p>
+     * After completing this operation, you will no longer have access to the table versions and partitions that belong
+     * to the deleted table. AWS Glue deletes these "orphaned" resources asynchronously in a timely manner, at the
+     * discretion of the service.
+     * </p>
+     * <p>
+     * To ensure immediate deletion of all related resources, before calling <code>BatchDeleteTable</code>, use
+     * <code>DeleteTableVersion</code> or <code>BatchDeleteTableVersion</code>, and <code>DeletePartition</code> or
+     * <code>BatchDeletePartition</code>, to delete any resources that belong to the table.
+     * </p>
+     * </note>
      * 
      * @param batchDeleteTableRequest
      * @param asyncHandler
@@ -156,6 +180,142 @@ public interface AWSGlueAsync extends AWSGlue {
      */
     java.util.concurrent.Future<BatchDeleteTableResult> batchDeleteTableAsync(BatchDeleteTableRequest batchDeleteTableRequest,
             com.amazonaws.handlers.AsyncHandler<BatchDeleteTableRequest, BatchDeleteTableResult> asyncHandler);
+
+    /**
+     * <p>
+     * Deletes a specified batch of versions of a table.
+     * </p>
+     * 
+     * @param batchDeleteTableVersionRequest
+     * @return A Java Future containing the result of the BatchDeleteTableVersion operation returned by the service.
+     * @sample AWSGlueAsync.BatchDeleteTableVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchDeleteTableVersion" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<BatchDeleteTableVersionResult> batchDeleteTableVersionAsync(BatchDeleteTableVersionRequest batchDeleteTableVersionRequest);
+
+    /**
+     * <p>
+     * Deletes a specified batch of versions of a table.
+     * </p>
+     * 
+     * @param batchDeleteTableVersionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the BatchDeleteTableVersion operation returned by the service.
+     * @sample AWSGlueAsyncHandler.BatchDeleteTableVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchDeleteTableVersion" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<BatchDeleteTableVersionResult> batchDeleteTableVersionAsync(BatchDeleteTableVersionRequest batchDeleteTableVersionRequest,
+            com.amazonaws.handlers.AsyncHandler<BatchDeleteTableVersionRequest, BatchDeleteTableVersionResult> asyncHandler);
+
+    /**
+     * <p>
+     * Returns a list of resource metadata for a given list of crawler names. After calling the
+     * <code>ListCrawlers</code> operation, you can call this operation to access the data to which you have been
+     * granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.
+     * </p>
+     * 
+     * @param batchGetCrawlersRequest
+     * @return A Java Future containing the result of the BatchGetCrawlers operation returned by the service.
+     * @sample AWSGlueAsync.BatchGetCrawlers
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetCrawlers" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<BatchGetCrawlersResult> batchGetCrawlersAsync(BatchGetCrawlersRequest batchGetCrawlersRequest);
+
+    /**
+     * <p>
+     * Returns a list of resource metadata for a given list of crawler names. After calling the
+     * <code>ListCrawlers</code> operation, you can call this operation to access the data to which you have been
+     * granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.
+     * </p>
+     * 
+     * @param batchGetCrawlersRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the BatchGetCrawlers operation returned by the service.
+     * @sample AWSGlueAsyncHandler.BatchGetCrawlers
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetCrawlers" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<BatchGetCrawlersResult> batchGetCrawlersAsync(BatchGetCrawlersRequest batchGetCrawlersRequest,
+            com.amazonaws.handlers.AsyncHandler<BatchGetCrawlersRequest, BatchGetCrawlersResult> asyncHandler);
+
+    /**
+     * <p>
+     * Returns a list of resource metadata for a given list of DevEndpoint names. After calling the
+     * <code>ListDevEndpoints</code> operation, you can call this operation to access the data to which you have been
+     * granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.
+     * </p>
+     * 
+     * @param batchGetDevEndpointsRequest
+     * @return A Java Future containing the result of the BatchGetDevEndpoints operation returned by the service.
+     * @sample AWSGlueAsync.BatchGetDevEndpoints
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetDevEndpoints" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<BatchGetDevEndpointsResult> batchGetDevEndpointsAsync(BatchGetDevEndpointsRequest batchGetDevEndpointsRequest);
+
+    /**
+     * <p>
+     * Returns a list of resource metadata for a given list of DevEndpoint names. After calling the
+     * <code>ListDevEndpoints</code> operation, you can call this operation to access the data to which you have been
+     * granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.
+     * </p>
+     * 
+     * @param batchGetDevEndpointsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the BatchGetDevEndpoints operation returned by the service.
+     * @sample AWSGlueAsyncHandler.BatchGetDevEndpoints
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetDevEndpoints" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<BatchGetDevEndpointsResult> batchGetDevEndpointsAsync(BatchGetDevEndpointsRequest batchGetDevEndpointsRequest,
+            com.amazonaws.handlers.AsyncHandler<BatchGetDevEndpointsRequest, BatchGetDevEndpointsResult> asyncHandler);
+
+    /**
+     * <p>
+     * Returns a list of resource metadata for a given list of job names. After calling the <code>ListJobs</code>
+     * operation, you can call this operation to access the data to which you have been granted permissions. This
+     * operation supports all IAM permissions, including permission conditions that uses tags.
+     * </p>
+     * 
+     * @param batchGetJobsRequest
+     * @return A Java Future containing the result of the BatchGetJobs operation returned by the service.
+     * @sample AWSGlueAsync.BatchGetJobs
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetJobs" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<BatchGetJobsResult> batchGetJobsAsync(BatchGetJobsRequest batchGetJobsRequest);
+
+    /**
+     * <p>
+     * Returns a list of resource metadata for a given list of job names. After calling the <code>ListJobs</code>
+     * operation, you can call this operation to access the data to which you have been granted permissions. This
+     * operation supports all IAM permissions, including permission conditions that uses tags.
+     * </p>
+     * 
+     * @param batchGetJobsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the BatchGetJobs operation returned by the service.
+     * @sample AWSGlueAsyncHandler.BatchGetJobs
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetJobs" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<BatchGetJobsResult> batchGetJobsAsync(BatchGetJobsRequest batchGetJobsRequest,
+            com.amazonaws.handlers.AsyncHandler<BatchGetJobsRequest, BatchGetJobsResult> asyncHandler);
 
     /**
      * <p>
@@ -190,7 +350,42 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Stops a batch of job runs for a given job.
+     * Returns a list of resource metadata for a given list of trigger names. After calling the
+     * <code>ListTriggers</code> operation, you can call this operation to access the data to which you have been
+     * granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.
+     * </p>
+     * 
+     * @param batchGetTriggersRequest
+     * @return A Java Future containing the result of the BatchGetTriggers operation returned by the service.
+     * @sample AWSGlueAsync.BatchGetTriggers
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetTriggers" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<BatchGetTriggersResult> batchGetTriggersAsync(BatchGetTriggersRequest batchGetTriggersRequest);
+
+    /**
+     * <p>
+     * Returns a list of resource metadata for a given list of trigger names. After calling the
+     * <code>ListTriggers</code> operation, you can call this operation to access the data to which you have been
+     * granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.
+     * </p>
+     * 
+     * @param batchGetTriggersRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the BatchGetTriggers operation returned by the service.
+     * @sample AWSGlueAsyncHandler.BatchGetTriggers
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetTriggers" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<BatchGetTriggersResult> batchGetTriggersAsync(BatchGetTriggersRequest batchGetTriggersRequest,
+            com.amazonaws.handlers.AsyncHandler<BatchGetTriggersRequest, BatchGetTriggersResult> asyncHandler);
+
+    /**
+     * <p>
+     * Stops one or more job runs for a specified job definition.
      * </p>
      * 
      * @param batchStopJobRunRequest
@@ -203,7 +398,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Stops a batch of job runs for a given job.
+     * Stops one or more job runs for a specified job definition.
      * </p>
      * 
      * @param batchStopJobRunRequest
@@ -221,8 +416,9 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Creates a classifier in the user's account. This may be either a <code>GrokClassifier</code> or an
-     * <code>XMLClassifier</code>.
+     * Creates a classifier in the user's account. This may be a <code>GrokClassifier</code>, an
+     * <code>XMLClassifier</code>, a <code>JsonClassifier</code>, or a <code>CsvClassifier</code>, depending on which
+     * field of the request is present.
      * </p>
      * 
      * @param createClassifierRequest
@@ -235,8 +431,9 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Creates a classifier in the user's account. This may be either a <code>GrokClassifier</code> or an
-     * <code>XMLClassifier</code>.
+     * Creates a classifier in the user's account. This may be a <code>GrokClassifier</code>, an
+     * <code>XMLClassifier</code>, a <code>JsonClassifier</code>, or a <code>CsvClassifier</code>, depending on which
+     * field of the request is present.
      * </p>
      * 
      * @param createClassifierRequest
@@ -286,7 +483,8 @@ public interface AWSGlueAsync extends AWSGlue {
     /**
      * <p>
      * Creates a new crawler with specified targets, role, configuration, and optional schedule. At least one crawl
-     * target must be specified, in either the <i>s3Targets</i> or the <i>jdbcTargets</i> field.
+     * target must be specified, in the <i>s3Targets</i> field, the <i>jdbcTargets</i> field, or the
+     * <i>DynamoDBTargets</i> field.
      * </p>
      * 
      * @param createCrawlerRequest
@@ -300,7 +498,8 @@ public interface AWSGlueAsync extends AWSGlue {
     /**
      * <p>
      * Creates a new crawler with specified targets, role, configuration, and optional schedule. At least one crawl
-     * target must be specified, in either the <i>s3Targets</i> or the <i>jdbcTargets</i> field.
+     * target must be specified, in the <i>s3Targets</i> field, the <i>jdbcTargets</i> field, or the
+     * <i>DynamoDBTargets</i> field.
      * </p>
      * 
      * @param createCrawlerRequest
@@ -380,7 +579,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Creates a new job.
+     * Creates a new job definition.
      * </p>
      * 
      * @param createJobRequest
@@ -393,7 +592,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Creates a new job.
+     * Creates a new job definition.
      * </p>
      * 
      * @param createJobRequest
@@ -442,7 +641,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Transforms a directed acyclic graph (DAG) into a Python script.
+     * Transforms a directed acyclic graph (DAG) into code.
      * </p>
      * 
      * @param createScriptRequest
@@ -455,7 +654,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Transforms a directed acyclic graph (DAG) into a Python script.
+     * Transforms a directed acyclic graph (DAG) into code.
      * </p>
      * 
      * @param createScriptRequest
@@ -470,6 +669,39 @@ public interface AWSGlueAsync extends AWSGlue {
      */
     java.util.concurrent.Future<CreateScriptResult> createScriptAsync(CreateScriptRequest createScriptRequest,
             com.amazonaws.handlers.AsyncHandler<CreateScriptRequest, CreateScriptResult> asyncHandler);
+
+    /**
+     * <p>
+     * Creates a new security configuration.
+     * </p>
+     * 
+     * @param createSecurityConfigurationRequest
+     * @return A Java Future containing the result of the CreateSecurityConfiguration operation returned by the service.
+     * @sample AWSGlueAsync.CreateSecurityConfiguration
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateSecurityConfiguration"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateSecurityConfigurationResult> createSecurityConfigurationAsync(
+            CreateSecurityConfigurationRequest createSecurityConfigurationRequest);
+
+    /**
+     * <p>
+     * Creates a new security configuration.
+     * </p>
+     * 
+     * @param createSecurityConfigurationRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the CreateSecurityConfiguration operation returned by the service.
+     * @sample AWSGlueAsyncHandler.CreateSecurityConfiguration
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateSecurityConfiguration"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateSecurityConfigurationResult> createSecurityConfigurationAsync(
+            CreateSecurityConfigurationRequest createSecurityConfigurationRequest,
+            com.amazonaws.handlers.AsyncHandler<CreateSecurityConfigurationRequest, CreateSecurityConfigurationResult> asyncHandler);
 
     /**
      * <p>
@@ -663,6 +895,19 @@ public interface AWSGlueAsync extends AWSGlue {
      * <p>
      * Removes a specified Database from a Data Catalog.
      * </p>
+     * <note>
+     * <p>
+     * After completing this operation, you will no longer have access to the tables (and all table versions and
+     * partitions that might belong to the tables) and the user-defined functions in the deleted database. AWS Glue
+     * deletes these "orphaned" resources asynchronously in a timely manner, at the discretion of the service.
+     * </p>
+     * <p>
+     * To ensure immediate deletion of all related resources, before calling <code>DeleteDatabase</code>, use
+     * <code>DeleteTableVersion</code> or <code>BatchDeleteTableVersion</code>, <code>DeletePartition</code> or
+     * <code>BatchDeletePartition</code>, <code>DeleteUserDefinedFunction</code>, and <code>DeleteTable</code> or
+     * <code>BatchDeleteTable</code>, to delete any resources that belong to the database.
+     * </p>
+     * </note>
      * 
      * @param deleteDatabaseRequest
      * @return A Java Future containing the result of the DeleteDatabase operation returned by the service.
@@ -676,6 +921,19 @@ public interface AWSGlueAsync extends AWSGlue {
      * <p>
      * Removes a specified Database from a Data Catalog.
      * </p>
+     * <note>
+     * <p>
+     * After completing this operation, you will no longer have access to the tables (and all table versions and
+     * partitions that might belong to the tables) and the user-defined functions in the deleted database. AWS Glue
+     * deletes these "orphaned" resources asynchronously in a timely manner, at the discretion of the service.
+     * </p>
+     * <p>
+     * To ensure immediate deletion of all related resources, before calling <code>DeleteDatabase</code>, use
+     * <code>DeleteTableVersion</code> or <code>BatchDeleteTableVersion</code>, <code>DeletePartition</code> or
+     * <code>BatchDeletePartition</code>, <code>DeleteUserDefinedFunction</code>, and <code>DeleteTable</code> or
+     * <code>BatchDeleteTable</code>, to delete any resources that belong to the database.
+     * </p>
+     * </note>
      * 
      * @param deleteDatabaseRequest
      * @param asyncHandler
@@ -723,7 +981,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Deletes a specified job.
+     * Deletes a specified job definition. If the job definition is not found, no exception is thrown.
      * </p>
      * 
      * @param deleteJobRequest
@@ -736,7 +994,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Deletes a specified job.
+     * Deletes a specified job definition. If the job definition is not found, no exception is thrown.
      * </p>
      * 
      * @param deleteJobRequest
@@ -785,8 +1043,84 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
+     * Deletes a specified policy.
+     * </p>
+     * 
+     * @param deleteResourcePolicyRequest
+     * @return A Java Future containing the result of the DeleteResourcePolicy operation returned by the service.
+     * @sample AWSGlueAsync.DeleteResourcePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteResourcePolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteResourcePolicyResult> deleteResourcePolicyAsync(DeleteResourcePolicyRequest deleteResourcePolicyRequest);
+
+    /**
+     * <p>
+     * Deletes a specified policy.
+     * </p>
+     * 
+     * @param deleteResourcePolicyRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteResourcePolicy operation returned by the service.
+     * @sample AWSGlueAsyncHandler.DeleteResourcePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteResourcePolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteResourcePolicyResult> deleteResourcePolicyAsync(DeleteResourcePolicyRequest deleteResourcePolicyRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteResourcePolicyRequest, DeleteResourcePolicyResult> asyncHandler);
+
+    /**
+     * <p>
+     * Deletes a specified security configuration.
+     * </p>
+     * 
+     * @param deleteSecurityConfigurationRequest
+     * @return A Java Future containing the result of the DeleteSecurityConfiguration operation returned by the service.
+     * @sample AWSGlueAsync.DeleteSecurityConfiguration
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteSecurityConfiguration"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteSecurityConfigurationResult> deleteSecurityConfigurationAsync(
+            DeleteSecurityConfigurationRequest deleteSecurityConfigurationRequest);
+
+    /**
+     * <p>
+     * Deletes a specified security configuration.
+     * </p>
+     * 
+     * @param deleteSecurityConfigurationRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteSecurityConfiguration operation returned by the service.
+     * @sample AWSGlueAsyncHandler.DeleteSecurityConfiguration
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteSecurityConfiguration"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteSecurityConfigurationResult> deleteSecurityConfigurationAsync(
+            DeleteSecurityConfigurationRequest deleteSecurityConfigurationRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteSecurityConfigurationRequest, DeleteSecurityConfigurationResult> asyncHandler);
+
+    /**
+     * <p>
      * Removes a table definition from the Data Catalog.
      * </p>
+     * <note>
+     * <p>
+     * After completing this operation, you will no longer have access to the table versions and partitions that belong
+     * to the deleted table. AWS Glue deletes these "orphaned" resources asynchronously in a timely manner, at the
+     * discretion of the service.
+     * </p>
+     * <p>
+     * To ensure immediate deletion of all related resources, before calling <code>DeleteTable</code>, use
+     * <code>DeleteTableVersion</code> or <code>BatchDeleteTableVersion</code>, and <code>DeletePartition</code> or
+     * <code>BatchDeletePartition</code>, to delete any resources that belong to the table.
+     * </p>
+     * </note>
      * 
      * @param deleteTableRequest
      * @return A Java Future containing the result of the DeleteTable operation returned by the service.
@@ -800,6 +1134,18 @@ public interface AWSGlueAsync extends AWSGlue {
      * <p>
      * Removes a table definition from the Data Catalog.
      * </p>
+     * <note>
+     * <p>
+     * After completing this operation, you will no longer have access to the table versions and partitions that belong
+     * to the deleted table. AWS Glue deletes these "orphaned" resources asynchronously in a timely manner, at the
+     * discretion of the service.
+     * </p>
+     * <p>
+     * To ensure immediate deletion of all related resources, before calling <code>DeleteTable</code>, use
+     * <code>DeleteTableVersion</code> or <code>BatchDeleteTableVersion</code>, and <code>DeletePartition</code> or
+     * <code>BatchDeletePartition</code>, to delete any resources that belong to the table.
+     * </p>
+     * </note>
      * 
      * @param deleteTableRequest
      * @param asyncHandler
@@ -816,7 +1162,38 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Deletes a specified trigger.
+     * Deletes a specified version of a table.
+     * </p>
+     * 
+     * @param deleteTableVersionRequest
+     * @return A Java Future containing the result of the DeleteTableVersion operation returned by the service.
+     * @sample AWSGlueAsync.DeleteTableVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteTableVersion" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteTableVersionResult> deleteTableVersionAsync(DeleteTableVersionRequest deleteTableVersionRequest);
+
+    /**
+     * <p>
+     * Deletes a specified version of a table.
+     * </p>
+     * 
+     * @param deleteTableVersionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteTableVersion operation returned by the service.
+     * @sample AWSGlueAsyncHandler.DeleteTableVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteTableVersion" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteTableVersionResult> deleteTableVersionAsync(DeleteTableVersionRequest deleteTableVersionRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteTableVersionRequest, DeleteTableVersionResult> asyncHandler);
+
+    /**
+     * <p>
+     * Deletes a specified trigger. If the trigger is not found, no exception is thrown.
      * </p>
      * 
      * @param deleteTriggerRequest
@@ -829,7 +1206,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Deletes a specified trigger.
+     * Deletes a specified trigger. If the trigger is not found, no exception is thrown.
      * </p>
      * 
      * @param deleteTriggerRequest
@@ -1128,6 +1505,41 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
+     * Retrieves the security configuration for a specified catalog.
+     * </p>
+     * 
+     * @param getDataCatalogEncryptionSettingsRequest
+     * @return A Java Future containing the result of the GetDataCatalogEncryptionSettings operation returned by the
+     *         service.
+     * @sample AWSGlueAsync.GetDataCatalogEncryptionSettings
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataCatalogEncryptionSettings"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetDataCatalogEncryptionSettingsResult> getDataCatalogEncryptionSettingsAsync(
+            GetDataCatalogEncryptionSettingsRequest getDataCatalogEncryptionSettingsRequest);
+
+    /**
+     * <p>
+     * Retrieves the security configuration for a specified catalog.
+     * </p>
+     * 
+     * @param getDataCatalogEncryptionSettingsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetDataCatalogEncryptionSettings operation returned by the
+     *         service.
+     * @sample AWSGlueAsyncHandler.GetDataCatalogEncryptionSettings
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataCatalogEncryptionSettings"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetDataCatalogEncryptionSettingsResult> getDataCatalogEncryptionSettingsAsync(
+            GetDataCatalogEncryptionSettingsRequest getDataCatalogEncryptionSettingsRequest,
+            com.amazonaws.handlers.AsyncHandler<GetDataCatalogEncryptionSettingsRequest, GetDataCatalogEncryptionSettingsResult> asyncHandler);
+
+    /**
+     * <p>
      * Retrieves the definition of a specified database.
      * </p>
      * 
@@ -1223,6 +1635,13 @@ public interface AWSGlueAsync extends AWSGlue {
      * <p>
      * Retrieves information about a specified DevEndpoint.
      * </p>
+     * <note>
+     * <p>
+     * When you create a development endpoint in a virtual private cloud (VPC), AWS Glue returns only a private IP
+     * address, and the public IP address field is not populated. When you create a non-VPC development endpoint, AWS
+     * Glue returns only a public IP address.
+     * </p>
+     * </note>
      * 
      * @param getDevEndpointRequest
      * @return A Java Future containing the result of the GetDevEndpoint operation returned by the service.
@@ -1236,6 +1655,13 @@ public interface AWSGlueAsync extends AWSGlue {
      * <p>
      * Retrieves information about a specified DevEndpoint.
      * </p>
+     * <note>
+     * <p>
+     * When you create a development endpoint in a virtual private cloud (VPC), AWS Glue returns only a private IP
+     * address, and the public IP address field is not populated. When you create a non-VPC development endpoint, AWS
+     * Glue returns only a public IP address.
+     * </p>
+     * </note>
      * 
      * @param getDevEndpointRequest
      * @param asyncHandler
@@ -1254,6 +1680,13 @@ public interface AWSGlueAsync extends AWSGlue {
      * <p>
      * Retrieves all the DevEndpoints in this AWS account.
      * </p>
+     * <note>
+     * <p>
+     * When you create a development endpoint in a virtual private cloud (VPC), AWS Glue returns only a private IP
+     * address and the public IP address field is not populated. When you create a non-VPC development endpoint, AWS
+     * Glue returns only a public IP address.
+     * </p>
+     * </note>
      * 
      * @param getDevEndpointsRequest
      * @return A Java Future containing the result of the GetDevEndpoints operation returned by the service.
@@ -1267,6 +1700,13 @@ public interface AWSGlueAsync extends AWSGlue {
      * <p>
      * Retrieves all the DevEndpoints in this AWS account.
      * </p>
+     * <note>
+     * <p>
+     * When you create a development endpoint in a virtual private cloud (VPC), AWS Glue returns only a private IP
+     * address and the public IP address field is not populated. When you create a non-VPC development endpoint, AWS
+     * Glue returns only a public IP address.
+     * </p>
+     * </note>
      * 
      * @param getDevEndpointsRequest
      * @param asyncHandler
@@ -1345,7 +1785,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Retrieves metadata for all runs of a given job.
+     * Retrieves metadata for all runs of a given job definition.
      * </p>
      * 
      * @param getJobRunsRequest
@@ -1358,7 +1798,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Retrieves metadata for all runs of a given job.
+     * Retrieves metadata for all runs of a given job definition.
      * </p>
      * 
      * @param getJobRunsRequest
@@ -1376,7 +1816,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Retrieves all current jobs.
+     * Retrieves all current job definitions.
      * </p>
      * 
      * @param getJobsRequest
@@ -1389,7 +1829,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Retrieves all current jobs.
+     * Retrieves all current job definitions.
      * </p>
      * 
      * @param getJobsRequest
@@ -1500,7 +1940,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Gets a Python script to perform a specified mapping.
+     * Gets code to perform a specified mapping.
      * </p>
      * 
      * @param getPlanRequest
@@ -1513,7 +1953,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Gets a Python script to perform a specified mapping.
+     * Gets code to perform a specified mapping.
      * </p>
      * 
      * @param getPlanRequest
@@ -1528,6 +1968,101 @@ public interface AWSGlueAsync extends AWSGlue {
      */
     java.util.concurrent.Future<GetPlanResult> getPlanAsync(GetPlanRequest getPlanRequest,
             com.amazonaws.handlers.AsyncHandler<GetPlanRequest, GetPlanResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves a specified resource policy.
+     * </p>
+     * 
+     * @param getResourcePolicyRequest
+     * @return A Java Future containing the result of the GetResourcePolicy operation returned by the service.
+     * @sample AWSGlueAsync.GetResourcePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetResourcePolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<GetResourcePolicyResult> getResourcePolicyAsync(GetResourcePolicyRequest getResourcePolicyRequest);
+
+    /**
+     * <p>
+     * Retrieves a specified resource policy.
+     * </p>
+     * 
+     * @param getResourcePolicyRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetResourcePolicy operation returned by the service.
+     * @sample AWSGlueAsyncHandler.GetResourcePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetResourcePolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<GetResourcePolicyResult> getResourcePolicyAsync(GetResourcePolicyRequest getResourcePolicyRequest,
+            com.amazonaws.handlers.AsyncHandler<GetResourcePolicyRequest, GetResourcePolicyResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves a specified security configuration.
+     * </p>
+     * 
+     * @param getSecurityConfigurationRequest
+     * @return A Java Future containing the result of the GetSecurityConfiguration operation returned by the service.
+     * @sample AWSGlueAsync.GetSecurityConfiguration
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetSecurityConfiguration" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<GetSecurityConfigurationResult> getSecurityConfigurationAsync(GetSecurityConfigurationRequest getSecurityConfigurationRequest);
+
+    /**
+     * <p>
+     * Retrieves a specified security configuration.
+     * </p>
+     * 
+     * @param getSecurityConfigurationRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetSecurityConfiguration operation returned by the service.
+     * @sample AWSGlueAsyncHandler.GetSecurityConfiguration
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetSecurityConfiguration" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<GetSecurityConfigurationResult> getSecurityConfigurationAsync(GetSecurityConfigurationRequest getSecurityConfigurationRequest,
+            com.amazonaws.handlers.AsyncHandler<GetSecurityConfigurationRequest, GetSecurityConfigurationResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves a list of all security configurations.
+     * </p>
+     * 
+     * @param getSecurityConfigurationsRequest
+     * @return A Java Future containing the result of the GetSecurityConfigurations operation returned by the service.
+     * @sample AWSGlueAsync.GetSecurityConfigurations
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetSecurityConfigurations" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<GetSecurityConfigurationsResult> getSecurityConfigurationsAsync(
+            GetSecurityConfigurationsRequest getSecurityConfigurationsRequest);
+
+    /**
+     * <p>
+     * Retrieves a list of all security configurations.
+     * </p>
+     * 
+     * @param getSecurityConfigurationsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetSecurityConfigurations operation returned by the service.
+     * @sample AWSGlueAsyncHandler.GetSecurityConfigurations
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetSecurityConfigurations" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<GetSecurityConfigurationsResult> getSecurityConfigurationsAsync(
+            GetSecurityConfigurationsRequest getSecurityConfigurationsRequest,
+            com.amazonaws.handlers.AsyncHandler<GetSecurityConfigurationsRequest, GetSecurityConfigurationsResult> asyncHandler);
 
     /**
      * <p>
@@ -1559,6 +2094,37 @@ public interface AWSGlueAsync extends AWSGlue {
      */
     java.util.concurrent.Future<GetTableResult> getTableAsync(GetTableRequest getTableRequest,
             com.amazonaws.handlers.AsyncHandler<GetTableRequest, GetTableResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves a specified version of a table.
+     * </p>
+     * 
+     * @param getTableVersionRequest
+     * @return A Java Future containing the result of the GetTableVersion operation returned by the service.
+     * @sample AWSGlueAsync.GetTableVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetTableVersion" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<GetTableVersionResult> getTableVersionAsync(GetTableVersionRequest getTableVersionRequest);
+
+    /**
+     * <p>
+     * Retrieves a specified version of a table.
+     * </p>
+     * 
+     * @param getTableVersionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetTableVersion operation returned by the service.
+     * @sample AWSGlueAsyncHandler.GetTableVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetTableVersion" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<GetTableVersionResult> getTableVersionAsync(GetTableVersionRequest getTableVersionRequest,
+            com.amazonaws.handlers.AsyncHandler<GetTableVersionRequest, GetTableVersionResult> asyncHandler);
 
     /**
      * <p>
@@ -1621,6 +2187,37 @@ public interface AWSGlueAsync extends AWSGlue {
      */
     java.util.concurrent.Future<GetTablesResult> getTablesAsync(GetTablesRequest getTablesRequest,
             com.amazonaws.handlers.AsyncHandler<GetTablesRequest, GetTablesResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves a list of tags associated with a resource.
+     * </p>
+     * 
+     * @param getTagsRequest
+     * @return A Java Future containing the result of the GetTags operation returned by the service.
+     * @sample AWSGlueAsync.GetTags
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetTags" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<GetTagsResult> getTagsAsync(GetTagsRequest getTagsRequest);
+
+    /**
+     * <p>
+     * Retrieves a list of tags associated with a resource.
+     * </p>
+     * 
+     * @param getTagsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetTags operation returned by the service.
+     * @sample AWSGlueAsyncHandler.GetTags
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetTags" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<GetTagsResult> getTagsAsync(GetTagsRequest getTagsRequest,
+            com.amazonaws.handlers.AsyncHandler<GetTagsRequest, GetTagsResult> asyncHandler);
 
     /**
      * <p>
@@ -1779,6 +2376,246 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
+     * Retrieves the names of all crawler resources in this AWS account, or the resources with the specified tag. This
+     * operation allows you to see which resources are available in your account, and their names.
+     * </p>
+     * <p>
+     * This operation takes the optional <code>Tags</code> field which you can use as a filter on the response so that
+     * tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag
+     * will be retrieved.
+     * </p>
+     * 
+     * @param listCrawlersRequest
+     * @return A Java Future containing the result of the ListCrawlers operation returned by the service.
+     * @sample AWSGlueAsync.ListCrawlers
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListCrawlers" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<ListCrawlersResult> listCrawlersAsync(ListCrawlersRequest listCrawlersRequest);
+
+    /**
+     * <p>
+     * Retrieves the names of all crawler resources in this AWS account, or the resources with the specified tag. This
+     * operation allows you to see which resources are available in your account, and their names.
+     * </p>
+     * <p>
+     * This operation takes the optional <code>Tags</code> field which you can use as a filter on the response so that
+     * tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag
+     * will be retrieved.
+     * </p>
+     * 
+     * @param listCrawlersRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListCrawlers operation returned by the service.
+     * @sample AWSGlueAsyncHandler.ListCrawlers
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListCrawlers" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<ListCrawlersResult> listCrawlersAsync(ListCrawlersRequest listCrawlersRequest,
+            com.amazonaws.handlers.AsyncHandler<ListCrawlersRequest, ListCrawlersResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves the names of all DevEndpoint resources in this AWS account, or the resources with the specified tag.
+     * This operation allows you to see which resources are available in your account, and their names.
+     * </p>
+     * <p>
+     * This operation takes the optional <code>Tags</code> field which you can use as a filter on the response so that
+     * tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag
+     * will be retrieved.
+     * </p>
+     * 
+     * @param listDevEndpointsRequest
+     * @return A Java Future containing the result of the ListDevEndpoints operation returned by the service.
+     * @sample AWSGlueAsync.ListDevEndpoints
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListDevEndpoints" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<ListDevEndpointsResult> listDevEndpointsAsync(ListDevEndpointsRequest listDevEndpointsRequest);
+
+    /**
+     * <p>
+     * Retrieves the names of all DevEndpoint resources in this AWS account, or the resources with the specified tag.
+     * This operation allows you to see which resources are available in your account, and their names.
+     * </p>
+     * <p>
+     * This operation takes the optional <code>Tags</code> field which you can use as a filter on the response so that
+     * tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag
+     * will be retrieved.
+     * </p>
+     * 
+     * @param listDevEndpointsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListDevEndpoints operation returned by the service.
+     * @sample AWSGlueAsyncHandler.ListDevEndpoints
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListDevEndpoints" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<ListDevEndpointsResult> listDevEndpointsAsync(ListDevEndpointsRequest listDevEndpointsRequest,
+            com.amazonaws.handlers.AsyncHandler<ListDevEndpointsRequest, ListDevEndpointsResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves the names of all job resources in this AWS account, or the resources with the specified tag. This
+     * operation allows you to see which resources are available in your account, and their names.
+     * </p>
+     * <p>
+     * This operation takes the optional <code>Tags</code> field which you can use as a filter on the response so that
+     * tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag
+     * will be retrieved.
+     * </p>
+     * 
+     * @param listJobsRequest
+     * @return A Java Future containing the result of the ListJobs operation returned by the service.
+     * @sample AWSGlueAsync.ListJobs
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListJobs" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<ListJobsResult> listJobsAsync(ListJobsRequest listJobsRequest);
+
+    /**
+     * <p>
+     * Retrieves the names of all job resources in this AWS account, or the resources with the specified tag. This
+     * operation allows you to see which resources are available in your account, and their names.
+     * </p>
+     * <p>
+     * This operation takes the optional <code>Tags</code> field which you can use as a filter on the response so that
+     * tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag
+     * will be retrieved.
+     * </p>
+     * 
+     * @param listJobsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListJobs operation returned by the service.
+     * @sample AWSGlueAsyncHandler.ListJobs
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListJobs" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<ListJobsResult> listJobsAsync(ListJobsRequest listJobsRequest,
+            com.amazonaws.handlers.AsyncHandler<ListJobsRequest, ListJobsResult> asyncHandler);
+
+    /**
+     * <p>
+     * Retrieves the names of all trigger resources in this AWS account, or the resources with the specified tag. This
+     * operation allows you to see which resources are available in your account, and their names.
+     * </p>
+     * <p>
+     * This operation takes the optional <code>Tags</code> field which you can use as a filter on the response so that
+     * tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag
+     * will be retrieved.
+     * </p>
+     * 
+     * @param listTriggersRequest
+     * @return A Java Future containing the result of the ListTriggers operation returned by the service.
+     * @sample AWSGlueAsync.ListTriggers
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListTriggers" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<ListTriggersResult> listTriggersAsync(ListTriggersRequest listTriggersRequest);
+
+    /**
+     * <p>
+     * Retrieves the names of all trigger resources in this AWS account, or the resources with the specified tag. This
+     * operation allows you to see which resources are available in your account, and their names.
+     * </p>
+     * <p>
+     * This operation takes the optional <code>Tags</code> field which you can use as a filter on the response so that
+     * tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag
+     * will be retrieved.
+     * </p>
+     * 
+     * @param listTriggersRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListTriggers operation returned by the service.
+     * @sample AWSGlueAsyncHandler.ListTriggers
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListTriggers" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<ListTriggersResult> listTriggersAsync(ListTriggersRequest listTriggersRequest,
+            com.amazonaws.handlers.AsyncHandler<ListTriggersRequest, ListTriggersResult> asyncHandler);
+
+    /**
+     * <p>
+     * Sets the security configuration for a specified catalog. After the configuration has been set, the specified
+     * encryption is applied to every catalog write thereafter.
+     * </p>
+     * 
+     * @param putDataCatalogEncryptionSettingsRequest
+     * @return A Java Future containing the result of the PutDataCatalogEncryptionSettings operation returned by the
+     *         service.
+     * @sample AWSGlueAsync.PutDataCatalogEncryptionSettings
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/PutDataCatalogEncryptionSettings"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<PutDataCatalogEncryptionSettingsResult> putDataCatalogEncryptionSettingsAsync(
+            PutDataCatalogEncryptionSettingsRequest putDataCatalogEncryptionSettingsRequest);
+
+    /**
+     * <p>
+     * Sets the security configuration for a specified catalog. After the configuration has been set, the specified
+     * encryption is applied to every catalog write thereafter.
+     * </p>
+     * 
+     * @param putDataCatalogEncryptionSettingsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the PutDataCatalogEncryptionSettings operation returned by the
+     *         service.
+     * @sample AWSGlueAsyncHandler.PutDataCatalogEncryptionSettings
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/PutDataCatalogEncryptionSettings"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<PutDataCatalogEncryptionSettingsResult> putDataCatalogEncryptionSettingsAsync(
+            PutDataCatalogEncryptionSettingsRequest putDataCatalogEncryptionSettingsRequest,
+            com.amazonaws.handlers.AsyncHandler<PutDataCatalogEncryptionSettingsRequest, PutDataCatalogEncryptionSettingsResult> asyncHandler);
+
+    /**
+     * <p>
+     * Sets the Data Catalog resource policy for access control.
+     * </p>
+     * 
+     * @param putResourcePolicyRequest
+     * @return A Java Future containing the result of the PutResourcePolicy operation returned by the service.
+     * @sample AWSGlueAsync.PutResourcePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/PutResourcePolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<PutResourcePolicyResult> putResourcePolicyAsync(PutResourcePolicyRequest putResourcePolicyRequest);
+
+    /**
+     * <p>
+     * Sets the Data Catalog resource policy for access control.
+     * </p>
+     * 
+     * @param putResourcePolicyRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the PutResourcePolicy operation returned by the service.
+     * @sample AWSGlueAsyncHandler.PutResourcePolicy
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/PutResourcePolicy" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<PutResourcePolicyResult> putResourcePolicyAsync(PutResourcePolicyRequest putResourcePolicyRequest,
+            com.amazonaws.handlers.AsyncHandler<PutResourcePolicyRequest, PutResourcePolicyResult> asyncHandler);
+
+    /**
+     * <p>
      * Resets a bookmark entry.
      * </p>
      * 
@@ -1811,7 +2648,9 @@ public interface AWSGlueAsync extends AWSGlue {
     /**
      * <p>
      * Starts a crawl using the specified crawler, regardless of what is scheduled. If the crawler is already running,
-     * does nothing.
+     * returns a <a href=
+     * "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-exceptions.html#aws-glue-api-exceptions-CrawlerRunningException"
+     * >CrawlerRunningException</a>.
      * </p>
      * 
      * @param startCrawlerRequest
@@ -1825,7 +2664,9 @@ public interface AWSGlueAsync extends AWSGlue {
     /**
      * <p>
      * Starts a crawl using the specified crawler, regardless of what is scheduled. If the crawler is already running,
-     * does nothing.
+     * returns a <a href=
+     * "https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-exceptions.html#aws-glue-api-exceptions-CrawlerRunningException"
+     * >CrawlerRunningException</a>.
      * </p>
      * 
      * @param startCrawlerRequest
@@ -1876,7 +2717,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Runs a job.
+     * Starts a job run using a job definition.
      * </p>
      * 
      * @param startJobRunRequest
@@ -1889,7 +2730,7 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Runs a job.
+     * Starts a job run using a job definition.
      * </p>
      * 
      * @param startJobRunRequest
@@ -1907,7 +2748,8 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Starts an existing trigger.
+     * Starts an existing trigger. See <a href="http://docs.aws.amazon.com/glue/latest/dg/trigger-job.html">Triggering
+     * Jobs</a> for information about how different types of trigger are started.
      * </p>
      * 
      * @param startTriggerRequest
@@ -1920,7 +2762,8 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Starts an existing trigger.
+     * Starts an existing trigger. See <a href="http://docs.aws.amazon.com/glue/latest/dg/trigger-job.html">Triggering
+     * Jobs</a> for information about how different types of trigger are started.
      * </p>
      * 
      * @param startTriggerRequest
@@ -2033,7 +2876,74 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Modifies an existing classifier (either a <code>GrokClassifier</code> or an <code>XMLClassifier</code>).
+     * Adds tags to a resource. A tag is a label you can assign to an AWS resource. In AWS Glue, you can tag only
+     * certain resources. For information about what resources you can tag, see <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html">AWS Tags in AWS Glue</a>.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     * @return A Java Future containing the result of the TagResource operation returned by the service.
+     * @sample AWSGlueAsync.TagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/TagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<TagResourceResult> tagResourceAsync(TagResourceRequest tagResourceRequest);
+
+    /**
+     * <p>
+     * Adds tags to a resource. A tag is a label you can assign to an AWS resource. In AWS Glue, you can tag only
+     * certain resources. For information about what resources you can tag, see <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html">AWS Tags in AWS Glue</a>.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the TagResource operation returned by the service.
+     * @sample AWSGlueAsyncHandler.TagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/TagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<TagResourceResult> tagResourceAsync(TagResourceRequest tagResourceRequest,
+            com.amazonaws.handlers.AsyncHandler<TagResourceRequest, TagResourceResult> asyncHandler);
+
+    /**
+     * <p>
+     * Removes tags from a resource.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     * @return A Java Future containing the result of the UntagResource operation returned by the service.
+     * @sample AWSGlueAsync.UntagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UntagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<UntagResourceResult> untagResourceAsync(UntagResourceRequest untagResourceRequest);
+
+    /**
+     * <p>
+     * Removes tags from a resource.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the UntagResource operation returned by the service.
+     * @sample AWSGlueAsyncHandler.UntagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UntagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<UntagResourceResult> untagResourceAsync(UntagResourceRequest untagResourceRequest,
+            com.amazonaws.handlers.AsyncHandler<UntagResourceRequest, UntagResourceResult> asyncHandler);
+
+    /**
+     * <p>
+     * Modifies an existing classifier (a <code>GrokClassifier</code>, an <code>XMLClassifier</code>, a
+     * <code>JsonClassifier</code>, or a <code>CsvClassifier</code>, depending on which field is present).
      * </p>
      * 
      * @param updateClassifierRequest
@@ -2046,7 +2956,8 @@ public interface AWSGlueAsync extends AWSGlue {
 
     /**
      * <p>
-     * Modifies an existing classifier (either a <code>GrokClassifier</code> or an <code>XMLClassifier</code>).
+     * Modifies an existing classifier (a <code>GrokClassifier</code>, an <code>XMLClassifier</code>, a
+     * <code>JsonClassifier</code>, or a <code>CsvClassifier</code>, depending on which field is present).
      * </p>
      * 
      * @param updateClassifierRequest

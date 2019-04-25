@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -69,7 +69,7 @@ public class StackSet implements Serializable, Cloneable {
      * The capabilities that are allowed in the stack set. Some stack set templates might include resources that can
      * affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management (IAM)
      * users. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      * >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * </p>
      */
@@ -80,6 +80,33 @@ public class StackSet implements Serializable, Cloneable {
      * </p>
      */
     private com.amazonaws.internal.SdkInternalList<Tag> tags;
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the stack set.
+     * </p>
+     */
+    private String stackSetARN;
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the IAM role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized administrator roles to control which users or groups can manage specific stack sets within the
+     * same administrator account. For more information, see <a
+     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Prerequisites:
+     * Granting Permissions for Stack Set Operations</a> in the <i>AWS CloudFormation User Guide</i>.
+     * </p>
+     */
+    private String administrationRoleARN;
+    /**
+     * <p>
+     * The name of the IAM execution role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized execution roles to control which stack resources users and groups can include in their stack sets.
+     * </p>
+     */
+    private String executionRoleName;
 
     /**
      * <p>
@@ -392,14 +419,14 @@ public class StackSet implements Serializable, Cloneable {
      * The capabilities that are allowed in the stack set. Some stack set templates might include resources that can
      * affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management (IAM)
      * users. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      * >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * </p>
      * 
      * @return The capabilities that are allowed in the stack set. Some stack set templates might include resources that
      *         can affect permissions in your AWS account—for example, by creating new AWS Identity and Access
      *         Management (IAM) users. For more information, see <a href=
-     *         "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     *         "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      *         >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * @see Capability
      */
@@ -416,7 +443,7 @@ public class StackSet implements Serializable, Cloneable {
      * The capabilities that are allowed in the stack set. Some stack set templates might include resources that can
      * affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management (IAM)
      * users. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      * >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * </p>
      * 
@@ -424,7 +451,7 @@ public class StackSet implements Serializable, Cloneable {
      *        The capabilities that are allowed in the stack set. Some stack set templates might include resources that
      *        can affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management
      *        (IAM) users. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     *        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      *        >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * @see Capability
      */
@@ -443,7 +470,7 @@ public class StackSet implements Serializable, Cloneable {
      * The capabilities that are allowed in the stack set. Some stack set templates might include resources that can
      * affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management (IAM)
      * users. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      * >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * </p>
      * <p>
@@ -456,7 +483,7 @@ public class StackSet implements Serializable, Cloneable {
      *        The capabilities that are allowed in the stack set. Some stack set templates might include resources that
      *        can affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management
      *        (IAM) users. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     *        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      *        >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see Capability
@@ -477,7 +504,7 @@ public class StackSet implements Serializable, Cloneable {
      * The capabilities that are allowed in the stack set. Some stack set templates might include resources that can
      * affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management (IAM)
      * users. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      * >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * </p>
      * 
@@ -485,7 +512,7 @@ public class StackSet implements Serializable, Cloneable {
      *        The capabilities that are allowed in the stack set. Some stack set templates might include resources that
      *        can affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management
      *        (IAM) users. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     *        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      *        >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see Capability
@@ -501,7 +528,7 @@ public class StackSet implements Serializable, Cloneable {
      * The capabilities that are allowed in the stack set. Some stack set templates might include resources that can
      * affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management (IAM)
      * users. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      * >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * </p>
      * 
@@ -509,7 +536,7 @@ public class StackSet implements Serializable, Cloneable {
      *        The capabilities that are allowed in the stack set. Some stack set templates might include resources that
      *        can affect permissions in your AWS account—for example, by creating new AWS Identity and Access Management
      *        (IAM) users. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
+     *        "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#capabilities"
      *        >Acknowledging IAM Resources in AWS CloudFormation Templates.</a>
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see Capability
@@ -603,7 +630,180 @@ public class StackSet implements Serializable, Cloneable {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The Amazon Resource Number (ARN) of the stack set.
+     * </p>
+     * 
+     * @param stackSetARN
+     *        The Amazon Resource Number (ARN) of the stack set.
+     */
+
+    public void setStackSetARN(String stackSetARN) {
+        this.stackSetARN = stackSetARN;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the stack set.
+     * </p>
+     * 
+     * @return The Amazon Resource Number (ARN) of the stack set.
+     */
+
+    public String getStackSetARN() {
+        return this.stackSetARN;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the stack set.
+     * </p>
+     * 
+     * @param stackSetARN
+     *        The Amazon Resource Number (ARN) of the stack set.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public StackSet withStackSetARN(String stackSetARN) {
+        setStackSetARN(stackSetARN);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the IAM role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized administrator roles to control which users or groups can manage specific stack sets within the
+     * same administrator account. For more information, see <a
+     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Prerequisites:
+     * Granting Permissions for Stack Set Operations</a> in the <i>AWS CloudFormation User Guide</i>.
+     * </p>
+     * 
+     * @param administrationRoleARN
+     *        The Amazon Resource Number (ARN) of the IAM role used to create or update the stack set.</p>
+     *        <p>
+     *        Use customized administrator roles to control which users or groups can manage specific stack sets within
+     *        the same administrator account. For more information, see <a
+     *        href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Prerequisites:
+     *        Granting Permissions for Stack Set Operations</a> in the <i>AWS CloudFormation User Guide</i>.
+     */
+
+    public void setAdministrationRoleARN(String administrationRoleARN) {
+        this.administrationRoleARN = administrationRoleARN;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the IAM role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized administrator roles to control which users or groups can manage specific stack sets within the
+     * same administrator account. For more information, see <a
+     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Prerequisites:
+     * Granting Permissions for Stack Set Operations</a> in the <i>AWS CloudFormation User Guide</i>.
+     * </p>
+     * 
+     * @return The Amazon Resource Number (ARN) of the IAM role used to create or update the stack set.</p>
+     *         <p>
+     *         Use customized administrator roles to control which users or groups can manage specific stack sets within
+     *         the same administrator account. For more information, see <a
+     *         href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html"
+     *         >Prerequisites: Granting Permissions for Stack Set Operations</a> in the <i>AWS CloudFormation User
+     *         Guide</i>.
+     */
+
+    public String getAdministrationRoleARN() {
+        return this.administrationRoleARN;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the IAM role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized administrator roles to control which users or groups can manage specific stack sets within the
+     * same administrator account. For more information, see <a
+     * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Prerequisites:
+     * Granting Permissions for Stack Set Operations</a> in the <i>AWS CloudFormation User Guide</i>.
+     * </p>
+     * 
+     * @param administrationRoleARN
+     *        The Amazon Resource Number (ARN) of the IAM role used to create or update the stack set.</p>
+     *        <p>
+     *        Use customized administrator roles to control which users or groups can manage specific stack sets within
+     *        the same administrator account. For more information, see <a
+     *        href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html">Prerequisites:
+     *        Granting Permissions for Stack Set Operations</a> in the <i>AWS CloudFormation User Guide</i>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public StackSet withAdministrationRoleARN(String administrationRoleARN) {
+        setAdministrationRoleARN(administrationRoleARN);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The name of the IAM execution role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized execution roles to control which stack resources users and groups can include in their stack sets.
+     * </p>
+     * 
+     * @param executionRoleName
+     *        The name of the IAM execution role used to create or update the stack set. </p>
+     *        <p>
+     *        Use customized execution roles to control which stack resources users and groups can include in their
+     *        stack sets.
+     */
+
+    public void setExecutionRoleName(String executionRoleName) {
+        this.executionRoleName = executionRoleName;
+    }
+
+    /**
+     * <p>
+     * The name of the IAM execution role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized execution roles to control which stack resources users and groups can include in their stack sets.
+     * </p>
+     * 
+     * @return The name of the IAM execution role used to create or update the stack set. </p>
+     *         <p>
+     *         Use customized execution roles to control which stack resources users and groups can include in their
+     *         stack sets.
+     */
+
+    public String getExecutionRoleName() {
+        return this.executionRoleName;
+    }
+
+    /**
+     * <p>
+     * The name of the IAM execution role used to create or update the stack set.
+     * </p>
+     * <p>
+     * Use customized execution roles to control which stack resources users and groups can include in their stack sets.
+     * </p>
+     * 
+     * @param executionRoleName
+     *        The name of the IAM execution role used to create or update the stack set. </p>
+     *        <p>
+     *        Use customized execution roles to control which stack resources users and groups can include in their
+     *        stack sets.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public StackSet withExecutionRoleName(String executionRoleName) {
+        setExecutionRoleName(executionRoleName);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -628,7 +828,13 @@ public class StackSet implements Serializable, Cloneable {
         if (getCapabilities() != null)
             sb.append("Capabilities: ").append(getCapabilities()).append(",");
         if (getTags() != null)
-            sb.append("Tags: ").append(getTags());
+            sb.append("Tags: ").append(getTags()).append(",");
+        if (getStackSetARN() != null)
+            sb.append("StackSetARN: ").append(getStackSetARN()).append(",");
+        if (getAdministrationRoleARN() != null)
+            sb.append("AdministrationRoleARN: ").append(getAdministrationRoleARN()).append(",");
+        if (getExecutionRoleName() != null)
+            sb.append("ExecutionRoleName: ").append(getExecutionRoleName());
         sb.append("}");
         return sb.toString();
     }
@@ -675,6 +881,18 @@ public class StackSet implements Serializable, Cloneable {
             return false;
         if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
+        if (other.getStackSetARN() == null ^ this.getStackSetARN() == null)
+            return false;
+        if (other.getStackSetARN() != null && other.getStackSetARN().equals(this.getStackSetARN()) == false)
+            return false;
+        if (other.getAdministrationRoleARN() == null ^ this.getAdministrationRoleARN() == null)
+            return false;
+        if (other.getAdministrationRoleARN() != null && other.getAdministrationRoleARN().equals(this.getAdministrationRoleARN()) == false)
+            return false;
+        if (other.getExecutionRoleName() == null ^ this.getExecutionRoleName() == null)
+            return false;
+        if (other.getExecutionRoleName() != null && other.getExecutionRoleName().equals(this.getExecutionRoleName()) == false)
+            return false;
         return true;
     }
 
@@ -691,6 +909,9 @@ public class StackSet implements Serializable, Cloneable {
         hashCode = prime * hashCode + ((getParameters() == null) ? 0 : getParameters().hashCode());
         hashCode = prime * hashCode + ((getCapabilities() == null) ? 0 : getCapabilities().hashCode());
         hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
+        hashCode = prime * hashCode + ((getStackSetARN() == null) ? 0 : getStackSetARN().hashCode());
+        hashCode = prime * hashCode + ((getAdministrationRoleARN() == null) ? 0 : getAdministrationRoleARN().hashCode());
+        hashCode = prime * hashCode + ((getExecutionRoleName() == null) ? 0 : getExecutionRoleName().hashCode());
         return hashCode;
     }
 

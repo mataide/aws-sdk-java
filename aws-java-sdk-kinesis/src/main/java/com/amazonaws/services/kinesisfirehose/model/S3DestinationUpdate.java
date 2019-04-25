@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -30,29 +30,40 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The ARN of the AWS credentials.
+     * The Amazon Resource Name (ARN) of the AWS credentials. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names (ARNs)
+     * and AWS Service Namespaces</a>.
      * </p>
      */
     private String roleARN;
     /**
      * <p>
-     * The ARN of the S3 bucket.
+     * The ARN of the S3 bucket. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names (ARNs)
+     * and AWS Service Namespaces</a>.
      * </p>
      */
     private String bucketARN;
     /**
      * <p>
-     * The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra
-     * prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in
-     * the S3 bucket. For more information, see <a
-     * href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html">Amazon S3 Object Name Format</a> in the
-     * <i>Amazon Kinesis Firehose Developer Guide</i>.
+     * The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered Amazon S3 files. You can specify an
+     * extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a
+     * folder in the S3 bucket. For more information, see <a
+     * href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#s3-object-name">Amazon S3 Object Name
+     * Format</a> in the <i>Amazon Kinesis Data Firehose Developer Guide</i>.
      * </p>
      */
     private String prefix;
     /**
      * <p>
-     * The buffering option. If no value is specified, <b>BufferingHints</b> object default values are used.
+     * A prefix that Kinesis Data Firehose evaluates and adds to failed records before writing them to S3. This prefix
+     * appears immediately following the bucket name.
+     * </p>
+     */
+    private String errorOutputPrefix;
+    /**
+     * <p>
+     * The buffering option. If no value is specified, <code>BufferingHints</code> object default values are used.
      * </p>
      */
     private BufferingHints bufferingHints;
@@ -82,11 +93,15 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The ARN of the AWS credentials.
+     * The Amazon Resource Name (ARN) of the AWS credentials. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names (ARNs)
+     * and AWS Service Namespaces</a>.
      * </p>
      * 
      * @param roleARN
-     *        The ARN of the AWS credentials.
+     *        The Amazon Resource Name (ARN) of the AWS credentials. For more information, see <a
+     *        href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
+     *        (ARNs) and AWS Service Namespaces</a>.
      */
 
     public void setRoleARN(String roleARN) {
@@ -95,10 +110,14 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The ARN of the AWS credentials.
+     * The Amazon Resource Name (ARN) of the AWS credentials. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names (ARNs)
+     * and AWS Service Namespaces</a>.
      * </p>
      * 
-     * @return The ARN of the AWS credentials.
+     * @return The Amazon Resource Name (ARN) of the AWS credentials. For more information, see <a
+     *         href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
+     *         (ARNs) and AWS Service Namespaces</a>.
      */
 
     public String getRoleARN() {
@@ -107,11 +126,15 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The ARN of the AWS credentials.
+     * The Amazon Resource Name (ARN) of the AWS credentials. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names (ARNs)
+     * and AWS Service Namespaces</a>.
      * </p>
      * 
      * @param roleARN
-     *        The ARN of the AWS credentials.
+     *        The Amazon Resource Name (ARN) of the AWS credentials. For more information, see <a
+     *        href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
+     *        (ARNs) and AWS Service Namespaces</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -122,11 +145,15 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The ARN of the S3 bucket.
+     * The ARN of the S3 bucket. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names (ARNs)
+     * and AWS Service Namespaces</a>.
      * </p>
      * 
      * @param bucketARN
-     *        The ARN of the S3 bucket.
+     *        The ARN of the S3 bucket. For more information, see <a
+     *        href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
+     *        (ARNs) and AWS Service Namespaces</a>.
      */
 
     public void setBucketARN(String bucketARN) {
@@ -135,10 +162,14 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The ARN of the S3 bucket.
+     * The ARN of the S3 bucket. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names (ARNs)
+     * and AWS Service Namespaces</a>.
      * </p>
      * 
-     * @return The ARN of the S3 bucket.
+     * @return The ARN of the S3 bucket. For more information, see <a
+     *         href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
+     *         (ARNs) and AWS Service Namespaces</a>.
      */
 
     public String getBucketARN() {
@@ -147,11 +178,15 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The ARN of the S3 bucket.
+     * The ARN of the S3 bucket. For more information, see <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names (ARNs)
+     * and AWS Service Namespaces</a>.
      * </p>
      * 
      * @param bucketARN
-     *        The ARN of the S3 bucket.
+     *        The ARN of the S3 bucket. For more information, see <a
+     *        href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
+     *        (ARNs) and AWS Service Namespaces</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -162,19 +197,19 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra
-     * prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in
-     * the S3 bucket. For more information, see <a
-     * href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html">Amazon S3 Object Name Format</a> in the
-     * <i>Amazon Kinesis Firehose Developer Guide</i>.
+     * The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered Amazon S3 files. You can specify an
+     * extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a
+     * folder in the S3 bucket. For more information, see <a
+     * href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#s3-object-name">Amazon S3 Object Name
+     * Format</a> in the <i>Amazon Kinesis Data Firehose Developer Guide</i>.
      * </p>
      * 
      * @param prefix
-     *        The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an
-     *        extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears
-     *        as a folder in the S3 bucket. For more information, see <a
-     *        href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html">Amazon S3 Object Name Format</a>
-     *        in the <i>Amazon Kinesis Firehose Developer Guide</i>.
+     *        The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered Amazon S3 files. You can
+     *        specify an extra prefix to be added in front of the time format prefix. If the prefix ends with a slash,
+     *        it appears as a folder in the S3 bucket. For more information, see <a
+     *        href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#s3-object-name">Amazon S3 Object
+     *        Name Format</a> in the <i>Amazon Kinesis Data Firehose Developer Guide</i>.
      */
 
     public void setPrefix(String prefix) {
@@ -183,18 +218,18 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra
-     * prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in
-     * the S3 bucket. For more information, see <a
-     * href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html">Amazon S3 Object Name Format</a> in the
-     * <i>Amazon Kinesis Firehose Developer Guide</i>.
+     * The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered Amazon S3 files. You can specify an
+     * extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a
+     * folder in the S3 bucket. For more information, see <a
+     * href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#s3-object-name">Amazon S3 Object Name
+     * Format</a> in the <i>Amazon Kinesis Data Firehose Developer Guide</i>.
      * </p>
      * 
-     * @return The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an
-     *         extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears
-     *         as a folder in the S3 bucket. For more information, see <a
-     *         href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html">Amazon S3 Object Name Format</a>
-     *         in the <i>Amazon Kinesis Firehose Developer Guide</i>.
+     * @return The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered Amazon S3 files. You can
+     *         specify an extra prefix to be added in front of the time format prefix. If the prefix ends with a slash,
+     *         it appears as a folder in the S3 bucket. For more information, see <a
+     *         href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#s3-object-name">Amazon S3 Object
+     *         Name Format</a> in the <i>Amazon Kinesis Data Firehose Developer Guide</i>.
      */
 
     public String getPrefix() {
@@ -203,19 +238,19 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra
-     * prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in
-     * the S3 bucket. For more information, see <a
-     * href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html">Amazon S3 Object Name Format</a> in the
-     * <i>Amazon Kinesis Firehose Developer Guide</i>.
+     * The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered Amazon S3 files. You can specify an
+     * extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a
+     * folder in the S3 bucket. For more information, see <a
+     * href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#s3-object-name">Amazon S3 Object Name
+     * Format</a> in the <i>Amazon Kinesis Data Firehose Developer Guide</i>.
      * </p>
      * 
      * @param prefix
-     *        The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an
-     *        extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears
-     *        as a folder in the S3 bucket. For more information, see <a
-     *        href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html">Amazon S3 Object Name Format</a>
-     *        in the <i>Amazon Kinesis Firehose Developer Guide</i>.
+     *        The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered Amazon S3 files. You can
+     *        specify an extra prefix to be added in front of the time format prefix. If the prefix ends with a slash,
+     *        it appears as a folder in the S3 bucket. For more information, see <a
+     *        href="http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#s3-object-name">Amazon S3 Object
+     *        Name Format</a> in the <i>Amazon Kinesis Data Firehose Developer Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -226,11 +261,58 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The buffering option. If no value is specified, <b>BufferingHints</b> object default values are used.
+     * A prefix that Kinesis Data Firehose evaluates and adds to failed records before writing them to S3. This prefix
+     * appears immediately following the bucket name.
+     * </p>
+     * 
+     * @param errorOutputPrefix
+     *        A prefix that Kinesis Data Firehose evaluates and adds to failed records before writing them to S3. This
+     *        prefix appears immediately following the bucket name.
+     */
+
+    public void setErrorOutputPrefix(String errorOutputPrefix) {
+        this.errorOutputPrefix = errorOutputPrefix;
+    }
+
+    /**
+     * <p>
+     * A prefix that Kinesis Data Firehose evaluates and adds to failed records before writing them to S3. This prefix
+     * appears immediately following the bucket name.
+     * </p>
+     * 
+     * @return A prefix that Kinesis Data Firehose evaluates and adds to failed records before writing them to S3. This
+     *         prefix appears immediately following the bucket name.
+     */
+
+    public String getErrorOutputPrefix() {
+        return this.errorOutputPrefix;
+    }
+
+    /**
+     * <p>
+     * A prefix that Kinesis Data Firehose evaluates and adds to failed records before writing them to S3. This prefix
+     * appears immediately following the bucket name.
+     * </p>
+     * 
+     * @param errorOutputPrefix
+     *        A prefix that Kinesis Data Firehose evaluates and adds to failed records before writing them to S3. This
+     *        prefix appears immediately following the bucket name.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public S3DestinationUpdate withErrorOutputPrefix(String errorOutputPrefix) {
+        setErrorOutputPrefix(errorOutputPrefix);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The buffering option. If no value is specified, <code>BufferingHints</code> object default values are used.
      * </p>
      * 
      * @param bufferingHints
-     *        The buffering option. If no value is specified, <b>BufferingHints</b> object default values are used.
+     *        The buffering option. If no value is specified, <code>BufferingHints</code> object default values are
+     *        used.
      */
 
     public void setBufferingHints(BufferingHints bufferingHints) {
@@ -239,10 +321,11 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The buffering option. If no value is specified, <b>BufferingHints</b> object default values are used.
+     * The buffering option. If no value is specified, <code>BufferingHints</code> object default values are used.
      * </p>
      * 
-     * @return The buffering option. If no value is specified, <b>BufferingHints</b> object default values are used.
+     * @return The buffering option. If no value is specified, <code>BufferingHints</code> object default values are
+     *         used.
      */
 
     public BufferingHints getBufferingHints() {
@@ -251,11 +334,12 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
 
     /**
      * <p>
-     * The buffering option. If no value is specified, <b>BufferingHints</b> object default values are used.
+     * The buffering option. If no value is specified, <code>BufferingHints</code> object default values are used.
      * </p>
      * 
      * @param bufferingHints
-     *        The buffering option. If no value is specified, <b>BufferingHints</b> object default values are used.
+     *        The buffering option. If no value is specified, <code>BufferingHints</code> object default values are
+     *        used.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -463,7 +547,8 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -479,6 +564,8 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
             sb.append("BucketARN: ").append(getBucketARN()).append(",");
         if (getPrefix() != null)
             sb.append("Prefix: ").append(getPrefix()).append(",");
+        if (getErrorOutputPrefix() != null)
+            sb.append("ErrorOutputPrefix: ").append(getErrorOutputPrefix()).append(",");
         if (getBufferingHints() != null)
             sb.append("BufferingHints: ").append(getBufferingHints()).append(",");
         if (getCompressionFormat() != null)
@@ -513,6 +600,10 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
             return false;
         if (other.getPrefix() != null && other.getPrefix().equals(this.getPrefix()) == false)
             return false;
+        if (other.getErrorOutputPrefix() == null ^ this.getErrorOutputPrefix() == null)
+            return false;
+        if (other.getErrorOutputPrefix() != null && other.getErrorOutputPrefix().equals(this.getErrorOutputPrefix()) == false)
+            return false;
         if (other.getBufferingHints() == null ^ this.getBufferingHints() == null)
             return false;
         if (other.getBufferingHints() != null && other.getBufferingHints().equals(this.getBufferingHints()) == false)
@@ -540,6 +631,7 @@ public class S3DestinationUpdate implements Serializable, Cloneable, StructuredP
         hashCode = prime * hashCode + ((getRoleARN() == null) ? 0 : getRoleARN().hashCode());
         hashCode = prime * hashCode + ((getBucketARN() == null) ? 0 : getBucketARN().hashCode());
         hashCode = prime * hashCode + ((getPrefix() == null) ? 0 : getPrefix().hashCode());
+        hashCode = prime * hashCode + ((getErrorOutputPrefix() == null) ? 0 : getErrorOutputPrefix().hashCode());
         hashCode = prime * hashCode + ((getBufferingHints() == null) ? 0 : getBufferingHints().hashCode());
         hashCode = prime * hashCode + ((getCompressionFormat() == null) ? 0 : getCompressionFormat().hashCode());
         hashCode = prime * hashCode + ((getEncryptionConfiguration() == null) ? 0 : getEncryptionConfiguration().hashCode());

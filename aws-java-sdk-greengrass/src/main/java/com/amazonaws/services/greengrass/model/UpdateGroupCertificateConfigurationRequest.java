@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,16 +25,16 @@ import com.amazonaws.AmazonWebServiceRequest;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class UpdateGroupCertificateConfigurationRequest extends com.amazonaws.AmazonWebServiceRequest implements Serializable, Cloneable {
 
-    /** Amount of time when the certificate expires in milliseconds. */
+    /** The amount of time remaining before the certificate expires, in milliseconds. */
     private String certificateExpiryInMilliseconds;
-    /** The unique Id of the AWS Greengrass Group */
+    /** The ID of the Greengrass group. */
     private String groupId;
 
     /**
-     * Amount of time when the certificate expires in milliseconds.
+     * The amount of time remaining before the certificate expires, in milliseconds.
      * 
      * @param certificateExpiryInMilliseconds
-     *        Amount of time when the certificate expires in milliseconds.
+     *        The amount of time remaining before the certificate expires, in milliseconds.
      */
 
     public void setCertificateExpiryInMilliseconds(String certificateExpiryInMilliseconds) {
@@ -42,9 +42,9 @@ public class UpdateGroupCertificateConfigurationRequest extends com.amazonaws.Am
     }
 
     /**
-     * Amount of time when the certificate expires in milliseconds.
+     * The amount of time remaining before the certificate expires, in milliseconds.
      * 
-     * @return Amount of time when the certificate expires in milliseconds.
+     * @return The amount of time remaining before the certificate expires, in milliseconds.
      */
 
     public String getCertificateExpiryInMilliseconds() {
@@ -52,10 +52,10 @@ public class UpdateGroupCertificateConfigurationRequest extends com.amazonaws.Am
     }
 
     /**
-     * Amount of time when the certificate expires in milliseconds.
+     * The amount of time remaining before the certificate expires, in milliseconds.
      * 
      * @param certificateExpiryInMilliseconds
-     *        Amount of time when the certificate expires in milliseconds.
+     *        The amount of time remaining before the certificate expires, in milliseconds.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -65,10 +65,10 @@ public class UpdateGroupCertificateConfigurationRequest extends com.amazonaws.Am
     }
 
     /**
-     * The unique Id of the AWS Greengrass Group
+     * The ID of the Greengrass group.
      * 
      * @param groupId
-     *        The unique Id of the AWS Greengrass Group
+     *        The ID of the Greengrass group.
      */
 
     public void setGroupId(String groupId) {
@@ -76,9 +76,9 @@ public class UpdateGroupCertificateConfigurationRequest extends com.amazonaws.Am
     }
 
     /**
-     * The unique Id of the AWS Greengrass Group
+     * The ID of the Greengrass group.
      * 
-     * @return The unique Id of the AWS Greengrass Group
+     * @return The ID of the Greengrass group.
      */
 
     public String getGroupId() {
@@ -86,10 +86,10 @@ public class UpdateGroupCertificateConfigurationRequest extends com.amazonaws.Am
     }
 
     /**
-     * The unique Id of the AWS Greengrass Group
+     * The ID of the Greengrass group.
      * 
      * @param groupId
-     *        The unique Id of the AWS Greengrass Group
+     *        The ID of the Greengrass group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -99,7 +99,8 @@ public class UpdateGroupCertificateConfigurationRequest extends com.amazonaws.Am
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

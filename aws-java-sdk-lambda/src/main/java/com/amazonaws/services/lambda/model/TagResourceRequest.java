@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -27,24 +27,24 @@ public class TagResourceRequest extends com.amazonaws.AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The ARN (Amazon Resource Name) of the Lambda function.
+     * The function's Amazon Resource Name (ARN).
      * </p>
      */
     private String resource;
     /**
      * <p>
-     * The list of tags (key-value pairs) you are assigning to the Lambda function.
+     * A list of tags to apply to the function.
      * </p>
      */
     private com.amazonaws.internal.SdkInternalMap<String, String> tags;
 
     /**
      * <p>
-     * The ARN (Amazon Resource Name) of the Lambda function.
+     * The function's Amazon Resource Name (ARN).
      * </p>
      * 
      * @param resource
-     *        The ARN (Amazon Resource Name) of the Lambda function.
+     *        The function's Amazon Resource Name (ARN).
      */
 
     public void setResource(String resource) {
@@ -53,10 +53,10 @@ public class TagResourceRequest extends com.amazonaws.AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The ARN (Amazon Resource Name) of the Lambda function.
+     * The function's Amazon Resource Name (ARN).
      * </p>
      * 
-     * @return The ARN (Amazon Resource Name) of the Lambda function.
+     * @return The function's Amazon Resource Name (ARN).
      */
 
     public String getResource() {
@@ -65,11 +65,11 @@ public class TagResourceRequest extends com.amazonaws.AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The ARN (Amazon Resource Name) of the Lambda function.
+     * The function's Amazon Resource Name (ARN).
      * </p>
      * 
      * @param resource
-     *        The ARN (Amazon Resource Name) of the Lambda function.
+     *        The function's Amazon Resource Name (ARN).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -80,10 +80,10 @@ public class TagResourceRequest extends com.amazonaws.AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The list of tags (key-value pairs) you are assigning to the Lambda function.
+     * A list of tags to apply to the function.
      * </p>
      * 
-     * @return The list of tags (key-value pairs) you are assigning to the Lambda function.
+     * @return A list of tags to apply to the function.
      */
 
     public java.util.Map<String, String> getTags() {
@@ -95,11 +95,11 @@ public class TagResourceRequest extends com.amazonaws.AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The list of tags (key-value pairs) you are assigning to the Lambda function.
+     * A list of tags to apply to the function.
      * </p>
      * 
      * @param tags
-     *        The list of tags (key-value pairs) you are assigning to the Lambda function.
+     *        A list of tags to apply to the function.
      */
 
     public void setTags(java.util.Map<String, String> tags) {
@@ -108,11 +108,11 @@ public class TagResourceRequest extends com.amazonaws.AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The list of tags (key-value pairs) you are assigning to the Lambda function.
+     * A list of tags to apply to the function.
      * </p>
      * 
      * @param tags
-     *        The list of tags (key-value pairs) you are assigning to the Lambda function.
+     *        A list of tags to apply to the function.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -143,7 +143,8 @@ public class TagResourceRequest extends com.amazonaws.AmazonWebServiceRequest im
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

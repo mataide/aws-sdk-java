@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -48,7 +48,7 @@ public class ConfigurationRecorderStatus implements Serializable, Cloneable, Str
     private java.util.Date lastStopTime;
     /**
      * <p>
-     * Specifies whether the recorder is currently recording or not.
+     * Specifies whether or not the recorder is currently recording.
      * </p>
      */
     private Boolean recording;
@@ -199,11 +199,11 @@ public class ConfigurationRecorderStatus implements Serializable, Cloneable, Str
 
     /**
      * <p>
-     * Specifies whether the recorder is currently recording or not.
+     * Specifies whether or not the recorder is currently recording.
      * </p>
      * 
      * @param recording
-     *        Specifies whether the recorder is currently recording or not.
+     *        Specifies whether or not the recorder is currently recording.
      */
 
     public void setRecording(Boolean recording) {
@@ -212,10 +212,10 @@ public class ConfigurationRecorderStatus implements Serializable, Cloneable, Str
 
     /**
      * <p>
-     * Specifies whether the recorder is currently recording or not.
+     * Specifies whether or not the recorder is currently recording.
      * </p>
      * 
-     * @return Specifies whether the recorder is currently recording or not.
+     * @return Specifies whether or not the recorder is currently recording.
      */
 
     public Boolean getRecording() {
@@ -224,11 +224,11 @@ public class ConfigurationRecorderStatus implements Serializable, Cloneable, Str
 
     /**
      * <p>
-     * Specifies whether the recorder is currently recording or not.
+     * Specifies whether or not the recorder is currently recording.
      * </p>
      * 
      * @param recording
-     *        Specifies whether the recorder is currently recording or not.
+     *        Specifies whether or not the recorder is currently recording.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -239,10 +239,10 @@ public class ConfigurationRecorderStatus implements Serializable, Cloneable, Str
 
     /**
      * <p>
-     * Specifies whether the recorder is currently recording or not.
+     * Specifies whether or not the recorder is currently recording.
      * </p>
      * 
-     * @return Specifies whether the recorder is currently recording or not.
+     * @return Specifies whether or not the recorder is currently recording.
      */
 
     public Boolean isRecording() {
@@ -443,7 +443,8 @@ public class ConfigurationRecorderStatus implements Serializable, Cloneable, Str
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

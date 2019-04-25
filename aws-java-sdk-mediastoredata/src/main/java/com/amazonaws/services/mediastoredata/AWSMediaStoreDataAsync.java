@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -66,7 +66,7 @@ public interface AWSMediaStoreDataAsync extends AWSMediaStoreData {
 
     /**
      * <p>
-     * Gets the header for an object at the specified path.
+     * Gets the headers for an object at the specified path.
      * </p>
      * 
      * @param describeObjectRequest
@@ -79,7 +79,7 @@ public interface AWSMediaStoreDataAsync extends AWSMediaStoreData {
 
     /**
      * <p>
-     * Gets the header for an object at the specified path.
+     * Gets the headers for an object at the specified path.
      * </p>
      * 
      * @param describeObjectRequest
@@ -159,7 +159,7 @@ public interface AWSMediaStoreDataAsync extends AWSMediaStoreData {
 
     /**
      * <p>
-     * Uploads an object to the specified path. Object sizes are limited to 10 MB.
+     * Uploads an object to the specified path. Object sizes are limited to 25 MB.
      * </p>
      * 
      * @param putObjectRequest
@@ -172,7 +172,7 @@ public interface AWSMediaStoreDataAsync extends AWSMediaStoreData {
 
     /**
      * <p>
-     * Uploads an object to the specified path. Object sizes are limited to 10 MB.
+     * Uploads an object to the specified path. Object sizes are limited to 25 MB.
      * </p>
      * 
      * @param putObjectRequest

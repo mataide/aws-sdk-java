@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -49,9 +49,9 @@ public class GameSessionPlacementMarshaller {
     private static final MarshallingInfo<List> PLAYERLATENCIES_BINDING = MarshallingInfo.builder(MarshallingType.LIST)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("PlayerLatencies").build();
     private static final MarshallingInfo<java.util.Date> STARTTIME_BINDING = MarshallingInfo.builder(MarshallingType.DATE)
-            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("StartTime").build();
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("StartTime").timestampFormat("unixTimestamp").build();
     private static final MarshallingInfo<java.util.Date> ENDTIME_BINDING = MarshallingInfo.builder(MarshallingType.DATE)
-            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("EndTime").build();
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("EndTime").timestampFormat("unixTimestamp").build();
     private static final MarshallingInfo<String> IPADDRESS_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
             .marshallLocationName("IpAddress").build();
     private static final MarshallingInfo<Integer> PORT_BINDING = MarshallingInfo.builder(MarshallingType.INTEGER).marshallLocation(MarshallLocation.PAYLOAD)
@@ -60,6 +60,8 @@ public class GameSessionPlacementMarshaller {
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("PlacedPlayerSessions").build();
     private static final MarshallingInfo<String> GAMESESSIONDATA_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("GameSessionData").build();
+    private static final MarshallingInfo<String> MATCHMAKERDATA_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("MatchmakerData").build();
 
     private static final GameSessionPlacementMarshaller instance = new GameSessionPlacementMarshaller();
 
@@ -93,6 +95,7 @@ public class GameSessionPlacementMarshaller {
             protocolMarshaller.marshall(gameSessionPlacement.getPort(), PORT_BINDING);
             protocolMarshaller.marshall(gameSessionPlacement.getPlacedPlayerSessions(), PLACEDPLAYERSESSIONS_BINDING);
             protocolMarshaller.marshall(gameSessionPlacement.getGameSessionData(), GAMESESSIONDATA_BINDING);
+            protocolMarshaller.marshall(gameSessionPlacement.getMatchmakerData(), MATCHMAKERDATA_BINDING);
         } catch (Exception e) {
             throw new SdkClientException("Unable to marshall request to JSON: " + e.getMessage(), e);
         }

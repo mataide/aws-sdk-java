@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,33 +14,33 @@
  */
 package com.amazonaws;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
+
 import com.amazonaws.retry.PredefinedRetryPolicies;
 import com.amazonaws.retry.RetryPolicy;
 import com.amazonaws.util.ImmutableMapParameter;
-
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyStore;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
-import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.junit.Test;
+import org.mockito.Mockito;
 
 public class ClientConfigurationTest {
 
@@ -271,8 +271,13 @@ public class ClientConfigurationTest {
             } else if (clzz.isAssignableFrom(InetAddress.class)) {
                 field.set(customConfig, InetAddress.getLocalHost());
             } else if (clzz.isAssignableFrom(Protocol.class)) {
-                // Default is HTTPS so switch to HTTP
-                field.set(customConfig, Protocol.HTTP);
+                if (field.getName().equals("protocol")) {
+                    // Default is HTTPS so switch to HTTP
+                    field.set(customConfig, Protocol.HTTP);
+                } else {
+                    // field proxyProtocol's default is HTTP
+                    field.set(customConfig, Protocol.HTTPS);
+                }
             } else if (clzz.isAssignableFrom(DnsResolver.class)) {
                 field.set(customConfig, new MyCustomDnsResolver());
             } else if (clzz.isAssignableFrom(SecureRandom.class)) {
@@ -298,6 +303,22 @@ public class ClientConfigurationTest {
 
         // Do a deep comparison of the config after sending it through the copy constructor
         assertReflectionEquals(customConfig, new ClientConfiguration(customConfig));
+    }
+
+    /**
+     * Some customers extend ClientConfiguration and override the accessors. We should use the accessors
+     * in the copy constructor otherwise we will ignore those overridden methods. See TT0142110771 for
+     * more information.
+     */
+    @Test
+    public void copyConstructorUsesAccessors() {
+       ClientConfiguration config = new ClientConfiguration()  {
+           @Override
+           public int getSocketTimeout() {
+               return Integer.MAX_VALUE;
+           }
+       };
+       assertThat(new ClientConfiguration(config).getSocketTimeout(), equalTo(Integer.MAX_VALUE));
     }
 
     private boolean isStaticField(Field field) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -75,6 +75,12 @@ public class PipelineExecutionSummary implements Serializable, Cloneable, Struct
      * </p>
      */
     private java.util.Date lastUpdateTime;
+    /**
+     * <p>
+     * A list of the source artifact revisions that initiated a pipeline execution.
+     * </p>
+     */
+    private java.util.List<SourceRevision> sourceRevisions;
 
     /**
      * <p>
@@ -495,7 +501,78 @@ public class PipelineExecutionSummary implements Serializable, Cloneable, Struct
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * A list of the source artifact revisions that initiated a pipeline execution.
+     * </p>
+     * 
+     * @return A list of the source artifact revisions that initiated a pipeline execution.
+     */
+
+    public java.util.List<SourceRevision> getSourceRevisions() {
+        return sourceRevisions;
+    }
+
+    /**
+     * <p>
+     * A list of the source artifact revisions that initiated a pipeline execution.
+     * </p>
+     * 
+     * @param sourceRevisions
+     *        A list of the source artifact revisions that initiated a pipeline execution.
+     */
+
+    public void setSourceRevisions(java.util.Collection<SourceRevision> sourceRevisions) {
+        if (sourceRevisions == null) {
+            this.sourceRevisions = null;
+            return;
+        }
+
+        this.sourceRevisions = new java.util.ArrayList<SourceRevision>(sourceRevisions);
+    }
+
+    /**
+     * <p>
+     * A list of the source artifact revisions that initiated a pipeline execution.
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setSourceRevisions(java.util.Collection)} or {@link #withSourceRevisions(java.util.Collection)} if you
+     * want to override the existing values.
+     * </p>
+     * 
+     * @param sourceRevisions
+     *        A list of the source artifact revisions that initiated a pipeline execution.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public PipelineExecutionSummary withSourceRevisions(SourceRevision... sourceRevisions) {
+        if (this.sourceRevisions == null) {
+            setSourceRevisions(new java.util.ArrayList<SourceRevision>(sourceRevisions.length));
+        }
+        for (SourceRevision ele : sourceRevisions) {
+            this.sourceRevisions.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * A list of the source artifact revisions that initiated a pipeline execution.
+     * </p>
+     * 
+     * @param sourceRevisions
+     *        A list of the source artifact revisions that initiated a pipeline execution.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public PipelineExecutionSummary withSourceRevisions(java.util.Collection<SourceRevision> sourceRevisions) {
+        setSourceRevisions(sourceRevisions);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -512,7 +589,9 @@ public class PipelineExecutionSummary implements Serializable, Cloneable, Struct
         if (getStartTime() != null)
             sb.append("StartTime: ").append(getStartTime()).append(",");
         if (getLastUpdateTime() != null)
-            sb.append("LastUpdateTime: ").append(getLastUpdateTime());
+            sb.append("LastUpdateTime: ").append(getLastUpdateTime()).append(",");
+        if (getSourceRevisions() != null)
+            sb.append("SourceRevisions: ").append(getSourceRevisions());
         sb.append("}");
         return sb.toString();
     }
@@ -543,6 +622,10 @@ public class PipelineExecutionSummary implements Serializable, Cloneable, Struct
             return false;
         if (other.getLastUpdateTime() != null && other.getLastUpdateTime().equals(this.getLastUpdateTime()) == false)
             return false;
+        if (other.getSourceRevisions() == null ^ this.getSourceRevisions() == null)
+            return false;
+        if (other.getSourceRevisions() != null && other.getSourceRevisions().equals(this.getSourceRevisions()) == false)
+            return false;
         return true;
     }
 
@@ -555,6 +638,7 @@ public class PipelineExecutionSummary implements Serializable, Cloneable, Struct
         hashCode = prime * hashCode + ((getStatus() == null) ? 0 : getStatus().hashCode());
         hashCode = prime * hashCode + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
         hashCode = prime * hashCode + ((getLastUpdateTime() == null) ? 0 : getLastUpdateTime().hashCode());
+        hashCode = prime * hashCode + ((getSourceRevisions() == null) ? 0 : getSourceRevisions().hashCode());
         return hashCode;
     }
 

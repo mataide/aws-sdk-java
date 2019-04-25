@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,17 +18,49 @@ import com.amazonaws.protocol.StructuredPojo;
 import com.amazonaws.protocol.ProtocolMarshaller;
 
 /**
- * A structure that represents either a cost spend or usage spend. Contains an amount and a unit.
+ * <p>
+ * The amount of cost or usage that is measured for a budget.
+ * </p>
+ * <p>
+ * For example, a <code>Spend</code> for <code>3 GB</code> of S3 usage would have the following parameters:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * An <code>Amount</code> of <code>3</code>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * A <code>unit</code> of <code>GB</code>
+ * </p>
+ * </li>
+ * </ul>
  */
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class Spend implements Serializable, Cloneable, StructuredPojo {
 
+    /**
+     * <p>
+     * The cost or usage amount that is associated with a budget forecast, actual spend, or budget threshold.
+     * </p>
+     */
     private java.math.BigDecimal amount;
-
+    /**
+     * <p>
+     * The unit of measurement that is used for the budget forecast, actual spend, or budget threshold, such as dollars
+     * or GB.
+     * </p>
+     */
     private String unit;
 
     /**
+     * <p>
+     * The cost or usage amount that is associated with a budget forecast, actual spend, or budget threshold.
+     * </p>
+     * 
      * @param amount
+     *        The cost or usage amount that is associated with a budget forecast, actual spend, or budget threshold.
      */
 
     public void setAmount(java.math.BigDecimal amount) {
@@ -36,7 +68,11 @@ public class Spend implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * @return
+     * <p>
+     * The cost or usage amount that is associated with a budget forecast, actual spend, or budget threshold.
+     * </p>
+     * 
+     * @return The cost or usage amount that is associated with a budget forecast, actual spend, or budget threshold.
      */
 
     public java.math.BigDecimal getAmount() {
@@ -44,7 +80,12 @@ public class Spend implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * <p>
+     * The cost or usage amount that is associated with a budget forecast, actual spend, or budget threshold.
+     * </p>
+     * 
      * @param amount
+     *        The cost or usage amount that is associated with a budget forecast, actual spend, or budget threshold.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -54,7 +95,14 @@ public class Spend implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * <p>
+     * The unit of measurement that is used for the budget forecast, actual spend, or budget threshold, such as dollars
+     * or GB.
+     * </p>
+     * 
      * @param unit
+     *        The unit of measurement that is used for the budget forecast, actual spend, or budget threshold, such as
+     *        dollars or GB.
      */
 
     public void setUnit(String unit) {
@@ -62,7 +110,13 @@ public class Spend implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * @return
+     * <p>
+     * The unit of measurement that is used for the budget forecast, actual spend, or budget threshold, such as dollars
+     * or GB.
+     * </p>
+     * 
+     * @return The unit of measurement that is used for the budget forecast, actual spend, or budget threshold, such as
+     *         dollars or GB.
      */
 
     public String getUnit() {
@@ -70,7 +124,14 @@ public class Spend implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * <p>
+     * The unit of measurement that is used for the budget forecast, actual spend, or budget threshold, such as dollars
+     * or GB.
+     * </p>
+     * 
      * @param unit
+     *        The unit of measurement that is used for the budget forecast, actual spend, or budget threshold, such as
+     *        dollars or GB.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -80,7 +141,8 @@ public class Spend implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

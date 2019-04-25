@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -35,10 +35,45 @@ public class Action implements Serializable, Cloneable, StructuredPojo {
     private String jobName;
     /**
      * <p>
-     * Arguments to be passed to the job.
+     * The job arguments used when this trigger fires. For this job run, they replace the default arguments set in the
+     * job definition itself.
+     * </p>
+     * <p>
+     * You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue
+     * itself consumes.
+     * </p>
+     * <p>
+     * For information about how to specify and consume your own Job arguments, see the <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html">Calling AWS Glue APIs
+     * in Python</a> topic in the developer guide.
+     * </p>
+     * <p>
+     * For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Special Parameters
+     * Used by AWS Glue</a> topic in the developer guide.
      * </p>
      */
     private java.util.Map<String, String> arguments;
+    /**
+     * <p>
+     * The JobRun timeout in minutes. This is the maximum time that a job run can consume resources before it is
+     * terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours). This overrides the
+     * timeout value set in the parent job.
+     * </p>
+     */
+    private Integer timeout;
+    /**
+     * <p>
+     * Specifies configuration properties of a job run notification.
+     * </p>
+     */
+    private NotificationProperty notificationProperty;
+    /**
+     * <p>
+     * The name of the SecurityConfiguration structure to be used with this action.
+     * </p>
+     */
+    private String securityConfiguration;
 
     /**
      * <p>
@@ -82,10 +117,39 @@ public class Action implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * Arguments to be passed to the job.
+     * The job arguments used when this trigger fires. For this job run, they replace the default arguments set in the
+     * job definition itself.
+     * </p>
+     * <p>
+     * You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue
+     * itself consumes.
+     * </p>
+     * <p>
+     * For information about how to specify and consume your own Job arguments, see the <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html">Calling AWS Glue APIs
+     * in Python</a> topic in the developer guide.
+     * </p>
+     * <p>
+     * For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Special Parameters
+     * Used by AWS Glue</a> topic in the developer guide.
      * </p>
      * 
-     * @return Arguments to be passed to the job.
+     * @return The job arguments used when this trigger fires. For this job run, they replace the default arguments set
+     *         in the job definition itself.</p>
+     *         <p>
+     *         You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS
+     *         Glue itself consumes.
+     *         </p>
+     *         <p>
+     *         For information about how to specify and consume your own Job arguments, see the <a
+     *         href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html">Calling AWS
+     *         Glue APIs in Python</a> topic in the developer guide.
+     *         </p>
+     *         <p>
+     *         For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a
+     *         href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Special
+     *         Parameters Used by AWS Glue</a> topic in the developer guide.
      */
 
     public java.util.Map<String, String> getArguments() {
@@ -94,11 +158,40 @@ public class Action implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * Arguments to be passed to the job.
+     * The job arguments used when this trigger fires. For this job run, they replace the default arguments set in the
+     * job definition itself.
+     * </p>
+     * <p>
+     * You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue
+     * itself consumes.
+     * </p>
+     * <p>
+     * For information about how to specify and consume your own Job arguments, see the <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html">Calling AWS Glue APIs
+     * in Python</a> topic in the developer guide.
+     * </p>
+     * <p>
+     * For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Special Parameters
+     * Used by AWS Glue</a> topic in the developer guide.
      * </p>
      * 
      * @param arguments
-     *        Arguments to be passed to the job.
+     *        The job arguments used when this trigger fires. For this job run, they replace the default arguments set
+     *        in the job definition itself.</p>
+     *        <p>
+     *        You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS
+     *        Glue itself consumes.
+     *        </p>
+     *        <p>
+     *        For information about how to specify and consume your own Job arguments, see the <a
+     *        href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html">Calling AWS Glue
+     *        APIs in Python</a> topic in the developer guide.
+     *        </p>
+     *        <p>
+     *        For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a
+     *        href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Special
+     *        Parameters Used by AWS Glue</a> topic in the developer guide.
      */
 
     public void setArguments(java.util.Map<String, String> arguments) {
@@ -107,11 +200,40 @@ public class Action implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * Arguments to be passed to the job.
+     * The job arguments used when this trigger fires. For this job run, they replace the default arguments set in the
+     * job definition itself.
+     * </p>
+     * <p>
+     * You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue
+     * itself consumes.
+     * </p>
+     * <p>
+     * For information about how to specify and consume your own Job arguments, see the <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html">Calling AWS Glue APIs
+     * in Python</a> topic in the developer guide.
+     * </p>
+     * <p>
+     * For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Special Parameters
+     * Used by AWS Glue</a> topic in the developer guide.
      * </p>
      * 
      * @param arguments
-     *        Arguments to be passed to the job.
+     *        The job arguments used when this trigger fires. For this job run, they replace the default arguments set
+     *        in the job definition itself.</p>
+     *        <p>
+     *        You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS
+     *        Glue itself consumes.
+     *        </p>
+     *        <p>
+     *        For information about how to specify and consume your own Job arguments, see the <a
+     *        href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html">Calling AWS Glue
+     *        APIs in Python</a> topic in the developer guide.
+     *        </p>
+     *        <p>
+     *        For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a
+     *        href="http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Special
+     *        Parameters Used by AWS Glue</a> topic in the developer guide.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -142,7 +264,140 @@ public class Action implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The JobRun timeout in minutes. This is the maximum time that a job run can consume resources before it is
+     * terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours). This overrides the
+     * timeout value set in the parent job.
+     * </p>
+     * 
+     * @param timeout
+     *        The JobRun timeout in minutes. This is the maximum time that a job run can consume resources before it is
+     *        terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours). This overrides
+     *        the timeout value set in the parent job.
+     */
+
+    public void setTimeout(Integer timeout) {
+        this.timeout = timeout;
+    }
+
+    /**
+     * <p>
+     * The JobRun timeout in minutes. This is the maximum time that a job run can consume resources before it is
+     * terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours). This overrides the
+     * timeout value set in the parent job.
+     * </p>
+     * 
+     * @return The JobRun timeout in minutes. This is the maximum time that a job run can consume resources before it is
+     *         terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours). This
+     *         overrides the timeout value set in the parent job.
+     */
+
+    public Integer getTimeout() {
+        return this.timeout;
+    }
+
+    /**
+     * <p>
+     * The JobRun timeout in minutes. This is the maximum time that a job run can consume resources before it is
+     * terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours). This overrides the
+     * timeout value set in the parent job.
+     * </p>
+     * 
+     * @param timeout
+     *        The JobRun timeout in minutes. This is the maximum time that a job run can consume resources before it is
+     *        terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours). This overrides
+     *        the timeout value set in the parent job.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Action withTimeout(Integer timeout) {
+        setTimeout(timeout);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies configuration properties of a job run notification.
+     * </p>
+     * 
+     * @param notificationProperty
+     *        Specifies configuration properties of a job run notification.
+     */
+
+    public void setNotificationProperty(NotificationProperty notificationProperty) {
+        this.notificationProperty = notificationProperty;
+    }
+
+    /**
+     * <p>
+     * Specifies configuration properties of a job run notification.
+     * </p>
+     * 
+     * @return Specifies configuration properties of a job run notification.
+     */
+
+    public NotificationProperty getNotificationProperty() {
+        return this.notificationProperty;
+    }
+
+    /**
+     * <p>
+     * Specifies configuration properties of a job run notification.
+     * </p>
+     * 
+     * @param notificationProperty
+     *        Specifies configuration properties of a job run notification.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Action withNotificationProperty(NotificationProperty notificationProperty) {
+        setNotificationProperty(notificationProperty);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The name of the SecurityConfiguration structure to be used with this action.
+     * </p>
+     * 
+     * @param securityConfiguration
+     *        The name of the SecurityConfiguration structure to be used with this action.
+     */
+
+    public void setSecurityConfiguration(String securityConfiguration) {
+        this.securityConfiguration = securityConfiguration;
+    }
+
+    /**
+     * <p>
+     * The name of the SecurityConfiguration structure to be used with this action.
+     * </p>
+     * 
+     * @return The name of the SecurityConfiguration structure to be used with this action.
+     */
+
+    public String getSecurityConfiguration() {
+        return this.securityConfiguration;
+    }
+
+    /**
+     * <p>
+     * The name of the SecurityConfiguration structure to be used with this action.
+     * </p>
+     * 
+     * @param securityConfiguration
+     *        The name of the SecurityConfiguration structure to be used with this action.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Action withSecurityConfiguration(String securityConfiguration) {
+        setSecurityConfiguration(securityConfiguration);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -155,7 +410,13 @@ public class Action implements Serializable, Cloneable, StructuredPojo {
         if (getJobName() != null)
             sb.append("JobName: ").append(getJobName()).append(",");
         if (getArguments() != null)
-            sb.append("Arguments: ").append(getArguments());
+            sb.append("Arguments: ").append(getArguments()).append(",");
+        if (getTimeout() != null)
+            sb.append("Timeout: ").append(getTimeout()).append(",");
+        if (getNotificationProperty() != null)
+            sb.append("NotificationProperty: ").append(getNotificationProperty()).append(",");
+        if (getSecurityConfiguration() != null)
+            sb.append("SecurityConfiguration: ").append(getSecurityConfiguration());
         sb.append("}");
         return sb.toString();
     }
@@ -178,6 +439,18 @@ public class Action implements Serializable, Cloneable, StructuredPojo {
             return false;
         if (other.getArguments() != null && other.getArguments().equals(this.getArguments()) == false)
             return false;
+        if (other.getTimeout() == null ^ this.getTimeout() == null)
+            return false;
+        if (other.getTimeout() != null && other.getTimeout().equals(this.getTimeout()) == false)
+            return false;
+        if (other.getNotificationProperty() == null ^ this.getNotificationProperty() == null)
+            return false;
+        if (other.getNotificationProperty() != null && other.getNotificationProperty().equals(this.getNotificationProperty()) == false)
+            return false;
+        if (other.getSecurityConfiguration() == null ^ this.getSecurityConfiguration() == null)
+            return false;
+        if (other.getSecurityConfiguration() != null && other.getSecurityConfiguration().equals(this.getSecurityConfiguration()) == false)
+            return false;
         return true;
     }
 
@@ -188,6 +461,9 @@ public class Action implements Serializable, Cloneable, StructuredPojo {
 
         hashCode = prime * hashCode + ((getJobName() == null) ? 0 : getJobName().hashCode());
         hashCode = prime * hashCode + ((getArguments() == null) ? 0 : getArguments().hashCode());
+        hashCode = prime * hashCode + ((getTimeout() == null) ? 0 : getTimeout().hashCode());
+        hashCode = prime * hashCode + ((getNotificationProperty() == null) ? 0 : getNotificationProperty().hashCode());
+        hashCode = prime * hashCode + ((getSecurityConfiguration() == null) ? 0 : getSecurityConfiguration().hashCode());
         return hashCode;
     }
 

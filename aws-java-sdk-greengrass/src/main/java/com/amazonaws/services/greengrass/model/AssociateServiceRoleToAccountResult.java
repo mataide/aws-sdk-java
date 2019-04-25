@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -24,14 +24,14 @@ import javax.annotation.Generated;
 public class AssociateServiceRoleToAccountResult extends com.amazonaws.AmazonWebServiceResult<com.amazonaws.ResponseMetadata> implements Serializable,
         Cloneable {
 
-    /** Time when the service role was associated to the account. */
+    /** The time when the service role was associated with the account. */
     private String associatedAt;
 
     /**
-     * Time when the service role was associated to the account.
+     * The time when the service role was associated with the account.
      * 
      * @param associatedAt
-     *        Time when the service role was associated to the account.
+     *        The time when the service role was associated with the account.
      */
 
     public void setAssociatedAt(String associatedAt) {
@@ -39,9 +39,9 @@ public class AssociateServiceRoleToAccountResult extends com.amazonaws.AmazonWeb
     }
 
     /**
-     * Time when the service role was associated to the account.
+     * The time when the service role was associated with the account.
      * 
-     * @return Time when the service role was associated to the account.
+     * @return The time when the service role was associated with the account.
      */
 
     public String getAssociatedAt() {
@@ -49,10 +49,10 @@ public class AssociateServiceRoleToAccountResult extends com.amazonaws.AmazonWeb
     }
 
     /**
-     * Time when the service role was associated to the account.
+     * The time when the service role was associated with the account.
      * 
      * @param associatedAt
-     *        Time when the service role was associated to the account.
+     *        The time when the service role was associated with the account.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -62,7 +62,8 @@ public class AssociateServiceRoleToAccountResult extends com.amazonaws.AmazonWeb
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

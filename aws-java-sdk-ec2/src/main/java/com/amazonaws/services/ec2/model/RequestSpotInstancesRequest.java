@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -62,15 +62,15 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
      * gives the instance a two-minute warning before it terminates.
      * </p>
      * <p>
-     * Note that you can't specify an Availability Zone group or a launch group if you specify a duration.
+     * You can't specify an Availability Zone group or a launch group if you specify a duration.
      * </p>
      */
     private Integer blockDurationMinutes;
     /**
      * <p>
      * Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more
-     * information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How
-     * to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How
+     * to Ensure Idempotency</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * </p>
      */
     private String clientToken;
@@ -308,7 +308,7 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
      * gives the instance a two-minute warning before it terminates.
      * </p>
      * <p>
-     * Note that you can't specify an Availability Zone group or a launch group if you specify a duration.
+     * You can't specify an Availability Zone group or a launch group if you specify a duration.
      * </p>
      * 
      * @param blockDurationMinutes
@@ -320,7 +320,7 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
      *        termination notice, which gives the instance a two-minute warning before it terminates.
      *        </p>
      *        <p>
-     *        Note that you can't specify an Availability Zone group or a launch group if you specify a duration.
+     *        You can't specify an Availability Zone group or a launch group if you specify a duration.
      */
 
     public void setBlockDurationMinutes(Integer blockDurationMinutes) {
@@ -338,7 +338,7 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
      * gives the instance a two-minute warning before it terminates.
      * </p>
      * <p>
-     * Note that you can't specify an Availability Zone group or a launch group if you specify a duration.
+     * You can't specify an Availability Zone group or a launch group if you specify a duration.
      * </p>
      * 
      * @return The required duration for the Spot Instances (also known as Spot blocks), in minutes. This value must be
@@ -349,7 +349,7 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
      *         termination notice, which gives the instance a two-minute warning before it terminates.
      *         </p>
      *         <p>
-     *         Note that you can't specify an Availability Zone group or a launch group if you specify a duration.
+     *         You can't specify an Availability Zone group or a launch group if you specify a duration.
      */
 
     public Integer getBlockDurationMinutes() {
@@ -367,7 +367,7 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
      * gives the instance a two-minute warning before it terminates.
      * </p>
      * <p>
-     * Note that you can't specify an Availability Zone group or a launch group if you specify a duration.
+     * You can't specify an Availability Zone group or a launch group if you specify a duration.
      * </p>
      * 
      * @param blockDurationMinutes
@@ -379,7 +379,7 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
      *        termination notice, which gives the instance a two-minute warning before it terminates.
      *        </p>
      *        <p>
-     *        Note that you can't specify an Availability Zone group or a launch group if you specify a duration.
+     *        You can't specify an Availability Zone group or a launch group if you specify a duration.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -391,15 +391,15 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
     /**
      * <p>
      * Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more
-     * information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How
-     * to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How
+     * to Ensure Idempotency</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * </p>
      * 
      * @param clientToken
      *        Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more
      *        information, see <a
-     *        href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
-     *        Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     *        href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     *        Idempotency</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.
      */
 
     public void setClientToken(String clientToken) {
@@ -409,14 +409,14 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
     /**
      * <p>
      * Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more
-     * information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How
-     * to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How
+     * to Ensure Idempotency</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * </p>
      * 
      * @return Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more
      *         information, see <a
-     *         href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
-     *         Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     *         href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     *         Idempotency</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.
      */
 
     public String getClientToken() {
@@ -426,15 +426,15 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
     /**
      * <p>
      * Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more
-     * information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How
-     * to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How
+     * to Ensure Idempotency</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * </p>
      * 
      * @param clientToken
      *        Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more
      *        information, see <a
-     *        href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
-     *        Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     *        href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     *        Idempotency</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -930,7 +930,8 @@ public class RequestSpotInstancesRequest extends AmazonWebServiceRequest impleme
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

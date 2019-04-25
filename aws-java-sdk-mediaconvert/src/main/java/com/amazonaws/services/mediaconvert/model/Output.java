@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -36,7 +36,7 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
      * instance of (CaptionDescriptions). (CaptionDescriptions) can contain multiple groups of captions settings.
      */
     private java.util.List<CaptionDescription> captionDescriptions;
-
+    /** Container specific settings. */
     private ContainerSettings containerSettings;
     /**
      * Use Extension (Extension) to specify the file extension for outputs in File output groups. If you do not specify
@@ -48,12 +48,12 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     /**
      * Use Name modifier (NameModifier) to have the service add a string to the end of each output filename. You specify
      * the base filename as part of your destination URI. When you create multiple outputs in the same output group,
-     * Name modifier is required. Name modifier also accepts format identifiers. For DASH ISO outputs, if you use the
-     * format identifiers $Number$ or $Time$ in one output, you must use them in the same way in all outputs of the
-     * output group.
+     * Name modifier (NameModifier) is required. Name modifier also accepts format identifiers. For DASH ISO outputs, if
+     * you use the format identifiers $Number$ or $Time$ in one output, you must use them in the same way in all outputs
+     * of the output group.
      */
     private String nameModifier;
-
+    /** Specific settings for this type of output. */
     private OutputSettings outputSettings;
     /**
      * Use Preset (Preset) to specifiy a preset for your transcoding settings. Provide the system or custom preset name.
@@ -213,7 +213,10 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Container specific settings.
+     * 
      * @param containerSettings
+     *        Container specific settings.
      */
 
     public void setContainerSettings(ContainerSettings containerSettings) {
@@ -221,7 +224,9 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * @return
+     * Container specific settings.
+     * 
+     * @return Container specific settings.
      */
 
     public ContainerSettings getContainerSettings() {
@@ -229,7 +234,10 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Container specific settings.
+     * 
      * @param containerSettings
+     *        Container specific settings.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -293,16 +301,16 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     /**
      * Use Name modifier (NameModifier) to have the service add a string to the end of each output filename. You specify
      * the base filename as part of your destination URI. When you create multiple outputs in the same output group,
-     * Name modifier is required. Name modifier also accepts format identifiers. For DASH ISO outputs, if you use the
-     * format identifiers $Number$ or $Time$ in one output, you must use them in the same way in all outputs of the
-     * output group.
+     * Name modifier (NameModifier) is required. Name modifier also accepts format identifiers. For DASH ISO outputs, if
+     * you use the format identifiers $Number$ or $Time$ in one output, you must use them in the same way in all outputs
+     * of the output group.
      * 
      * @param nameModifier
      *        Use Name modifier (NameModifier) to have the service add a string to the end of each output filename. You
      *        specify the base filename as part of your destination URI. When you create multiple outputs in the same
-     *        output group, Name modifier is required. Name modifier also accepts format identifiers. For DASH ISO
-     *        outputs, if you use the format identifiers $Number$ or $Time$ in one output, you must use them in the same
-     *        way in all outputs of the output group.
+     *        output group, Name modifier (NameModifier) is required. Name modifier also accepts format identifiers. For
+     *        DASH ISO outputs, if you use the format identifiers $Number$ or $Time$ in one output, you must use them in
+     *        the same way in all outputs of the output group.
      */
 
     public void setNameModifier(String nameModifier) {
@@ -312,15 +320,15 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     /**
      * Use Name modifier (NameModifier) to have the service add a string to the end of each output filename. You specify
      * the base filename as part of your destination URI. When you create multiple outputs in the same output group,
-     * Name modifier is required. Name modifier also accepts format identifiers. For DASH ISO outputs, if you use the
-     * format identifiers $Number$ or $Time$ in one output, you must use them in the same way in all outputs of the
-     * output group.
+     * Name modifier (NameModifier) is required. Name modifier also accepts format identifiers. For DASH ISO outputs, if
+     * you use the format identifiers $Number$ or $Time$ in one output, you must use them in the same way in all outputs
+     * of the output group.
      * 
      * @return Use Name modifier (NameModifier) to have the service add a string to the end of each output filename. You
      *         specify the base filename as part of your destination URI. When you create multiple outputs in the same
-     *         output group, Name modifier is required. Name modifier also accepts format identifiers. For DASH ISO
-     *         outputs, if you use the format identifiers $Number$ or $Time$ in one output, you must use them in the
-     *         same way in all outputs of the output group.
+     *         output group, Name modifier (NameModifier) is required. Name modifier also accepts format identifiers.
+     *         For DASH ISO outputs, if you use the format identifiers $Number$ or $Time$ in one output, you must use
+     *         them in the same way in all outputs of the output group.
      */
 
     public String getNameModifier() {
@@ -330,16 +338,16 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     /**
      * Use Name modifier (NameModifier) to have the service add a string to the end of each output filename. You specify
      * the base filename as part of your destination URI. When you create multiple outputs in the same output group,
-     * Name modifier is required. Name modifier also accepts format identifiers. For DASH ISO outputs, if you use the
-     * format identifiers $Number$ or $Time$ in one output, you must use them in the same way in all outputs of the
-     * output group.
+     * Name modifier (NameModifier) is required. Name modifier also accepts format identifiers. For DASH ISO outputs, if
+     * you use the format identifiers $Number$ or $Time$ in one output, you must use them in the same way in all outputs
+     * of the output group.
      * 
      * @param nameModifier
      *        Use Name modifier (NameModifier) to have the service add a string to the end of each output filename. You
      *        specify the base filename as part of your destination URI. When you create multiple outputs in the same
-     *        output group, Name modifier is required. Name modifier also accepts format identifiers. For DASH ISO
-     *        outputs, if you use the format identifiers $Number$ or $Time$ in one output, you must use them in the same
-     *        way in all outputs of the output group.
+     *        output group, Name modifier (NameModifier) is required. Name modifier also accepts format identifiers. For
+     *        DASH ISO outputs, if you use the format identifiers $Number$ or $Time$ in one output, you must use them in
+     *        the same way in all outputs of the output group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -349,7 +357,10 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Specific settings for this type of output.
+     * 
      * @param outputSettings
+     *        Specific settings for this type of output.
      */
 
     public void setOutputSettings(OutputSettings outputSettings) {
@@ -357,7 +368,9 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * @return
+     * Specific settings for this type of output.
+     * 
+     * @return Specific settings for this type of output.
      */
 
     public OutputSettings getOutputSettings() {
@@ -365,7 +378,10 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
+     * Specific settings for this type of output.
+     * 
      * @param outputSettings
+     *        Specific settings for this type of output.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -464,7 +480,8 @@ public class Output implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

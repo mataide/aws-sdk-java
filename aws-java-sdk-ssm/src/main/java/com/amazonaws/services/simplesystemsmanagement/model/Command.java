@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -41,20 +41,26 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
     private String documentName;
     /**
      * <p>
+     * The SSM document version.
+     * </p>
+     */
+    private String documentVersion;
+    /**
+     * <p>
      * User-specified information about the command, such as a brief description of what the command should do.
      * </p>
      */
     private String comment;
     /**
      * <p>
-     * If this time is reached and the command has not already started executing, it will not execute. Calculated based
-     * on the ExpiresAfter user input provided as part of the SendCommand API.
+     * If this time is reached and the command has not already started running, it will not run. Calculated based on the
+     * ExpiresAfter user input provided as part of the SendCommand API.
      * </p>
      */
     private java.util.Date expiresAfter;
     /**
      * <p>
-     * The parameter values to be inserted in the document when executing the command.
+     * The parameter values to be inserted in the document when running the command.
      * </p>
      */
     private java.util.Map<String, java.util.List<String>> parameters;
@@ -88,8 +94,8 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * A detailed status of the command execution. StatusDetails includes more information than Status because it
      * includes states resulting from error and concurrency control parameters. StatusDetails can show different results
      * than Status. For more information about these statuses, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html">Run Command
-     * Status</a>. StatusDetails can be one of the following values:
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html">Understanding Command
+     * Statuses</a> in the <i>AWS Systems Manager User Guide</i>. StatusDetails can be one of the following values:
      * </p>
      * <ul>
      * <li>
@@ -105,7 +111,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * Success: The command successfully executed on all invocations. This is a terminal state.
+     * Success: The command successfully ran on all invocations. This is a terminal state.
      * </p>
      * </li>
      * <li>
@@ -139,7 +145,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * <li>
      * <p>
      * Rate Exceeded: The number of instances targeted by the command exceeded the account limit for pending
-     * invocations. The system has canceled the command before executing it on any instance. This is a terminal state.
+     * invocations. The system has canceled the command before running it on any instance. This is a terminal state.
      * </p>
      * </li>
      * </ul>
@@ -168,21 +174,21 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
     private String outputS3KeyPrefix;
     /**
      * <p>
-     * The maximum number of instances that are allowed to execute the command at the same time. You can specify a
-     * number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more
-     * information about how to use MaxConcurrency, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command Using
-     * Systems Manager Run Command</a>.
+     * The maximum number of instances that are allowed to run the command at the same time. You can specify a number of
+     * instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more information
+     * about how to use MaxConcurrency, see <a
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     * Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * </p>
      */
     private String maxConcurrency;
     /**
      * <p>
      * The maximum number of errors allowed before the system stops sending the command to additional targets. You can
-     * specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 50. For more
+     * specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 0. For more
      * information about how to use MaxErrors, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command Using
-     * Systems Manager Run Command</a>.
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     * Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * </p>
      */
     private String maxErrors;
@@ -207,6 +213,12 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
     private Integer errorCount;
     /**
      * <p>
+     * The number of targets for which the status is Delivery Timed Out.
+     * </p>
+     */
+    private Integer deliveryTimedOutCount;
+    /**
+     * <p>
      * The IAM service role that Run Command uses to act on your behalf when sending notifications about command status
      * changes.
      * </p>
@@ -218,6 +230,12 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * </p>
      */
     private NotificationConfig notificationConfig;
+    /**
+     * <p>
+     * CloudWatch Logs information where you want Systems Manager to send the command output.
+     * </p>
+     */
+    private CloudWatchOutputConfig cloudWatchOutputConfig;
 
     /**
      * <p>
@@ -301,6 +319,46 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
+     * The SSM document version.
+     * </p>
+     * 
+     * @param documentVersion
+     *        The SSM document version.
+     */
+
+    public void setDocumentVersion(String documentVersion) {
+        this.documentVersion = documentVersion;
+    }
+
+    /**
+     * <p>
+     * The SSM document version.
+     * </p>
+     * 
+     * @return The SSM document version.
+     */
+
+    public String getDocumentVersion() {
+        return this.documentVersion;
+    }
+
+    /**
+     * <p>
+     * The SSM document version.
+     * </p>
+     * 
+     * @param documentVersion
+     *        The SSM document version.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Command withDocumentVersion(String documentVersion) {
+        setDocumentVersion(documentVersion);
+        return this;
+    }
+
+    /**
+     * <p>
      * User-specified information about the command, such as a brief description of what the command should do.
      * </p>
      * 
@@ -341,13 +399,13 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * If this time is reached and the command has not already started executing, it will not execute. Calculated based
-     * on the ExpiresAfter user input provided as part of the SendCommand API.
+     * If this time is reached and the command has not already started running, it will not run. Calculated based on the
+     * ExpiresAfter user input provided as part of the SendCommand API.
      * </p>
      * 
      * @param expiresAfter
-     *        If this time is reached and the command has not already started executing, it will not execute. Calculated
-     *        based on the ExpiresAfter user input provided as part of the SendCommand API.
+     *        If this time is reached and the command has not already started running, it will not run. Calculated based
+     *        on the ExpiresAfter user input provided as part of the SendCommand API.
      */
 
     public void setExpiresAfter(java.util.Date expiresAfter) {
@@ -356,12 +414,12 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * If this time is reached and the command has not already started executing, it will not execute. Calculated based
-     * on the ExpiresAfter user input provided as part of the SendCommand API.
+     * If this time is reached and the command has not already started running, it will not run. Calculated based on the
+     * ExpiresAfter user input provided as part of the SendCommand API.
      * </p>
      * 
-     * @return If this time is reached and the command has not already started executing, it will not execute.
-     *         Calculated based on the ExpiresAfter user input provided as part of the SendCommand API.
+     * @return If this time is reached and the command has not already started running, it will not run. Calculated
+     *         based on the ExpiresAfter user input provided as part of the SendCommand API.
      */
 
     public java.util.Date getExpiresAfter() {
@@ -370,13 +428,13 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * If this time is reached and the command has not already started executing, it will not execute. Calculated based
-     * on the ExpiresAfter user input provided as part of the SendCommand API.
+     * If this time is reached and the command has not already started running, it will not run. Calculated based on the
+     * ExpiresAfter user input provided as part of the SendCommand API.
      * </p>
      * 
      * @param expiresAfter
-     *        If this time is reached and the command has not already started executing, it will not execute. Calculated
-     *        based on the ExpiresAfter user input provided as part of the SendCommand API.
+     *        If this time is reached and the command has not already started running, it will not run. Calculated based
+     *        on the ExpiresAfter user input provided as part of the SendCommand API.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -387,10 +445,10 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The parameter values to be inserted in the document when executing the command.
+     * The parameter values to be inserted in the document when running the command.
      * </p>
      * 
-     * @return The parameter values to be inserted in the document when executing the command.
+     * @return The parameter values to be inserted in the document when running the command.
      */
 
     public java.util.Map<String, java.util.List<String>> getParameters() {
@@ -399,11 +457,11 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The parameter values to be inserted in the document when executing the command.
+     * The parameter values to be inserted in the document when running the command.
      * </p>
      * 
      * @param parameters
-     *        The parameter values to be inserted in the document when executing the command.
+     *        The parameter values to be inserted in the document when running the command.
      */
 
     public void setParameters(java.util.Map<String, java.util.List<String>> parameters) {
@@ -412,11 +470,11 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The parameter values to be inserted in the document when executing the command.
+     * The parameter values to be inserted in the document when running the command.
      * </p>
      * 
      * @param parameters
-     *        The parameter values to be inserted in the document when executing the command.
+     *        The parameter values to be inserted in the document when running the command.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -718,8 +776,8 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * A detailed status of the command execution. StatusDetails includes more information than Status because it
      * includes states resulting from error and concurrency control parameters. StatusDetails can show different results
      * than Status. For more information about these statuses, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html">Run Command
-     * Status</a>. StatusDetails can be one of the following values:
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html">Understanding Command
+     * Statuses</a> in the <i>AWS Systems Manager User Guide</i>. StatusDetails can be one of the following values:
      * </p>
      * <ul>
      * <li>
@@ -735,7 +793,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * Success: The command successfully executed on all invocations. This is a terminal state.
+     * Success: The command successfully ran on all invocations. This is a terminal state.
      * </p>
      * </li>
      * <li>
@@ -769,7 +827,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * <li>
      * <p>
      * Rate Exceeded: The number of instances targeted by the command exceeded the account limit for pending
-     * invocations. The system has canceled the command before executing it on any instance. This is a terminal state.
+     * invocations. The system has canceled the command before running it on any instance. This is a terminal state.
      * </p>
      * </li>
      * </ul>
@@ -778,8 +836,9 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      *        A detailed status of the command execution. StatusDetails includes more information than Status because it
      *        includes states resulting from error and concurrency control parameters. StatusDetails can show different
      *        results than Status. For more information about these statuses, see <a
-     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html">Run Command
-     *        Status</a>. StatusDetails can be one of the following values:</p>
+     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html">Understanding
+     *        Command Statuses</a> in the <i>AWS Systems Manager User Guide</i>. StatusDetails can be one of the
+     *        following values:</p>
      *        <ul>
      *        <li>
      *        <p>
@@ -794,7 +853,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      *        </li>
      *        <li>
      *        <p>
-     *        Success: The command successfully executed on all invocations. This is a terminal state.
+     *        Success: The command successfully ran on all invocations. This is a terminal state.
      *        </p>
      *        </li>
      *        <li>
@@ -829,7 +888,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      *        <li>
      *        <p>
      *        Rate Exceeded: The number of instances targeted by the command exceeded the account limit for pending
-     *        invocations. The system has canceled the command before executing it on any instance. This is a terminal
+     *        invocations. The system has canceled the command before running it on any instance. This is a terminal
      *        state.
      *        </p>
      *        </li>
@@ -844,8 +903,8 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * A detailed status of the command execution. StatusDetails includes more information than Status because it
      * includes states resulting from error and concurrency control parameters. StatusDetails can show different results
      * than Status. For more information about these statuses, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html">Run Command
-     * Status</a>. StatusDetails can be one of the following values:
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html">Understanding Command
+     * Statuses</a> in the <i>AWS Systems Manager User Guide</i>. StatusDetails can be one of the following values:
      * </p>
      * <ul>
      * <li>
@@ -861,7 +920,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * Success: The command successfully executed on all invocations. This is a terminal state.
+     * Success: The command successfully ran on all invocations. This is a terminal state.
      * </p>
      * </li>
      * <li>
@@ -895,7 +954,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * <li>
      * <p>
      * Rate Exceeded: The number of instances targeted by the command exceeded the account limit for pending
-     * invocations. The system has canceled the command before executing it on any instance. This is a terminal state.
+     * invocations. The system has canceled the command before running it on any instance. This is a terminal state.
      * </p>
      * </li>
      * </ul>
@@ -903,8 +962,9 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * @return A detailed status of the command execution. StatusDetails includes more information than Status because
      *         it includes states resulting from error and concurrency control parameters. StatusDetails can show
      *         different results than Status. For more information about these statuses, see <a
-     *         href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html">Run Command
-     *         Status</a>. StatusDetails can be one of the following values:</p>
+     *         href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html">Understanding
+     *         Command Statuses</a> in the <i>AWS Systems Manager User Guide</i>. StatusDetails can be one of the
+     *         following values:</p>
      *         <ul>
      *         <li>
      *         <p>
@@ -919,7 +979,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      *         </li>
      *         <li>
      *         <p>
-     *         Success: The command successfully executed on all invocations. This is a terminal state.
+     *         Success: The command successfully ran on all invocations. This is a terminal state.
      *         </p>
      *         </li>
      *         <li>
@@ -954,7 +1014,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      *         <li>
      *         <p>
      *         Rate Exceeded: The number of instances targeted by the command exceeded the account limit for pending
-     *         invocations. The system has canceled the command before executing it on any instance. This is a terminal
+     *         invocations. The system has canceled the command before running it on any instance. This is a terminal
      *         state.
      *         </p>
      *         </li>
@@ -969,8 +1029,8 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * A detailed status of the command execution. StatusDetails includes more information than Status because it
      * includes states resulting from error and concurrency control parameters. StatusDetails can show different results
      * than Status. For more information about these statuses, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html">Run Command
-     * Status</a>. StatusDetails can be one of the following values:
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html">Understanding Command
+     * Statuses</a> in the <i>AWS Systems Manager User Guide</i>. StatusDetails can be one of the following values:
      * </p>
      * <ul>
      * <li>
@@ -986,7 +1046,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * Success: The command successfully executed on all invocations. This is a terminal state.
+     * Success: The command successfully ran on all invocations. This is a terminal state.
      * </p>
      * </li>
      * <li>
@@ -1020,7 +1080,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      * <li>
      * <p>
      * Rate Exceeded: The number of instances targeted by the command exceeded the account limit for pending
-     * invocations. The system has canceled the command before executing it on any instance. This is a terminal state.
+     * invocations. The system has canceled the command before running it on any instance. This is a terminal state.
      * </p>
      * </li>
      * </ul>
@@ -1029,8 +1089,9 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      *        A detailed status of the command execution. StatusDetails includes more information than Status because it
      *        includes states resulting from error and concurrency control parameters. StatusDetails can show different
      *        results than Status. For more information about these statuses, see <a
-     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html">Run Command
-     *        Status</a>. StatusDetails can be one of the following values:</p>
+     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html">Understanding
+     *        Command Statuses</a> in the <i>AWS Systems Manager User Guide</i>. StatusDetails can be one of the
+     *        following values:</p>
      *        <ul>
      *        <li>
      *        <p>
@@ -1045,7 +1106,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      *        </li>
      *        <li>
      *        <p>
-     *        Success: The command successfully executed on all invocations. This is a terminal state.
+     *        Success: The command successfully ran on all invocations. This is a terminal state.
      *        </p>
      *        </li>
      *        <li>
@@ -1080,7 +1141,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
      *        <li>
      *        <p>
      *        Rate Exceeded: The number of instances targeted by the command exceeded the account limit for pending
-     *        invocations. The system has canceled the command before executing it on any instance. This is a terminal
+     *        invocations. The system has canceled the command before running it on any instance. This is a terminal
      *        state.
      *        </p>
      *        </li>
@@ -1232,19 +1293,19 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The maximum number of instances that are allowed to execute the command at the same time. You can specify a
-     * number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more
-     * information about how to use MaxConcurrency, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command Using
-     * Systems Manager Run Command</a>.
+     * The maximum number of instances that are allowed to run the command at the same time. You can specify a number of
+     * instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more information
+     * about how to use MaxConcurrency, see <a
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     * Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * </p>
      * 
      * @param maxConcurrency
-     *        The maximum number of instances that are allowed to execute the command at the same time. You can specify
-     *        a number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For
+     *        The maximum number of instances that are allowed to run the command at the same time. You can specify a
+     *        number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For
      *        more information about how to use MaxConcurrency, see <a
-     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command
-     *        Using Systems Manager Run Command</a>.
+     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     *        Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      */
 
     public void setMaxConcurrency(String maxConcurrency) {
@@ -1253,18 +1314,18 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The maximum number of instances that are allowed to execute the command at the same time. You can specify a
-     * number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more
-     * information about how to use MaxConcurrency, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command Using
-     * Systems Manager Run Command</a>.
+     * The maximum number of instances that are allowed to run the command at the same time. You can specify a number of
+     * instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more information
+     * about how to use MaxConcurrency, see <a
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     * Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * </p>
      * 
-     * @return The maximum number of instances that are allowed to execute the command at the same time. You can specify
-     *         a number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50.
-     *         For more information about how to use MaxConcurrency, see <a
-     *         href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command
-     *         Using Systems Manager Run Command</a>.
+     * @return The maximum number of instances that are allowed to run the command at the same time. You can specify a
+     *         number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For
+     *         more information about how to use MaxConcurrency, see <a
+     *         href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands
+     *         Using Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      */
 
     public String getMaxConcurrency() {
@@ -1273,19 +1334,19 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The maximum number of instances that are allowed to execute the command at the same time. You can specify a
-     * number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more
-     * information about how to use MaxConcurrency, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command Using
-     * Systems Manager Run Command</a>.
+     * The maximum number of instances that are allowed to run the command at the same time. You can specify a number of
+     * instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more information
+     * about how to use MaxConcurrency, see <a
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     * Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * </p>
      * 
      * @param maxConcurrency
-     *        The maximum number of instances that are allowed to execute the command at the same time. You can specify
-     *        a number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For
+     *        The maximum number of instances that are allowed to run the command at the same time. You can specify a
+     *        number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For
      *        more information about how to use MaxConcurrency, see <a
-     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command
-     *        Using Systems Manager Run Command</a>.
+     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     *        Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1297,18 +1358,18 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * The maximum number of errors allowed before the system stops sending the command to additional targets. You can
-     * specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 50. For more
+     * specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 0. For more
      * information about how to use MaxErrors, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command Using
-     * Systems Manager Run Command</a>.
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     * Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * </p>
      * 
      * @param maxErrors
      *        The maximum number of errors allowed before the system stops sending the command to additional targets.
      *        You can specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value
-     *        is 50. For more information about how to use MaxErrors, see <a
-     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command
-     *        Using Systems Manager Run Command</a>.
+     *        is 0. For more information about how to use MaxErrors, see <a
+     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     *        Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      */
 
     public void setMaxErrors(String maxErrors) {
@@ -1318,17 +1379,17 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * The maximum number of errors allowed before the system stops sending the command to additional targets. You can
-     * specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 50. For more
+     * specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 0. For more
      * information about how to use MaxErrors, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command Using
-     * Systems Manager Run Command</a>.
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     * Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * </p>
      * 
      * @return The maximum number of errors allowed before the system stops sending the command to additional targets.
      *         You can specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value
-     *         is 50. For more information about how to use MaxErrors, see <a
-     *         href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command
-     *         Using Systems Manager Run Command</a>.
+     *         is 0. For more information about how to use MaxErrors, see <a
+     *         href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands
+     *         Using Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      */
 
     public String getMaxErrors() {
@@ -1338,18 +1399,18 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * The maximum number of errors allowed before the system stops sending the command to additional targets. You can
-     * specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 50. For more
+     * specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 0. For more
      * information about how to use MaxErrors, see <a
-     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command Using
-     * Systems Manager Run Command</a>.
+     * href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     * Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * </p>
      * 
      * @param maxErrors
      *        The maximum number of errors allowed before the system stops sending the command to additional targets.
      *        You can specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value
-     *        is 50. For more information about how to use MaxErrors, see <a
-     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Executing a Command
-     *        Using Systems Manager Run Command</a>.
+     *        is 0. For more information about how to use MaxErrors, see <a
+     *        href="http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html">Running Commands Using
+     *        Systems Manager Run Command</a> in the <i>AWS Systems Manager User Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1489,6 +1550,46 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
+     * The number of targets for which the status is Delivery Timed Out.
+     * </p>
+     * 
+     * @param deliveryTimedOutCount
+     *        The number of targets for which the status is Delivery Timed Out.
+     */
+
+    public void setDeliveryTimedOutCount(Integer deliveryTimedOutCount) {
+        this.deliveryTimedOutCount = deliveryTimedOutCount;
+    }
+
+    /**
+     * <p>
+     * The number of targets for which the status is Delivery Timed Out.
+     * </p>
+     * 
+     * @return The number of targets for which the status is Delivery Timed Out.
+     */
+
+    public Integer getDeliveryTimedOutCount() {
+        return this.deliveryTimedOutCount;
+    }
+
+    /**
+     * <p>
+     * The number of targets for which the status is Delivery Timed Out.
+     * </p>
+     * 
+     * @param deliveryTimedOutCount
+     *        The number of targets for which the status is Delivery Timed Out.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Command withDeliveryTimedOutCount(Integer deliveryTimedOutCount) {
+        setDeliveryTimedOutCount(deliveryTimedOutCount);
+        return this;
+    }
+
+    /**
+     * <p>
      * The IAM service role that Run Command uses to act on your behalf when sending notifications about command status
      * changes.
      * </p>
@@ -1574,7 +1675,48 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * CloudWatch Logs information where you want Systems Manager to send the command output.
+     * </p>
+     * 
+     * @param cloudWatchOutputConfig
+     *        CloudWatch Logs information where you want Systems Manager to send the command output.
+     */
+
+    public void setCloudWatchOutputConfig(CloudWatchOutputConfig cloudWatchOutputConfig) {
+        this.cloudWatchOutputConfig = cloudWatchOutputConfig;
+    }
+
+    /**
+     * <p>
+     * CloudWatch Logs information where you want Systems Manager to send the command output.
+     * </p>
+     * 
+     * @return CloudWatch Logs information where you want Systems Manager to send the command output.
+     */
+
+    public CloudWatchOutputConfig getCloudWatchOutputConfig() {
+        return this.cloudWatchOutputConfig;
+    }
+
+    /**
+     * <p>
+     * CloudWatch Logs information where you want Systems Manager to send the command output.
+     * </p>
+     * 
+     * @param cloudWatchOutputConfig
+     *        CloudWatch Logs information where you want Systems Manager to send the command output.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Command withCloudWatchOutputConfig(CloudWatchOutputConfig cloudWatchOutputConfig) {
+        setCloudWatchOutputConfig(cloudWatchOutputConfig);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -1588,6 +1730,8 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
             sb.append("CommandId: ").append(getCommandId()).append(",");
         if (getDocumentName() != null)
             sb.append("DocumentName: ").append(getDocumentName()).append(",");
+        if (getDocumentVersion() != null)
+            sb.append("DocumentVersion: ").append(getDocumentVersion()).append(",");
         if (getComment() != null)
             sb.append("Comment: ").append(getComment()).append(",");
         if (getExpiresAfter() != null)
@@ -1620,10 +1764,14 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
             sb.append("CompletedCount: ").append(getCompletedCount()).append(",");
         if (getErrorCount() != null)
             sb.append("ErrorCount: ").append(getErrorCount()).append(",");
+        if (getDeliveryTimedOutCount() != null)
+            sb.append("DeliveryTimedOutCount: ").append(getDeliveryTimedOutCount()).append(",");
         if (getServiceRole() != null)
             sb.append("ServiceRole: ").append(getServiceRole()).append(",");
         if (getNotificationConfig() != null)
-            sb.append("NotificationConfig: ").append(getNotificationConfig());
+            sb.append("NotificationConfig: ").append(getNotificationConfig()).append(",");
+        if (getCloudWatchOutputConfig() != null)
+            sb.append("CloudWatchOutputConfig: ").append(getCloudWatchOutputConfig());
         sb.append("}");
         return sb.toString();
     }
@@ -1645,6 +1793,10 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
         if (other.getDocumentName() == null ^ this.getDocumentName() == null)
             return false;
         if (other.getDocumentName() != null && other.getDocumentName().equals(this.getDocumentName()) == false)
+            return false;
+        if (other.getDocumentVersion() == null ^ this.getDocumentVersion() == null)
+            return false;
+        if (other.getDocumentVersion() != null && other.getDocumentVersion().equals(this.getDocumentVersion()) == false)
             return false;
         if (other.getComment() == null ^ this.getComment() == null)
             return false;
@@ -1710,6 +1862,10 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
             return false;
         if (other.getErrorCount() != null && other.getErrorCount().equals(this.getErrorCount()) == false)
             return false;
+        if (other.getDeliveryTimedOutCount() == null ^ this.getDeliveryTimedOutCount() == null)
+            return false;
+        if (other.getDeliveryTimedOutCount() != null && other.getDeliveryTimedOutCount().equals(this.getDeliveryTimedOutCount()) == false)
+            return false;
         if (other.getServiceRole() == null ^ this.getServiceRole() == null)
             return false;
         if (other.getServiceRole() != null && other.getServiceRole().equals(this.getServiceRole()) == false)
@@ -1717,6 +1873,10 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
         if (other.getNotificationConfig() == null ^ this.getNotificationConfig() == null)
             return false;
         if (other.getNotificationConfig() != null && other.getNotificationConfig().equals(this.getNotificationConfig()) == false)
+            return false;
+        if (other.getCloudWatchOutputConfig() == null ^ this.getCloudWatchOutputConfig() == null)
+            return false;
+        if (other.getCloudWatchOutputConfig() != null && other.getCloudWatchOutputConfig().equals(this.getCloudWatchOutputConfig()) == false)
             return false;
         return true;
     }
@@ -1728,6 +1888,7 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
 
         hashCode = prime * hashCode + ((getCommandId() == null) ? 0 : getCommandId().hashCode());
         hashCode = prime * hashCode + ((getDocumentName() == null) ? 0 : getDocumentName().hashCode());
+        hashCode = prime * hashCode + ((getDocumentVersion() == null) ? 0 : getDocumentVersion().hashCode());
         hashCode = prime * hashCode + ((getComment() == null) ? 0 : getComment().hashCode());
         hashCode = prime * hashCode + ((getExpiresAfter() == null) ? 0 : getExpiresAfter().hashCode());
         hashCode = prime * hashCode + ((getParameters() == null) ? 0 : getParameters().hashCode());
@@ -1744,8 +1905,10 @@ public class Command implements Serializable, Cloneable, StructuredPojo {
         hashCode = prime * hashCode + ((getTargetCount() == null) ? 0 : getTargetCount().hashCode());
         hashCode = prime * hashCode + ((getCompletedCount() == null) ? 0 : getCompletedCount().hashCode());
         hashCode = prime * hashCode + ((getErrorCount() == null) ? 0 : getErrorCount().hashCode());
+        hashCode = prime * hashCode + ((getDeliveryTimedOutCount() == null) ? 0 : getDeliveryTimedOutCount().hashCode());
         hashCode = prime * hashCode + ((getServiceRole() == null) ? 0 : getServiceRole().hashCode());
         hashCode = prime * hashCode + ((getNotificationConfig() == null) ? 0 : getNotificationConfig().hashCode());
+        hashCode = prime * hashCode + ((getCloudWatchOutputConfig() == null) ? 0 : getCloudWatchOutputConfig().hashCode());
         return hashCode;
     }
 

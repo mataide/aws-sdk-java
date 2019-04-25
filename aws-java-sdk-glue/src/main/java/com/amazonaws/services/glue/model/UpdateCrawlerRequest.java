@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -67,8 +67,8 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
     private String schedule;
     /**
      * <p>
-     * A list of custom classifiers that the user has registered. By default, all classifiers are included in a crawl,
-     * but these custom classifiers always override the default classifiers for a given classification.
+     * A list of custom classifiers that the user has registered. By default, all built-in classifiers are included in a
+     * crawl, but these custom classifiers always override the default classifiers for a given classification.
      * </p>
      */
     private java.util.List<String> classifiers;
@@ -86,16 +86,18 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
     private SchemaChangePolicy schemaChangePolicy;
     /**
      * <p>
-     * Crawler configuration information. This versioned JSON string allows users to specify aspects of a Crawler's
-     * behavior.
-     * </p>
-     * <p>
-     * You can use this field to force partitions to inherit metadata such as classification, input format, output
-     * format, serde information, and schema from their parent table, rather than detect this information separately for
-     * each partition. Use the following JSON string to specify that behavior:
+     * Crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's
+     * behavior. For more information, see <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html">Configuring a Crawler</a>.
      * </p>
      */
     private String configuration;
+    /**
+     * <p>
+     * The name of the SecurityConfiguration structure to be used by this Crawler.
+     * </p>
+     */
+    private String crawlerSecurityConfiguration;
 
     /**
      * <p>
@@ -363,12 +365,13 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A list of custom classifiers that the user has registered. By default, all classifiers are included in a crawl,
-     * but these custom classifiers always override the default classifiers for a given classification.
+     * A list of custom classifiers that the user has registered. By default, all built-in classifiers are included in a
+     * crawl, but these custom classifiers always override the default classifiers for a given classification.
      * </p>
      * 
-     * @return A list of custom classifiers that the user has registered. By default, all classifiers are included in a
-     *         crawl, but these custom classifiers always override the default classifiers for a given classification.
+     * @return A list of custom classifiers that the user has registered. By default, all built-in classifiers are
+     *         included in a crawl, but these custom classifiers always override the default classifiers for a given
+     *         classification.
      */
 
     public java.util.List<String> getClassifiers() {
@@ -377,13 +380,14 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A list of custom classifiers that the user has registered. By default, all classifiers are included in a crawl,
-     * but these custom classifiers always override the default classifiers for a given classification.
+     * A list of custom classifiers that the user has registered. By default, all built-in classifiers are included in a
+     * crawl, but these custom classifiers always override the default classifiers for a given classification.
      * </p>
      * 
      * @param classifiers
-     *        A list of custom classifiers that the user has registered. By default, all classifiers are included in a
-     *        crawl, but these custom classifiers always override the default classifiers for a given classification.
+     *        A list of custom classifiers that the user has registered. By default, all built-in classifiers are
+     *        included in a crawl, but these custom classifiers always override the default classifiers for a given
+     *        classification.
      */
 
     public void setClassifiers(java.util.Collection<String> classifiers) {
@@ -397,8 +401,8 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A list of custom classifiers that the user has registered. By default, all classifiers are included in a crawl,
-     * but these custom classifiers always override the default classifiers for a given classification.
+     * A list of custom classifiers that the user has registered. By default, all built-in classifiers are included in a
+     * crawl, but these custom classifiers always override the default classifiers for a given classification.
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
@@ -407,8 +411,9 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
      * </p>
      * 
      * @param classifiers
-     *        A list of custom classifiers that the user has registered. By default, all classifiers are included in a
-     *        crawl, but these custom classifiers always override the default classifiers for a given classification.
+     *        A list of custom classifiers that the user has registered. By default, all built-in classifiers are
+     *        included in a crawl, but these custom classifiers always override the default classifiers for a given
+     *        classification.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -424,13 +429,14 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A list of custom classifiers that the user has registered. By default, all classifiers are included in a crawl,
-     * but these custom classifiers always override the default classifiers for a given classification.
+     * A list of custom classifiers that the user has registered. By default, all built-in classifiers are included in a
+     * crawl, but these custom classifiers always override the default classifiers for a given classification.
      * </p>
      * 
      * @param classifiers
-     *        A list of custom classifiers that the user has registered. By default, all classifiers are included in a
-     *        crawl, but these custom classifiers always override the default classifiers for a given classification.
+     *        A list of custom classifiers that the user has registered. By default, all built-in classifiers are
+     *        included in a crawl, but these custom classifiers always override the default classifiers for a given
+     *        classification.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -521,22 +527,15 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Crawler configuration information. This versioned JSON string allows users to specify aspects of a Crawler's
-     * behavior.
-     * </p>
-     * <p>
-     * You can use this field to force partitions to inherit metadata such as classification, input format, output
-     * format, serde information, and schema from their parent table, rather than detect this information separately for
-     * each partition. Use the following JSON string to specify that behavior:
+     * Crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's
+     * behavior. For more information, see <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html">Configuring a Crawler</a>.
      * </p>
      * 
      * @param configuration
      *        Crawler configuration information. This versioned JSON string allows users to specify aspects of a
-     *        Crawler's behavior.</p>
-     *        <p>
-     *        You can use this field to force partitions to inherit metadata such as classification, input format,
-     *        output format, serde information, and schema from their parent table, rather than detect this information
-     *        separately for each partition. Use the following JSON string to specify that behavior:
+     *        crawler's behavior. For more information, see <a
+     *        href="http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html">Configuring a Crawler</a>.
      */
 
     public void setConfiguration(String configuration) {
@@ -545,21 +544,14 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Crawler configuration information. This versioned JSON string allows users to specify aspects of a Crawler's
-     * behavior.
-     * </p>
-     * <p>
-     * You can use this field to force partitions to inherit metadata such as classification, input format, output
-     * format, serde information, and schema from their parent table, rather than detect this information separately for
-     * each partition. Use the following JSON string to specify that behavior:
+     * Crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's
+     * behavior. For more information, see <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html">Configuring a Crawler</a>.
      * </p>
      * 
      * @return Crawler configuration information. This versioned JSON string allows users to specify aspects of a
-     *         Crawler's behavior.</p>
-     *         <p>
-     *         You can use this field to force partitions to inherit metadata such as classification, input format,
-     *         output format, serde information, and schema from their parent table, rather than detect this information
-     *         separately for each partition. Use the following JSON string to specify that behavior:
+     *         crawler's behavior. For more information, see <a
+     *         href="http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html">Configuring a Crawler</a>.
      */
 
     public String getConfiguration() {
@@ -568,22 +560,15 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Crawler configuration information. This versioned JSON string allows users to specify aspects of a Crawler's
-     * behavior.
-     * </p>
-     * <p>
-     * You can use this field to force partitions to inherit metadata such as classification, input format, output
-     * format, serde information, and schema from their parent table, rather than detect this information separately for
-     * each partition. Use the following JSON string to specify that behavior:
+     * Crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's
+     * behavior. For more information, see <a
+     * href="http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html">Configuring a Crawler</a>.
      * </p>
      * 
      * @param configuration
      *        Crawler configuration information. This versioned JSON string allows users to specify aspects of a
-     *        Crawler's behavior.</p>
-     *        <p>
-     *        You can use this field to force partitions to inherit metadata such as classification, input format,
-     *        output format, serde information, and schema from their parent table, rather than detect this information
-     *        separately for each partition. Use the following JSON string to specify that behavior:
+     *        crawler's behavior. For more information, see <a
+     *        href="http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html">Configuring a Crawler</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -593,7 +578,48 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The name of the SecurityConfiguration structure to be used by this Crawler.
+     * </p>
+     * 
+     * @param crawlerSecurityConfiguration
+     *        The name of the SecurityConfiguration structure to be used by this Crawler.
+     */
+
+    public void setCrawlerSecurityConfiguration(String crawlerSecurityConfiguration) {
+        this.crawlerSecurityConfiguration = crawlerSecurityConfiguration;
+    }
+
+    /**
+     * <p>
+     * The name of the SecurityConfiguration structure to be used by this Crawler.
+     * </p>
+     * 
+     * @return The name of the SecurityConfiguration structure to be used by this Crawler.
+     */
+
+    public String getCrawlerSecurityConfiguration() {
+        return this.crawlerSecurityConfiguration;
+    }
+
+    /**
+     * <p>
+     * The name of the SecurityConfiguration structure to be used by this Crawler.
+     * </p>
+     * 
+     * @param crawlerSecurityConfiguration
+     *        The name of the SecurityConfiguration structure to be used by this Crawler.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public UpdateCrawlerRequest withCrawlerSecurityConfiguration(String crawlerSecurityConfiguration) {
+        setCrawlerSecurityConfiguration(crawlerSecurityConfiguration);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -622,7 +648,9 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
         if (getSchemaChangePolicy() != null)
             sb.append("SchemaChangePolicy: ").append(getSchemaChangePolicy()).append(",");
         if (getConfiguration() != null)
-            sb.append("Configuration: ").append(getConfiguration());
+            sb.append("Configuration: ").append(getConfiguration()).append(",");
+        if (getCrawlerSecurityConfiguration() != null)
+            sb.append("CrawlerSecurityConfiguration: ").append(getCrawlerSecurityConfiguration());
         sb.append("}");
         return sb.toString();
     }
@@ -677,6 +705,10 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
             return false;
         if (other.getConfiguration() != null && other.getConfiguration().equals(this.getConfiguration()) == false)
             return false;
+        if (other.getCrawlerSecurityConfiguration() == null ^ this.getCrawlerSecurityConfiguration() == null)
+            return false;
+        if (other.getCrawlerSecurityConfiguration() != null && other.getCrawlerSecurityConfiguration().equals(this.getCrawlerSecurityConfiguration()) == false)
+            return false;
         return true;
     }
 
@@ -695,6 +727,7 @@ public class UpdateCrawlerRequest extends com.amazonaws.AmazonWebServiceRequest 
         hashCode = prime * hashCode + ((getTablePrefix() == null) ? 0 : getTablePrefix().hashCode());
         hashCode = prime * hashCode + ((getSchemaChangePolicy() == null) ? 0 : getSchemaChangePolicy().hashCode());
         hashCode = prime * hashCode + ((getConfiguration() == null) ? 0 : getConfiguration().hashCode());
+        hashCode = prime * hashCode + ((getCrawlerSecurityConfiguration() == null) ? 0 : getCrawlerSecurityConfiguration().hashCode());
         return hashCode;
     }
 

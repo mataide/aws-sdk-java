@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -30,8 +30,9 @@ public class Container implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The DNS endpoint of the container. Use from 1 to 255 characters. Use this endpoint to identify this container
-     * when sending requests to the data plane.
+     * The DNS endpoint of the container. Use the endpoint to identify the specific container when sending requests to
+     * the data plane. The service assigns this value when the container is created. Once the value has been assigned,
+     * it does not change.
      * </p>
      */
     private String endpoint;
@@ -67,16 +68,27 @@ public class Container implements Serializable, Cloneable, StructuredPojo {
      * </p>
      */
     private String status;
+    /**
+     * <p>
+     * The state of access logging on the container. This value is <code>false</code> by default, indicating that AWS
+     * Elemental MediaStore does not send access logs to Amazon CloudWatch Logs. When you enable access logging on the
+     * container, MediaStore changes this value to <code>true</code>, indicating that the service delivers access logs
+     * for objects stored in that container to CloudWatch Logs.
+     * </p>
+     */
+    private Boolean accessLoggingEnabled;
 
     /**
      * <p>
-     * The DNS endpoint of the container. Use from 1 to 255 characters. Use this endpoint to identify this container
-     * when sending requests to the data plane.
+     * The DNS endpoint of the container. Use the endpoint to identify the specific container when sending requests to
+     * the data plane. The service assigns this value when the container is created. Once the value has been assigned,
+     * it does not change.
      * </p>
      * 
      * @param endpoint
-     *        The DNS endpoint of the container. Use from 1 to 255 characters. Use this endpoint to identify this
-     *        container when sending requests to the data plane.
+     *        The DNS endpoint of the container. Use the endpoint to identify the specific container when sending
+     *        requests to the data plane. The service assigns this value when the container is created. Once the value
+     *        has been assigned, it does not change.
      */
 
     public void setEndpoint(String endpoint) {
@@ -85,12 +97,14 @@ public class Container implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The DNS endpoint of the container. Use from 1 to 255 characters. Use this endpoint to identify this container
-     * when sending requests to the data plane.
+     * The DNS endpoint of the container. Use the endpoint to identify the specific container when sending requests to
+     * the data plane. The service assigns this value when the container is created. Once the value has been assigned,
+     * it does not change.
      * </p>
      * 
-     * @return The DNS endpoint of the container. Use from 1 to 255 characters. Use this endpoint to identify this
-     *         container when sending requests to the data plane.
+     * @return The DNS endpoint of the container. Use the endpoint to identify the specific container when sending
+     *         requests to the data plane. The service assigns this value when the container is created. Once the value
+     *         has been assigned, it does not change.
      */
 
     public String getEndpoint() {
@@ -99,13 +113,15 @@ public class Container implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The DNS endpoint of the container. Use from 1 to 255 characters. Use this endpoint to identify this container
-     * when sending requests to the data plane.
+     * The DNS endpoint of the container. Use the endpoint to identify the specific container when sending requests to
+     * the data plane. The service assigns this value when the container is created. Once the value has been assigned,
+     * it does not change.
      * </p>
      * 
      * @param endpoint
-     *        The DNS endpoint of the container. Use from 1 to 255 characters. Use this endpoint to identify this
-     *        container when sending requests to the data plane.
+     *        The DNS endpoint of the container. Use the endpoint to identify the specific container when sending
+     *        requests to the data plane. The service assigns this value when the container is created. Once the value
+     *        has been assigned, it does not change.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -343,7 +359,84 @@ public class Container implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The state of access logging on the container. This value is <code>false</code> by default, indicating that AWS
+     * Elemental MediaStore does not send access logs to Amazon CloudWatch Logs. When you enable access logging on the
+     * container, MediaStore changes this value to <code>true</code>, indicating that the service delivers access logs
+     * for objects stored in that container to CloudWatch Logs.
+     * </p>
+     * 
+     * @param accessLoggingEnabled
+     *        The state of access logging on the container. This value is <code>false</code> by default, indicating that
+     *        AWS Elemental MediaStore does not send access logs to Amazon CloudWatch Logs. When you enable access
+     *        logging on the container, MediaStore changes this value to <code>true</code>, indicating that the service
+     *        delivers access logs for objects stored in that container to CloudWatch Logs.
+     */
+
+    public void setAccessLoggingEnabled(Boolean accessLoggingEnabled) {
+        this.accessLoggingEnabled = accessLoggingEnabled;
+    }
+
+    /**
+     * <p>
+     * The state of access logging on the container. This value is <code>false</code> by default, indicating that AWS
+     * Elemental MediaStore does not send access logs to Amazon CloudWatch Logs. When you enable access logging on the
+     * container, MediaStore changes this value to <code>true</code>, indicating that the service delivers access logs
+     * for objects stored in that container to CloudWatch Logs.
+     * </p>
+     * 
+     * @return The state of access logging on the container. This value is <code>false</code> by default, indicating
+     *         that AWS Elemental MediaStore does not send access logs to Amazon CloudWatch Logs. When you enable access
+     *         logging on the container, MediaStore changes this value to <code>true</code>, indicating that the service
+     *         delivers access logs for objects stored in that container to CloudWatch Logs.
+     */
+
+    public Boolean getAccessLoggingEnabled() {
+        return this.accessLoggingEnabled;
+    }
+
+    /**
+     * <p>
+     * The state of access logging on the container. This value is <code>false</code> by default, indicating that AWS
+     * Elemental MediaStore does not send access logs to Amazon CloudWatch Logs. When you enable access logging on the
+     * container, MediaStore changes this value to <code>true</code>, indicating that the service delivers access logs
+     * for objects stored in that container to CloudWatch Logs.
+     * </p>
+     * 
+     * @param accessLoggingEnabled
+     *        The state of access logging on the container. This value is <code>false</code> by default, indicating that
+     *        AWS Elemental MediaStore does not send access logs to Amazon CloudWatch Logs. When you enable access
+     *        logging on the container, MediaStore changes this value to <code>true</code>, indicating that the service
+     *        delivers access logs for objects stored in that container to CloudWatch Logs.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Container withAccessLoggingEnabled(Boolean accessLoggingEnabled) {
+        setAccessLoggingEnabled(accessLoggingEnabled);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The state of access logging on the container. This value is <code>false</code> by default, indicating that AWS
+     * Elemental MediaStore does not send access logs to Amazon CloudWatch Logs. When you enable access logging on the
+     * container, MediaStore changes this value to <code>true</code>, indicating that the service delivers access logs
+     * for objects stored in that container to CloudWatch Logs.
+     * </p>
+     * 
+     * @return The state of access logging on the container. This value is <code>false</code> by default, indicating
+     *         that AWS Elemental MediaStore does not send access logs to Amazon CloudWatch Logs. When you enable access
+     *         logging on the container, MediaStore changes this value to <code>true</code>, indicating that the service
+     *         delivers access logs for objects stored in that container to CloudWatch Logs.
+     */
+
+    public Boolean isAccessLoggingEnabled() {
+        return this.accessLoggingEnabled;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -362,7 +455,9 @@ public class Container implements Serializable, Cloneable, StructuredPojo {
         if (getName() != null)
             sb.append("Name: ").append(getName()).append(",");
         if (getStatus() != null)
-            sb.append("Status: ").append(getStatus());
+            sb.append("Status: ").append(getStatus()).append(",");
+        if (getAccessLoggingEnabled() != null)
+            sb.append("AccessLoggingEnabled: ").append(getAccessLoggingEnabled());
         sb.append("}");
         return sb.toString();
     }
@@ -397,6 +492,10 @@ public class Container implements Serializable, Cloneable, StructuredPojo {
             return false;
         if (other.getStatus() != null && other.getStatus().equals(this.getStatus()) == false)
             return false;
+        if (other.getAccessLoggingEnabled() == null ^ this.getAccessLoggingEnabled() == null)
+            return false;
+        if (other.getAccessLoggingEnabled() != null && other.getAccessLoggingEnabled().equals(this.getAccessLoggingEnabled()) == false)
+            return false;
         return true;
     }
 
@@ -410,6 +509,7 @@ public class Container implements Serializable, Cloneable, StructuredPojo {
         hashCode = prime * hashCode + ((getARN() == null) ? 0 : getARN().hashCode());
         hashCode = prime * hashCode + ((getName() == null) ? 0 : getName().hashCode());
         hashCode = prime * hashCode + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        hashCode = prime * hashCode + ((getAccessLoggingEnabled() == null) ? 0 : getAccessLoggingEnabled().hashCode());
         return hashCode;
     }
 

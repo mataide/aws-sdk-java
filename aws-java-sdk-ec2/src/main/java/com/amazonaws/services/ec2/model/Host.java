@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -45,8 +45,8 @@ public class Host implements Serializable, Cloneable {
     private AvailableCapacity availableCapacity;
     /**
      * <p>
-     * Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     * Unique, case-sensitive identifier that you provide to ensure idempotency of the request. For more information,
+     * see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
      * Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      */
@@ -82,6 +82,24 @@ public class Host implements Serializable, Cloneable {
      * </p>
      */
     private String state;
+    /**
+     * <p>
+     * The time that the Dedicated Host was allocated.
+     * </p>
+     */
+    private java.util.Date allocationTime;
+    /**
+     * <p>
+     * The time that the Dedicated Host was released.
+     * </p>
+     */
+    private java.util.Date releaseTime;
+    /**
+     * <p>
+     * Any tags assigned to the Dedicated Host.
+     * </p>
+     */
+    private com.amazonaws.internal.SdkInternalList<Tag> tags;
 
     /**
      * <p>
@@ -238,15 +256,16 @@ public class Host implements Serializable, Cloneable {
 
     /**
      * <p>
-     * Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     * Unique, case-sensitive identifier that you provide to ensure idempotency of the request. For more information,
+     * see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
      * Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param clientToken
-     *        Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information,
-     *        see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to
-     *        Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     *        Unique, case-sensitive identifier that you provide to ensure idempotency of the request. For more
+     *        information, see <a
+     *        href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     *        Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      */
 
     public void setClientToken(String clientToken) {
@@ -255,14 +274,15 @@ public class Host implements Serializable, Cloneable {
 
     /**
      * <p>
-     * Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     * Unique, case-sensitive identifier that you provide to ensure idempotency of the request. For more information,
+     * see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
      * Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
-     * @return Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information,
-     *         see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to
-     *         Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * @return Unique, case-sensitive identifier that you provide to ensure idempotency of the request. For more
+     *         information, see <a
+     *         href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     *         Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      */
 
     public String getClientToken() {
@@ -271,15 +291,16 @@ public class Host implements Serializable, Cloneable {
 
     /**
      * <p>
-     * Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     * Unique, case-sensitive identifier that you provide to ensure idempotency of the request. For more information,
+     * see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
      * Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param clientToken
-     *        Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information,
-     *        see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to
-     *        Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     *        Unique, case-sensitive identifier that you provide to ensure idempotency of the request. For more
+     *        information, see <a
+     *        href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html">How to Ensure
+     *        Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -561,7 +582,161 @@ public class Host implements Serializable, Cloneable {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The time that the Dedicated Host was allocated.
+     * </p>
+     * 
+     * @param allocationTime
+     *        The time that the Dedicated Host was allocated.
+     */
+
+    public void setAllocationTime(java.util.Date allocationTime) {
+        this.allocationTime = allocationTime;
+    }
+
+    /**
+     * <p>
+     * The time that the Dedicated Host was allocated.
+     * </p>
+     * 
+     * @return The time that the Dedicated Host was allocated.
+     */
+
+    public java.util.Date getAllocationTime() {
+        return this.allocationTime;
+    }
+
+    /**
+     * <p>
+     * The time that the Dedicated Host was allocated.
+     * </p>
+     * 
+     * @param allocationTime
+     *        The time that the Dedicated Host was allocated.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Host withAllocationTime(java.util.Date allocationTime) {
+        setAllocationTime(allocationTime);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The time that the Dedicated Host was released.
+     * </p>
+     * 
+     * @param releaseTime
+     *        The time that the Dedicated Host was released.
+     */
+
+    public void setReleaseTime(java.util.Date releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
+    /**
+     * <p>
+     * The time that the Dedicated Host was released.
+     * </p>
+     * 
+     * @return The time that the Dedicated Host was released.
+     */
+
+    public java.util.Date getReleaseTime() {
+        return this.releaseTime;
+    }
+
+    /**
+     * <p>
+     * The time that the Dedicated Host was released.
+     * </p>
+     * 
+     * @param releaseTime
+     *        The time that the Dedicated Host was released.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Host withReleaseTime(java.util.Date releaseTime) {
+        setReleaseTime(releaseTime);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Any tags assigned to the Dedicated Host.
+     * </p>
+     * 
+     * @return Any tags assigned to the Dedicated Host.
+     */
+
+    public java.util.List<Tag> getTags() {
+        if (tags == null) {
+            tags = new com.amazonaws.internal.SdkInternalList<Tag>();
+        }
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Any tags assigned to the Dedicated Host.
+     * </p>
+     * 
+     * @param tags
+     *        Any tags assigned to the Dedicated Host.
+     */
+
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new com.amazonaws.internal.SdkInternalList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * Any tags assigned to the Dedicated Host.
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setTags(java.util.Collection)} or {@link #withTags(java.util.Collection)} if you want to override the
+     * existing values.
+     * </p>
+     * 
+     * @param tags
+     *        Any tags assigned to the Dedicated Host.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Host withTags(Tag... tags) {
+        if (this.tags == null) {
+            setTags(new com.amazonaws.internal.SdkInternalList<Tag>(tags.length));
+        }
+        for (Tag ele : tags) {
+            this.tags.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Any tags assigned to the Dedicated Host.
+     * </p>
+     * 
+     * @param tags
+     *        Any tags assigned to the Dedicated Host.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Host withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -588,7 +763,13 @@ public class Host implements Serializable, Cloneable {
         if (getInstances() != null)
             sb.append("Instances: ").append(getInstances()).append(",");
         if (getState() != null)
-            sb.append("State: ").append(getState());
+            sb.append("State: ").append(getState()).append(",");
+        if (getAllocationTime() != null)
+            sb.append("AllocationTime: ").append(getAllocationTime()).append(",");
+        if (getReleaseTime() != null)
+            sb.append("ReleaseTime: ").append(getReleaseTime()).append(",");
+        if (getTags() != null)
+            sb.append("Tags: ").append(getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -639,6 +820,18 @@ public class Host implements Serializable, Cloneable {
             return false;
         if (other.getState() != null && other.getState().equals(this.getState()) == false)
             return false;
+        if (other.getAllocationTime() == null ^ this.getAllocationTime() == null)
+            return false;
+        if (other.getAllocationTime() != null && other.getAllocationTime().equals(this.getAllocationTime()) == false)
+            return false;
+        if (other.getReleaseTime() == null ^ this.getReleaseTime() == null)
+            return false;
+        if (other.getReleaseTime() != null && other.getReleaseTime().equals(this.getReleaseTime()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
+            return false;
         return true;
     }
 
@@ -656,6 +849,9 @@ public class Host implements Serializable, Cloneable {
         hashCode = prime * hashCode + ((getHostReservationId() == null) ? 0 : getHostReservationId().hashCode());
         hashCode = prime * hashCode + ((getInstances() == null) ? 0 : getInstances().hashCode());
         hashCode = prime * hashCode + ((getState() == null) ? 0 : getState().hashCode());
+        hashCode = prime * hashCode + ((getAllocationTime() == null) ? 0 : getAllocationTime().hashCode());
+        hashCode = prime * hashCode + ((getReleaseTime() == null) ? 0 : getReleaseTime().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 

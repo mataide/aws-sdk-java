@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -28,11 +28,11 @@ import java.util.concurrent.ExecutorService;
  * <p>
  * Amazon WorkMail is a secure, managed business email and calendaring service with support for existing desktop and
  * mobile email clients. You can access your email, contacts, and calendars using Microsoft Outlook, your browser, or
- * their native iOS and Android email applications. You can integrate Amazon WorkMail with your existing corporate
- * directory and control both the keys that encrypt your data and the location in which your data is stored.
+ * other native iOS and Android email applications. You can integrate WorkMail with your existing corporate directory
+ * and control both the keys that encrypt your data and the location in which your data is stored.
  * </p>
  * <p>
- * The Amazon WorkMail API is designed for the following scenarios:
+ * The WorkMail API is designed for the following scenarios:
  * </p>
  * <ul>
  * <li>
@@ -63,13 +63,13 @@ import java.util.concurrent.ExecutorService;
  * </li>
  * </ul>
  * <p>
- * All Amazon WorkMail API actions are Amazon-authenticated and certificate-signed. They not only require the use of the
- * AWS SDK, but also allow for the exclusive use of IAM users and roles to help facilitate access, trust, and permission
- * policies. By creating a role and allowing an IAM user to access the Amazon WorkMail site, the IAM user gains full
- * administrative visibility into the entire Amazon WorkMail organization (or as set in the IAM policy). This includes,
- * but is not limited to, the ability to create, update, and delete users, groups, and resources. This allows developers
- * to perform the scenarios listed above, as well as give users the ability to grant access on a selective basis using
- * the IAM model.
+ * All WorkMail API operations are Amazon-authenticated and certificate-signed. They not only require the use of the AWS
+ * SDK, but also allow for the exclusive use of AWS Identity and Access Management users and roles to help facilitate
+ * access, trust, and permission policies. By creating a role and allowing an IAM user to access the WorkMail site, the
+ * IAM user gains full administrative visibility into the entire WorkMail organization (or as set in the IAM policy).
+ * This includes, but is not limited to, the ability to create, update, and delete users, groups, and resources. This
+ * allows developers to perform the scenarios listed above, as well as give users the ability to grant access on a
+ * selective basis using the IAM model.
  * </p>
  */
 @ThreadSafe
@@ -353,6 +353,39 @@ public class AmazonWorkMailAsyncClient extends AmazonWorkMailClient implements A
 
                 try {
                     result = executeDeleteGroup(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
+    public java.util.concurrent.Future<DeleteMailboxPermissionsResult> deleteMailboxPermissionsAsync(DeleteMailboxPermissionsRequest request) {
+
+        return deleteMailboxPermissionsAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DeleteMailboxPermissionsResult> deleteMailboxPermissionsAsync(final DeleteMailboxPermissionsRequest request,
+            final com.amazonaws.handlers.AsyncHandler<DeleteMailboxPermissionsRequest, DeleteMailboxPermissionsResult> asyncHandler) {
+        final DeleteMailboxPermissionsRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<DeleteMailboxPermissionsResult>() {
+            @Override
+            public DeleteMailboxPermissionsResult call() throws Exception {
+                DeleteMailboxPermissionsResult result = null;
+
+                try {
+                    result = executeDeleteMailboxPermissions(finalRequest);
                 } catch (Exception ex) {
                     if (asyncHandler != null) {
                         asyncHandler.onError(ex);
@@ -767,6 +800,39 @@ public class AmazonWorkMailAsyncClient extends AmazonWorkMailClient implements A
     }
 
     @Override
+    public java.util.concurrent.Future<ListMailboxPermissionsResult> listMailboxPermissionsAsync(ListMailboxPermissionsRequest request) {
+
+        return listMailboxPermissionsAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListMailboxPermissionsResult> listMailboxPermissionsAsync(final ListMailboxPermissionsRequest request,
+            final com.amazonaws.handlers.AsyncHandler<ListMailboxPermissionsRequest, ListMailboxPermissionsResult> asyncHandler) {
+        final ListMailboxPermissionsRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<ListMailboxPermissionsResult>() {
+            @Override
+            public ListMailboxPermissionsResult call() throws Exception {
+                ListMailboxPermissionsResult result = null;
+
+                try {
+                    result = executeListMailboxPermissions(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
     public java.util.concurrent.Future<ListOrganizationsResult> listOrganizationsAsync(ListOrganizationsRequest request) {
 
         return listOrganizationsAsync(request, null);
@@ -883,6 +949,39 @@ public class AmazonWorkMailAsyncClient extends AmazonWorkMailClient implements A
 
                 try {
                     result = executeListUsers(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
+    public java.util.concurrent.Future<PutMailboxPermissionsResult> putMailboxPermissionsAsync(PutMailboxPermissionsRequest request) {
+
+        return putMailboxPermissionsAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<PutMailboxPermissionsResult> putMailboxPermissionsAsync(final PutMailboxPermissionsRequest request,
+            final com.amazonaws.handlers.AsyncHandler<PutMailboxPermissionsRequest, PutMailboxPermissionsResult> asyncHandler) {
+        final PutMailboxPermissionsRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<PutMailboxPermissionsResult>() {
+            @Override
+            public PutMailboxPermissionsResult call() throws Exception {
+                PutMailboxPermissionsResult result = null;
+
+                try {
+                    result = executePutMailboxPermissions(finalRequest);
                 } catch (Exception ex) {
                     if (asyncHandler != null) {
                         asyncHandler.onError(ex);

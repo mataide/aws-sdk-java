@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -53,7 +53,7 @@ public class CreateEnvironmentEC2Request extends com.amazonaws.AmazonWebServiceR
     private String clientRequestToken;
     /**
      * <p>
-     * The type of instance to host the environment on (for example, <code>t2.micro</code>).
+     * The type of instance to connect to the environment (for example, <code>t2.micro</code>).
      * </p>
      */
     private String instanceType;
@@ -244,11 +244,11 @@ public class CreateEnvironmentEC2Request extends com.amazonaws.AmazonWebServiceR
 
     /**
      * <p>
-     * The type of instance to host the environment on (for example, <code>t2.micro</code>).
+     * The type of instance to connect to the environment (for example, <code>t2.micro</code>).
      * </p>
      * 
      * @param instanceType
-     *        The type of instance to host the environment on (for example, <code>t2.micro</code>).
+     *        The type of instance to connect to the environment (for example, <code>t2.micro</code>).
      */
 
     public void setInstanceType(String instanceType) {
@@ -257,10 +257,10 @@ public class CreateEnvironmentEC2Request extends com.amazonaws.AmazonWebServiceR
 
     /**
      * <p>
-     * The type of instance to host the environment on (for example, <code>t2.micro</code>).
+     * The type of instance to connect to the environment (for example, <code>t2.micro</code>).
      * </p>
      * 
-     * @return The type of instance to host the environment on (for example, <code>t2.micro</code>).
+     * @return The type of instance to connect to the environment (for example, <code>t2.micro</code>).
      */
 
     public String getInstanceType() {
@@ -269,11 +269,11 @@ public class CreateEnvironmentEC2Request extends com.amazonaws.AmazonWebServiceR
 
     /**
      * <p>
-     * The type of instance to host the environment on (for example, <code>t2.micro</code>).
+     * The type of instance to connect to the environment (for example, <code>t2.micro</code>).
      * </p>
      * 
      * @param instanceType
-     *        The type of instance to host the environment on (for example, <code>t2.micro</code>).
+     *        The type of instance to connect to the environment (for example, <code>t2.micro</code>).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -409,7 +409,8 @@ public class CreateEnvironmentEC2Request extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -422,7 +423,7 @@ public class CreateEnvironmentEC2Request extends com.amazonaws.AmazonWebServiceR
         if (getName() != null)
             sb.append("Name: ").append(getName()).append(",");
         if (getDescription() != null)
-            sb.append("Description: ").append(getDescription()).append(",");
+            sb.append("Description: ").append("***Sensitive Data Redacted***").append(",");
         if (getClientRequestToken() != null)
             sb.append("ClientRequestToken: ").append(getClientRequestToken()).append(",");
         if (getInstanceType() != null)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -20,8 +20,8 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 /**
  * <p>
  * Indicates whether an AWS resource that is evaluated according to one or more AWS Config rules is compliant. A
- * resource is compliant if it complies with all of the rules that evaluate it, and it is noncompliant if it does not
- * comply with one or more of these rules.
+ * resource is compliant if it complies with all of the rules that evaluate it. A resource is noncompliant if it does
+ * not comply with one or more of these rules.
  * </p>
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/ComplianceByResource" target="_top">AWS API
@@ -170,7 +170,8 @@ public class ComplianceByResource implements Serializable, Cloneable, Structured
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

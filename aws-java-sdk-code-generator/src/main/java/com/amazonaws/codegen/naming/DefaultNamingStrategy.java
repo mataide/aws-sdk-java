@@ -77,7 +77,7 @@ public class DefaultNamingStrategy implements NamingStrategy {
 
     @Override
     public String getRequestClassName(String operationName) {
-        return capitialize(operationName + REQUEST_CLASS_SUFFIX);
+        return Utils.sanitize(operationName).map(Utils::capitialize).collect(Collectors.joining()) + REQUEST_CLASS_SUFFIX;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class DefaultNamingStrategy implements NamingStrategy {
                 return operationOutput.getShape();
             }
         }
-        return capitialize(operationName + RESPONSE_CLASS_SUFFIX);
+        return Utils.sanitize(operationName).map(Utils::capitialize).collect(Collectors.joining()) + RESPONSE_CLASS_SUFFIX;
     }
 
     @Override
@@ -121,7 +121,7 @@ public class DefaultNamingStrategy implements NamingStrategy {
 
     @Override
     public String getJavaClassName(String shapeName) {
-        return Arrays.stream(shapeName.split("[._-]|\\W")).map(Utils::capitialize).collect(Collectors.joining());
+        return Arrays.stream(shapeName.split("[._-]|\\W")).filter(StringUtils::hasValue).map(Utils::capitialize).collect(Collectors.joining());
     }
 
     @Override
@@ -152,7 +152,7 @@ public class DefaultNamingStrategy implements NamingStrategy {
         }
     }
 
-    private static boolean isJavaKeyword(String word) {
+    public static boolean isJavaKeyword(String word) {
         return reservedKeywords.contains(word) ||
                reservedKeywords.contains(StringUtils.lowerCase(word));
     }

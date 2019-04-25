@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -69,6 +69,21 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     }
 
     @Override
+    public java.util.concurrent.Future<AssociateServiceActionWithProvisioningArtifactResult> associateServiceActionWithProvisioningArtifactAsync(
+            AssociateServiceActionWithProvisioningArtifactRequest request) {
+
+        return associateServiceActionWithProvisioningArtifactAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<AssociateServiceActionWithProvisioningArtifactResult> associateServiceActionWithProvisioningArtifactAsync(
+            AssociateServiceActionWithProvisioningArtifactRequest request,
+            com.amazonaws.handlers.AsyncHandler<AssociateServiceActionWithProvisioningArtifactRequest, AssociateServiceActionWithProvisioningArtifactResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public java.util.concurrent.Future<AssociateTagOptionWithResourceResult> associateTagOptionWithResourceAsync(AssociateTagOptionWithResourceRequest request) {
 
         return associateTagOptionWithResourceAsync(request, null);
@@ -77,6 +92,36 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     @Override
     public java.util.concurrent.Future<AssociateTagOptionWithResourceResult> associateTagOptionWithResourceAsync(AssociateTagOptionWithResourceRequest request,
             com.amazonaws.handlers.AsyncHandler<AssociateTagOptionWithResourceRequest, AssociateTagOptionWithResourceResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<BatchAssociateServiceActionWithProvisioningArtifactResult> batchAssociateServiceActionWithProvisioningArtifactAsync(
+            BatchAssociateServiceActionWithProvisioningArtifactRequest request) {
+
+        return batchAssociateServiceActionWithProvisioningArtifactAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<BatchAssociateServiceActionWithProvisioningArtifactResult> batchAssociateServiceActionWithProvisioningArtifactAsync(
+            BatchAssociateServiceActionWithProvisioningArtifactRequest request,
+            com.amazonaws.handlers.AsyncHandler<BatchAssociateServiceActionWithProvisioningArtifactRequest, BatchAssociateServiceActionWithProvisioningArtifactResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<BatchDisassociateServiceActionFromProvisioningArtifactResult> batchDisassociateServiceActionFromProvisioningArtifactAsync(
+            BatchDisassociateServiceActionFromProvisioningArtifactRequest request) {
+
+        return batchDisassociateServiceActionFromProvisioningArtifactAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<BatchDisassociateServiceActionFromProvisioningArtifactResult> batchDisassociateServiceActionFromProvisioningArtifactAsync(
+            BatchDisassociateServiceActionFromProvisioningArtifactRequest request,
+            com.amazonaws.handlers.AsyncHandler<BatchDisassociateServiceActionFromProvisioningArtifactRequest, BatchDisassociateServiceActionFromProvisioningArtifactResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }
@@ -147,6 +192,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     }
 
     @Override
+    public java.util.concurrent.Future<CreateProvisionedProductPlanResult> createProvisionedProductPlanAsync(CreateProvisionedProductPlanRequest request) {
+
+        return createProvisionedProductPlanAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<CreateProvisionedProductPlanResult> createProvisionedProductPlanAsync(CreateProvisionedProductPlanRequest request,
+            com.amazonaws.handlers.AsyncHandler<CreateProvisionedProductPlanRequest, CreateProvisionedProductPlanResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public java.util.concurrent.Future<CreateProvisioningArtifactResult> createProvisioningArtifactAsync(CreateProvisioningArtifactRequest request) {
 
         return createProvisioningArtifactAsync(request, null);
@@ -155,6 +213,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     @Override
     public java.util.concurrent.Future<CreateProvisioningArtifactResult> createProvisioningArtifactAsync(CreateProvisioningArtifactRequest request,
             com.amazonaws.handlers.AsyncHandler<CreateProvisioningArtifactRequest, CreateProvisioningArtifactResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<CreateServiceActionResult> createServiceActionAsync(CreateServiceActionRequest request) {
+
+        return createServiceActionAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<CreateServiceActionResult> createServiceActionAsync(CreateServiceActionRequest request,
+            com.amazonaws.handlers.AsyncHandler<CreateServiceActionRequest, CreateServiceActionResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }
@@ -225,6 +296,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     }
 
     @Override
+    public java.util.concurrent.Future<DeleteProvisionedProductPlanResult> deleteProvisionedProductPlanAsync(DeleteProvisionedProductPlanRequest request) {
+
+        return deleteProvisionedProductPlanAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DeleteProvisionedProductPlanResult> deleteProvisionedProductPlanAsync(DeleteProvisionedProductPlanRequest request,
+            com.amazonaws.handlers.AsyncHandler<DeleteProvisionedProductPlanRequest, DeleteProvisionedProductPlanResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public java.util.concurrent.Future<DeleteProvisioningArtifactResult> deleteProvisioningArtifactAsync(DeleteProvisioningArtifactRequest request) {
 
         return deleteProvisioningArtifactAsync(request, null);
@@ -233,6 +317,32 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     @Override
     public java.util.concurrent.Future<DeleteProvisioningArtifactResult> deleteProvisioningArtifactAsync(DeleteProvisioningArtifactRequest request,
             com.amazonaws.handlers.AsyncHandler<DeleteProvisioningArtifactRequest, DeleteProvisioningArtifactResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<DeleteServiceActionResult> deleteServiceActionAsync(DeleteServiceActionRequest request) {
+
+        return deleteServiceActionAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DeleteServiceActionResult> deleteServiceActionAsync(DeleteServiceActionRequest request,
+            com.amazonaws.handlers.AsyncHandler<DeleteServiceActionRequest, DeleteServiceActionResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<DeleteTagOptionResult> deleteTagOptionAsync(DeleteTagOptionRequest request) {
+
+        return deleteTagOptionAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DeleteTagOptionResult> deleteTagOptionAsync(DeleteTagOptionRequest request,
+            com.amazonaws.handlers.AsyncHandler<DeleteTagOptionRequest, DeleteTagOptionResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }
@@ -272,6 +382,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     @Override
     public java.util.concurrent.Future<DescribePortfolioResult> describePortfolioAsync(DescribePortfolioRequest request,
             com.amazonaws.handlers.AsyncHandler<DescribePortfolioRequest, DescribePortfolioResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<DescribePortfolioShareStatusResult> describePortfolioShareStatusAsync(DescribePortfolioShareStatusRequest request) {
+
+        return describePortfolioShareStatusAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DescribePortfolioShareStatusResult> describePortfolioShareStatusAsync(DescribePortfolioShareStatusRequest request,
+            com.amazonaws.handlers.AsyncHandler<DescribePortfolioShareStatusRequest, DescribePortfolioShareStatusResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }
@@ -329,6 +452,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     }
 
     @Override
+    public java.util.concurrent.Future<DescribeProvisionedProductPlanResult> describeProvisionedProductPlanAsync(DescribeProvisionedProductPlanRequest request) {
+
+        return describeProvisionedProductPlanAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DescribeProvisionedProductPlanResult> describeProvisionedProductPlanAsync(DescribeProvisionedProductPlanRequest request,
+            com.amazonaws.handlers.AsyncHandler<DescribeProvisionedProductPlanRequest, DescribeProvisionedProductPlanResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public java.util.concurrent.Future<DescribeProvisioningArtifactResult> describeProvisioningArtifactAsync(DescribeProvisioningArtifactRequest request) {
 
         return describeProvisioningArtifactAsync(request, null);
@@ -368,6 +504,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     }
 
     @Override
+    public java.util.concurrent.Future<DescribeServiceActionResult> describeServiceActionAsync(DescribeServiceActionRequest request) {
+
+        return describeServiceActionAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DescribeServiceActionResult> describeServiceActionAsync(DescribeServiceActionRequest request,
+            com.amazonaws.handlers.AsyncHandler<DescribeServiceActionRequest, DescribeServiceActionResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public java.util.concurrent.Future<DescribeTagOptionResult> describeTagOptionAsync(DescribeTagOptionRequest request) {
 
         return describeTagOptionAsync(request, null);
@@ -376,6 +525,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     @Override
     public java.util.concurrent.Future<DescribeTagOptionResult> describeTagOptionAsync(DescribeTagOptionRequest request,
             com.amazonaws.handlers.AsyncHandler<DescribeTagOptionRequest, DescribeTagOptionResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<DisableAWSOrganizationsAccessResult> disableAWSOrganizationsAccessAsync(DisableAWSOrganizationsAccessRequest request) {
+
+        return disableAWSOrganizationsAccessAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DisableAWSOrganizationsAccessResult> disableAWSOrganizationsAccessAsync(DisableAWSOrganizationsAccessRequest request,
+            com.amazonaws.handlers.AsyncHandler<DisableAWSOrganizationsAccessRequest, DisableAWSOrganizationsAccessResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }
@@ -411,6 +573,21 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     }
 
     @Override
+    public java.util.concurrent.Future<DisassociateServiceActionFromProvisioningArtifactResult> disassociateServiceActionFromProvisioningArtifactAsync(
+            DisassociateServiceActionFromProvisioningArtifactRequest request) {
+
+        return disassociateServiceActionFromProvisioningArtifactAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<DisassociateServiceActionFromProvisioningArtifactResult> disassociateServiceActionFromProvisioningArtifactAsync(
+            DisassociateServiceActionFromProvisioningArtifactRequest request,
+            com.amazonaws.handlers.AsyncHandler<DisassociateServiceActionFromProvisioningArtifactRequest, DisassociateServiceActionFromProvisioningArtifactResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public java.util.concurrent.Future<DisassociateTagOptionFromResourceResult> disassociateTagOptionFromResourceAsync(
             DisassociateTagOptionFromResourceRequest request) {
 
@@ -421,6 +598,62 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     public java.util.concurrent.Future<DisassociateTagOptionFromResourceResult> disassociateTagOptionFromResourceAsync(
             DisassociateTagOptionFromResourceRequest request,
             com.amazonaws.handlers.AsyncHandler<DisassociateTagOptionFromResourceRequest, DisassociateTagOptionFromResourceResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<EnableAWSOrganizationsAccessResult> enableAWSOrganizationsAccessAsync(EnableAWSOrganizationsAccessRequest request) {
+
+        return enableAWSOrganizationsAccessAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<EnableAWSOrganizationsAccessResult> enableAWSOrganizationsAccessAsync(EnableAWSOrganizationsAccessRequest request,
+            com.amazonaws.handlers.AsyncHandler<EnableAWSOrganizationsAccessRequest, EnableAWSOrganizationsAccessResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<ExecuteProvisionedProductPlanResult> executeProvisionedProductPlanAsync(ExecuteProvisionedProductPlanRequest request) {
+
+        return executeProvisionedProductPlanAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ExecuteProvisionedProductPlanResult> executeProvisionedProductPlanAsync(ExecuteProvisionedProductPlanRequest request,
+            com.amazonaws.handlers.AsyncHandler<ExecuteProvisionedProductPlanRequest, ExecuteProvisionedProductPlanResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<ExecuteProvisionedProductServiceActionResult> executeProvisionedProductServiceActionAsync(
+            ExecuteProvisionedProductServiceActionRequest request) {
+
+        return executeProvisionedProductServiceActionAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ExecuteProvisionedProductServiceActionResult> executeProvisionedProductServiceActionAsync(
+            ExecuteProvisionedProductServiceActionRequest request,
+            com.amazonaws.handlers.AsyncHandler<ExecuteProvisionedProductServiceActionRequest, ExecuteProvisionedProductServiceActionResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<GetAWSOrganizationsAccessStatusResult> getAWSOrganizationsAccessStatusAsync(
+            GetAWSOrganizationsAccessStatusRequest request) {
+
+        return getAWSOrganizationsAccessStatusAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<GetAWSOrganizationsAccessStatusResult> getAWSOrganizationsAccessStatusAsync(
+            GetAWSOrganizationsAccessStatusRequest request,
+            com.amazonaws.handlers.AsyncHandler<GetAWSOrganizationsAccessStatusRequest, GetAWSOrganizationsAccessStatusResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }
@@ -460,6 +693,21 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     @Override
     public java.util.concurrent.Future<ListLaunchPathsResult> listLaunchPathsAsync(ListLaunchPathsRequest request,
             com.amazonaws.handlers.AsyncHandler<ListLaunchPathsRequest, ListLaunchPathsResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListOrganizationPortfolioAccessResult> listOrganizationPortfolioAccessAsync(
+            ListOrganizationPortfolioAccessRequest request) {
+
+        return listOrganizationPortfolioAccessAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListOrganizationPortfolioAccessResult> listOrganizationPortfolioAccessAsync(
+            ListOrganizationPortfolioAccessRequest request,
+            com.amazonaws.handlers.AsyncHandler<ListOrganizationPortfolioAccessRequest, ListOrganizationPortfolioAccessResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }
@@ -517,6 +765,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     }
 
     @Override
+    public java.util.concurrent.Future<ListProvisionedProductPlansResult> listProvisionedProductPlansAsync(ListProvisionedProductPlansRequest request) {
+
+        return listProvisionedProductPlansAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListProvisionedProductPlansResult> listProvisionedProductPlansAsync(ListProvisionedProductPlansRequest request,
+            com.amazonaws.handlers.AsyncHandler<ListProvisionedProductPlansRequest, ListProvisionedProductPlansResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public java.util.concurrent.Future<ListProvisioningArtifactsResult> listProvisioningArtifactsAsync(ListProvisioningArtifactsRequest request) {
 
         return listProvisioningArtifactsAsync(request, null);
@@ -525,6 +786,21 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     @Override
     public java.util.concurrent.Future<ListProvisioningArtifactsResult> listProvisioningArtifactsAsync(ListProvisioningArtifactsRequest request,
             com.amazonaws.handlers.AsyncHandler<ListProvisioningArtifactsRequest, ListProvisioningArtifactsResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListProvisioningArtifactsForServiceActionResult> listProvisioningArtifactsForServiceActionAsync(
+            ListProvisioningArtifactsForServiceActionRequest request) {
+
+        return listProvisioningArtifactsForServiceActionAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListProvisioningArtifactsForServiceActionResult> listProvisioningArtifactsForServiceActionAsync(
+            ListProvisioningArtifactsForServiceActionRequest request,
+            com.amazonaws.handlers.AsyncHandler<ListProvisioningArtifactsForServiceActionRequest, ListProvisioningArtifactsForServiceActionResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }
@@ -551,6 +827,34 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     @Override
     public java.util.concurrent.Future<ListResourcesForTagOptionResult> listResourcesForTagOptionAsync(ListResourcesForTagOptionRequest request,
             com.amazonaws.handlers.AsyncHandler<ListResourcesForTagOptionRequest, ListResourcesForTagOptionResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListServiceActionsResult> listServiceActionsAsync(ListServiceActionsRequest request) {
+
+        return listServiceActionsAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListServiceActionsResult> listServiceActionsAsync(ListServiceActionsRequest request,
+            com.amazonaws.handlers.AsyncHandler<ListServiceActionsRequest, ListServiceActionsResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListServiceActionsForProvisioningArtifactResult> listServiceActionsForProvisioningArtifactAsync(
+            ListServiceActionsForProvisioningArtifactRequest request) {
+
+        return listServiceActionsForProvisioningArtifactAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ListServiceActionsForProvisioningArtifactResult> listServiceActionsForProvisioningArtifactAsync(
+            ListServiceActionsForProvisioningArtifactRequest request,
+            com.amazonaws.handlers.AsyncHandler<ListServiceActionsForProvisioningArtifactRequest, ListServiceActionsForProvisioningArtifactResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }
@@ -634,6 +938,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     }
 
     @Override
+    public java.util.concurrent.Future<SearchProvisionedProductsResult> searchProvisionedProductsAsync(SearchProvisionedProductsRequest request) {
+
+        return searchProvisionedProductsAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<SearchProvisionedProductsResult> searchProvisionedProductsAsync(SearchProvisionedProductsRequest request,
+            com.amazonaws.handlers.AsyncHandler<SearchProvisionedProductsRequest, SearchProvisionedProductsResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
     public java.util.concurrent.Future<TerminateProvisionedProductResult> terminateProvisionedProductAsync(TerminateProvisionedProductRequest request) {
 
         return terminateProvisionedProductAsync(request, null);
@@ -707,6 +1024,19 @@ public class AbstractAWSServiceCatalogAsync extends AbstractAWSServiceCatalog im
     @Override
     public java.util.concurrent.Future<UpdateProvisioningArtifactResult> updateProvisioningArtifactAsync(UpdateProvisioningArtifactRequest request,
             com.amazonaws.handlers.AsyncHandler<UpdateProvisioningArtifactRequest, UpdateProvisioningArtifactResult> asyncHandler) {
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.concurrent.Future<UpdateServiceActionResult> updateServiceActionAsync(UpdateServiceActionRequest request) {
+
+        return updateServiceActionAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<UpdateServiceActionResult> updateServiceActionAsync(UpdateServiceActionRequest request,
+            com.amazonaws.handlers.AsyncHandler<UpdateServiceActionRequest, UpdateServiceActionResult> asyncHandler) {
 
         throw new java.lang.UnsupportedOperationException();
     }

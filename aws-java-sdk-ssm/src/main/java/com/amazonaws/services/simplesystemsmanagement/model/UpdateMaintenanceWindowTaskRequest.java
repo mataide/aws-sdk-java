@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -54,11 +54,35 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The IAM service role ARN to modify. The system assumes this role during task execution.
      * </p>
+     * <p>
+     * If you do not specify a service role ARN, Systems Manager will use your account's service-linked role for Systems
+     * Manager by default. If no service-linked role for Systems Manager exists in your account, it will be created when
+     * you run <code>RegisterTaskWithMaintenanceWindow</code> without specifying a service role ARN.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "http://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html#slr-permissions"
+     * >Service-Linked Role Permissions for Systems Manager</a> and <a href=
+     * "http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html#maintenance-window-tasks-service-role"
+     * >Should I Use a Service-Linked Role or a Custom Service Role to Run Maintenance Window Tasks? </a> in the <i>AWS
+     * Systems Manager User Guide</i>.
+     * </p>
      */
     private String serviceRoleArn;
     /**
      * <p>
-     * The parameters to modify. The map has the following format:
+     * The parameters to modify.
+     * </p>
+     * <note>
+     * <p>
+     * <code>TaskParameters</code> has been deprecated. To specify parameters to pass to a task when it runs, instead
+     * use the <code>Parameters</code> option in the <code>TaskInvocationParameters</code> structure. For information
+     * about how Systems Manager handles these options for the supported Maintenance Window task types, see
+     * <a>MaintenanceWindowTaskInvocationParameters</a>.
+     * </p>
+     * </note>
+     * <p>
+     * The map has the following format:
      * </p>
      * <p>
      * Key: string, between 1 and 255 characters
@@ -100,6 +124,14 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The new logging location in Amazon S3 to specify.
      * </p>
+     * <note>
+     * <p>
+     * <code>LoggingInfo</code> has been deprecated. To specify an S3 bucket to contain logs, instead use the
+     * <code>OutputS3BucketName</code> and <code>OutputS3KeyPrefix</code> options in the
+     * <code>TaskInvocationParameters</code> structure. For information about how Systems Manager handles these options
+     * for the supported Maintenance Window task types, see <a>MaintenanceWindowTaskInvocationParameters</a>.
+     * </p>
+     * </note>
      */
     private LoggingInfo loggingInfo;
     /**
@@ -327,9 +359,35 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The IAM service role ARN to modify. The system assumes this role during task execution.
      * </p>
+     * <p>
+     * If you do not specify a service role ARN, Systems Manager will use your account's service-linked role for Systems
+     * Manager by default. If no service-linked role for Systems Manager exists in your account, it will be created when
+     * you run <code>RegisterTaskWithMaintenanceWindow</code> without specifying a service role ARN.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "http://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html#slr-permissions"
+     * >Service-Linked Role Permissions for Systems Manager</a> and <a href=
+     * "http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html#maintenance-window-tasks-service-role"
+     * >Should I Use a Service-Linked Role or a Custom Service Role to Run Maintenance Window Tasks? </a> in the <i>AWS
+     * Systems Manager User Guide</i>.
+     * </p>
      * 
      * @param serviceRoleArn
-     *        The IAM service role ARN to modify. The system assumes this role during task execution.
+     *        The IAM service role ARN to modify. The system assumes this role during task execution.</p>
+     *        <p>
+     *        If you do not specify a service role ARN, Systems Manager will use your account's service-linked role for
+     *        Systems Manager by default. If no service-linked role for Systems Manager exists in your account, it will
+     *        be created when you run <code>RegisterTaskWithMaintenanceWindow</code> without specifying a service role
+     *        ARN.
+     *        </p>
+     *        <p>
+     *        For more information, see <a href=
+     *        "http://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html#slr-permissions"
+     *        >Service-Linked Role Permissions for Systems Manager</a> and <a href=
+     *        "http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html#maintenance-window-tasks-service-role"
+     *        >Should I Use a Service-Linked Role or a Custom Service Role to Run Maintenance Window Tasks? </a> in the
+     *        <i>AWS Systems Manager User Guide</i>.
      */
 
     public void setServiceRoleArn(String serviceRoleArn) {
@@ -340,8 +398,34 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The IAM service role ARN to modify. The system assumes this role during task execution.
      * </p>
+     * <p>
+     * If you do not specify a service role ARN, Systems Manager will use your account's service-linked role for Systems
+     * Manager by default. If no service-linked role for Systems Manager exists in your account, it will be created when
+     * you run <code>RegisterTaskWithMaintenanceWindow</code> without specifying a service role ARN.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "http://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html#slr-permissions"
+     * >Service-Linked Role Permissions for Systems Manager</a> and <a href=
+     * "http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html#maintenance-window-tasks-service-role"
+     * >Should I Use a Service-Linked Role or a Custom Service Role to Run Maintenance Window Tasks? </a> in the <i>AWS
+     * Systems Manager User Guide</i>.
+     * </p>
      * 
-     * @return The IAM service role ARN to modify. The system assumes this role during task execution.
+     * @return The IAM service role ARN to modify. The system assumes this role during task execution.</p>
+     *         <p>
+     *         If you do not specify a service role ARN, Systems Manager will use your account's service-linked role for
+     *         Systems Manager by default. If no service-linked role for Systems Manager exists in your account, it will
+     *         be created when you run <code>RegisterTaskWithMaintenanceWindow</code> without specifying a service role
+     *         ARN.
+     *         </p>
+     *         <p>
+     *         For more information, see <a href=
+     *         "http://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html#slr-permissions"
+     *         >Service-Linked Role Permissions for Systems Manager</a> and <a href=
+     *         "http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html#maintenance-window-tasks-service-role"
+     *         >Should I Use a Service-Linked Role or a Custom Service Role to Run Maintenance Window Tasks? </a> in the
+     *         <i>AWS Systems Manager User Guide</i>.
      */
 
     public String getServiceRoleArn() {
@@ -352,9 +436,35 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The IAM service role ARN to modify. The system assumes this role during task execution.
      * </p>
+     * <p>
+     * If you do not specify a service role ARN, Systems Manager will use your account's service-linked role for Systems
+     * Manager by default. If no service-linked role for Systems Manager exists in your account, it will be created when
+     * you run <code>RegisterTaskWithMaintenanceWindow</code> without specifying a service role ARN.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "http://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html#slr-permissions"
+     * >Service-Linked Role Permissions for Systems Manager</a> and <a href=
+     * "http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html#maintenance-window-tasks-service-role"
+     * >Should I Use a Service-Linked Role or a Custom Service Role to Run Maintenance Window Tasks? </a> in the <i>AWS
+     * Systems Manager User Guide</i>.
+     * </p>
      * 
      * @param serviceRoleArn
-     *        The IAM service role ARN to modify. The system assumes this role during task execution.
+     *        The IAM service role ARN to modify. The system assumes this role during task execution.</p>
+     *        <p>
+     *        If you do not specify a service role ARN, Systems Manager will use your account's service-linked role for
+     *        Systems Manager by default. If no service-linked role for Systems Manager exists in your account, it will
+     *        be created when you run <code>RegisterTaskWithMaintenanceWindow</code> without specifying a service role
+     *        ARN.
+     *        </p>
+     *        <p>
+     *        For more information, see <a href=
+     *        "http://docs.aws.amazon.com/systems-manager/latest/userguide/using-service-linked-roles.html#slr-permissions"
+     *        >Service-Linked Role Permissions for Systems Manager</a> and <a href=
+     *        "http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html#maintenance-window-tasks-service-role"
+     *        >Should I Use a Service-Linked Role or a Custom Service Role to Run Maintenance Window Tasks? </a> in the
+     *        <i>AWS Systems Manager User Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -365,7 +475,18 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parameters to modify. The map has the following format:
+     * The parameters to modify.
+     * </p>
+     * <note>
+     * <p>
+     * <code>TaskParameters</code> has been deprecated. To specify parameters to pass to a task when it runs, instead
+     * use the <code>Parameters</code> option in the <code>TaskInvocationParameters</code> structure. For information
+     * about how Systems Manager handles these options for the supported Maintenance Window task types, see
+     * <a>MaintenanceWindowTaskInvocationParameters</a>.
+     * </p>
+     * </note>
+     * <p>
+     * The map has the following format:
      * </p>
      * <p>
      * Key: string, between 1 and 255 characters
@@ -374,7 +495,17 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * Value: an array of strings, each string is between 1 and 255 characters
      * </p>
      * 
-     * @return The parameters to modify. The map has the following format:</p>
+     * @return The parameters to modify.</p> <note>
+     *         <p>
+     *         <code>TaskParameters</code> has been deprecated. To specify parameters to pass to a task when it runs,
+     *         instead use the <code>Parameters</code> option in the <code>TaskInvocationParameters</code> structure.
+     *         For information about how Systems Manager handles these options for the supported Maintenance Window task
+     *         types, see <a>MaintenanceWindowTaskInvocationParameters</a>.
+     *         </p>
+     *         </note>
+     *         <p>
+     *         The map has the following format:
+     *         </p>
      *         <p>
      *         Key: string, between 1 and 255 characters
      *         </p>
@@ -388,7 +519,18 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parameters to modify. The map has the following format:
+     * The parameters to modify.
+     * </p>
+     * <note>
+     * <p>
+     * <code>TaskParameters</code> has been deprecated. To specify parameters to pass to a task when it runs, instead
+     * use the <code>Parameters</code> option in the <code>TaskInvocationParameters</code> structure. For information
+     * about how Systems Manager handles these options for the supported Maintenance Window task types, see
+     * <a>MaintenanceWindowTaskInvocationParameters</a>.
+     * </p>
+     * </note>
+     * <p>
+     * The map has the following format:
      * </p>
      * <p>
      * Key: string, between 1 and 255 characters
@@ -398,7 +540,17 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * </p>
      * 
      * @param taskParameters
-     *        The parameters to modify. The map has the following format:</p>
+     *        The parameters to modify.</p> <note>
+     *        <p>
+     *        <code>TaskParameters</code> has been deprecated. To specify parameters to pass to a task when it runs,
+     *        instead use the <code>Parameters</code> option in the <code>TaskInvocationParameters</code> structure. For
+     *        information about how Systems Manager handles these options for the supported Maintenance Window task
+     *        types, see <a>MaintenanceWindowTaskInvocationParameters</a>.
+     *        </p>
+     *        </note>
+     *        <p>
+     *        The map has the following format:
+     *        </p>
      *        <p>
      *        Key: string, between 1 and 255 characters
      *        </p>
@@ -412,7 +564,18 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parameters to modify. The map has the following format:
+     * The parameters to modify.
+     * </p>
+     * <note>
+     * <p>
+     * <code>TaskParameters</code> has been deprecated. To specify parameters to pass to a task when it runs, instead
+     * use the <code>Parameters</code> option in the <code>TaskInvocationParameters</code> structure. For information
+     * about how Systems Manager handles these options for the supported Maintenance Window task types, see
+     * <a>MaintenanceWindowTaskInvocationParameters</a>.
+     * </p>
+     * </note>
+     * <p>
+     * The map has the following format:
      * </p>
      * <p>
      * Key: string, between 1 and 255 characters
@@ -422,7 +585,17 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * </p>
      * 
      * @param taskParameters
-     *        The parameters to modify. The map has the following format:</p>
+     *        The parameters to modify.</p> <note>
+     *        <p>
+     *        <code>TaskParameters</code> has been deprecated. To specify parameters to pass to a task when it runs,
+     *        instead use the <code>Parameters</code> option in the <code>TaskInvocationParameters</code> structure. For
+     *        information about how Systems Manager handles these options for the supported Maintenance Window task
+     *        types, see <a>MaintenanceWindowTaskInvocationParameters</a>.
+     *        </p>
+     *        </note>
+     *        <p>
+     *        The map has the following format:
+     *        </p>
      *        <p>
      *        Key: string, between 1 and 255 characters
      *        </p>
@@ -645,9 +818,24 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The new logging location in Amazon S3 to specify.
      * </p>
+     * <note>
+     * <p>
+     * <code>LoggingInfo</code> has been deprecated. To specify an S3 bucket to contain logs, instead use the
+     * <code>OutputS3BucketName</code> and <code>OutputS3KeyPrefix</code> options in the
+     * <code>TaskInvocationParameters</code> structure. For information about how Systems Manager handles these options
+     * for the supported Maintenance Window task types, see <a>MaintenanceWindowTaskInvocationParameters</a>.
+     * </p>
+     * </note>
      * 
      * @param loggingInfo
-     *        The new logging location in Amazon S3 to specify.
+     *        The new logging location in Amazon S3 to specify.</p> <note>
+     *        <p>
+     *        <code>LoggingInfo</code> has been deprecated. To specify an S3 bucket to contain logs, instead use the
+     *        <code>OutputS3BucketName</code> and <code>OutputS3KeyPrefix</code> options in the
+     *        <code>TaskInvocationParameters</code> structure. For information about how Systems Manager handles these
+     *        options for the supported Maintenance Window task types, see
+     *        <a>MaintenanceWindowTaskInvocationParameters</a>.
+     *        </p>
      */
 
     public void setLoggingInfo(LoggingInfo loggingInfo) {
@@ -658,8 +846,23 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The new logging location in Amazon S3 to specify.
      * </p>
+     * <note>
+     * <p>
+     * <code>LoggingInfo</code> has been deprecated. To specify an S3 bucket to contain logs, instead use the
+     * <code>OutputS3BucketName</code> and <code>OutputS3KeyPrefix</code> options in the
+     * <code>TaskInvocationParameters</code> structure. For information about how Systems Manager handles these options
+     * for the supported Maintenance Window task types, see <a>MaintenanceWindowTaskInvocationParameters</a>.
+     * </p>
+     * </note>
      * 
-     * @return The new logging location in Amazon S3 to specify.
+     * @return The new logging location in Amazon S3 to specify.</p> <note>
+     *         <p>
+     *         <code>LoggingInfo</code> has been deprecated. To specify an S3 bucket to contain logs, instead use the
+     *         <code>OutputS3BucketName</code> and <code>OutputS3KeyPrefix</code> options in the
+     *         <code>TaskInvocationParameters</code> structure. For information about how Systems Manager handles these
+     *         options for the supported Maintenance Window task types, see
+     *         <a>MaintenanceWindowTaskInvocationParameters</a>.
+     *         </p>
      */
 
     public LoggingInfo getLoggingInfo() {
@@ -670,9 +873,24 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The new logging location in Amazon S3 to specify.
      * </p>
+     * <note>
+     * <p>
+     * <code>LoggingInfo</code> has been deprecated. To specify an S3 bucket to contain logs, instead use the
+     * <code>OutputS3BucketName</code> and <code>OutputS3KeyPrefix</code> options in the
+     * <code>TaskInvocationParameters</code> structure. For information about how Systems Manager handles these options
+     * for the supported Maintenance Window task types, see <a>MaintenanceWindowTaskInvocationParameters</a>.
+     * </p>
+     * </note>
      * 
      * @param loggingInfo
-     *        The new logging location in Amazon S3 to specify.
+     *        The new logging location in Amazon S3 to specify.</p> <note>
+     *        <p>
+     *        <code>LoggingInfo</code> has been deprecated. To specify an S3 bucket to contain logs, instead use the
+     *        <code>OutputS3BucketName</code> and <code>OutputS3KeyPrefix</code> options in the
+     *        <code>TaskInvocationParameters</code> structure. For information about how Systems Manager handles these
+     *        options for the supported Maintenance Window task types, see
+     *        <a>MaintenanceWindowTaskInvocationParameters</a>.
+     *        </p>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -822,7 +1040,8 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -843,7 +1062,7 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
         if (getServiceRoleArn() != null)
             sb.append("ServiceRoleArn: ").append(getServiceRoleArn()).append(",");
         if (getTaskParameters() != null)
-            sb.append("TaskParameters: ").append(getTaskParameters()).append(",");
+            sb.append("TaskParameters: ").append("***Sensitive Data Redacted***").append(",");
         if (getTaskInvocationParameters() != null)
             sb.append("TaskInvocationParameters: ").append(getTaskInvocationParameters()).append(",");
         if (getPriority() != null)
@@ -857,7 +1076,7 @@ public class UpdateMaintenanceWindowTaskRequest extends com.amazonaws.AmazonWebS
         if (getName() != null)
             sb.append("Name: ").append(getName()).append(",");
         if (getDescription() != null)
-            sb.append("Description: ").append(getDescription()).append(",");
+            sb.append("Description: ").append("***Sensitive Data Redacted***").append(",");
         if (getReplace() != null)
             sb.append("Replace: ").append(getReplace());
         sb.append("}");

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -23,22 +23,24 @@ import javax.annotation.Generated;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServiceResult<com.amazonaws.ResponseMetadata> implements Serializable, Cloneable {
 
-    /** Arn of the core definition version. */
+    /** The ARN of the core definition version. */
     private String arn;
-    /** Timestamp of when the core definition version was created. */
+    /** The time, in milliseconds since the epoch, when the core definition version was created. */
     private String creationTimestamp;
-    /** Information on definition */
+    /** Information about the core definition version. */
     private CoreDefinitionVersion definition;
-    /** Id of the core definition the version belongs to. */
+    /** The ID of the core definition version. */
     private String id;
-    /** Version of the core definition version. */
+    /** The token for the next set of results, or ''null'' if there are no additional results. */
+    private String nextToken;
+    /** The version of the core definition version. */
     private String version;
 
     /**
-     * Arn of the core definition version.
+     * The ARN of the core definition version.
      * 
      * @param arn
-     *        Arn of the core definition version.
+     *        The ARN of the core definition version.
      */
 
     public void setArn(String arn) {
@@ -46,9 +48,9 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Arn of the core definition version.
+     * The ARN of the core definition version.
      * 
-     * @return Arn of the core definition version.
+     * @return The ARN of the core definition version.
      */
 
     public String getArn() {
@@ -56,10 +58,10 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Arn of the core definition version.
+     * The ARN of the core definition version.
      * 
      * @param arn
-     *        Arn of the core definition version.
+     *        The ARN of the core definition version.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -69,10 +71,10 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Timestamp of when the core definition version was created.
+     * The time, in milliseconds since the epoch, when the core definition version was created.
      * 
      * @param creationTimestamp
-     *        Timestamp of when the core definition version was created.
+     *        The time, in milliseconds since the epoch, when the core definition version was created.
      */
 
     public void setCreationTimestamp(String creationTimestamp) {
@@ -80,9 +82,9 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Timestamp of when the core definition version was created.
+     * The time, in milliseconds since the epoch, when the core definition version was created.
      * 
-     * @return Timestamp of when the core definition version was created.
+     * @return The time, in milliseconds since the epoch, when the core definition version was created.
      */
 
     public String getCreationTimestamp() {
@@ -90,10 +92,10 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Timestamp of when the core definition version was created.
+     * The time, in milliseconds since the epoch, when the core definition version was created.
      * 
      * @param creationTimestamp
-     *        Timestamp of when the core definition version was created.
+     *        The time, in milliseconds since the epoch, when the core definition version was created.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -103,10 +105,10 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Information on definition
+     * Information about the core definition version.
      * 
      * @param definition
-     *        Information on definition
+     *        Information about the core definition version.
      */
 
     public void setDefinition(CoreDefinitionVersion definition) {
@@ -114,9 +116,9 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Information on definition
+     * Information about the core definition version.
      * 
-     * @return Information on definition
+     * @return Information about the core definition version.
      */
 
     public CoreDefinitionVersion getDefinition() {
@@ -124,10 +126,10 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Information on definition
+     * Information about the core definition version.
      * 
      * @param definition
-     *        Information on definition
+     *        Information about the core definition version.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -137,10 +139,10 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Id of the core definition the version belongs to.
+     * The ID of the core definition version.
      * 
      * @param id
-     *        Id of the core definition the version belongs to.
+     *        The ID of the core definition version.
      */
 
     public void setId(String id) {
@@ -148,9 +150,9 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Id of the core definition the version belongs to.
+     * The ID of the core definition version.
      * 
-     * @return Id of the core definition the version belongs to.
+     * @return The ID of the core definition version.
      */
 
     public String getId() {
@@ -158,10 +160,10 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Id of the core definition the version belongs to.
+     * The ID of the core definition version.
      * 
      * @param id
-     *        Id of the core definition the version belongs to.
+     *        The ID of the core definition version.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -171,10 +173,44 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Version of the core definition version.
+     * The token for the next set of results, or ''null'' if there are no additional results.
+     * 
+     * @param nextToken
+     *        The token for the next set of results, or ''null'' if there are no additional results.
+     */
+
+    public void setNextToken(String nextToken) {
+        this.nextToken = nextToken;
+    }
+
+    /**
+     * The token for the next set of results, or ''null'' if there are no additional results.
+     * 
+     * @return The token for the next set of results, or ''null'' if there are no additional results.
+     */
+
+    public String getNextToken() {
+        return this.nextToken;
+    }
+
+    /**
+     * The token for the next set of results, or ''null'' if there are no additional results.
+     * 
+     * @param nextToken
+     *        The token for the next set of results, or ''null'' if there are no additional results.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public GetCoreDefinitionVersionResult withNextToken(String nextToken) {
+        setNextToken(nextToken);
+        return this;
+    }
+
+    /**
+     * The version of the core definition version.
      * 
      * @param version
-     *        Version of the core definition version.
+     *        The version of the core definition version.
      */
 
     public void setVersion(String version) {
@@ -182,9 +218,9 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Version of the core definition version.
+     * The version of the core definition version.
      * 
-     * @return Version of the core definition version.
+     * @return The version of the core definition version.
      */
 
     public String getVersion() {
@@ -192,10 +228,10 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Version of the core definition version.
+     * The version of the core definition version.
      * 
      * @param version
-     *        Version of the core definition version.
+     *        The version of the core definition version.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -205,7 +241,8 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -223,6 +260,8 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
             sb.append("Definition: ").append(getDefinition()).append(",");
         if (getId() != null)
             sb.append("Id: ").append(getId()).append(",");
+        if (getNextToken() != null)
+            sb.append("NextToken: ").append(getNextToken()).append(",");
         if (getVersion() != null)
             sb.append("Version: ").append(getVersion());
         sb.append("}");
@@ -255,6 +294,10 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
             return false;
         if (other.getId() != null && other.getId().equals(this.getId()) == false)
             return false;
+        if (other.getNextToken() == null ^ this.getNextToken() == null)
+            return false;
+        if (other.getNextToken() != null && other.getNextToken().equals(this.getNextToken()) == false)
+            return false;
         if (other.getVersion() == null ^ this.getVersion() == null)
             return false;
         if (other.getVersion() != null && other.getVersion().equals(this.getVersion()) == false)
@@ -271,6 +314,7 @@ public class GetCoreDefinitionVersionResult extends com.amazonaws.AmazonWebServi
         hashCode = prime * hashCode + ((getCreationTimestamp() == null) ? 0 : getCreationTimestamp().hashCode());
         hashCode = prime * hashCode + ((getDefinition() == null) ? 0 : getDefinition().hashCode());
         hashCode = prime * hashCode + ((getId() == null) ? 0 : getId().hashCode());
+        hashCode = prime * hashCode + ((getNextToken() == null) ? 0 : getNextToken().hashCode());
         hashCode = prime * hashCode + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return hashCode;
     }

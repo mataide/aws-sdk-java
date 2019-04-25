@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -27,7 +27,7 @@ public class CreateRestApiRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The name of the <a>RestApi</a>.
+     * [Required] The name of the <a>RestApi</a>.
      * </p>
      */
     private String name;
@@ -58,18 +58,43 @@ public class CreateRestApiRequest extends com.amazonaws.AmazonWebServiceRequest 
     private java.util.List<String> binaryMediaTypes;
     /**
      * <p>
+     * A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M) bytes,
+     * inclusive) or disable compression (with a null value) on an API. When compression is enabled, compression or
+     * decompression is not applied on the payload if the payload size is smaller than this value. Setting it to zero
+     * allows compression for any payload size.
+     * </p>
+     */
+    private Integer minimumCompressionSize;
+    /**
+     * <p>
+     * The source of the API key for metering requests according to a usage plan. Valid values are:
+     * <ul>
+     * <li><code>HEADER</code> to read the API key from the <code>X-API-Key</code> header of a request.</li>
+     * <li><code>AUTHORIZER</code> to read the API key from the <code>UsageIdentifierKey</code> from a custom
+     * authorizer.</li>
+     * </ul>
+     * </p>
+     */
+    private String apiKeySource;
+    /**
+     * <p>
      * The endpoint configuration of this <a>RestApi</a> showing the endpoint types of the API.
      * </p>
      */
     private EndpointConfiguration endpointConfiguration;
+    /**
+     * A stringified JSON policy document that applies to this RestApi regardless of the caller and <a>Method</a>
+     * configuration.
+     */
+    private String policy;
 
     /**
      * <p>
-     * The name of the <a>RestApi</a>.
+     * [Required] The name of the <a>RestApi</a>.
      * </p>
      * 
      * @param name
-     *        The name of the <a>RestApi</a>.
+     *        [Required] The name of the <a>RestApi</a>.
      */
 
     public void setName(String name) {
@@ -78,10 +103,10 @@ public class CreateRestApiRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The name of the <a>RestApi</a>.
+     * [Required] The name of the <a>RestApi</a>.
      * </p>
      * 
-     * @return The name of the <a>RestApi</a>.
+     * @return [Required] The name of the <a>RestApi</a>.
      */
 
     public String getName() {
@@ -90,11 +115,11 @@ public class CreateRestApiRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The name of the <a>RestApi</a>.
+     * [Required] The name of the <a>RestApi</a>.
      * </p>
      * 
      * @param name
-     *        The name of the <a>RestApi</a>.
+     *        [Required] The name of the <a>RestApi</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -303,6 +328,163 @@ public class CreateRestApiRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
+     * A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M) bytes,
+     * inclusive) or disable compression (with a null value) on an API. When compression is enabled, compression or
+     * decompression is not applied on the payload if the payload size is smaller than this value. Setting it to zero
+     * allows compression for any payload size.
+     * </p>
+     * 
+     * @param minimumCompressionSize
+     *        A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M)
+     *        bytes, inclusive) or disable compression (with a null value) on an API. When compression is enabled,
+     *        compression or decompression is not applied on the payload if the payload size is smaller than this value.
+     *        Setting it to zero allows compression for any payload size.
+     */
+
+    public void setMinimumCompressionSize(Integer minimumCompressionSize) {
+        this.minimumCompressionSize = minimumCompressionSize;
+    }
+
+    /**
+     * <p>
+     * A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M) bytes,
+     * inclusive) or disable compression (with a null value) on an API. When compression is enabled, compression or
+     * decompression is not applied on the payload if the payload size is smaller than this value. Setting it to zero
+     * allows compression for any payload size.
+     * </p>
+     * 
+     * @return A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M)
+     *         bytes, inclusive) or disable compression (with a null value) on an API. When compression is enabled,
+     *         compression or decompression is not applied on the payload if the payload size is smaller than this
+     *         value. Setting it to zero allows compression for any payload size.
+     */
+
+    public Integer getMinimumCompressionSize() {
+        return this.minimumCompressionSize;
+    }
+
+    /**
+     * <p>
+     * A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M) bytes,
+     * inclusive) or disable compression (with a null value) on an API. When compression is enabled, compression or
+     * decompression is not applied on the payload if the payload size is smaller than this value. Setting it to zero
+     * allows compression for any payload size.
+     * </p>
+     * 
+     * @param minimumCompressionSize
+     *        A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M)
+     *        bytes, inclusive) or disable compression (with a null value) on an API. When compression is enabled,
+     *        compression or decompression is not applied on the payload if the payload size is smaller than this value.
+     *        Setting it to zero allows compression for any payload size.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateRestApiRequest withMinimumCompressionSize(Integer minimumCompressionSize) {
+        setMinimumCompressionSize(minimumCompressionSize);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The source of the API key for metering requests according to a usage plan. Valid values are:
+     * <ul>
+     * <li><code>HEADER</code> to read the API key from the <code>X-API-Key</code> header of a request.</li>
+     * <li><code>AUTHORIZER</code> to read the API key from the <code>UsageIdentifierKey</code> from a custom
+     * authorizer.</li>
+     * </ul>
+     * </p>
+     * 
+     * @param apiKeySource
+     *        The source of the API key for metering requests according to a usage plan. Valid values are:
+     *        <ul>
+     *        <li><code>HEADER</code> to read the API key from the <code>X-API-Key</code> header of a request.</li>
+     *        <li><code>AUTHORIZER</code> to read the API key from the <code>UsageIdentifierKey</code> from a custom
+     *        authorizer.</li>
+     *        </ul>
+     * @see ApiKeySourceType
+     */
+
+    public void setApiKeySource(String apiKeySource) {
+        this.apiKeySource = apiKeySource;
+    }
+
+    /**
+     * <p>
+     * The source of the API key for metering requests according to a usage plan. Valid values are:
+     * <ul>
+     * <li><code>HEADER</code> to read the API key from the <code>X-API-Key</code> header of a request.</li>
+     * <li><code>AUTHORIZER</code> to read the API key from the <code>UsageIdentifierKey</code> from a custom
+     * authorizer.</li>
+     * </ul>
+     * </p>
+     * 
+     * @return The source of the API key for metering requests according to a usage plan. Valid values are:
+     *         <ul>
+     *         <li><code>HEADER</code> to read the API key from the <code>X-API-Key</code> header of a request.</li>
+     *         <li><code>AUTHORIZER</code> to read the API key from the <code>UsageIdentifierKey</code> from a custom
+     *         authorizer.</li>
+     *         </ul>
+     * @see ApiKeySourceType
+     */
+
+    public String getApiKeySource() {
+        return this.apiKeySource;
+    }
+
+    /**
+     * <p>
+     * The source of the API key for metering requests according to a usage plan. Valid values are:
+     * <ul>
+     * <li><code>HEADER</code> to read the API key from the <code>X-API-Key</code> header of a request.</li>
+     * <li><code>AUTHORIZER</code> to read the API key from the <code>UsageIdentifierKey</code> from a custom
+     * authorizer.</li>
+     * </ul>
+     * </p>
+     * 
+     * @param apiKeySource
+     *        The source of the API key for metering requests according to a usage plan. Valid values are:
+     *        <ul>
+     *        <li><code>HEADER</code> to read the API key from the <code>X-API-Key</code> header of a request.</li>
+     *        <li><code>AUTHORIZER</code> to read the API key from the <code>UsageIdentifierKey</code> from a custom
+     *        authorizer.</li>
+     *        </ul>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see ApiKeySourceType
+     */
+
+    public CreateRestApiRequest withApiKeySource(String apiKeySource) {
+        setApiKeySource(apiKeySource);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The source of the API key for metering requests according to a usage plan. Valid values are:
+     * <ul>
+     * <li><code>HEADER</code> to read the API key from the <code>X-API-Key</code> header of a request.</li>
+     * <li><code>AUTHORIZER</code> to read the API key from the <code>UsageIdentifierKey</code> from a custom
+     * authorizer.</li>
+     * </ul>
+     * </p>
+     * 
+     * @param apiKeySource
+     *        The source of the API key for metering requests according to a usage plan. Valid values are:
+     *        <ul>
+     *        <li><code>HEADER</code> to read the API key from the <code>X-API-Key</code> header of a request.</li>
+     *        <li><code>AUTHORIZER</code> to read the API key from the <code>UsageIdentifierKey</code> from a custom
+     *        authorizer.</li>
+     *        </ul>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see ApiKeySourceType
+     */
+
+    public CreateRestApiRequest withApiKeySource(ApiKeySourceType apiKeySource) {
+        this.apiKeySource = apiKeySource.toString();
+        return this;
+    }
+
+    /**
+     * <p>
      * The endpoint configuration of this <a>RestApi</a> showing the endpoint types of the API.
      * </p>
      * 
@@ -342,7 +524,48 @@ public class CreateRestApiRequest extends com.amazonaws.AmazonWebServiceRequest 
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * A stringified JSON policy document that applies to this RestApi regardless of the caller and <a>Method</a>
+     * configuration.
+     * 
+     * @param policy
+     *        A stringified JSON policy document that applies to this RestApi regardless of the caller and <a>Method</a>
+     *        configuration.
+     */
+
+    public void setPolicy(String policy) {
+        this.policy = policy;
+    }
+
+    /**
+     * A stringified JSON policy document that applies to this RestApi regardless of the caller and <a>Method</a>
+     * configuration.
+     * 
+     * @return A stringified JSON policy document that applies to this RestApi regardless of the caller and
+     *         <a>Method</a> configuration.
+     */
+
+    public String getPolicy() {
+        return this.policy;
+    }
+
+    /**
+     * A stringified JSON policy document that applies to this RestApi regardless of the caller and <a>Method</a>
+     * configuration.
+     * 
+     * @param policy
+     *        A stringified JSON policy document that applies to this RestApi regardless of the caller and <a>Method</a>
+     *        configuration.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateRestApiRequest withPolicy(String policy) {
+        setPolicy(policy);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -362,8 +585,14 @@ public class CreateRestApiRequest extends com.amazonaws.AmazonWebServiceRequest 
             sb.append("CloneFrom: ").append(getCloneFrom()).append(",");
         if (getBinaryMediaTypes() != null)
             sb.append("BinaryMediaTypes: ").append(getBinaryMediaTypes()).append(",");
+        if (getMinimumCompressionSize() != null)
+            sb.append("MinimumCompressionSize: ").append(getMinimumCompressionSize()).append(",");
+        if (getApiKeySource() != null)
+            sb.append("ApiKeySource: ").append(getApiKeySource()).append(",");
         if (getEndpointConfiguration() != null)
-            sb.append("EndpointConfiguration: ").append(getEndpointConfiguration());
+            sb.append("EndpointConfiguration: ").append(getEndpointConfiguration()).append(",");
+        if (getPolicy() != null)
+            sb.append("Policy: ").append(getPolicy());
         sb.append("}");
         return sb.toString();
     }
@@ -398,9 +627,21 @@ public class CreateRestApiRequest extends com.amazonaws.AmazonWebServiceRequest 
             return false;
         if (other.getBinaryMediaTypes() != null && other.getBinaryMediaTypes().equals(this.getBinaryMediaTypes()) == false)
             return false;
+        if (other.getMinimumCompressionSize() == null ^ this.getMinimumCompressionSize() == null)
+            return false;
+        if (other.getMinimumCompressionSize() != null && other.getMinimumCompressionSize().equals(this.getMinimumCompressionSize()) == false)
+            return false;
+        if (other.getApiKeySource() == null ^ this.getApiKeySource() == null)
+            return false;
+        if (other.getApiKeySource() != null && other.getApiKeySource().equals(this.getApiKeySource()) == false)
+            return false;
         if (other.getEndpointConfiguration() == null ^ this.getEndpointConfiguration() == null)
             return false;
         if (other.getEndpointConfiguration() != null && other.getEndpointConfiguration().equals(this.getEndpointConfiguration()) == false)
+            return false;
+        if (other.getPolicy() == null ^ this.getPolicy() == null)
+            return false;
+        if (other.getPolicy() != null && other.getPolicy().equals(this.getPolicy()) == false)
             return false;
         return true;
     }
@@ -415,7 +656,10 @@ public class CreateRestApiRequest extends com.amazonaws.AmazonWebServiceRequest 
         hashCode = prime * hashCode + ((getVersion() == null) ? 0 : getVersion().hashCode());
         hashCode = prime * hashCode + ((getCloneFrom() == null) ? 0 : getCloneFrom().hashCode());
         hashCode = prime * hashCode + ((getBinaryMediaTypes() == null) ? 0 : getBinaryMediaTypes().hashCode());
+        hashCode = prime * hashCode + ((getMinimumCompressionSize() == null) ? 0 : getMinimumCompressionSize().hashCode());
+        hashCode = prime * hashCode + ((getApiKeySource() == null) ? 0 : getApiKeySource().hashCode());
         hashCode = prime * hashCode + ((getEndpointConfiguration() == null) ? 0 : getEndpointConfiguration().hashCode());
+        hashCode = prime * hashCode + ((getPolicy() == null) ? 0 : getPolicy().hashCode());
         return hashCode;
     }
 

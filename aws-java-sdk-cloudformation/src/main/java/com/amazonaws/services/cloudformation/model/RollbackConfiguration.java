@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -23,21 +23,9 @@ import javax.annotation.Generated;
  * <p>
  * Rollback triggers enable you to have AWS CloudFormation monitor the state of your application during stack creation
  * and updating, and to roll back that operation if the application breaches the threshold of any of the alarms you've
- * specified. For each rollback trigger you create, you specify the Cloudwatch alarm that CloudFormation should monitor.
- * CloudFormation monitors the specified alarms during the stack create or update operation, and for the specified
- * amount of time after all resources have been deployed. If any of the alarms goes to ALERT state during the stack
- * operation or the monitoring period, CloudFormation rolls back the entire stack operation. If the monitoring period
- * expires without any alarms going to ALERT state, CloudFormation proceeds to dispose of old resources as usual.
- * </p>
- * <p>
- * By default, CloudFormation only rolls back stack operations if an alarm goes to ALERT state, not INSUFFICIENT_DATA
- * state. To have CloudFormation roll back the stack operation if an alarm goes to INSUFFICIENT_DATA state as well, edit
- * the CloudWatch alarm to treat missing data as <code>breaching</code>. For more information, see <a
- * href="http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">Configuring How
- * CloudWatch Alarms Treats Missing Data</a>.
- * </p>
- * <p>
- * AWS CloudFormation does not monitor rollback triggers when it rolls back a stack during an update operation.
+ * specified. For more information, see <a
+ * href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-rollback-triggers.html">Monitor and
+ * Roll Back Stack Operations</a>.
  * </p>
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/cloudformation-2010-05-15/RollbackConfiguration"
@@ -58,44 +46,41 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      * <ul>
      * <li>
      * <p>
-     * If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified for this
-     * stack, if any.
+     * To use the rollback triggers previously specified for this stack, if any, don't specify this parameter.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify any rollback triggers using this parameter, you must specify all the triggers that you want used
-     * for this stack, even triggers you've specifed before (for example, when creating the stack or during a previous
-     * stack update). Any triggers that you don't include in the updated list of triggers are no longer applied to the
-     * stack.
+     * To specify new or updated rollback triggers, you must specify <i>all</i> the triggers that you want used for this
+     * stack, even triggers you've specifed before (for example, when creating the stack or during a previous stack
+     * update). Any triggers that you don't include in the updated list of triggers are no longer applied to the stack.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify an empty list, AWS CloudFormation removes all currently specified triggers.
+     * To remove all currently specified triggers, specify an empty list for this parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
-     * If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back.
+     * If a specified trigger is missing, the entire stack operation fails and is rolled back.
      * </p>
      */
     private com.amazonaws.internal.SdkInternalList<RollbackTrigger> rollbackTriggers;
     /**
      * <p>
      * The amount of time, in minutes, during which CloudFormation should monitor all the rollback triggers after the
-     * stack creation or update operation deploys all necessary resources. If any of the alarms goes to ALERT state
-     * during the stack operation or this monitoring period, CloudFormation rolls back the entire stack operation. Then,
-     * for update operations, if the monitoring period expires without any alarms going to ALERT state CloudFormation
-     * proceeds to dispose of old resources as usual.
+     * stack creation or update operation deploys all necessary resources.
+     * </p>
+     * <p>
+     * The default is 0 minutes.
      * </p>
      * <p>
      * If you specify a monitoring period but do not specify any rollback triggers, CloudFormation still waits the
-     * specified period of time before cleaning up old resources for update operations. You can use this monitoring
+     * specified period of time before cleaning up old resources after update operations. You can use this monitoring
      * period to perform any manual stack validation desired, and manually cancel the stack creation or update (using <a
-     * href
-     * ="http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html">CancelUpdateStack
-     * </a>, for example) as necessary.
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html">
+     * CancelUpdateStack</a>, for example) as necessary.
      * </p>
      * <p>
      * If you specify 0 for this parameter, CloudFormation still monitors the specified rollback triggers during stack
@@ -117,26 +102,24 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      * <ul>
      * <li>
      * <p>
-     * If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified for this
-     * stack, if any.
+     * To use the rollback triggers previously specified for this stack, if any, don't specify this parameter.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify any rollback triggers using this parameter, you must specify all the triggers that you want used
-     * for this stack, even triggers you've specifed before (for example, when creating the stack or during a previous
-     * stack update). Any triggers that you don't include in the updated list of triggers are no longer applied to the
-     * stack.
+     * To specify new or updated rollback triggers, you must specify <i>all</i> the triggers that you want used for this
+     * stack, even triggers you've specifed before (for example, when creating the stack or during a previous stack
+     * update). Any triggers that you don't include in the updated list of triggers are no longer applied to the stack.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify an empty list, AWS CloudFormation removes all currently specified triggers.
+     * To remove all currently specified triggers, specify an empty list for this parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
-     * If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back.
+     * If a specified trigger is missing, the entire stack operation fails and is rolled back.
      * </p>
      * 
      * @return The triggers to monitor during stack creation or update actions. </p>
@@ -149,26 +132,25 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      *         <ul>
      *         <li>
      *         <p>
-     *         If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified
-     *         for this stack, if any.
+     *         To use the rollback triggers previously specified for this stack, if any, don't specify this parameter.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         If you specify any rollback triggers using this parameter, you must specify all the triggers that you
-     *         want used for this stack, even triggers you've specifed before (for example, when creating the stack or
-     *         during a previous stack update). Any triggers that you don't include in the updated list of triggers are
-     *         no longer applied to the stack.
+     *         To specify new or updated rollback triggers, you must specify <i>all</i> the triggers that you want used
+     *         for this stack, even triggers you've specifed before (for example, when creating the stack or during a
+     *         previous stack update). Any triggers that you don't include in the updated list of triggers are no longer
+     *         applied to the stack.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         If you specify an empty list, AWS CloudFormation removes all currently specified triggers.
+     *         To remove all currently specified triggers, specify an empty list for this parameter.
      *         </p>
      *         </li>
      *         </ul>
      *         <p>
-     *         If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back.
+     *         If a specified trigger is missing, the entire stack operation fails and is rolled back.
      */
 
     public java.util.List<RollbackTrigger> getRollbackTriggers() {
@@ -190,26 +172,24 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      * <ul>
      * <li>
      * <p>
-     * If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified for this
-     * stack, if any.
+     * To use the rollback triggers previously specified for this stack, if any, don't specify this parameter.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify any rollback triggers using this parameter, you must specify all the triggers that you want used
-     * for this stack, even triggers you've specifed before (for example, when creating the stack or during a previous
-     * stack update). Any triggers that you don't include in the updated list of triggers are no longer applied to the
-     * stack.
+     * To specify new or updated rollback triggers, you must specify <i>all</i> the triggers that you want used for this
+     * stack, even triggers you've specifed before (for example, when creating the stack or during a previous stack
+     * update). Any triggers that you don't include in the updated list of triggers are no longer applied to the stack.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify an empty list, AWS CloudFormation removes all currently specified triggers.
+     * To remove all currently specified triggers, specify an empty list for this parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
-     * If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back.
+     * If a specified trigger is missing, the entire stack operation fails and is rolled back.
      * </p>
      * 
      * @param rollbackTriggers
@@ -223,26 +203,25 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      *        <ul>
      *        <li>
      *        <p>
-     *        If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified
-     *        for this stack, if any.
+     *        To use the rollback triggers previously specified for this stack, if any, don't specify this parameter.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        If you specify any rollback triggers using this parameter, you must specify all the triggers that you want
-     *        used for this stack, even triggers you've specifed before (for example, when creating the stack or during
-     *        a previous stack update). Any triggers that you don't include in the updated list of triggers are no
-     *        longer applied to the stack.
+     *        To specify new or updated rollback triggers, you must specify <i>all</i> the triggers that you want used
+     *        for this stack, even triggers you've specifed before (for example, when creating the stack or during a
+     *        previous stack update). Any triggers that you don't include in the updated list of triggers are no longer
+     *        applied to the stack.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        If you specify an empty list, AWS CloudFormation removes all currently specified triggers.
+     *        To remove all currently specified triggers, specify an empty list for this parameter.
      *        </p>
      *        </li>
      *        </ul>
      *        <p>
-     *        If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back.
+     *        If a specified trigger is missing, the entire stack operation fails and is rolled back.
      */
 
     public void setRollbackTriggers(java.util.Collection<RollbackTrigger> rollbackTriggers) {
@@ -266,26 +245,24 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      * <ul>
      * <li>
      * <p>
-     * If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified for this
-     * stack, if any.
+     * To use the rollback triggers previously specified for this stack, if any, don't specify this parameter.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify any rollback triggers using this parameter, you must specify all the triggers that you want used
-     * for this stack, even triggers you've specifed before (for example, when creating the stack or during a previous
-     * stack update). Any triggers that you don't include in the updated list of triggers are no longer applied to the
-     * stack.
+     * To specify new or updated rollback triggers, you must specify <i>all</i> the triggers that you want used for this
+     * stack, even triggers you've specifed before (for example, when creating the stack or during a previous stack
+     * update). Any triggers that you don't include in the updated list of triggers are no longer applied to the stack.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify an empty list, AWS CloudFormation removes all currently specified triggers.
+     * To remove all currently specified triggers, specify an empty list for this parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
-     * If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back.
+     * If a specified trigger is missing, the entire stack operation fails and is rolled back.
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
@@ -304,26 +281,25 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      *        <ul>
      *        <li>
      *        <p>
-     *        If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified
-     *        for this stack, if any.
+     *        To use the rollback triggers previously specified for this stack, if any, don't specify this parameter.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        If you specify any rollback triggers using this parameter, you must specify all the triggers that you want
-     *        used for this stack, even triggers you've specifed before (for example, when creating the stack or during
-     *        a previous stack update). Any triggers that you don't include in the updated list of triggers are no
-     *        longer applied to the stack.
+     *        To specify new or updated rollback triggers, you must specify <i>all</i> the triggers that you want used
+     *        for this stack, even triggers you've specifed before (for example, when creating the stack or during a
+     *        previous stack update). Any triggers that you don't include in the updated list of triggers are no longer
+     *        applied to the stack.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        If you specify an empty list, AWS CloudFormation removes all currently specified triggers.
+     *        To remove all currently specified triggers, specify an empty list for this parameter.
      *        </p>
      *        </li>
      *        </ul>
      *        <p>
-     *        If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back.
+     *        If a specified trigger is missing, the entire stack operation fails and is rolled back.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -349,26 +325,24 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      * <ul>
      * <li>
      * <p>
-     * If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified for this
-     * stack, if any.
+     * To use the rollback triggers previously specified for this stack, if any, don't specify this parameter.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify any rollback triggers using this parameter, you must specify all the triggers that you want used
-     * for this stack, even triggers you've specifed before (for example, when creating the stack or during a previous
-     * stack update). Any triggers that you don't include in the updated list of triggers are no longer applied to the
-     * stack.
+     * To specify new or updated rollback triggers, you must specify <i>all</i> the triggers that you want used for this
+     * stack, even triggers you've specifed before (for example, when creating the stack or during a previous stack
+     * update). Any triggers that you don't include in the updated list of triggers are no longer applied to the stack.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If you specify an empty list, AWS CloudFormation removes all currently specified triggers.
+     * To remove all currently specified triggers, specify an empty list for this parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
-     * If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back.
+     * If a specified trigger is missing, the entire stack operation fails and is rolled back.
      * </p>
      * 
      * @param rollbackTriggers
@@ -382,26 +356,25 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      *        <ul>
      *        <li>
      *        <p>
-     *        If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified
-     *        for this stack, if any.
+     *        To use the rollback triggers previously specified for this stack, if any, don't specify this parameter.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        If you specify any rollback triggers using this parameter, you must specify all the triggers that you want
-     *        used for this stack, even triggers you've specifed before (for example, when creating the stack or during
-     *        a previous stack update). Any triggers that you don't include in the updated list of triggers are no
-     *        longer applied to the stack.
+     *        To specify new or updated rollback triggers, you must specify <i>all</i> the triggers that you want used
+     *        for this stack, even triggers you've specifed before (for example, when creating the stack or during a
+     *        previous stack update). Any triggers that you don't include in the updated list of triggers are no longer
+     *        applied to the stack.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        If you specify an empty list, AWS CloudFormation removes all currently specified triggers.
+     *        To remove all currently specified triggers, specify an empty list for this parameter.
      *        </p>
      *        </li>
      *        </ul>
      *        <p>
-     *        If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back.
+     *        If a specified trigger is missing, the entire stack operation fails and is rolled back.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -413,18 +386,17 @@ public class RollbackConfiguration implements Serializable, Cloneable {
     /**
      * <p>
      * The amount of time, in minutes, during which CloudFormation should monitor all the rollback triggers after the
-     * stack creation or update operation deploys all necessary resources. If any of the alarms goes to ALERT state
-     * during the stack operation or this monitoring period, CloudFormation rolls back the entire stack operation. Then,
-     * for update operations, if the monitoring period expires without any alarms going to ALERT state CloudFormation
-     * proceeds to dispose of old resources as usual.
+     * stack creation or update operation deploys all necessary resources.
+     * </p>
+     * <p>
+     * The default is 0 minutes.
      * </p>
      * <p>
      * If you specify a monitoring period but do not specify any rollback triggers, CloudFormation still waits the
-     * specified period of time before cleaning up old resources for update operations. You can use this monitoring
+     * specified period of time before cleaning up old resources after update operations. You can use this monitoring
      * period to perform any manual stack validation desired, and manually cancel the stack creation or update (using <a
-     * href
-     * ="http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html">CancelUpdateStack
-     * </a>, for example) as necessary.
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html">
+     * CancelUpdateStack</a>, for example) as necessary.
      * </p>
      * <p>
      * If you specify 0 for this parameter, CloudFormation still monitors the specified rollback triggers during stack
@@ -434,16 +406,16 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      * 
      * @param monitoringTimeInMinutes
      *        The amount of time, in minutes, during which CloudFormation should monitor all the rollback triggers after
-     *        the stack creation or update operation deploys all necessary resources. If any of the alarms goes to ALERT
-     *        state during the stack operation or this monitoring period, CloudFormation rolls back the entire stack
-     *        operation. Then, for update operations, if the monitoring period expires without any alarms going to ALERT
-     *        state CloudFormation proceeds to dispose of old resources as usual.</p>
+     *        the stack creation or update operation deploys all necessary resources.</p>
+     *        <p>
+     *        The default is 0 minutes.
+     *        </p>
      *        <p>
      *        If you specify a monitoring period but do not specify any rollback triggers, CloudFormation still waits
-     *        the specified period of time before cleaning up old resources for update operations. You can use this
+     *        the specified period of time before cleaning up old resources after update operations. You can use this
      *        monitoring period to perform any manual stack validation desired, and manually cancel the stack creation
      *        or update (using <a
-     *        href="http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html"
+     *        href="https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html"
      *        >CancelUpdateStack</a>, for example) as necessary.
      *        </p>
      *        <p>
@@ -459,18 +431,17 @@ public class RollbackConfiguration implements Serializable, Cloneable {
     /**
      * <p>
      * The amount of time, in minutes, during which CloudFormation should monitor all the rollback triggers after the
-     * stack creation or update operation deploys all necessary resources. If any of the alarms goes to ALERT state
-     * during the stack operation or this monitoring period, CloudFormation rolls back the entire stack operation. Then,
-     * for update operations, if the monitoring period expires without any alarms going to ALERT state CloudFormation
-     * proceeds to dispose of old resources as usual.
+     * stack creation or update operation deploys all necessary resources.
+     * </p>
+     * <p>
+     * The default is 0 minutes.
      * </p>
      * <p>
      * If you specify a monitoring period but do not specify any rollback triggers, CloudFormation still waits the
-     * specified period of time before cleaning up old resources for update operations. You can use this monitoring
+     * specified period of time before cleaning up old resources after update operations. You can use this monitoring
      * period to perform any manual stack validation desired, and manually cancel the stack creation or update (using <a
-     * href
-     * ="http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html">CancelUpdateStack
-     * </a>, for example) as necessary.
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html">
+     * CancelUpdateStack</a>, for example) as necessary.
      * </p>
      * <p>
      * If you specify 0 for this parameter, CloudFormation still monitors the specified rollback triggers during stack
@@ -479,16 +450,16 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      * </p>
      * 
      * @return The amount of time, in minutes, during which CloudFormation should monitor all the rollback triggers
-     *         after the stack creation or update operation deploys all necessary resources. If any of the alarms goes
-     *         to ALERT state during the stack operation or this monitoring period, CloudFormation rolls back the entire
-     *         stack operation. Then, for update operations, if the monitoring period expires without any alarms going
-     *         to ALERT state CloudFormation proceeds to dispose of old resources as usual.</p>
+     *         after the stack creation or update operation deploys all necessary resources.</p>
+     *         <p>
+     *         The default is 0 minutes.
+     *         </p>
      *         <p>
      *         If you specify a monitoring period but do not specify any rollback triggers, CloudFormation still waits
-     *         the specified period of time before cleaning up old resources for update operations. You can use this
+     *         the specified period of time before cleaning up old resources after update operations. You can use this
      *         monitoring period to perform any manual stack validation desired, and manually cancel the stack creation
      *         or update (using <a
-     *         href="http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html"
+     *         href="https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html"
      *         >CancelUpdateStack</a>, for example) as necessary.
      *         </p>
      *         <p>
@@ -504,18 +475,17 @@ public class RollbackConfiguration implements Serializable, Cloneable {
     /**
      * <p>
      * The amount of time, in minutes, during which CloudFormation should monitor all the rollback triggers after the
-     * stack creation or update operation deploys all necessary resources. If any of the alarms goes to ALERT state
-     * during the stack operation or this monitoring period, CloudFormation rolls back the entire stack operation. Then,
-     * for update operations, if the monitoring period expires without any alarms going to ALERT state CloudFormation
-     * proceeds to dispose of old resources as usual.
+     * stack creation or update operation deploys all necessary resources.
+     * </p>
+     * <p>
+     * The default is 0 minutes.
      * </p>
      * <p>
      * If you specify a monitoring period but do not specify any rollback triggers, CloudFormation still waits the
-     * specified period of time before cleaning up old resources for update operations. You can use this monitoring
+     * specified period of time before cleaning up old resources after update operations. You can use this monitoring
      * period to perform any manual stack validation desired, and manually cancel the stack creation or update (using <a
-     * href
-     * ="http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html">CancelUpdateStack
-     * </a>, for example) as necessary.
+     * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html">
+     * CancelUpdateStack</a>, for example) as necessary.
      * </p>
      * <p>
      * If you specify 0 for this parameter, CloudFormation still monitors the specified rollback triggers during stack
@@ -525,16 +495,16 @@ public class RollbackConfiguration implements Serializable, Cloneable {
      * 
      * @param monitoringTimeInMinutes
      *        The amount of time, in minutes, during which CloudFormation should monitor all the rollback triggers after
-     *        the stack creation or update operation deploys all necessary resources. If any of the alarms goes to ALERT
-     *        state during the stack operation or this monitoring period, CloudFormation rolls back the entire stack
-     *        operation. Then, for update operations, if the monitoring period expires without any alarms going to ALERT
-     *        state CloudFormation proceeds to dispose of old resources as usual.</p>
+     *        the stack creation or update operation deploys all necessary resources.</p>
+     *        <p>
+     *        The default is 0 minutes.
+     *        </p>
      *        <p>
      *        If you specify a monitoring period but do not specify any rollback triggers, CloudFormation still waits
-     *        the specified period of time before cleaning up old resources for update operations. You can use this
+     *        the specified period of time before cleaning up old resources after update operations. You can use this
      *        monitoring period to perform any manual stack validation desired, and manually cancel the stack creation
      *        or update (using <a
-     *        href="http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html"
+     *        href="https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CancelUpdateStack.html"
      *        >CancelUpdateStack</a>, for example) as necessary.
      *        </p>
      *        <p>
@@ -550,7 +520,8 @@ public class RollbackConfiguration implements Serializable, Cloneable {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

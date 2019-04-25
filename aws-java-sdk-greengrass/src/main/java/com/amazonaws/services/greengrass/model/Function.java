@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,7 +18,7 @@ import com.amazonaws.protocol.StructuredPojo;
 import com.amazonaws.protocol.ProtocolMarshaller;
 
 /**
- * Information on function
+ * Information about a Lambda function.
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/Function" target="_top">AWS API
  *      Documentation</a>
@@ -26,18 +26,21 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class Function implements Serializable, Cloneable, StructuredPojo {
 
-    /** Arn of the Lambda function. */
+    /** The ARN of the Lambda function. */
     private String functionArn;
-    /** Configuration of the function */
+    /** The configuration of the Lambda function. */
     private FunctionConfiguration functionConfiguration;
-    /** Id of the function in this version. */
+    /**
+     * A descriptive or arbitrary ID for the function. This value must be unique within the function definition version.
+     * Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
+     */
     private String id;
 
     /**
-     * Arn of the Lambda function.
+     * The ARN of the Lambda function.
      * 
      * @param functionArn
-     *        Arn of the Lambda function.
+     *        The ARN of the Lambda function.
      */
 
     public void setFunctionArn(String functionArn) {
@@ -45,9 +48,9 @@ public class Function implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Arn of the Lambda function.
+     * The ARN of the Lambda function.
      * 
-     * @return Arn of the Lambda function.
+     * @return The ARN of the Lambda function.
      */
 
     public String getFunctionArn() {
@@ -55,10 +58,10 @@ public class Function implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Arn of the Lambda function.
+     * The ARN of the Lambda function.
      * 
      * @param functionArn
-     *        Arn of the Lambda function.
+     *        The ARN of the Lambda function.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -68,10 +71,10 @@ public class Function implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Configuration of the function
+     * The configuration of the Lambda function.
      * 
      * @param functionConfiguration
-     *        Configuration of the function
+     *        The configuration of the Lambda function.
      */
 
     public void setFunctionConfiguration(FunctionConfiguration functionConfiguration) {
@@ -79,9 +82,9 @@ public class Function implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Configuration of the function
+     * The configuration of the Lambda function.
      * 
-     * @return Configuration of the function
+     * @return The configuration of the Lambda function.
      */
 
     public FunctionConfiguration getFunctionConfiguration() {
@@ -89,10 +92,10 @@ public class Function implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Configuration of the function
+     * The configuration of the Lambda function.
      * 
      * @param functionConfiguration
-     *        Configuration of the function
+     *        The configuration of the Lambda function.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -102,10 +105,12 @@ public class Function implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Id of the function in this version.
+     * A descriptive or arbitrary ID for the function. This value must be unique within the function definition version.
+     * Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      * 
      * @param id
-     *        Id of the function in this version.
+     *        A descriptive or arbitrary ID for the function. This value must be unique within the function definition
+     *        version. Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      */
 
     public void setId(String id) {
@@ -113,9 +118,11 @@ public class Function implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Id of the function in this version.
+     * A descriptive or arbitrary ID for the function. This value must be unique within the function definition version.
+     * Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      * 
-     * @return Id of the function in this version.
+     * @return A descriptive or arbitrary ID for the function. This value must be unique within the function definition
+     *         version. Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      */
 
     public String getId() {
@@ -123,10 +130,12 @@ public class Function implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Id of the function in this version.
+     * A descriptive or arbitrary ID for the function. This value must be unique within the function definition version.
+     * Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      * 
      * @param id
-     *        Id of the function in this version.
+     *        A descriptive or arbitrary ID for the function. This value must be unique within the function definition
+     *        version. Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -136,7 +145,8 @@ public class Function implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

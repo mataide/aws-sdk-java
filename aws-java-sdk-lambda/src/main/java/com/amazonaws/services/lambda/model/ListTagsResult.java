@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,17 +25,17 @@ public class ListTagsResult extends com.amazonaws.AmazonWebServiceResult<com.ama
 
     /**
      * <p>
-     * The list of tags assigned to the function.
+     * The function's tags.
      * </p>
      */
     private com.amazonaws.internal.SdkInternalMap<String, String> tags;
 
     /**
      * <p>
-     * The list of tags assigned to the function.
+     * The function's tags.
      * </p>
      * 
-     * @return The list of tags assigned to the function.
+     * @return The function's tags.
      */
 
     public java.util.Map<String, String> getTags() {
@@ -47,11 +47,11 @@ public class ListTagsResult extends com.amazonaws.AmazonWebServiceResult<com.ama
 
     /**
      * <p>
-     * The list of tags assigned to the function.
+     * The function's tags.
      * </p>
      * 
      * @param tags
-     *        The list of tags assigned to the function.
+     *        The function's tags.
      */
 
     public void setTags(java.util.Map<String, String> tags) {
@@ -60,11 +60,11 @@ public class ListTagsResult extends com.amazonaws.AmazonWebServiceResult<com.ama
 
     /**
      * <p>
-     * The list of tags assigned to the function.
+     * The function's tags.
      * </p>
      * 
      * @param tags
-     *        The list of tags assigned to the function.
+     *        The function's tags.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -95,7 +95,8 @@ public class ListTagsResult extends com.amazonaws.AmazonWebServiceResult<com.ama
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

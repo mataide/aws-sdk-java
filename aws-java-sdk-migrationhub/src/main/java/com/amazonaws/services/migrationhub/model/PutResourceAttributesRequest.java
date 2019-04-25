@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -42,6 +42,34 @@ public class PutResourceAttributesRequest extends com.amazonaws.AmazonWebService
      * Information about the resource that is being migrated. This data will be used to map the task to a resource in
      * the Application Discovery Service (ADS)'s repository.
      * </p>
+     * <note>
+     * <p>
+     * Takes the object array of <code>ResourceAttribute</code> where the <code>Type</code> field is reserved for the
+     * following values:
+     * <code>IPV4_ADDRESS | IPV6_ADDRESS | MAC_ADDRESS | FQDN | VM_MANAGER_ID | VM_MANAGED_OBJECT_REFERENCE | VM_NAME | VM_PATH | BIOS_ID | MOTHERBOARD_SERIAL_NUMBER</code>
+     * where the identifying value can be a string up to 256 characters.
+     * </p>
+     * </note> <important>
+     * <ul>
+     * <li>
+     * <p>
+     * If any "VM" related value is set for a <code>ResourceAttribute</code> object, it is required that
+     * <code>VM_MANAGER_ID</code>, as a minimum, is always set. If <code>VM_MANAGER_ID</code> is not set, then all "VM"
+     * fields will be discarded and "VM" fields will not be used for matching the migration task to a server in
+     * Application Discovery Service (ADS)'s repository. See the <a href=
+     * "https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#API_PutResourceAttributes_Examples"
+     * >Example</a> section below for a use case of specifying "VM" related values.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * If a server you are trying to match has multiple IP or MAC addresses, you should provide as many as you know in
+     * separate type/value pairs passed to the <code>ResourceAttributeList</code> parameter to maximize the chances of
+     * matching.
+     * </p>
+     * </li>
+     * </ul>
+     * </important>
      */
     private java.util.List<ResourceAttribute> resourceAttributeList;
     /**
@@ -137,9 +165,63 @@ public class PutResourceAttributesRequest extends com.amazonaws.AmazonWebService
      * Information about the resource that is being migrated. This data will be used to map the task to a resource in
      * the Application Discovery Service (ADS)'s repository.
      * </p>
+     * <note>
+     * <p>
+     * Takes the object array of <code>ResourceAttribute</code> where the <code>Type</code> field is reserved for the
+     * following values:
+     * <code>IPV4_ADDRESS | IPV6_ADDRESS | MAC_ADDRESS | FQDN | VM_MANAGER_ID | VM_MANAGED_OBJECT_REFERENCE | VM_NAME | VM_PATH | BIOS_ID | MOTHERBOARD_SERIAL_NUMBER</code>
+     * where the identifying value can be a string up to 256 characters.
+     * </p>
+     * </note> <important>
+     * <ul>
+     * <li>
+     * <p>
+     * If any "VM" related value is set for a <code>ResourceAttribute</code> object, it is required that
+     * <code>VM_MANAGER_ID</code>, as a minimum, is always set. If <code>VM_MANAGER_ID</code> is not set, then all "VM"
+     * fields will be discarded and "VM" fields will not be used for matching the migration task to a server in
+     * Application Discovery Service (ADS)'s repository. See the <a href=
+     * "https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#API_PutResourceAttributes_Examples"
+     * >Example</a> section below for a use case of specifying "VM" related values.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * If a server you are trying to match has multiple IP or MAC addresses, you should provide as many as you know in
+     * separate type/value pairs passed to the <code>ResourceAttributeList</code> parameter to maximize the chances of
+     * matching.
+     * </p>
+     * </li>
+     * </ul>
+     * </important>
      * 
      * @return Information about the resource that is being migrated. This data will be used to map the task to a
-     *         resource in the Application Discovery Service (ADS)'s repository.
+     *         resource in the Application Discovery Service (ADS)'s repository.</p> <note>
+     *         <p>
+     *         Takes the object array of <code>ResourceAttribute</code> where the <code>Type</code> field is reserved
+     *         for the following values:
+     *         <code>IPV4_ADDRESS | IPV6_ADDRESS | MAC_ADDRESS | FQDN | VM_MANAGER_ID | VM_MANAGED_OBJECT_REFERENCE | VM_NAME | VM_PATH | BIOS_ID | MOTHERBOARD_SERIAL_NUMBER</code>
+     *         where the identifying value can be a string up to 256 characters.
+     *         </p>
+     *         </note> <important>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         If any "VM" related value is set for a <code>ResourceAttribute</code> object, it is required that
+     *         <code>VM_MANAGER_ID</code>, as a minimum, is always set. If <code>VM_MANAGER_ID</code> is not set, then
+     *         all "VM" fields will be discarded and "VM" fields will not be used for matching the migration task to a
+     *         server in Application Discovery Service (ADS)'s repository. See the <a href=
+     *         "https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#API_PutResourceAttributes_Examples"
+     *         >Example</a> section below for a use case of specifying "VM" related values.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         If a server you are trying to match has multiple IP or MAC addresses, you should provide as many as you
+     *         know in separate type/value pairs passed to the <code>ResourceAttributeList</code> parameter to maximize
+     *         the chances of matching.
+     *         </p>
+     *         </li>
+     *         </ul>
      */
 
     public java.util.List<ResourceAttribute> getResourceAttributeList() {
@@ -151,10 +233,64 @@ public class PutResourceAttributesRequest extends com.amazonaws.AmazonWebService
      * Information about the resource that is being migrated. This data will be used to map the task to a resource in
      * the Application Discovery Service (ADS)'s repository.
      * </p>
+     * <note>
+     * <p>
+     * Takes the object array of <code>ResourceAttribute</code> where the <code>Type</code> field is reserved for the
+     * following values:
+     * <code>IPV4_ADDRESS | IPV6_ADDRESS | MAC_ADDRESS | FQDN | VM_MANAGER_ID | VM_MANAGED_OBJECT_REFERENCE | VM_NAME | VM_PATH | BIOS_ID | MOTHERBOARD_SERIAL_NUMBER</code>
+     * where the identifying value can be a string up to 256 characters.
+     * </p>
+     * </note> <important>
+     * <ul>
+     * <li>
+     * <p>
+     * If any "VM" related value is set for a <code>ResourceAttribute</code> object, it is required that
+     * <code>VM_MANAGER_ID</code>, as a minimum, is always set. If <code>VM_MANAGER_ID</code> is not set, then all "VM"
+     * fields will be discarded and "VM" fields will not be used for matching the migration task to a server in
+     * Application Discovery Service (ADS)'s repository. See the <a href=
+     * "https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#API_PutResourceAttributes_Examples"
+     * >Example</a> section below for a use case of specifying "VM" related values.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * If a server you are trying to match has multiple IP or MAC addresses, you should provide as many as you know in
+     * separate type/value pairs passed to the <code>ResourceAttributeList</code> parameter to maximize the chances of
+     * matching.
+     * </p>
+     * </li>
+     * </ul>
+     * </important>
      * 
      * @param resourceAttributeList
      *        Information about the resource that is being migrated. This data will be used to map the task to a
-     *        resource in the Application Discovery Service (ADS)'s repository.
+     *        resource in the Application Discovery Service (ADS)'s repository.</p> <note>
+     *        <p>
+     *        Takes the object array of <code>ResourceAttribute</code> where the <code>Type</code> field is reserved for
+     *        the following values:
+     *        <code>IPV4_ADDRESS | IPV6_ADDRESS | MAC_ADDRESS | FQDN | VM_MANAGER_ID | VM_MANAGED_OBJECT_REFERENCE | VM_NAME | VM_PATH | BIOS_ID | MOTHERBOARD_SERIAL_NUMBER</code>
+     *        where the identifying value can be a string up to 256 characters.
+     *        </p>
+     *        </note> <important>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        If any "VM" related value is set for a <code>ResourceAttribute</code> object, it is required that
+     *        <code>VM_MANAGER_ID</code>, as a minimum, is always set. If <code>VM_MANAGER_ID</code> is not set, then
+     *        all "VM" fields will be discarded and "VM" fields will not be used for matching the migration task to a
+     *        server in Application Discovery Service (ADS)'s repository. See the <a href=
+     *        "https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#API_PutResourceAttributes_Examples"
+     *        >Example</a> section below for a use case of specifying "VM" related values.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        If a server you are trying to match has multiple IP or MAC addresses, you should provide as many as you
+     *        know in separate type/value pairs passed to the <code>ResourceAttributeList</code> parameter to maximize
+     *        the chances of matching.
+     *        </p>
+     *        </li>
+     *        </ul>
      */
 
     public void setResourceAttributeList(java.util.Collection<ResourceAttribute> resourceAttributeList) {
@@ -171,6 +307,34 @@ public class PutResourceAttributesRequest extends com.amazonaws.AmazonWebService
      * Information about the resource that is being migrated. This data will be used to map the task to a resource in
      * the Application Discovery Service (ADS)'s repository.
      * </p>
+     * <note>
+     * <p>
+     * Takes the object array of <code>ResourceAttribute</code> where the <code>Type</code> field is reserved for the
+     * following values:
+     * <code>IPV4_ADDRESS | IPV6_ADDRESS | MAC_ADDRESS | FQDN | VM_MANAGER_ID | VM_MANAGED_OBJECT_REFERENCE | VM_NAME | VM_PATH | BIOS_ID | MOTHERBOARD_SERIAL_NUMBER</code>
+     * where the identifying value can be a string up to 256 characters.
+     * </p>
+     * </note> <important>
+     * <ul>
+     * <li>
+     * <p>
+     * If any "VM" related value is set for a <code>ResourceAttribute</code> object, it is required that
+     * <code>VM_MANAGER_ID</code>, as a minimum, is always set. If <code>VM_MANAGER_ID</code> is not set, then all "VM"
+     * fields will be discarded and "VM" fields will not be used for matching the migration task to a server in
+     * Application Discovery Service (ADS)'s repository. See the <a href=
+     * "https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#API_PutResourceAttributes_Examples"
+     * >Example</a> section below for a use case of specifying "VM" related values.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * If a server you are trying to match has multiple IP or MAC addresses, you should provide as many as you know in
+     * separate type/value pairs passed to the <code>ResourceAttributeList</code> parameter to maximize the chances of
+     * matching.
+     * </p>
+     * </li>
+     * </ul>
+     * </important>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setResourceAttributeList(java.util.Collection)} or
@@ -179,7 +343,33 @@ public class PutResourceAttributesRequest extends com.amazonaws.AmazonWebService
      * 
      * @param resourceAttributeList
      *        Information about the resource that is being migrated. This data will be used to map the task to a
-     *        resource in the Application Discovery Service (ADS)'s repository.
+     *        resource in the Application Discovery Service (ADS)'s repository.</p> <note>
+     *        <p>
+     *        Takes the object array of <code>ResourceAttribute</code> where the <code>Type</code> field is reserved for
+     *        the following values:
+     *        <code>IPV4_ADDRESS | IPV6_ADDRESS | MAC_ADDRESS | FQDN | VM_MANAGER_ID | VM_MANAGED_OBJECT_REFERENCE | VM_NAME | VM_PATH | BIOS_ID | MOTHERBOARD_SERIAL_NUMBER</code>
+     *        where the identifying value can be a string up to 256 characters.
+     *        </p>
+     *        </note> <important>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        If any "VM" related value is set for a <code>ResourceAttribute</code> object, it is required that
+     *        <code>VM_MANAGER_ID</code>, as a minimum, is always set. If <code>VM_MANAGER_ID</code> is not set, then
+     *        all "VM" fields will be discarded and "VM" fields will not be used for matching the migration task to a
+     *        server in Application Discovery Service (ADS)'s repository. See the <a href=
+     *        "https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#API_PutResourceAttributes_Examples"
+     *        >Example</a> section below for a use case of specifying "VM" related values.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        If a server you are trying to match has multiple IP or MAC addresses, you should provide as many as you
+     *        know in separate type/value pairs passed to the <code>ResourceAttributeList</code> parameter to maximize
+     *        the chances of matching.
+     *        </p>
+     *        </li>
+     *        </ul>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -198,10 +388,64 @@ public class PutResourceAttributesRequest extends com.amazonaws.AmazonWebService
      * Information about the resource that is being migrated. This data will be used to map the task to a resource in
      * the Application Discovery Service (ADS)'s repository.
      * </p>
+     * <note>
+     * <p>
+     * Takes the object array of <code>ResourceAttribute</code> where the <code>Type</code> field is reserved for the
+     * following values:
+     * <code>IPV4_ADDRESS | IPV6_ADDRESS | MAC_ADDRESS | FQDN | VM_MANAGER_ID | VM_MANAGED_OBJECT_REFERENCE | VM_NAME | VM_PATH | BIOS_ID | MOTHERBOARD_SERIAL_NUMBER</code>
+     * where the identifying value can be a string up to 256 characters.
+     * </p>
+     * </note> <important>
+     * <ul>
+     * <li>
+     * <p>
+     * If any "VM" related value is set for a <code>ResourceAttribute</code> object, it is required that
+     * <code>VM_MANAGER_ID</code>, as a minimum, is always set. If <code>VM_MANAGER_ID</code> is not set, then all "VM"
+     * fields will be discarded and "VM" fields will not be used for matching the migration task to a server in
+     * Application Discovery Service (ADS)'s repository. See the <a href=
+     * "https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#API_PutResourceAttributes_Examples"
+     * >Example</a> section below for a use case of specifying "VM" related values.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * If a server you are trying to match has multiple IP or MAC addresses, you should provide as many as you know in
+     * separate type/value pairs passed to the <code>ResourceAttributeList</code> parameter to maximize the chances of
+     * matching.
+     * </p>
+     * </li>
+     * </ul>
+     * </important>
      * 
      * @param resourceAttributeList
      *        Information about the resource that is being migrated. This data will be used to map the task to a
-     *        resource in the Application Discovery Service (ADS)'s repository.
+     *        resource in the Application Discovery Service (ADS)'s repository.</p> <note>
+     *        <p>
+     *        Takes the object array of <code>ResourceAttribute</code> where the <code>Type</code> field is reserved for
+     *        the following values:
+     *        <code>IPV4_ADDRESS | IPV6_ADDRESS | MAC_ADDRESS | FQDN | VM_MANAGER_ID | VM_MANAGED_OBJECT_REFERENCE | VM_NAME | VM_PATH | BIOS_ID | MOTHERBOARD_SERIAL_NUMBER</code>
+     *        where the identifying value can be a string up to 256 characters.
+     *        </p>
+     *        </note> <important>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        If any "VM" related value is set for a <code>ResourceAttribute</code> object, it is required that
+     *        <code>VM_MANAGER_ID</code>, as a minimum, is always set. If <code>VM_MANAGER_ID</code> is not set, then
+     *        all "VM" fields will be discarded and "VM" fields will not be used for matching the migration task to a
+     *        server in Application Discovery Service (ADS)'s repository. See the <a href=
+     *        "https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#API_PutResourceAttributes_Examples"
+     *        >Example</a> section below for a use case of specifying "VM" related values.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        If a server you are trying to match has multiple IP or MAC addresses, you should provide as many as you
+     *        know in separate type/value pairs passed to the <code>ResourceAttributeList</code> parameter to maximize
+     *        the chances of matching.
+     *        </p>
+     *        </li>
+     *        </ul>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -271,7 +515,8 @@ public class PutResourceAttributesRequest extends com.amazonaws.AmazonWebService
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

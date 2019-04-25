@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,8 @@ import com.amazonaws.protocol.json.*;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.annotation.ThreadSafe;
 import com.amazonaws.client.AwsSyncClientParams;
+import com.amazonaws.client.builder.AdvancedConfig;
+
 import com.amazonaws.services.route53domains.AmazonRoute53DomainsClientBuilder;
 
 import com.amazonaws.AmazonServiceException;
@@ -55,6 +57,7 @@ import com.amazonaws.services.route53domains.model.transform.*;
 @ThreadSafe
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implements AmazonRoute53Domains {
+
     /** Provider for AWS credentials. */
     private final AWSCredentialsProvider awsCredentialsProvider;
 
@@ -65,6 +68,8 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
 
     /** Client configuration factory providing ClientConfigurations tailored to this client */
     protected static final ClientConfigurationFactory configFactory = new ClientConfigurationFactory();
+
+    private final AdvancedConfig advancedConfig;
 
     private static final com.amazonaws.protocol.json.SdkJsonProtocolFactory protocolFactory = new com.amazonaws.protocol.json.SdkJsonProtocolFactory(
             new JsonClientMetadata()
@@ -175,6 +180,7 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
     public AmazonRoute53DomainsClient(AWSCredentials awsCredentials, ClientConfiguration clientConfiguration) {
         super(clientConfiguration);
         this.awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -240,6 +246,7 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
             RequestMetricCollector requestMetricCollector) {
         super(clientConfiguration, requestMetricCollector);
         this.awsCredentialsProvider = awsCredentialsProvider;
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -258,8 +265,23 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
      *        Object providing client parameters.
      */
     AmazonRoute53DomainsClient(AwsSyncClientParams clientParams) {
+        this(clientParams, false);
+    }
+
+    /**
+     * Constructs a new client to invoke service methods on Amazon Route 53 Domains using the specified parameters.
+     *
+     * <p>
+     * All service calls made using this new client object are blocking, and will not return until the service call
+     * completes.
+     *
+     * @param clientParams
+     *        Object providing client parameters.
+     */
+    AmazonRoute53DomainsClient(AwsSyncClientParams clientParams, boolean endpointDiscoveryEnabled) {
         super(clientParams);
         this.awsCredentialsProvider = clientParams.getCredentialsProvider();
+        this.advancedConfig = clientParams.getAdvancedConfig();
         init();
     }
 
@@ -315,6 +337,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(checkDomainAvailabilityRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CheckDomainAvailability");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -372,6 +398,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(checkDomainTransferabilityRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CheckDomainTransferability");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -434,6 +464,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new DeleteTagsForDomainRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(deleteTagsForDomainRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteTagsForDomain");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -488,6 +522,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new DisableDomainAutoRenewRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(disableDomainAutoRenewRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisableDomainAutoRenew");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -555,6 +593,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(disableDomainTransferLockRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisableDomainTransferLock");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -580,9 +622,9 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
      * <p>
      * The period during which you can renew a domain name varies by TLD. For a list of TLDs and their renewal policies,
      * see <a href="http://wiki.gandi.net/en/domains/renew#renewal_restoration_and_deletion_times">
-     * "Renewal, restoration, and deletion times"</a> on the website for our registrar partner, Gandi. Route 53 requires
-     * that you renew before the end of the renewal period that is listed on the Gandi website so we can complete
-     * processing before the deadline.
+     * "Renewal, restoration, and deletion times"</a> on the website for our registrar associate, Gandi. Amazon Route 53
+     * requires that you renew before the end of the renewal period that is listed on the Gandi website so we can
+     * complete processing before the deadline.
      * </p>
      * 
      * @param enableDomainAutoRenewRequest
@@ -620,6 +662,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new EnableDomainAutoRenewRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(enableDomainAutoRenewRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "EnableDomainAutoRenew");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -686,6 +732,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(enableDomainTransferLockRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "EnableDomainTransferLock");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -748,6 +798,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(getContactReachabilityStatusRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetContactReachabilityStatus");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -805,6 +859,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new GetDomainDetailRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getDomainDetailRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetDomainDetail");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -860,6 +918,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new GetDomainSuggestionsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getDomainSuggestionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetDomainSuggestions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -913,6 +975,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new GetOperationDetailRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(getOperationDetailRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetOperationDetail");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -966,6 +1032,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new ListDomainsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listDomainsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListDomains");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1024,6 +1094,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new ListOperationsRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listOperationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListOperations");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1090,6 +1164,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new ListTagsForDomainRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(listTagsForDomainRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ListTagsForDomain");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1108,8 +1186,9 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * This operation registers a domain. Domains are registered by the AWS registrar partner, Gandi. For some top-level
-     * domains (TLDs), this operation requires extra parameters.
+     * This operation registers a domain. Domains are registered either by Amazon Registrar (for .com, .net, and .org
+     * domains) or by our registrar associate, Gandi (for all other domains). For some top-level domains (TLDs), this
+     * operation requires extra parameters.
      * </p>
      * <p>
      * When you register a domain, Amazon Route 53 does the following:
@@ -1130,8 +1209,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
      * </li>
      * <li>
      * <p>
-     * Optionally enables privacy protection, so WHOIS queries return contact information for our registrar partner,
-     * Gandi, instead of the information you entered for registrant, admin, and tech contacts.
+     * Optionally enables privacy protection, so WHOIS queries return contact information either for Amazon Registrar
+     * (for .com, .net, and .org domains) or for our registrar associate, Gandi (for all other TLDs). If you don't
+     * enable privacy protection, WHOIS queries return the information that you entered for the registrant, admin, and
+     * tech contacts.
      * </p>
      * </li>
      * <li>
@@ -1190,6 +1271,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new RegisterDomainRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(registerDomainRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RegisterDomain");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1260,6 +1345,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new RenewDomainRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(renewDomainRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RenewDomain");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1319,6 +1408,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(resendContactReachabilityEmailRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ResendContactReachabilityEmail");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1377,6 +1470,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new RetrieveDomainAuthCodeRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(retrieveDomainAuthCodeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RetrieveDomainAuthCode");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1397,7 +1494,8 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
     /**
      * <p>
      * This operation transfers a domain from another registrar to Amazon Route 53. When the transfer is complete, the
-     * domain is registered with the AWS registrar partner, Gandi.
+     * domain is registered either with Amazon Registrar (for .com, .net, and .org domains) or with our registrar
+     * associate, Gandi (for all other TLDs).
      * </p>
      * <p>
      * For transfer requirements, a detailed procedure, and information about viewing the status of a domain transfer,
@@ -1467,6 +1565,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new TransferDomainRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(transferDomainRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "TransferDomain");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1485,8 +1587,8 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * This operation updates the contact information for a particular domain. Information for at least one contact
-     * (registrant, administrator, or technical) must be supplied for update.
+     * This operation updates the contact information for a particular domain. You must specify information for at least
+     * one contact: registrant, administrator, or technical.
      * </p>
      * <p>
      * If the update is successful, this method returns an operation ID that you can use to track the progress and
@@ -1534,6 +1636,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new UpdateDomainContactRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateDomainContactRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateDomainContact");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1552,16 +1658,15 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
 
     /**
      * <p>
-     * This operation updates the specified domain contact's privacy setting. When the privacy option is enabled,
-     * personal information such as postal or email address is hidden from the results of a public WHOIS query. The
-     * privacy services are provided by the AWS registrar, Gandi. For more information, see the <a
-     * href="http://www.gandi.net/domain/whois/?currency=USD&amp;amp;lang=en">Gandi privacy features</a>.
+     * This operation updates the specified domain contact's privacy setting. When privacy protection is enabled,
+     * contact information such as email address is replaced either with contact information for Amazon Registrar (for
+     * .com, .net, and .org domains) or with contact information for our registrar associate, Gandi.
      * </p>
      * <p>
-     * This operation only affects the privacy of the specified contact type (registrant, administrator, or tech).
-     * Successful acceptance returns an operation ID that you can use with <a>GetOperationDetail</a> to track the
-     * progress and completion of the action. If the request is not completed successfully, the domain registrant will
-     * be notified by email.
+     * This operation affects only the contact information for the specified contact type (registrant, administrator, or
+     * tech). If the request succeeds, Amazon Route 53 returns an operation ID that you can use with
+     * <a>GetOperationDetail</a> to track the progress and completion of the action. If the request doesn't complete
+     * successfully, the domain registrant will be notified by email.
      * </p>
      * 
      * @param updateDomainContactPrivacyRequest
@@ -1605,6 +1710,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(updateDomainContactPrivacyRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateDomainContactPrivacy");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1680,6 +1789,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                         .beforeMarshalling(updateDomainNameserversRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateDomainNameservers");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1742,6 +1855,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new UpdateTagsForDomainRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(updateTagsForDomainRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateTagsForDomain");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1795,6 +1912,10 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
                 request = new ViewBillingRequestProtocolMarshaller(protocolFactory).marshall(super.beforeMarshalling(viewBillingRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "Route 53 Domains");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ViewBilling");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1835,9 +1956,18 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
     private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
             ExecutionContext executionContext) {
 
+        return invoke(request, responseHandler, executionContext, null, null);
+    }
+
+    /**
+     * Normal invoke with authentication. Credentials are required and may be overriden at the request level.
+     **/
+    private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
+            ExecutionContext executionContext, URI cachedEndpoint, URI uriFromEndpointTrait) {
+
         executionContext.setCredentialsProvider(CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, cachedEndpoint, uriFromEndpointTrait);
     }
 
     /**
@@ -1847,7 +1977,7 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
     private <X, Y extends AmazonWebServiceRequest> Response<X> anonymousInvoke(Request<Y> request,
             HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler, ExecutionContext executionContext) {
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, null, null);
     }
 
     /**
@@ -1855,8 +1985,17 @@ public class AmazonRoute53DomainsClient extends AmazonWebServiceClient implement
      * ExecutionContext beforehand.
      **/
     private <X, Y extends AmazonWebServiceRequest> Response<X> doInvoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
-            ExecutionContext executionContext) {
-        request.setEndpoint(endpoint);
+            ExecutionContext executionContext, URI discoveredEndpoint, URI uriFromEndpointTrait) {
+
+        if (discoveredEndpoint != null) {
+            request.setEndpoint(discoveredEndpoint);
+            request.getOriginalRequest().getRequestClientOptions().appendUserAgent("endpoint-discovery");
+        } else if (uriFromEndpointTrait != null) {
+            request.setEndpoint(uriFromEndpointTrait);
+        } else {
+            request.setEndpoint(endpoint);
+        }
+
         request.setTimeOffset(timeOffset);
 
         HttpResponseHandler<AmazonServiceException> errorResponseHandler = protocolFactory.createErrorResponseHandler(new JsonErrorResponseMetadata());

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -32,6 +32,8 @@ public class CreateApplicationRequestMarshaller {
             .marshallLocationName("author").build();
     private static final MarshallingInfo<String> DESCRIPTION_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("description").build();
+    private static final MarshallingInfo<String> HOMEPAGEURL_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("homePageUrl").build();
     private static final MarshallingInfo<List> LABELS_BINDING = MarshallingInfo.builder(MarshallingType.LIST).marshallLocation(MarshallLocation.PAYLOAD)
             .marshallLocationName("labels").build();
     private static final MarshallingInfo<String> LICENSEBODY_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
@@ -46,6 +48,8 @@ public class CreateApplicationRequestMarshaller {
             .marshallLocationName("readmeUrl").build();
     private static final MarshallingInfo<String> SEMANTICVERSION_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("semanticVersion").build();
+    private static final MarshallingInfo<String> SOURCECODEARCHIVEURL_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("sourceCodeArchiveUrl").build();
     private static final MarshallingInfo<String> SOURCECODEURL_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("sourceCodeUrl").build();
     private static final MarshallingInfo<String> SPDXLICENSEID_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
@@ -73,6 +77,7 @@ public class CreateApplicationRequestMarshaller {
         try {
             protocolMarshaller.marshall(createApplicationRequest.getAuthor(), AUTHOR_BINDING);
             protocolMarshaller.marshall(createApplicationRequest.getDescription(), DESCRIPTION_BINDING);
+            protocolMarshaller.marshall(createApplicationRequest.getHomePageUrl(), HOMEPAGEURL_BINDING);
             protocolMarshaller.marshall(createApplicationRequest.getLabels(), LABELS_BINDING);
             protocolMarshaller.marshall(createApplicationRequest.getLicenseBody(), LICENSEBODY_BINDING);
             protocolMarshaller.marshall(createApplicationRequest.getLicenseUrl(), LICENSEURL_BINDING);
@@ -80,6 +85,7 @@ public class CreateApplicationRequestMarshaller {
             protocolMarshaller.marshall(createApplicationRequest.getReadmeBody(), READMEBODY_BINDING);
             protocolMarshaller.marshall(createApplicationRequest.getReadmeUrl(), READMEURL_BINDING);
             protocolMarshaller.marshall(createApplicationRequest.getSemanticVersion(), SEMANTICVERSION_BINDING);
+            protocolMarshaller.marshall(createApplicationRequest.getSourceCodeArchiveUrl(), SOURCECODEARCHIVEURL_BINDING);
             protocolMarshaller.marshall(createApplicationRequest.getSourceCodeUrl(), SOURCECODEURL_BINDING);
             protocolMarshaller.marshall(createApplicationRequest.getSpdxLicenseId(), SPDXLICENSEID_BINDING);
             protocolMarshaller.marshall(createApplicationRequest.getTemplateBody(), TEMPLATEBODY_BINDING);

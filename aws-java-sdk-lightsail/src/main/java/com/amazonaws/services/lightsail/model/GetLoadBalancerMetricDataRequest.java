@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -160,7 +160,7 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
     private String metricName;
     /**
      * <p>
-     * The time period duration for your health data request.
+     * The granularity, in seconds, of the returned data points.
      * </p>
      */
     private Integer period;
@@ -186,6 +186,39 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
      * <p>
      * An array of statistics that you want to request metrics for. Valid values are listed below.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical calculation.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing this
+     * statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close the average
+     * use is to the Minimum and Maximum. This comparison helps you to know when to increase or decrease your resources
+     * as needed.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic can be
+     * useful for determining the total volume of a metric.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this value to
+     * determine low volumes of activity for your application.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this value to
+     * determine high volumes of activity for your application.
+     * </p>
+     * </li>
+     * </ul>
      */
     private java.util.List<String> statistics;
 
@@ -1258,11 +1291,11 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * The time period duration for your health data request.
+     * The granularity, in seconds, of the returned data points.
      * </p>
      * 
      * @param period
-     *        The time period duration for your health data request.
+     *        The granularity, in seconds, of the returned data points.
      */
 
     public void setPeriod(Integer period) {
@@ -1271,10 +1304,10 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * The time period duration for your health data request.
+     * The granularity, in seconds, of the returned data points.
      * </p>
      * 
-     * @return The time period duration for your health data request.
+     * @return The granularity, in seconds, of the returned data points.
      */
 
     public Integer getPeriod() {
@@ -1283,11 +1316,11 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
 
     /**
      * <p>
-     * The time period duration for your health data request.
+     * The granularity, in seconds, of the returned data points.
      * </p>
      * 
      * @param period
-     *        The time period duration for your health data request.
+     *        The granularity, in seconds, of the returned data points.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1439,8 +1472,74 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
      * <p>
      * An array of statistics that you want to request metrics for. Valid values are listed below.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical calculation.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing this
+     * statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close the average
+     * use is to the Minimum and Maximum. This comparison helps you to know when to increase or decrease your resources
+     * as needed.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic can be
+     * useful for determining the total volume of a metric.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this value to
+     * determine low volumes of activity for your application.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this value to
+     * determine high volumes of activity for your application.
+     * </p>
+     * </li>
+     * </ul>
      * 
-     * @return An array of statistics that you want to request metrics for. Valid values are listed below.
+     * @return An array of statistics that you want to request metrics for. Valid values are listed below.</p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical
+     *         calculation.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing
+     *         this statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close
+     *         the average use is to the Minimum and Maximum. This comparison helps you to know when to increase or
+     *         decrease your resources as needed.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic
+     *         can be useful for determining the total volume of a metric.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this
+     *         value to determine low volumes of activity for your application.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this
+     *         value to determine high volumes of activity for your application.
+     *         </p>
+     *         </li>
      * @see MetricStatistic
      */
 
@@ -1452,9 +1551,75 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
      * <p>
      * An array of statistics that you want to request metrics for. Valid values are listed below.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical calculation.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing this
+     * statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close the average
+     * use is to the Minimum and Maximum. This comparison helps you to know when to increase or decrease your resources
+     * as needed.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic can be
+     * useful for determining the total volume of a metric.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this value to
+     * determine low volumes of activity for your application.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this value to
+     * determine high volumes of activity for your application.
+     * </p>
+     * </li>
+     * </ul>
      * 
      * @param statistics
-     *        An array of statistics that you want to request metrics for. Valid values are listed below.
+     *        An array of statistics that you want to request metrics for. Valid values are listed below.</p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical
+     *        calculation.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing
+     *        this statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close
+     *        the average use is to the Minimum and Maximum. This comparison helps you to know when to increase or
+     *        decrease your resources as needed.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic
+     *        can be useful for determining the total volume of a metric.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this
+     *        value to determine low volumes of activity for your application.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this
+     *        value to determine high volumes of activity for your application.
+     *        </p>
+     *        </li>
      * @see MetricStatistic
      */
 
@@ -1471,6 +1636,39 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
      * <p>
      * An array of statistics that you want to request metrics for. Valid values are listed below.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical calculation.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing this
+     * statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close the average
+     * use is to the Minimum and Maximum. This comparison helps you to know when to increase or decrease your resources
+     * as needed.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic can be
+     * useful for determining the total volume of a metric.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this value to
+     * determine low volumes of activity for your application.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this value to
+     * determine high volumes of activity for your application.
+     * </p>
+     * </li>
+     * </ul>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setStatistics(java.util.Collection)} or {@link #withStatistics(java.util.Collection)} if you want to
@@ -1478,7 +1676,40 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
      * </p>
      * 
      * @param statistics
-     *        An array of statistics that you want to request metrics for. Valid values are listed below.
+     *        An array of statistics that you want to request metrics for. Valid values are listed below.</p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical
+     *        calculation.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing
+     *        this statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close
+     *        the average use is to the Minimum and Maximum. This comparison helps you to know when to increase or
+     *        decrease your resources as needed.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic
+     *        can be useful for determining the total volume of a metric.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this
+     *        value to determine low volumes of activity for your application.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this
+     *        value to determine high volumes of activity for your application.
+     *        </p>
+     *        </li>
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see MetricStatistic
      */
@@ -1497,9 +1728,75 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
      * <p>
      * An array of statistics that you want to request metrics for. Valid values are listed below.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical calculation.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing this
+     * statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close the average
+     * use is to the Minimum and Maximum. This comparison helps you to know when to increase or decrease your resources
+     * as needed.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic can be
+     * useful for determining the total volume of a metric.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this value to
+     * determine low volumes of activity for your application.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this value to
+     * determine high volumes of activity for your application.
+     * </p>
+     * </li>
+     * </ul>
      * 
      * @param statistics
-     *        An array of statistics that you want to request metrics for. Valid values are listed below.
+     *        An array of statistics that you want to request metrics for. Valid values are listed below.</p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical
+     *        calculation.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing
+     *        this statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close
+     *        the average use is to the Minimum and Maximum. This comparison helps you to know when to increase or
+     *        decrease your resources as needed.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic
+     *        can be useful for determining the total volume of a metric.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this
+     *        value to determine low volumes of activity for your application.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this
+     *        value to determine high volumes of activity for your application.
+     *        </p>
+     *        </li>
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see MetricStatistic
      */
@@ -1513,9 +1810,75 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
      * <p>
      * An array of statistics that you want to request metrics for. Valid values are listed below.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical calculation.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing this
+     * statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close the average
+     * use is to the Minimum and Maximum. This comparison helps you to know when to increase or decrease your resources
+     * as needed.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic can be
+     * useful for determining the total volume of a metric.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this value to
+     * determine low volumes of activity for your application.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this value to
+     * determine high volumes of activity for your application.
+     * </p>
+     * </li>
+     * </ul>
      * 
      * @param statistics
-     *        An array of statistics that you want to request metrics for. Valid values are listed below.
+     *        An array of statistics that you want to request metrics for. Valid values are listed below.</p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <b> <code>SampleCount</code> </b> - The count (number) of data points used for the statistical
+     *        calculation.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Average</code> </b> - The value of Sum / SampleCount during the specified period. By comparing
+     *        this statistic with the Minimum and Maximum, you can determine the full scope of a metric and how close
+     *        the average use is to the Minimum and Maximum. This comparison helps you to know when to increase or
+     *        decrease your resources as needed.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Sum</code> </b> - All values submitted for the matching metric added together. This statistic
+     *        can be useful for determining the total volume of a metric.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Minimum</code> </b> - The lowest value observed during the specified period. You can use this
+     *        value to determine low volumes of activity for your application.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b> <code>Maximum</code> </b> - The highest value observed during the specified period. You can use this
+     *        value to determine high volumes of activity for your application.
+     *        </p>
+     *        </li>
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see MetricStatistic
      */
@@ -1534,7 +1897,8 @@ public class GetLoadBalancerMetricDataRequest extends com.amazonaws.AmazonWebSer
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

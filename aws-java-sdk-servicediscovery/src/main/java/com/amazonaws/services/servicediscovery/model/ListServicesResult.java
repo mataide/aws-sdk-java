@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -32,10 +32,16 @@ public class ListServicesResult extends com.amazonaws.AmazonWebServiceResult<com
     private java.util.List<ServiceSummary> services;
     /**
      * <p>
-     * If more than <code>MaxResults</code> operations match the specified criteria, the value of <code>NextToken</code>
-     * is the first service in the next group of services that were created by the current AWS account. To get the next
-     * group, specify the value of <code>NextToken</code> from the previous response in the next request.
+     * If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get the next
+     * group of results. Specify the value of <code>NextToken</code> from the previous response in the next request.
      * </p>
+     * <note>
+     * <p>
+     * AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria. It's
+     * possible that no services in the first <code>MaxResults</code> services matched the specified criteria but that
+     * subsequent groups of <code>MaxResults</code> services do contain services that match the criteria.
+     * </p>
+     * </note>
      */
     private String nextToken;
 
@@ -119,16 +125,27 @@ public class ListServicesResult extends com.amazonaws.AmazonWebServiceResult<com
 
     /**
      * <p>
-     * If more than <code>MaxResults</code> operations match the specified criteria, the value of <code>NextToken</code>
-     * is the first service in the next group of services that were created by the current AWS account. To get the next
-     * group, specify the value of <code>NextToken</code> from the previous response in the next request.
+     * If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get the next
+     * group of results. Specify the value of <code>NextToken</code> from the previous response in the next request.
      * </p>
+     * <note>
+     * <p>
+     * AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria. It's
+     * possible that no services in the first <code>MaxResults</code> services matched the specified criteria but that
+     * subsequent groups of <code>MaxResults</code> services do contain services that match the criteria.
+     * </p>
+     * </note>
      * 
      * @param nextToken
-     *        If more than <code>MaxResults</code> operations match the specified criteria, the value of
-     *        <code>NextToken</code> is the first service in the next group of services that were created by the current
-     *        AWS account. To get the next group, specify the value of <code>NextToken</code> from the previous response
-     *        in the next request.
+     *        If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get
+     *        the next group of results. Specify the value of <code>NextToken</code> from the previous response in the
+     *        next request.</p> <note>
+     *        <p>
+     *        AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria.
+     *        It's possible that no services in the first <code>MaxResults</code> services matched the specified
+     *        criteria but that subsequent groups of <code>MaxResults</code> services do contain services that match the
+     *        criteria.
+     *        </p>
      */
 
     public void setNextToken(String nextToken) {
@@ -137,15 +154,26 @@ public class ListServicesResult extends com.amazonaws.AmazonWebServiceResult<com
 
     /**
      * <p>
-     * If more than <code>MaxResults</code> operations match the specified criteria, the value of <code>NextToken</code>
-     * is the first service in the next group of services that were created by the current AWS account. To get the next
-     * group, specify the value of <code>NextToken</code> from the previous response in the next request.
+     * If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get the next
+     * group of results. Specify the value of <code>NextToken</code> from the previous response in the next request.
      * </p>
+     * <note>
+     * <p>
+     * AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria. It's
+     * possible that no services in the first <code>MaxResults</code> services matched the specified criteria but that
+     * subsequent groups of <code>MaxResults</code> services do contain services that match the criteria.
+     * </p>
+     * </note>
      * 
-     * @return If more than <code>MaxResults</code> operations match the specified criteria, the value of
-     *         <code>NextToken</code> is the first service in the next group of services that were created by the
-     *         current AWS account. To get the next group, specify the value of <code>NextToken</code> from the previous
-     *         response in the next request.
+     * @return If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get
+     *         the next group of results. Specify the value of <code>NextToken</code> from the previous response in the
+     *         next request.</p> <note>
+     *         <p>
+     *         AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified
+     *         criteria. It's possible that no services in the first <code>MaxResults</code> services matched the
+     *         specified criteria but that subsequent groups of <code>MaxResults</code> services do contain services
+     *         that match the criteria.
+     *         </p>
      */
 
     public String getNextToken() {
@@ -154,16 +182,27 @@ public class ListServicesResult extends com.amazonaws.AmazonWebServiceResult<com
 
     /**
      * <p>
-     * If more than <code>MaxResults</code> operations match the specified criteria, the value of <code>NextToken</code>
-     * is the first service in the next group of services that were created by the current AWS account. To get the next
-     * group, specify the value of <code>NextToken</code> from the previous response in the next request.
+     * If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get the next
+     * group of results. Specify the value of <code>NextToken</code> from the previous response in the next request.
      * </p>
+     * <note>
+     * <p>
+     * AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria. It's
+     * possible that no services in the first <code>MaxResults</code> services matched the specified criteria but that
+     * subsequent groups of <code>MaxResults</code> services do contain services that match the criteria.
+     * </p>
+     * </note>
      * 
      * @param nextToken
-     *        If more than <code>MaxResults</code> operations match the specified criteria, the value of
-     *        <code>NextToken</code> is the first service in the next group of services that were created by the current
-     *        AWS account. To get the next group, specify the value of <code>NextToken</code> from the previous response
-     *        in the next request.
+     *        If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get
+     *        the next group of results. Specify the value of <code>NextToken</code> from the previous response in the
+     *        next request.</p> <note>
+     *        <p>
+     *        AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria.
+     *        It's possible that no services in the first <code>MaxResults</code> services matched the specified
+     *        criteria but that subsequent groups of <code>MaxResults</code> services do contain services that match the
+     *        criteria.
+     *        </p>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -173,7 +212,8 @@ public class ListServicesResult extends com.amazonaws.AmazonWebServiceResult<com
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

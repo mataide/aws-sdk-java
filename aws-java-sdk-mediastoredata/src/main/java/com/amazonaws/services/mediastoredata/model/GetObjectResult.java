@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,16 +25,7 @@ public class GetObjectResult extends com.amazonaws.AmazonWebServiceResult<com.am
 
     /**
      * <p>
-     * The path to the file outside of the container. The file name can include or omit an extension.
-     * </p>
-     * <p>
-     * Example 1: If the file is stored on a remote server that has been mounted to the workstation on which the REST
-     * API command is being run, the path could be the absolute path <code> \mount\assets\mlaw.avi</code> or the
-     * relative path <code>..\..\mount\assets\movies\premium\mlaw.avi</code>.
-     * </p>
-     * <p>
-     * Example 2: If the file is stored on a remote server that is not mounted, the path could be
-     * <code>https:\\192.0.2.15\movies\premium\mlaw.avi</code>.
+     * The bytes of the object.
      * </p>
      */
     private java.io.InputStream body;
@@ -90,28 +81,11 @@ public class GetObjectResult extends com.amazonaws.AmazonWebServiceResult<com.am
 
     /**
      * <p>
-     * The path to the file outside of the container. The file name can include or omit an extension.
-     * </p>
-     * <p>
-     * Example 1: If the file is stored on a remote server that has been mounted to the workstation on which the REST
-     * API command is being run, the path could be the absolute path <code> \mount\assets\mlaw.avi</code> or the
-     * relative path <code>..\..\mount\assets\movies\premium\mlaw.avi</code>.
-     * </p>
-     * <p>
-     * Example 2: If the file is stored on a remote server that is not mounted, the path could be
-     * <code>https:\\192.0.2.15\movies\premium\mlaw.avi</code>.
+     * The bytes of the object.
      * </p>
      * 
      * @param body
-     *        The path to the file outside of the container. The file name can include or omit an extension. </p>
-     *        <p>
-     *        Example 1: If the file is stored on a remote server that has been mounted to the workstation on which the
-     *        REST API command is being run, the path could be the absolute path <code> \mount\assets\mlaw.avi</code> or
-     *        the relative path <code>..\..\mount\assets\movies\premium\mlaw.avi</code>.
-     *        </p>
-     *        <p>
-     *        Example 2: If the file is stored on a remote server that is not mounted, the path could be
-     *        <code>https:\\192.0.2.15\movies\premium\mlaw.avi</code>.
+     *        The bytes of the object.
      */
 
     public void setBody(java.io.InputStream body) {
@@ -120,27 +94,10 @@ public class GetObjectResult extends com.amazonaws.AmazonWebServiceResult<com.am
 
     /**
      * <p>
-     * The path to the file outside of the container. The file name can include or omit an extension.
-     * </p>
-     * <p>
-     * Example 1: If the file is stored on a remote server that has been mounted to the workstation on which the REST
-     * API command is being run, the path could be the absolute path <code> \mount\assets\mlaw.avi</code> or the
-     * relative path <code>..\..\mount\assets\movies\premium\mlaw.avi</code>.
-     * </p>
-     * <p>
-     * Example 2: If the file is stored on a remote server that is not mounted, the path could be
-     * <code>https:\\192.0.2.15\movies\premium\mlaw.avi</code>.
+     * The bytes of the object.
      * </p>
      * 
-     * @return The path to the file outside of the container. The file name can include or omit an extension. </p>
-     *         <p>
-     *         Example 1: If the file is stored on a remote server that has been mounted to the workstation on which the
-     *         REST API command is being run, the path could be the absolute path <code> \mount\assets\mlaw.avi</code>
-     *         or the relative path <code>..\..\mount\assets\movies\premium\mlaw.avi</code>.
-     *         </p>
-     *         <p>
-     *         Example 2: If the file is stored on a remote server that is not mounted, the path could be
-     *         <code>https:\\192.0.2.15\movies\premium\mlaw.avi</code>.
+     * @return The bytes of the object.
      */
 
     public java.io.InputStream getBody() {
@@ -149,28 +106,11 @@ public class GetObjectResult extends com.amazonaws.AmazonWebServiceResult<com.am
 
     /**
      * <p>
-     * The path to the file outside of the container. The file name can include or omit an extension.
-     * </p>
-     * <p>
-     * Example 1: If the file is stored on a remote server that has been mounted to the workstation on which the REST
-     * API command is being run, the path could be the absolute path <code> \mount\assets\mlaw.avi</code> or the
-     * relative path <code>..\..\mount\assets\movies\premium\mlaw.avi</code>.
-     * </p>
-     * <p>
-     * Example 2: If the file is stored on a remote server that is not mounted, the path could be
-     * <code>https:\\192.0.2.15\movies\premium\mlaw.avi</code>.
+     * The bytes of the object.
      * </p>
      * 
      * @param body
-     *        The path to the file outside of the container. The file name can include or omit an extension. </p>
-     *        <p>
-     *        Example 1: If the file is stored on a remote server that has been mounted to the workstation on which the
-     *        REST API command is being run, the path could be the absolute path <code> \mount\assets\mlaw.avi</code> or
-     *        the relative path <code>..\..\mount\assets\movies\premium\mlaw.avi</code>.
-     *        </p>
-     *        <p>
-     *        Example 2: If the file is stored on a remote server that is not mounted, the path could be
-     *        <code>https:\\192.0.2.15\movies\premium\mlaw.avi</code>.
+     *        The bytes of the object.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -499,7 +439,8 @@ public class GetObjectResult extends com.amazonaws.AmazonWebServiceResult<com.am
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

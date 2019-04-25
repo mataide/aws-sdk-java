@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -112,6 +112,12 @@ public class InstancesCount implements Serializable, Cloneable, StructuredPojo {
      * </p>
      */
     private Integer startFailed;
+    /**
+     * <p>
+     * The number of instances with <code>stop_failed</code> status.
+     * </p>
+     */
+    private Integer stopFailed;
     /**
      * <p>
      * The number of instances with <code>stopped</code> status.
@@ -705,6 +711,46 @@ public class InstancesCount implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
+     * The number of instances with <code>stop_failed</code> status.
+     * </p>
+     * 
+     * @param stopFailed
+     *        The number of instances with <code>stop_failed</code> status.
+     */
+
+    public void setStopFailed(Integer stopFailed) {
+        this.stopFailed = stopFailed;
+    }
+
+    /**
+     * <p>
+     * The number of instances with <code>stop_failed</code> status.
+     * </p>
+     * 
+     * @return The number of instances with <code>stop_failed</code> status.
+     */
+
+    public Integer getStopFailed() {
+        return this.stopFailed;
+    }
+
+    /**
+     * <p>
+     * The number of instances with <code>stop_failed</code> status.
+     * </p>
+     * 
+     * @param stopFailed
+     *        The number of instances with <code>stop_failed</code> status.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public InstancesCount withStopFailed(Integer stopFailed) {
+        setStopFailed(stopFailed);
+        return this;
+    }
+
+    /**
+     * <p>
      * The number of instances with <code>stopped</code> status.
      * </p>
      * 
@@ -904,7 +950,8 @@ public class InstancesCount implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -942,6 +989,8 @@ public class InstancesCount implements Serializable, Cloneable, StructuredPojo {
             sb.append("ShuttingDown: ").append(getShuttingDown()).append(",");
         if (getStartFailed() != null)
             sb.append("StartFailed: ").append(getStartFailed()).append(",");
+        if (getStopFailed() != null)
+            sb.append("StopFailed: ").append(getStopFailed()).append(",");
         if (getStopped() != null)
             sb.append("Stopped: ").append(getStopped()).append(",");
         if (getStopping() != null)
@@ -1022,6 +1071,10 @@ public class InstancesCount implements Serializable, Cloneable, StructuredPojo {
             return false;
         if (other.getStartFailed() != null && other.getStartFailed().equals(this.getStartFailed()) == false)
             return false;
+        if (other.getStopFailed() == null ^ this.getStopFailed() == null)
+            return false;
+        if (other.getStopFailed() != null && other.getStopFailed().equals(this.getStopFailed()) == false)
+            return false;
         if (other.getStopped() == null ^ this.getStopped() == null)
             return false;
         if (other.getStopped() != null && other.getStopped().equals(this.getStopped()) == false)
@@ -1064,6 +1117,7 @@ public class InstancesCount implements Serializable, Cloneable, StructuredPojo {
         hashCode = prime * hashCode + ((getSetupFailed() == null) ? 0 : getSetupFailed().hashCode());
         hashCode = prime * hashCode + ((getShuttingDown() == null) ? 0 : getShuttingDown().hashCode());
         hashCode = prime * hashCode + ((getStartFailed() == null) ? 0 : getStartFailed().hashCode());
+        hashCode = prime * hashCode + ((getStopFailed() == null) ? 0 : getStopFailed().hashCode());
         hashCode = prime * hashCode + ((getStopped() == null) ? 0 : getStopped().hashCode());
         hashCode = prime * hashCode + ((getStopping() == null) ? 0 : getStopping().hashCode());
         hashCode = prime * hashCode + ((getTerminated() == null) ? 0 : getTerminated().hashCode());

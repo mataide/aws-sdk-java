@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,7 +18,7 @@ import com.amazonaws.protocol.StructuredPojo;
 import com.amazonaws.protocol.ProtocolMarshaller;
 
 /**
- * Settings for a PUSH type input
+ * The settings for a PUSH type input.
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/InputDestination" target="_top">AWS API
  *      Documentation</a>
@@ -27,21 +27,23 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 public class InputDestination implements Serializable, Cloneable, StructuredPojo {
 
     /**
-     * system-generated static IP address of endpoint. Remains fixed for the lifetime of the input
+     * The system-generated static IP address of endpoint. It remains fixed for the lifetime of the input.
      */
     private String ip;
-    /** port for input */
+    /** The port number for the input. */
     private String port;
     /**
      * This represents the endpoint that the customer stream will be pushed to.
      */
     private String url;
 
+    private InputDestinationVpc vpc;
+
     /**
-     * system-generated static IP address of endpoint. Remains fixed for the lifetime of the input
+     * The system-generated static IP address of endpoint. It remains fixed for the lifetime of the input.
      * 
      * @param ip
-     *        system-generated static IP address of endpoint. Remains fixed for the lifetime of the input
+     *        The system-generated static IP address of endpoint. It remains fixed for the lifetime of the input.
      */
 
     public void setIp(String ip) {
@@ -49,9 +51,9 @@ public class InputDestination implements Serializable, Cloneable, StructuredPojo
     }
 
     /**
-     * system-generated static IP address of endpoint. Remains fixed for the lifetime of the input
+     * The system-generated static IP address of endpoint. It remains fixed for the lifetime of the input.
      * 
-     * @return system-generated static IP address of endpoint. Remains fixed for the lifetime of the input
+     * @return The system-generated static IP address of endpoint. It remains fixed for the lifetime of the input.
      */
 
     public String getIp() {
@@ -59,10 +61,10 @@ public class InputDestination implements Serializable, Cloneable, StructuredPojo
     }
 
     /**
-     * system-generated static IP address of endpoint. Remains fixed for the lifetime of the input
+     * The system-generated static IP address of endpoint. It remains fixed for the lifetime of the input.
      * 
      * @param ip
-     *        system-generated static IP address of endpoint. Remains fixed for the lifetime of the input
+     *        The system-generated static IP address of endpoint. It remains fixed for the lifetime of the input.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -72,10 +74,10 @@ public class InputDestination implements Serializable, Cloneable, StructuredPojo
     }
 
     /**
-     * port for input
+     * The port number for the input.
      * 
      * @param port
-     *        port for input
+     *        The port number for the input.
      */
 
     public void setPort(String port) {
@@ -83,9 +85,9 @@ public class InputDestination implements Serializable, Cloneable, StructuredPojo
     }
 
     /**
-     * port for input
+     * The port number for the input.
      * 
-     * @return port for input
+     * @return The port number for the input.
      */
 
     public String getPort() {
@@ -93,10 +95,10 @@ public class InputDestination implements Serializable, Cloneable, StructuredPojo
     }
 
     /**
-     * port for input
+     * The port number for the input.
      * 
      * @param port
-     *        port for input
+     *        The port number for the input.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -140,7 +142,34 @@ public class InputDestination implements Serializable, Cloneable, StructuredPojo
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * @param vpc
+     */
+
+    public void setVpc(InputDestinationVpc vpc) {
+        this.vpc = vpc;
+    }
+
+    /**
+     * @return
+     */
+
+    public InputDestinationVpc getVpc() {
+        return this.vpc;
+    }
+
+    /**
+     * @param vpc
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public InputDestination withVpc(InputDestinationVpc vpc) {
+        setVpc(vpc);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -155,7 +184,9 @@ public class InputDestination implements Serializable, Cloneable, StructuredPojo
         if (getPort() != null)
             sb.append("Port: ").append(getPort()).append(",");
         if (getUrl() != null)
-            sb.append("Url: ").append(getUrl());
+            sb.append("Url: ").append(getUrl()).append(",");
+        if (getVpc() != null)
+            sb.append("Vpc: ").append(getVpc());
         sb.append("}");
         return sb.toString();
     }
@@ -182,6 +213,10 @@ public class InputDestination implements Serializable, Cloneable, StructuredPojo
             return false;
         if (other.getUrl() != null && other.getUrl().equals(this.getUrl()) == false)
             return false;
+        if (other.getVpc() == null ^ this.getVpc() == null)
+            return false;
+        if (other.getVpc() != null && other.getVpc().equals(this.getVpc()) == false)
+            return false;
         return true;
     }
 
@@ -193,6 +228,7 @@ public class InputDestination implements Serializable, Cloneable, StructuredPojo
         hashCode = prime * hashCode + ((getIp() == null) ? 0 : getIp().hashCode());
         hashCode = prime * hashCode + ((getPort() == null) ? 0 : getPort().hashCode());
         hashCode = prime * hashCode + ((getUrl() == null) ? 0 : getUrl().hashCode());
+        hashCode = prime * hashCode + ((getVpc() == null) ? 0 : getVpc().hashCode());
         return hashCode;
     }
 

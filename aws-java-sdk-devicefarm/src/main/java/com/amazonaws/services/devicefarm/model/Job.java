@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -76,17 +76,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     * APPIUM_NODE: The Appium Node.js type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     * APPIUM_RUBY: The Appium Ruby type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      * </p>
      * </li>
      * <li>
@@ -262,10 +282,28 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
     private Device device;
     /**
      * <p>
+     * The Amazon Resource Name (ARN) of the instance.
+     * </p>
+     */
+    private String instanceArn;
+    /**
+     * <p>
      * Represents the total (metered or unmetered) minutes used by the job.
      * </p>
      */
     private DeviceMinutes deviceMinutes;
+    /**
+     * <p>
+     * The endpoint for streaming device video.
+     * </p>
+     */
+    private String videoEndpoint;
+    /**
+     * <p>
+     * This value is set to true if video capture is enabled; otherwise, it is set to false.
+     * </p>
+     */
+    private Boolean videoCapture;
 
     /**
      * <p>
@@ -383,17 +421,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     * APPIUM_NODE: The Appium Node.js type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     * APPIUM_RUBY: The Appium Ruby type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      * </p>
      * </li>
      * <li>
@@ -462,17 +520,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     *        APPIUM_NODE: The Appium Node.js type.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     *        APPIUM_RUBY: The Appium Ruby type.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     *        APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      *        </p>
      *        </li>
      *        <li>
@@ -548,17 +626,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     * APPIUM_NODE: The Appium Node.js type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     * APPIUM_RUBY: The Appium Ruby type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      * </p>
      * </li>
      * <li>
@@ -626,17 +724,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      *         </li>
      *         <li>
      *         <p>
-     *         APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     *         APPIUM_NODE: The Appium Node.js type.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     *         APPIUM_RUBY: The Appium Ruby type.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     *         APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      *         </p>
      *         </li>
      *         <li>
@@ -712,17 +830,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     * APPIUM_NODE: The Appium Node.js type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     * APPIUM_RUBY: The Appium Ruby type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      * </p>
      * </li>
      * <li>
@@ -791,17 +929,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     *        APPIUM_NODE: The Appium Node.js type.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     *        APPIUM_RUBY: The Appium Ruby type.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     *        APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      *        </p>
      *        </li>
      *        <li>
@@ -879,17 +1037,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     * APPIUM_NODE: The Appium Node.js type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     * APPIUM_RUBY: The Appium Ruby type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      * </p>
      * </li>
      * <li>
@@ -958,17 +1136,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     *        APPIUM_NODE: The Appium Node.js type.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     *        APPIUM_RUBY: The Appium Ruby type.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     *        APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      *        </p>
      *        </li>
      *        <li>
@@ -1044,17 +1242,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     * APPIUM_NODE: The Appium Node.js type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     * APPIUM_RUBY: The Appium Ruby type.
      * </p>
      * </li>
      * <li>
      * <p>
-     * APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      * </p>
      * </li>
      * <li>
@@ -1123,17 +1341,37 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for Web apps.
+     *        APPIUM_NODE: The Appium Node.js type.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for Web apps.
+     *        APPIUM_RUBY: The Appium Ruby type.
      *        </p>
      *        </li>
      *        <li>
      *        <p>
-     *        APPIUM_WEB_PYTHON: The Appium Python type for Web apps.
+     *        APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_PYTHON: The Appium Python type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_NODE: The Appium Node.js type for web apps.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        APPIUM_WEB_RUBY: The Appium Ruby test type for web apps.
      *        </p>
      *        </li>
      *        <li>
@@ -2453,6 +2691,46 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
+     * The Amazon Resource Name (ARN) of the instance.
+     * </p>
+     * 
+     * @param instanceArn
+     *        The Amazon Resource Name (ARN) of the instance.
+     */
+
+    public void setInstanceArn(String instanceArn) {
+        this.instanceArn = instanceArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the instance.
+     * </p>
+     * 
+     * @return The Amazon Resource Name (ARN) of the instance.
+     */
+
+    public String getInstanceArn() {
+        return this.instanceArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the instance.
+     * </p>
+     * 
+     * @param instanceArn
+     *        The Amazon Resource Name (ARN) of the instance.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Job withInstanceArn(String instanceArn) {
+        setInstanceArn(instanceArn);
+        return this;
+    }
+
+    /**
+     * <p>
      * Represents the total (metered or unmetered) minutes used by the job.
      * </p>
      * 
@@ -2492,7 +2770,100 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The endpoint for streaming device video.
+     * </p>
+     * 
+     * @param videoEndpoint
+     *        The endpoint for streaming device video.
+     */
+
+    public void setVideoEndpoint(String videoEndpoint) {
+        this.videoEndpoint = videoEndpoint;
+    }
+
+    /**
+     * <p>
+     * The endpoint for streaming device video.
+     * </p>
+     * 
+     * @return The endpoint for streaming device video.
+     */
+
+    public String getVideoEndpoint() {
+        return this.videoEndpoint;
+    }
+
+    /**
+     * <p>
+     * The endpoint for streaming device video.
+     * </p>
+     * 
+     * @param videoEndpoint
+     *        The endpoint for streaming device video.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Job withVideoEndpoint(String videoEndpoint) {
+        setVideoEndpoint(videoEndpoint);
+        return this;
+    }
+
+    /**
+     * <p>
+     * This value is set to true if video capture is enabled; otherwise, it is set to false.
+     * </p>
+     * 
+     * @param videoCapture
+     *        This value is set to true if video capture is enabled; otherwise, it is set to false.
+     */
+
+    public void setVideoCapture(Boolean videoCapture) {
+        this.videoCapture = videoCapture;
+    }
+
+    /**
+     * <p>
+     * This value is set to true if video capture is enabled; otherwise, it is set to false.
+     * </p>
+     * 
+     * @return This value is set to true if video capture is enabled; otherwise, it is set to false.
+     */
+
+    public Boolean getVideoCapture() {
+        return this.videoCapture;
+    }
+
+    /**
+     * <p>
+     * This value is set to true if video capture is enabled; otherwise, it is set to false.
+     * </p>
+     * 
+     * @param videoCapture
+     *        This value is set to true if video capture is enabled; otherwise, it is set to false.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public Job withVideoCapture(Boolean videoCapture) {
+        setVideoCapture(videoCapture);
+        return this;
+    }
+
+    /**
+     * <p>
+     * This value is set to true if video capture is enabled; otherwise, it is set to false.
+     * </p>
+     * 
+     * @return This value is set to true if video capture is enabled; otherwise, it is set to false.
+     */
+
+    public Boolean isVideoCapture() {
+        return this.videoCapture;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -2524,8 +2895,14 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
             sb.append("Message: ").append(getMessage()).append(",");
         if (getDevice() != null)
             sb.append("Device: ").append(getDevice()).append(",");
+        if (getInstanceArn() != null)
+            sb.append("InstanceArn: ").append(getInstanceArn()).append(",");
         if (getDeviceMinutes() != null)
-            sb.append("DeviceMinutes: ").append(getDeviceMinutes());
+            sb.append("DeviceMinutes: ").append(getDeviceMinutes()).append(",");
+        if (getVideoEndpoint() != null)
+            sb.append("VideoEndpoint: ").append(getVideoEndpoint()).append(",");
+        if (getVideoCapture() != null)
+            sb.append("VideoCapture: ").append(getVideoCapture());
         sb.append("}");
         return sb.toString();
     }
@@ -2584,9 +2961,21 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
             return false;
         if (other.getDevice() != null && other.getDevice().equals(this.getDevice()) == false)
             return false;
+        if (other.getInstanceArn() == null ^ this.getInstanceArn() == null)
+            return false;
+        if (other.getInstanceArn() != null && other.getInstanceArn().equals(this.getInstanceArn()) == false)
+            return false;
         if (other.getDeviceMinutes() == null ^ this.getDeviceMinutes() == null)
             return false;
         if (other.getDeviceMinutes() != null && other.getDeviceMinutes().equals(this.getDeviceMinutes()) == false)
+            return false;
+        if (other.getVideoEndpoint() == null ^ this.getVideoEndpoint() == null)
+            return false;
+        if (other.getVideoEndpoint() != null && other.getVideoEndpoint().equals(this.getVideoEndpoint()) == false)
+            return false;
+        if (other.getVideoCapture() == null ^ this.getVideoCapture() == null)
+            return false;
+        if (other.getVideoCapture() != null && other.getVideoCapture().equals(this.getVideoCapture()) == false)
             return false;
         return true;
     }
@@ -2607,7 +2996,10 @@ public class Job implements Serializable, Cloneable, StructuredPojo {
         hashCode = prime * hashCode + ((getCounters() == null) ? 0 : getCounters().hashCode());
         hashCode = prime * hashCode + ((getMessage() == null) ? 0 : getMessage().hashCode());
         hashCode = prime * hashCode + ((getDevice() == null) ? 0 : getDevice().hashCode());
+        hashCode = prime * hashCode + ((getInstanceArn() == null) ? 0 : getInstanceArn().hashCode());
         hashCode = prime * hashCode + ((getDeviceMinutes() == null) ? 0 : getDeviceMinutes().hashCode());
+        hashCode = prime * hashCode + ((getVideoEndpoint() == null) ? 0 : getVideoEndpoint().hashCode());
+        hashCode = prime * hashCode + ((getVideoCapture() == null) ? 0 : getVideoCapture().hashCode());
         return hashCode;
     }
 

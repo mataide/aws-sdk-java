@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,8 @@ import com.amazonaws.protocol.json.*;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.annotation.ThreadSafe;
 import com.amazonaws.client.AwsSyncClientParams;
+import com.amazonaws.client.builder.AdvancedConfig;
+
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.waiters.AmazonEC2Waiters;
 
@@ -51,14 +53,44 @@ import com.amazonaws.services.ec2.model.transform.*;
  * <p>
  * <fullname>Amazon Elastic Compute Cloud</fullname>
  * <p>
- * Amazon Elastic Compute Cloud (Amazon EC2) provides resizable computing capacity in the Amazon Web Services (AWS)
- * cloud. Using Amazon EC2 eliminates your need to invest in hardware up front, so you can develop and deploy
- * applications faster.
+ * Amazon Elastic Compute Cloud (Amazon EC2) provides secure and resizable computing capacity in the AWS cloud. Using
+ * Amazon EC2 eliminates the need to invest in hardware up front, so you can develop and deploy applications faster.
  * </p>
+ * <p>
+ * To learn more about Amazon EC2, Amazon EBS, and Amazon VPC, see the following resources:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href="http://aws.amazon.com/ec2">Amazon EC2 product page</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href="http://aws.amazon.com/documentation/ec2">Amazon EC2 documentation</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href="http://aws.amazon.com/ebs">Amazon EBS product page</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href="http://aws.amazon.com/vpc">Amazon VPC product page</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href="http://aws.amazon.com/documentation/vpc">Amazon VPC documentation</a>
+ * </p>
+ * </li>
+ * </ul>
  */
 @ThreadSafe
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2 {
+
     /** Provider for AWS credentials. */
     private final AWSCredentialsProvider awsCredentialsProvider;
 
@@ -71,6 +103,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /** Client configuration factory providing ClientConfigurations tailored to this client */
     protected static final ClientConfigurationFactory configFactory = new ClientConfigurationFactory();
+
+    private final AdvancedConfig advancedConfig;
 
     /**
      * List of exception unmarshallers for all modeled exceptions
@@ -160,6 +194,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     public AmazonEC2Client(AWSCredentials awsCredentials, ClientConfiguration clientConfiguration) {
         super(clientConfiguration);
         this.awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -224,6 +259,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     public AmazonEC2Client(AWSCredentialsProvider awsCredentialsProvider, ClientConfiguration clientConfiguration, RequestMetricCollector requestMetricCollector) {
         super(clientConfiguration, requestMetricCollector);
         this.awsCredentialsProvider = awsCredentialsProvider;
+        this.advancedConfig = AdvancedConfig.EMPTY;
         init();
     }
 
@@ -242,8 +278,23 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      *        Object providing client parameters.
      */
     AmazonEC2Client(AwsSyncClientParams clientParams) {
+        this(clientParams, false);
+    }
+
+    /**
+     * Constructs a new client to invoke service methods on Amazon EC2 using the specified parameters.
+     *
+     * <p>
+     * All service calls made using this new client object are blocking, and will not return until the service call
+     * completes.
+     *
+     * @param clientParams
+     *        Object providing client parameters.
+     */
+    AmazonEC2Client(AwsSyncClientParams clientParams, boolean endpointDiscoveryEnabled) {
         super(clientParams);
         this.awsCredentialsProvider = clientParams.getCredentialsProvider();
+        this.advancedConfig = clientParams.getAdvancedConfig();
         init();
     }
 
@@ -296,12 +347,74 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(acceptReservedInstancesExchangeQuoteRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AcceptReservedInstancesExchangeQuote");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<AcceptReservedInstancesExchangeQuoteResult> responseHandler = new StaxResponseHandler<AcceptReservedInstancesExchangeQuoteResult>(
                     new AcceptReservedInstancesExchangeQuoteResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Accepts a request to attach a VPC to a transit gateway.
+     * </p>
+     * <p>
+     * The VPC attachment must be in the <code>pendingAcceptance</code> state. Use
+     * <a>DescribeTransitGatewayVpcAttachments</a> to view your pending VPC attachment requests. Use
+     * <a>RejectTransitGatewayVpcAttachment</a> to reject a VPC attachment request.
+     * </p>
+     * 
+     * @param acceptTransitGatewayVpcAttachmentRequest
+     * @return Result of the AcceptTransitGatewayVpcAttachment operation returned by the service.
+     * @sample AmazonEC2.AcceptTransitGatewayVpcAttachment
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AcceptTransitGatewayVpcAttachment"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public AcceptTransitGatewayVpcAttachmentResult acceptTransitGatewayVpcAttachment(AcceptTransitGatewayVpcAttachmentRequest request) {
+        request = beforeClientExecution(request);
+        return executeAcceptTransitGatewayVpcAttachment(request);
+    }
+
+    @SdkInternalApi
+    final AcceptTransitGatewayVpcAttachmentResult executeAcceptTransitGatewayVpcAttachment(
+            AcceptTransitGatewayVpcAttachmentRequest acceptTransitGatewayVpcAttachmentRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(acceptTransitGatewayVpcAttachmentRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<AcceptTransitGatewayVpcAttachmentRequest> request = null;
+        Response<AcceptTransitGatewayVpcAttachmentResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new AcceptTransitGatewayVpcAttachmentRequestMarshaller().marshall(super.beforeMarshalling(acceptTransitGatewayVpcAttachmentRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AcceptTransitGatewayVpcAttachment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<AcceptTransitGatewayVpcAttachmentResult> responseHandler = new StaxResponseHandler<AcceptTransitGatewayVpcAttachmentResult>(
+                    new AcceptTransitGatewayVpcAttachmentResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -344,6 +457,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AcceptVpcEndpointConnectionsRequestMarshaller().marshall(super.beforeMarshalling(acceptVpcEndpointConnectionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AcceptVpcEndpointConnections");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -372,7 +489,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param acceptVpcPeeringConnectionRequest
-     *        Contains the parameters for AcceptVpcPeeringConnection.
      * @return Result of the AcceptVpcPeeringConnection operation returned by the service.
      * @sample AmazonEC2.AcceptVpcPeeringConnection
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AcceptVpcPeeringConnection" target="_top">AWS
@@ -399,6 +515,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AcceptVpcPeeringConnectionRequestMarshaller().marshall(super.beforeMarshalling(acceptVpcPeeringConnectionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AcceptVpcPeeringConnection");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -422,25 +542,103 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Allocates an Elastic IP address.
+     * Advertises an IPv4 address range that is provisioned for use with your AWS resources through bring your own IP
+     * addresses (BYOIP).
+     * </p>
+     * <p>
+     * You can perform this operation at most once every 10 seconds, even if you specify different address ranges each
+     * time.
+     * </p>
+     * <p>
+     * We recommend that you stop advertising the BYOIP CIDR from other locations when you advertise it from AWS. To
+     * minimize down time, you can configure your AWS resources to use an address from a BYOIP CIDR before it is
+     * advertised, and then simultaneously stop advertising it from the current location and start advertising it
+     * through AWS.
+     * </p>
+     * <p>
+     * It can take a few minutes before traffic to the specified addresses starts routing to AWS because of BGP
+     * propagation delays.
+     * </p>
+     * <p>
+     * To stop advertising the BYOIP CIDR, use <a>WithdrawByoipCidr</a>.
+     * </p>
+     * 
+     * @param advertiseByoipCidrRequest
+     * @return Result of the AdvertiseByoipCidr operation returned by the service.
+     * @sample AmazonEC2.AdvertiseByoipCidr
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AdvertiseByoipCidr" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public AdvertiseByoipCidrResult advertiseByoipCidr(AdvertiseByoipCidrRequest request) {
+        request = beforeClientExecution(request);
+        return executeAdvertiseByoipCidr(request);
+    }
+
+    @SdkInternalApi
+    final AdvertiseByoipCidrResult executeAdvertiseByoipCidr(AdvertiseByoipCidrRequest advertiseByoipCidrRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(advertiseByoipCidrRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<AdvertiseByoipCidrRequest> request = null;
+        Response<AdvertiseByoipCidrResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new AdvertiseByoipCidrRequestMarshaller().marshall(super.beforeMarshalling(advertiseByoipCidrRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AdvertiseByoipCidr");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<AdvertiseByoipCidrResult> responseHandler = new StaxResponseHandler<AdvertiseByoipCidrResult>(
+                    new AdvertiseByoipCidrResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Allocates an Elastic IP address to your AWS account. After you allocate the Elastic IP address you can associate
+     * it with an instance or network interface. After you release an Elastic IP address, it is released to the IP
+     * address pool and can be allocated to a different AWS account.
+     * </p>
+     * <p>
+     * You can allocate an Elastic IP address from an address pool owned by AWS or from an address pool created from a
+     * public IPv4 address range that you have brought to AWS for use with your AWS resources using bring your own IP
+     * addresses (BYOIP). For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html">Bring Your Own IP Addresses (BYOIP)</a>
+     * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * </p>
+     * <p>
+     * [EC2-VPC] If you release an Elastic IP address, you might be able to recover it. You cannot recover an Elastic IP
+     * address that you released after it is allocated to another AWS account. You cannot recover an Elastic IP address
+     * for EC2-Classic. To attempt to recover an Elastic IP address that you released, specify it in this operation.
      * </p>
      * <p>
      * An Elastic IP address is for use either in the EC2-Classic platform or in a VPC. By default, you can allocate 5
      * Elastic IP addresses for EC2-Classic per region and 5 Elastic IP addresses for EC2-VPC per region.
      * </p>
      * <p>
-     * If you release an Elastic IP address for use in a VPC, you might be able to recover it. To recover an Elastic IP
-     * address that you released, specify it in the <code>Address</code> parameter. Note that you cannot recover an
-     * Elastic IP address that you released after it is allocated to another AWS account.
-     * </p>
-     * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
      * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param allocateAddressRequest
-     *        Contains the parameters for AllocateAddress.
      * @return Result of the AllocateAddress operation returned by the service.
      * @sample AmazonEC2.AllocateAddress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AllocateAddress" target="_top">AWS API
@@ -467,6 +665,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AllocateAddressRequestMarshaller().marshall(super.beforeMarshalling(allocateAddressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AllocateAddress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -490,12 +692,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Allocates a Dedicated Host to your account. At minimum you need to specify the instance size type, Availability
-     * Zone, and quantity of hosts you want to allocate.
+     * Allocates a Dedicated Host to your account. At a minimum, specify the instance size type, Availability Zone, and
+     * quantity of hosts to allocate.
      * </p>
      * 
      * @param allocateHostsRequest
-     *        Contains the parameters for AllocateHosts.
      * @return Result of the AllocateHosts operation returned by the service.
      * @sample AmazonEC2.AllocateHosts
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AllocateHosts" target="_top">AWS API
@@ -522,6 +723,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AllocateHostsRequestMarshaller().marshall(super.beforeMarshalling(allocateHostsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AllocateHosts");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -539,11 +744,67 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Applies a security group to the association between the target network and the Client VPN endpoint. This action
+     * replaces the existing security groups with the specified security groups.
+     * </p>
+     * 
+     * @param applySecurityGroupsToClientVpnTargetNetworkRequest
+     * @return Result of the ApplySecurityGroupsToClientVpnTargetNetwork operation returned by the service.
+     * @sample AmazonEC2.ApplySecurityGroupsToClientVpnTargetNetwork
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ApplySecurityGroupsToClientVpnTargetNetwork"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public ApplySecurityGroupsToClientVpnTargetNetworkResult applySecurityGroupsToClientVpnTargetNetwork(
+            ApplySecurityGroupsToClientVpnTargetNetworkRequest request) {
+        request = beforeClientExecution(request);
+        return executeApplySecurityGroupsToClientVpnTargetNetwork(request);
+    }
+
+    @SdkInternalApi
+    final ApplySecurityGroupsToClientVpnTargetNetworkResult executeApplySecurityGroupsToClientVpnTargetNetwork(
+            ApplySecurityGroupsToClientVpnTargetNetworkRequest applySecurityGroupsToClientVpnTargetNetworkRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(applySecurityGroupsToClientVpnTargetNetworkRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ApplySecurityGroupsToClientVpnTargetNetworkRequest> request = null;
+        Response<ApplySecurityGroupsToClientVpnTargetNetworkResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ApplySecurityGroupsToClientVpnTargetNetworkRequestMarshaller().marshall(super
+                        .beforeMarshalling(applySecurityGroupsToClientVpnTargetNetworkRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ApplySecurityGroupsToClientVpnTargetNetwork");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ApplySecurityGroupsToClientVpnTargetNetworkResult> responseHandler = new StaxResponseHandler<ApplySecurityGroupsToClientVpnTargetNetworkResult>(
+                    new ApplySecurityGroupsToClientVpnTargetNetworkResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Assigns one or more IPv6 addresses to the specified network interface. You can specify one or more specific IPv6
      * addresses, or you can specify the number of IPv6 addresses to be automatically assigned from within the subnet's
      * IPv6 CIDR block range. You can assign as many IPv6 addresses to a network interface as you can assign private
      * IPv4 addresses, and the limit varies per instance type. For information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI">IP Addresses Per
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI">IP Addresses Per
      * Network Interface Per Instance Type</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -574,6 +835,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AssignIpv6AddressesRequestMarshaller().marshall(super.beforeMarshalling(assignIpv6AddressesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssignIpv6Addresses");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -592,17 +857,25 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Assigns one or more secondary private IP addresses to the specified network interface. You can specify one or
-     * more specific secondary IP addresses, or you can specify the number of secondary IP addresses to be automatically
-     * assigned within the subnet's CIDR block range. The number of secondary IP addresses that you can assign to an
-     * instance varies by instance type. For information about instance types, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html">Instance Types</a> in the <i>Amazon
-     * Elastic Compute Cloud User Guide</i>. For more information about Elastic IP addresses, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
+     * Assigns one or more secondary private IP addresses to the specified network interface.
+     * </p>
+     * <p>
+     * You can specify one or more specific secondary IP addresses, or you can specify the number of secondary IP
+     * addresses to be automatically assigned within the subnet's CIDR block range. The number of secondary IP addresses
+     * that you can assign to an instance varies by instance type. For information about instance types, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html">Instance Types</a> in the
+     * <i>Amazon Elastic Compute Cloud User Guide</i>. For more information about Elastic IP addresses, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
      * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
-     * AssignPrivateIpAddresses is available only in EC2-VPC.
+     * When you move a secondary private IP address to another network interface, any Elastic IP address that is
+     * associated with the IP address is also moved.
+     * </p>
+     * <p>
+     * Remapping an IP address is an asynchronous operation. When you move an IP address from one network interface to
+     * another, check <code>network/interfaces/macs/mac/local-ipv4s</code> in the instance metadata to confirm that the
+     * remapping is complete.
      * </p>
      * 
      * @param assignPrivateIpAddressesRequest
@@ -633,6 +906,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AssignPrivateIpAddressesRequestMarshaller().marshall(super.beforeMarshalling(assignPrivateIpAddressesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssignPrivateIpAddresses");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -651,11 +928,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Associates an Elastic IP address with an instance or a network interface.
+     * Associates an Elastic IP address with an instance or a network interface. Before you can use an Elastic IP
+     * address, you must allocate it to your account.
      * </p>
      * <p>
      * An Elastic IP address is for use in either the EC2-Classic platform or in a VPC. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
      * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
@@ -680,7 +958,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </important>
      * 
      * @param associateAddressRequest
-     *        Contains the parameters for AssociateAddress.
      * @return Result of the AssociateAddress operation returned by the service.
      * @sample AmazonEC2.AssociateAddress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateAddress" target="_top">AWS API
@@ -707,12 +984,71 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AssociateAddressRequestMarshaller().marshall(super.beforeMarshalling(associateAddressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssociateAddress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<AssociateAddressResult> responseHandler = new StaxResponseHandler<AssociateAddressResult>(
                     new AssociateAddressResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Associates a target network with a Client VPN endpoint. A target network is a subnet in a VPC. You can associate
+     * multiple subnets from the same VPC with a Client VPN endpoint. You can associate only one subnet in each
+     * Availability Zone. We recommend that you associate at least two subnets to provide Availability Zone redundancy.
+     * </p>
+     * 
+     * @param associateClientVpnTargetNetworkRequest
+     * @return Result of the AssociateClientVpnTargetNetwork operation returned by the service.
+     * @sample AmazonEC2.AssociateClientVpnTargetNetwork
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateClientVpnTargetNetwork"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public AssociateClientVpnTargetNetworkResult associateClientVpnTargetNetwork(AssociateClientVpnTargetNetworkRequest request) {
+        request = beforeClientExecution(request);
+        return executeAssociateClientVpnTargetNetwork(request);
+    }
+
+    @SdkInternalApi
+    final AssociateClientVpnTargetNetworkResult executeAssociateClientVpnTargetNetwork(
+            AssociateClientVpnTargetNetworkRequest associateClientVpnTargetNetworkRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(associateClientVpnTargetNetworkRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<AssociateClientVpnTargetNetworkRequest> request = null;
+        Response<AssociateClientVpnTargetNetworkResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new AssociateClientVpnTargetNetworkRequestMarshaller().marshall(super.beforeMarshalling(associateClientVpnTargetNetworkRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssociateClientVpnTargetNetwork");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<AssociateClientVpnTargetNetworkResult> responseHandler = new StaxResponseHandler<AssociateClientVpnTargetNetworkResult>(
+                    new AssociateClientVpnTargetNetworkResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -736,12 +1072,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html">DHCP Options Sets</a> in the
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html">DHCP Options Sets</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param associateDhcpOptionsRequest
-     *        Contains the parameters for AssociateDhcpOptions.
      * @return Result of the AssociateDhcpOptions operation returned by the service.
      * @sample AmazonEC2.AssociateDhcpOptions
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateDhcpOptions" target="_top">AWS API
@@ -768,6 +1103,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AssociateDhcpOptionsRequestMarshaller().marshall(super.beforeMarshalling(associateDhcpOptionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssociateDhcpOptions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -817,6 +1156,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AssociateIamInstanceProfileRequestMarshaller().marshall(super.beforeMarshalling(associateIamInstanceProfileRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssociateIamInstanceProfile");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -841,13 +1184,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * table can be associated with multiple subnets.
      * </p>
      * <p>
-     * For more information about route tables, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param associateRouteTableRequest
-     *        Contains the parameters for AssociateRouteTable.
      * @return Result of the AssociateRouteTable operation returned by the service.
      * @sample AmazonEC2.AssociateRouteTable
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateRouteTable" target="_top">AWS API
@@ -874,6 +1216,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AssociateRouteTableRequestMarshaller().marshall(super.beforeMarshalling(associateRouteTableRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssociateRouteTable");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -923,6 +1269,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AssociateSubnetCidrBlockRequestMarshaller().marshall(super.beforeMarshalling(associateSubnetCidrBlockRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssociateSubnetCidrBlock");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -941,12 +1291,66 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Associates the specified attachment with the specified transit gateway route table. You can associate only one
+     * route table with an attachment.
+     * </p>
+     * 
+     * @param associateTransitGatewayRouteTableRequest
+     * @return Result of the AssociateTransitGatewayRouteTable operation returned by the service.
+     * @sample AmazonEC2.AssociateTransitGatewayRouteTable
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AssociateTransitGatewayRouteTable"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public AssociateTransitGatewayRouteTableResult associateTransitGatewayRouteTable(AssociateTransitGatewayRouteTableRequest request) {
+        request = beforeClientExecution(request);
+        return executeAssociateTransitGatewayRouteTable(request);
+    }
+
+    @SdkInternalApi
+    final AssociateTransitGatewayRouteTableResult executeAssociateTransitGatewayRouteTable(
+            AssociateTransitGatewayRouteTableRequest associateTransitGatewayRouteTableRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(associateTransitGatewayRouteTableRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<AssociateTransitGatewayRouteTableRequest> request = null;
+        Response<AssociateTransitGatewayRouteTableResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new AssociateTransitGatewayRouteTableRequestMarshaller().marshall(super.beforeMarshalling(associateTransitGatewayRouteTableRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssociateTransitGatewayRouteTable");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<AssociateTransitGatewayRouteTableResult> responseHandler = new StaxResponseHandler<AssociateTransitGatewayRouteTableResult>(
+                    new AssociateTransitGatewayRouteTableResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Associates a CIDR block with your VPC. You can associate a secondary IPv4 CIDR block, or you can associate an
      * Amazon-provided IPv6 CIDR block. The IPv6 CIDR block size is fixed at /56.
      * </p>
      * <p>
      * For more information about associating CIDR blocks with your VPC and applicable restrictions, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html#VPC_Sizing">VPC and Subnet
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html#VPC_Sizing">VPC and Subnet
      * Sizing</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
@@ -977,6 +1381,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AssociateVpcCidrBlockRequestMarshaller().marshall(super.beforeMarshalling(associateVpcCidrBlockRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AssociateVpcCidrBlock");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1009,7 +1417,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param attachClassicLinkVpcRequest
-     *        Contains the parameters for AttachClassicLinkVpc.
      * @return Result of the AttachClassicLinkVpc operation returned by the service.
      * @sample AmazonEC2.AttachClassicLinkVpc
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AttachClassicLinkVpc" target="_top">AWS API
@@ -1036,6 +1443,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AttachClassicLinkVpcRequestMarshaller().marshall(super.beforeMarshalling(attachClassicLinkVpcRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AttachClassicLinkVpc");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1054,13 +1465,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Attaches an Internet gateway to a VPC, enabling connectivity between the Internet and the VPC. For more
-     * information about your VPC and Internet gateway, see the <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/">Amazon Virtual Private Cloud User Guide</a>.
+     * Attaches an internet gateway to a VPC, enabling connectivity between the internet and the VPC. For more
+     * information about your VPC and internet gateway, see the <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/">Amazon Virtual Private Cloud User Guide</a>.
      * </p>
      * 
      * @param attachInternetGatewayRequest
-     *        Contains the parameters for AttachInternetGateway.
      * @return Result of the AttachInternetGateway operation returned by the service.
      * @sample AmazonEC2.AttachInternetGateway
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AttachInternetGateway" target="_top">AWS API
@@ -1087,6 +1497,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AttachInternetGatewayRequestMarshaller().marshall(super.beforeMarshalling(attachInternetGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AttachInternetGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1136,6 +1550,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AttachNetworkInterfaceRequestMarshaller().marshall(super.beforeMarshalling(attachNetworkInterfaceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AttachNetworkInterface");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1159,15 +1577,16 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * Encrypted EBS volumes may only be attached to instances that support Amazon EBS encryption. For more information,
-     * see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS Encryption</a> in
+     * see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS Encryption</a> in
      * the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
      * For a list of supported device names, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html">Attaching an EBS Volume to an
-     * Instance</a>. Any device names that aren't reserved for instance store volumes can be used for EBS volumes. For
-     * more information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html">Amazon
-     * EC2 Instance Store</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html">Attaching an EBS Volume to
+     * an Instance</a>. Any device names that aren't reserved for instance store volumes can be used for EBS volumes.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html">Amazon EC2 Instance Store</a> in
+     * the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
      * If a volume has an AWS Marketplace product code:
@@ -1196,12 +1615,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </li>
      * </ul>
      * <p>
-     * For an overview of the AWS Marketplace, see <a
-     * href="https://aws.amazon.com/marketplace/help/200900000">Introducing AWS Marketplace</a>.
-     * </p>
-     * <p>
      * For more information about EBS volumes, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html">Attaching Amazon EBS
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html">Attaching Amazon EBS
      * Volumes</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -1233,6 +1648,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AttachVolumeRequestMarshaller().marshall(super.beforeMarshalling(attachVolumeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AttachVolume");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1253,8 +1672,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Attaches a virtual private gateway to a VPC. You can attach one virtual private gateway to one VPC at a time.
      * </p>
      * <p>
-     * For more information, see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html">AWS
-     * Managed VPN Connections</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html">AWS Site-to-Site
+     * VPN</a> in the <i>AWS Site-to-Site VPN User Guide</i>.
      * </p>
      * 
      * @param attachVpnGatewayRequest
@@ -1285,6 +1704,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AttachVpnGatewayRequestMarshaller().marshall(super.beforeMarshalling(attachVpnGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AttachVpnGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1303,13 +1726,67 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * [EC2-VPC only] Adds one or more egress rules to a security group for use with a VPC. Specifically, this action
-     * permits instances to send traffic to one or more destination IPv4 or IPv6 CIDR address ranges, or to one or more
-     * destination security groups for the same VPC. This action doesn't apply to security groups for use in
+     * Adds an ingress authorization rule to a Client VPN endpoint. Ingress authorization rules act as firewall rules
+     * that grant access to networks. You must configure ingress authorization rules to enable clients to access
+     * resources in AWS or on-premises networks.
+     * </p>
+     * 
+     * @param authorizeClientVpnIngressRequest
+     * @return Result of the AuthorizeClientVpnIngress operation returned by the service.
+     * @sample AmazonEC2.AuthorizeClientVpnIngress
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AuthorizeClientVpnIngress" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public AuthorizeClientVpnIngressResult authorizeClientVpnIngress(AuthorizeClientVpnIngressRequest request) {
+        request = beforeClientExecution(request);
+        return executeAuthorizeClientVpnIngress(request);
+    }
+
+    @SdkInternalApi
+    final AuthorizeClientVpnIngressResult executeAuthorizeClientVpnIngress(AuthorizeClientVpnIngressRequest authorizeClientVpnIngressRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(authorizeClientVpnIngressRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<AuthorizeClientVpnIngressRequest> request = null;
+        Response<AuthorizeClientVpnIngressResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new AuthorizeClientVpnIngressRequestMarshaller().marshall(super.beforeMarshalling(authorizeClientVpnIngressRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AuthorizeClientVpnIngress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<AuthorizeClientVpnIngressResult> responseHandler = new StaxResponseHandler<AuthorizeClientVpnIngressResult>(
+                    new AuthorizeClientVpnIngressResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * [EC2-VPC only] Adds the specified egress rules to a security group for use with a VPC. Specifically, this action
+     * permits instances to send traffic to the specified destination IPv4 or IPv6 CIDR address ranges, or to the
+     * specified destination security groups for the same VPC. This action doesn't apply to security groups for use in
      * EC2-Classic. For more information, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html">Security Groups for Your
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html">Security Groups for Your
      * VPC</a> in the <i>Amazon Virtual Private Cloud User Guide</i>. For more information about security group limits,
-     * see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Appendix_Limits.html">Amazon VPC
+     * see <a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Appendix_Limits.html">Amazon VPC
      * Limits</a>.
      * </p>
      * <p>
@@ -1323,7 +1800,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param authorizeSecurityGroupEgressRequest
-     *        Contains the parameters for AuthorizeSecurityGroupEgress.
      * @return Result of the AuthorizeSecurityGroupEgress operation returned by the service.
      * @sample AmazonEC2.AuthorizeSecurityGroupEgress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AuthorizeSecurityGroupEgress"
@@ -1350,6 +1826,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AuthorizeSecurityGroupEgressRequestMarshaller().marshall(super.beforeMarshalling(authorizeSecurityGroupEgressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AuthorizeSecurityGroupEgress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1368,31 +1848,29 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Adds one or more ingress rules to a security group.
+     * Adds the specified ingress rules to a security group.
      * </p>
      * <p>
      * Rule changes are propagated to instances within the security group as quickly as possible. However, a small delay
      * might occur.
      * </p>
      * <p>
-     * [EC2-Classic] This action gives one or more IPv4 CIDR address ranges permission to access a security group in
-     * your account, or gives one or more security groups (called the <i>source groups</i>) permission to access a
-     * security group for your account. A source group can be for your own AWS account, or another. You can have up to
-     * 100 rules per group.
+     * [EC2-Classic] This action gives the IPv4 CIDR address ranges permission to access a security group in your
+     * account, or gives the security groups (called the <i>source groups</i>) permission to access a security group for
+     * your account. A source group can be for your own AWS account, or another. You can have up to 100 rules per group.
      * </p>
      * <p>
-     * [EC2-VPC] This action gives one or more IPv4 or IPv6 CIDR address ranges permission to access a security group in
-     * your VPC, or gives one or more other security groups (called the <i>source groups</i>) permission to access a
+     * [EC2-VPC] This action gives the specified IPv4 or IPv6 CIDR address ranges permission to access a security group
+     * in your VPC, or gives the specified security groups (called the <i>source groups</i>) permission to access a
      * security group for your VPC. The security groups must all be for the same VPC or a peer VPC in a VPC peering
      * connection. For more information about VPC security group limits, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Appendix_Limits.html">Amazon VPC Limits</a>.
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Appendix_Limits.html">Amazon VPC Limits</a>.
      * </p>
      * <p>
      * You can optionally specify a description for the security group rule.
      * </p>
      * 
      * @param authorizeSecurityGroupIngressRequest
-     *        Contains the parameters for AuthorizeSecurityGroupIngress.
      * @return Result of the AuthorizeSecurityGroupIngress operation returned by the service.
      * @sample AmazonEC2.AuthorizeSecurityGroupIngress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AuthorizeSecurityGroupIngress"
@@ -1419,6 +1897,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new AuthorizeSecurityGroupIngressRequestMarshaller().marshall(super.beforeMarshalling(authorizeSecurityGroupIngressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "AuthorizeSecurityGroupIngress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1448,11 +1930,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * This action is not applicable for Linux/Unix instances or Windows instances that are backed by Amazon EBS.
      * </p>
      * </note>
-     * <p>
-     * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/Creating_InstanceStoreBacked_WinAMI.html">Creating an
-     * Instance Store-Backed Windows AMI</a>.
-     * </p>
      * 
      * @param bundleInstanceRequest
      *        Contains the parameters for BundleInstance.
@@ -1482,6 +1959,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new BundleInstanceRequestMarshaller().marshall(super.beforeMarshalling(bundleInstanceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "BundleInstance");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1531,6 +2012,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CancelBundleTaskRequestMarshaller().marshall(super.beforeMarshalling(cancelBundleTaskRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CancelBundleTask");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1549,13 +2034,72 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Cancels the specified Capacity Reservation, releases the reserved capacity, and changes the Capacity
+     * Reservation's state to <code>cancelled</code>.
+     * </p>
+     * <p>
+     * Instances running in the reserved capacity continue running until you stop them. Stopped instances that target
+     * the Capacity Reservation can no longer launch. Modify these instances to either target a different Capacity
+     * Reservation, launch On-Demand Instance capacity, or run in any open Capacity Reservation that has matching
+     * attributes and sufficient capacity.
+     * </p>
+     * 
+     * @param cancelCapacityReservationRequest
+     * @return Result of the CancelCapacityReservation operation returned by the service.
+     * @sample AmazonEC2.CancelCapacityReservation
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CancelCapacityReservation" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public CancelCapacityReservationResult cancelCapacityReservation(CancelCapacityReservationRequest request) {
+        request = beforeClientExecution(request);
+        return executeCancelCapacityReservation(request);
+    }
+
+    @SdkInternalApi
+    final CancelCapacityReservationResult executeCancelCapacityReservation(CancelCapacityReservationRequest cancelCapacityReservationRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(cancelCapacityReservationRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CancelCapacityReservationRequest> request = null;
+        Response<CancelCapacityReservationResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CancelCapacityReservationRequestMarshaller().marshall(super.beforeMarshalling(cancelCapacityReservationRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CancelCapacityReservation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<CancelCapacityReservationResult> responseHandler = new StaxResponseHandler<CancelCapacityReservationResult>(
+                    new CancelCapacityReservationResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Cancels an active conversion task. The task can be the import of an instance or volume. The action removes all
      * artifacts of the conversion, including a partially uploaded volume or instance. If the conversion is complete or
      * is in the process of transferring the final disk image, the command fails and returns an exception.
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ec2-cli-vmimport-export.html">Importing a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ec2-cli-vmimport-export.html">Importing a
      * Virtual Machine Using the Amazon EC2 CLI</a>.
      * </p>
      * 
@@ -1587,6 +2131,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CancelConversionTaskRequestMarshaller().marshall(super.beforeMarshalling(cancelConversionTaskRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CancelConversionTask");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1638,6 +2186,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CancelExportTaskRequestMarshaller().marshall(super.beforeMarshalling(cancelExportTaskRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CancelExportTask");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1687,6 +2239,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CancelImportTaskRequestMarshaller().marshall(super.beforeMarshalling(cancelImportTaskRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CancelImportTask");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1714,7 +2270,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved Instance
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved Instance
      * Marketplace</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -1746,6 +2302,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CancelReservedInstancesListingRequestMarshaller().marshall(super.beforeMarshalling(cancelReservedInstancesListingRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CancelReservedInstancesListing");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1802,6 +2362,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CancelSpotFleetRequestsRequestMarshaller().marshall(super.beforeMarshalling(cancelSpotFleetRequestsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CancelSpotFleetRequests");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1820,10 +2384,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Cancels one or more Spot Instance requests. Spot Instances are instances that Amazon EC2 starts on your behalf
-     * when the maximum price that you specify exceeds the current Spot price. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html">Spot Instance Requests</a> in the
-     * <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * Cancels one or more Spot Instance requests.
      * </p>
      * <important>
      * <p>
@@ -1859,6 +2420,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CancelSpotInstanceRequestsRequestMarshaller().marshall(super.beforeMarshalling(cancelSpotInstanceRequestsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CancelSpotInstanceRequests");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1883,7 +2448,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param confirmProductInstanceRequest
-     *        Contains the parameters for ConfirmProductInstance.
      * @return Result of the ConfirmProductInstance operation returned by the service.
      * @sample AmazonEC2.ConfirmProductInstance
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ConfirmProductInstance" target="_top">AWS API
@@ -1910,6 +2474,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ConfirmProductInstanceRequestMarshaller().marshall(super.beforeMarshalling(confirmProductInstanceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ConfirmProductInstance");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1958,6 +2526,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CopyFpgaImageRequestMarshaller().marshall(super.beforeMarshalling(copyFpgaImageRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CopyFpgaImage");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -1979,8 +2551,13 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * region by using its endpoint when making the request.
      * </p>
      * <p>
+     * Copies of encrypted backing snapshots for the AMI are encrypted. Copies of unencrypted backing snapshots remain
+     * unencrypted, unless you set <code>Encrypted</code> during the copy operation. You cannot create an unencrypted
+     * copy of an encrypted backing snapshot.
+     * </p>
+     * <p>
      * For more information about the prerequisites and limits when copying an AMI, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html">Copying an AMI</a> in the <i>Amazon
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html">Copying an AMI</a> in the <i>Amazon
      * Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -2012,6 +2589,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CopyImageRequestMarshaller().marshall(super.beforeMarshalling(copyImageRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CopyImage");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2030,7 +2611,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Copies a point-in-time snapshot of an EBS volume and stores it in Amazon S3. You can copy the snapshot within the
-     * same region or from one region to another. You can use the snapshot to create EBS volumes or Amazon Machine
+     * same Region or from one Region to another. You can use the snapshot to create EBS volumes or Amazon Machine
      * Images (AMIs). The snapshot is copied to the regional endpoint that you send the HTTP request to.
      * </p>
      * <p>
@@ -2039,19 +2620,17 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * copies use the default AWS Key Management Service (AWS KMS) customer master key (CMK); however, you can specify a
      * non-default CMK with the <code>KmsKeyId</code> parameter.
      * </p>
-     * <note>
      * <p>
      * To copy an encrypted snapshot that has been shared from another account, you must have permissions for the CMK
      * used to encrypt the snapshot.
      * </p>
-     * </note> <note>
      * <p>
-     * Snapshots created by the CopySnapshot action have an arbitrary volume ID that should not be used for any purpose.
+     * Snapshots created by copying another snapshot have an arbitrary volume ID that should not be used for any
+     * purpose.
      * </p>
-     * </note>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html">Copying an Amazon EBS
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html">Copying an Amazon EBS
      * Snapshot</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -2083,11 +2662,196 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CopySnapshotRequestMarshaller().marshall(super.beforeMarshalling(copySnapshotRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CopySnapshot");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<CopySnapshotResult> responseHandler = new StaxResponseHandler<CopySnapshotResult>(new CopySnapshotResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a new Capacity Reservation with the specified attributes.
+     * </p>
+     * <p>
+     * Capacity Reservations enable you to reserve capacity for your Amazon EC2 instances in a specific Availability
+     * Zone for any duration. This gives you the flexibility to selectively add capacity reservations and still get the
+     * Regional RI discounts for that usage. By creating Capacity Reservations, you ensure that you always have access
+     * to Amazon EC2 capacity when you need it, for as long as you need it. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html">Capacity
+     * Reservations</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * </p>
+     * <p>
+     * Your request to create a Capacity Reservation could fail if Amazon EC2 does not have sufficient capacity to
+     * fulfill the request. If your request fails due to Amazon EC2 capacity constraints, either try again at a later
+     * time, try in a different Availability Zone, or request a smaller capacity reservation. If your application is
+     * flexible across instance types and sizes, try to create a Capacity Reservation with different instance
+     * attributes.
+     * </p>
+     * <p>
+     * Your request could also fail if the requested quantity exceeds your On-Demand Instance limit for the selected
+     * instance type. If your request fails due to limit constraints, increase your On-Demand Instance limit for the
+     * required instance type and try again. For more information about increasing your instance limits, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html">Amazon EC2 Service Limits</a>
+     * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * </p>
+     * 
+     * @param createCapacityReservationRequest
+     * @return Result of the CreateCapacityReservation operation returned by the service.
+     * @sample AmazonEC2.CreateCapacityReservation
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateCapacityReservation" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public CreateCapacityReservationResult createCapacityReservation(CreateCapacityReservationRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateCapacityReservation(request);
+    }
+
+    @SdkInternalApi
+    final CreateCapacityReservationResult executeCreateCapacityReservation(CreateCapacityReservationRequest createCapacityReservationRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createCapacityReservationRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateCapacityReservationRequest> request = null;
+        Response<CreateCapacityReservationResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateCapacityReservationRequestMarshaller().marshall(super.beforeMarshalling(createCapacityReservationRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateCapacityReservation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<CreateCapacityReservationResult> responseHandler = new StaxResponseHandler<CreateCapacityReservationResult>(
+                    new CreateCapacityReservationResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a Client VPN endpoint. A Client VPN endpoint is the resource you create and configure to enable and
+     * manage client VPN sessions. It is the destination endpoint at which all client VPN sessions are terminated.
+     * </p>
+     * 
+     * @param createClientVpnEndpointRequest
+     * @return Result of the CreateClientVpnEndpoint operation returned by the service.
+     * @sample AmazonEC2.CreateClientVpnEndpoint
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateClientVpnEndpoint" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public CreateClientVpnEndpointResult createClientVpnEndpoint(CreateClientVpnEndpointRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateClientVpnEndpoint(request);
+    }
+
+    @SdkInternalApi
+    final CreateClientVpnEndpointResult executeCreateClientVpnEndpoint(CreateClientVpnEndpointRequest createClientVpnEndpointRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createClientVpnEndpointRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateClientVpnEndpointRequest> request = null;
+        Response<CreateClientVpnEndpointResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateClientVpnEndpointRequestMarshaller().marshall(super.beforeMarshalling(createClientVpnEndpointRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateClientVpnEndpoint");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<CreateClientVpnEndpointResult> responseHandler = new StaxResponseHandler<CreateClientVpnEndpointResult>(
+                    new CreateClientVpnEndpointResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Adds a route to a network to a Client VPN endpoint. Each Client VPN endpoint has a route table that describes the
+     * available destination network routes. Each route in the route table specifies the path for traﬃc to speciﬁc
+     * resources or networks.
+     * </p>
+     * 
+     * @param createClientVpnRouteRequest
+     * @return Result of the CreateClientVpnRoute operation returned by the service.
+     * @sample AmazonEC2.CreateClientVpnRoute
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateClientVpnRoute" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public CreateClientVpnRouteResult createClientVpnRoute(CreateClientVpnRouteRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateClientVpnRoute(request);
+    }
+
+    @SdkInternalApi
+    final CreateClientVpnRouteResult executeCreateClientVpnRoute(CreateClientVpnRouteRequest createClientVpnRouteRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createClientVpnRouteRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateClientVpnRouteRequest> request = null;
+        Response<CreateClientVpnRouteResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateClientVpnRouteRequestMarshaller().marshall(super.beforeMarshalling(createClientVpnRouteRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateClientVpnRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<CreateClientVpnRouteResult> responseHandler = new StaxResponseHandler<CreateClientVpnRouteResult>(
+                    new CreateClientVpnRouteResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -2117,9 +2881,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * </note>
      * <p>
-     * For more information about VPN customer gateways, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html">AWS Managed VPN Connections</a> in the
-     * <i>Amazon Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html">AWS Site-to-Site
+     * VPN</a> in the <i>AWS Site-to-Site VPN User Guide</i>.
      * </p>
      * <important>
      * <p>
@@ -2158,6 +2921,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateCustomerGatewayRequestMarshaller().marshall(super.beforeMarshalling(createCustomerGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateCustomerGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2178,7 +2945,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Creates a default subnet with a size <code>/20</code> IPv4 CIDR block in the specified Availability Zone in your
      * default VPC. You can have only one default subnet per Availability Zone. For more information, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html#create-default-subnet">Creating a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html#create-default-subnet">Creating a
      * Default Subnet</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
@@ -2209,6 +2976,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateDefaultSubnetRequestMarshaller().marshall(super.beforeMarshalling(createDefaultSubnetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateDefaultSubnet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2229,23 +3000,22 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Creates a default VPC with a size <code>/16</code> IPv4 CIDR block and a default subnet in each Availability
      * Zone. For more information about the components of a default VPC, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html">Default VPC and Default Subnets</a>
-     * in the <i>Amazon Virtual Private Cloud User Guide</i>. You cannot specify the components of the default VPC
-     * yourself.
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html">Default VPC and Default
+     * Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>. You cannot specify the components of the
+     * default VPC yourself.
      * </p>
      * <p>
-     * You can create a default VPC if you deleted your previous default VPC. You cannot have more than one default VPC
-     * per region.
+     * If you deleted your previous default VPC, you can create a default VPC. You cannot have more than one default VPC
+     * per Region.
      * </p>
      * <p>
-     * If your account supports EC2-Classic, you cannot use this action to create a default VPC in a region that
-     * supports EC2-Classic. If you want a default VPC in a region that supports EC2-Classic, see
+     * If your account supports EC2-Classic, you cannot use this action to create a default VPC in a Region that
+     * supports EC2-Classic. If you want a default VPC in a Region that supports EC2-Classic, see
      * "I really want a default VPC for my existing EC2 account. Is that possible?" in the <a
      * href="http://aws.amazon.com/vpc/faqs/#Default_VPCs">Default VPCs FAQ</a>.
      * </p>
      * 
      * @param createDefaultVpcRequest
-     *        Contains the parameters for CreateDefaultVpc.
      * @return Result of the CreateDefaultVpc operation returned by the service.
      * @sample AmazonEC2.CreateDefaultVpc
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateDefaultVpc" target="_top">AWS API
@@ -2272,6 +3042,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateDefaultVpcRequestMarshaller().marshall(super.beforeMarshalling(createDefaultVpcRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateDefaultVpc");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2300,9 +3074,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * <code>domain-name-servers</code> - The IP addresses of up to four domain name servers, or AmazonProvidedDNS. The
      * default DHCP option set specifies AmazonProvidedDNS. If specifying more than one domain name server, specify the
-     * IP addresses in a single parameter, separated by commas. If you want your instance to receive a custom DNS
-     * hostname as specified in <code>domain-name</code>, you must set <code>domain-name-servers</code> to a custom DNS
-     * server.
+     * IP addresses in a single parameter, separated by commas. ITo have your instance to receive a custom DNS hostname
+     * as specified in <code>domain-name</code>, you must set <code>domain-name-servers</code> to a custom DNS server.
      * </p>
      * </li>
      * <li>
@@ -2337,15 +3110,14 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </ul>
      * <p>
      * Your VPC automatically starts out with a set of DHCP options that includes only a DNS server that we provide
-     * (AmazonProvidedDNS). If you create a set of options, and if your VPC has an Internet gateway, make sure to set
+     * (AmazonProvidedDNS). If you create a set of options, and if your VPC has an internet gateway, make sure to set
      * the <code>domain-name-servers</code> option either to <code>AmazonProvidedDNS</code> or to a domain name server
-     * of your choice. For more information about DHCP options, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html">DHCP Options Sets</a> in the
+     * of your choice. For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html">DHCP Options Sets</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param createDhcpOptionsRequest
-     *        Contains the parameters for CreateDhcpOptions.
      * @return Result of the CreateDhcpOptions operation returned by the service.
      * @sample AmazonEC2.CreateDhcpOptions
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateDhcpOptions" target="_top">AWS API
@@ -2372,6 +3144,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateDhcpOptionsRequestMarshaller().marshall(super.beforeMarshalling(createDhcpOptionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateDhcpOptions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2390,8 +3166,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * [IPv6 only] Creates an egress-only Internet gateway for your VPC. An egress-only Internet gateway is used to
-     * enable outbound communication over IPv6 from instances in your VPC to the Internet, and prevents hosts outside of
+     * [IPv6 only] Creates an egress-only internet gateway for your VPC. An egress-only internet gateway is used to
+     * enable outbound communication over IPv6 from instances in your VPC to the internet, and prevents hosts outside of
      * your VPC from initiating an IPv6 connection with your instance.
      * </p>
      * 
@@ -2423,6 +3199,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateEgressOnlyInternetGatewayRequestMarshaller().marshall(super.beforeMarshalling(createEgressOnlyInternetGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateEgressOnlyInternetGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2441,18 +3221,85 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Creates one or more flow logs to capture IP traffic for a specific network interface, subnet, or VPC. Flow logs
-     * are delivered to a specified log group in Amazon CloudWatch Logs. If you specify a VPC or subnet in the request,
-     * a log stream is created in CloudWatch Logs for each network interface in the subnet or VPC. Log streams can
-     * include information about accepted and rejected traffic to a network interface. You can view the data in your log
-     * streams using Amazon CloudWatch Logs.
+     * Launches an EC2 Fleet.
      * </p>
      * <p>
-     * In your request, you must also specify an IAM role that has permission to publish logs to CloudWatch Logs.
+     * You can create a single EC2 Fleet that includes multiple launch specifications that vary by instance type, AMI,
+     * Availability Zone, or subnet.
+     * </p>
+     * <p>
+     * For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet.html">Launching
+     * an EC2 Fleet</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * </p>
+     * 
+     * @param createFleetRequest
+     * @return Result of the CreateFleet operation returned by the service.
+     * @sample AmazonEC2.CreateFleet
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateFleet" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public CreateFleetResult createFleet(CreateFleetRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateFleet(request);
+    }
+
+    @SdkInternalApi
+    final CreateFleetResult executeCreateFleet(CreateFleetRequest createFleetRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createFleetRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateFleetRequest> request = null;
+        Response<CreateFleetResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateFleetRequestMarshaller().marshall(super.beforeMarshalling(createFleetRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateFleet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<CreateFleetResult> responseHandler = new StaxResponseHandler<CreateFleetResult>(new CreateFleetResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates one or more flow logs to capture information about IP traffic for a specific network interface, subnet,
+     * or VPC.
+     * </p>
+     * <p>
+     * Flow log data for a monitored network interface is recorded as flow log records, which are log events consisting
+     * of fields that describe the traffic flow. For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/flow-logs.html#flow-log-records">Flow Log
+     * Records</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
+     * </p>
+     * <p>
+     * When publishing to CloudWatch Logs, flow log records are published to a log group, and each network interface has
+     * a unique log stream in the log group. When publishing to Amazon S3, flow log records for all of the monitored
+     * network interfaces are published to a single log file object that is stored in the specified bucket.
+     * </p>
+     * <p>
+     * For more information, see <a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/flow-logs.html">VPC
+     * Flow Logs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param createFlowLogsRequest
-     *        Contains the parameters for CreateFlowLogs.
      * @return Result of the CreateFlowLogs operation returned by the service.
      * @sample AmazonEC2.CreateFlowLogs
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateFlowLogs" target="_top">AWS API
@@ -2479,6 +3326,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateFlowLogsRequestMarshaller().marshall(super.beforeMarshalling(createFlowLogsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateFlowLogs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2535,6 +3386,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateFpgaImageRequestMarshaller().marshall(super.beforeMarshalling(createFpgaImageRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateFpgaImage");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2562,12 +3417,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html">Creating Amazon EBS-Backed
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html">Creating Amazon EBS-Backed
      * Linux AMIs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param createImageRequest
-     *        Contains the parameters for CreateImage.
      * @return Result of the CreateImage operation returned by the service.
      * @sample AmazonEC2.CreateImage
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateImage" target="_top">AWS API
@@ -2594,6 +3448,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateImageRequestMarshaller().marshall(super.beforeMarshalling(createImageRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateImage");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2616,8 +3474,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * For information about the supported operating systems, image formats, and known limitations for the types of
      * instances you can export, see <a
-     * href="http://docs.aws.amazon.com/vm-import/latest/userguide/vmexport.html">Exporting an Instance as a VM Using VM
-     * Import/Export</a> in the <i>VM Import/Export User Guide</i>.
+     * href="https://docs.aws.amazon.com/vm-import/latest/userguide/vmexport.html">Exporting an Instance as a VM Using
+     * VM Import/Export</a> in the <i>VM Import/Export User Guide</i>.
      * </p>
      * 
      * @param createInstanceExportTaskRequest
@@ -2648,6 +3506,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateInstanceExportTaskRequestMarshaller().marshall(super.beforeMarshalling(createInstanceExportTaskRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateInstanceExportTask");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2666,16 +3528,15 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Creates an Internet gateway for use with a VPC. After creating the Internet gateway, you attach it to a VPC using
+     * Creates an internet gateway for use with a VPC. After creating the internet gateway, you attach it to a VPC using
      * <a>AttachInternetGateway</a>.
      * </p>
      * <p>
-     * For more information about your VPC and Internet gateway, see the <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/">Amazon Virtual Private Cloud User Guide</a>.
+     * For more information about your VPC and internet gateway, see the <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/">Amazon Virtual Private Cloud User Guide</a>.
      * </p>
      * 
      * @param createInternetGatewayRequest
-     *        Contains the parameters for CreateInternetGateway.
      * @return Result of the CreateInternetGateway operation returned by the service.
      * @sample AmazonEC2.CreateInternetGateway
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateInternetGateway" target="_top">AWS API
@@ -2702,6 +3563,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateInternetGatewayRequestMarshaller().marshall(super.beforeMarshalling(createInternetGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateInternetGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2737,12 +3602,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * create your own key pair using a third-party tool and upload it to any region using <a>ImportKeyPair</a>.
      * </p>
      * <p>
-     * For more information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Key
+     * For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Key
      * Pairs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param createKeyPairRequest
-     *        Contains the parameters for CreateKeyPair.
      * @return Result of the CreateKeyPair operation returned by the service.
      * @sample AmazonEC2.CreateKeyPair
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateKeyPair" target="_top">AWS API
@@ -2769,6 +3633,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateKeyPairRequestMarshaller().marshall(super.beforeMarshalling(createKeyPairRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateKeyPair");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2818,6 +3686,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateLaunchTemplateRequestMarshaller().marshall(super.beforeMarshalling(createLaunchTemplateRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateLaunchTemplate");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2871,6 +3743,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateLaunchTemplateVersionRequestMarshaller().marshall(super.beforeMarshalling(createLaunchTemplateVersionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateLaunchTemplateVersion");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2889,15 +3765,15 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Creates a NAT gateway in the specified subnet. A NAT gateway can be used to enable instances in a private subnet
-     * to connect to the Internet. This action creates a network interface in the specified subnet with a private IP
-     * address from the IP address range of the subnet. For more information, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html">NAT Gateways</a> in the
+     * Creates a NAT gateway in the specified public subnet. This action creates a network interface in the specified
+     * subnet with a private IP address from the IP address range of the subnet. Internet-bound traffic from a private
+     * subnet can be routed to the NAT gateway, therefore enabling instances in the private subnet to connect to the
+     * internet. For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html">NAT Gateways</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param createNatGatewayRequest
-     *        Contains the parameters for CreateNatGateway.
      * @return Result of the CreateNatGateway operation returned by the service.
      * @sample AmazonEC2.CreateNatGateway
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNatGateway" target="_top">AWS API
@@ -2924,6 +3800,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateNatGatewayRequestMarshaller().marshall(super.beforeMarshalling(createNatGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateNatGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -2946,13 +3826,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * groups) for the instances in your VPC.
      * </p>
      * <p>
-     * For more information about network ACLs, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network ACLs</a> in the <i>Amazon
-     * Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network
+     * ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param createNetworkAclRequest
-     *        Contains the parameters for CreateNetworkAcl.
      * @return Result of the CreateNetworkAcl operation returned by the service.
      * @sample AmazonEC2.CreateNetworkAcl
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkAcl" target="_top">AWS API
@@ -2979,6 +3857,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateNetworkAclRequestMarshaller().marshall(super.beforeMarshalling(createNetworkAclRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateNetworkAcl");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3013,12 +3895,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about network ACLs, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network ACLs</a> in the <i>Amazon
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network ACLs</a> in the <i>Amazon
      * Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param createNetworkAclEntryRequest
-     *        Contains the parameters for CreateNetworkAclEntry.
      * @return Result of the CreateNetworkAclEntry operation returned by the service.
      * @sample AmazonEC2.CreateNetworkAclEntry
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkAclEntry" target="_top">AWS API
@@ -3045,6 +3926,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateNetworkAclEntryRequestMarshaller().marshall(super.beforeMarshalling(createNetworkAclEntryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateNetworkAclEntry");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3067,7 +3952,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about network interfaces, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html">Elastic Network Interfaces</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html">Elastic Network Interfaces</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
@@ -3099,6 +3984,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateNetworkInterfaceRequestMarshaller().marshall(super.beforeMarshalling(createNetworkInterfaceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateNetworkInterface");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3117,8 +4006,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Grants an AWS authorized partner account permission to attach the specified network interface to an instance in
-     * their account.
+     * Grants an AWS-authorized account permission to attach the specified network interface to an instance in their
+     * account.
      * </p>
      * <p>
      * You can grant permission to a single AWS account only, and only one account at a time.
@@ -3153,6 +4042,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateNetworkInterfacePermissionRequestMarshaller().marshall(super.beforeMarshalling(createNetworkInterfacePermissionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateNetworkInterfacePermission");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3177,16 +4070,16 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * A <code>cluster</code> placement group is a logical grouping of instances within a single Availability Zone that
      * benefit from low network latency, high network throughput. A <code>spread</code> placement group places instances
-     * on distinct hardware.
+     * on distinct hardware. A <code>partition</code> placement group places groups of instances in different
+     * partitions, where instances in one partition do not share the same hardware with instances in another partition.
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html">Placement Groups</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html">Placement Groups</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param createPlacementGroupRequest
-     *        Contains the parameters for CreatePlacementGroup.
      * @return Result of the CreatePlacementGroup operation returned by the service.
      * @sample AmazonEC2.CreatePlacementGroup
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreatePlacementGroup" target="_top">AWS API
@@ -3213,6 +4106,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreatePlacementGroupRequestMarshaller().marshall(super.beforeMarshalling(createPlacementGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreatePlacementGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3237,8 +4134,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <note>
      * <p>
-     * Only Standard Reserved Instances with a capacity reservation can be sold in the Reserved Instance Marketplace.
-     * Convertible Reserved Instances and Standard Reserved Instances with a regional benefit cannot be sold.
+     * Only Standard Reserved Instances can be sold in the Reserved Instance Marketplace. Convertible Reserved Instances
+     * cannot be sold.
      * </p>
      * </note>
      * <p>
@@ -3255,7 +4152,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved Instance
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved Instance
      * Marketplace</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -3287,6 +4184,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateReservedInstancesListingRequestMarshaller().marshall(super.beforeMarshalling(createReservedInstancesListingRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateReservedInstancesListing");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3308,8 +4209,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Creates a route in a route table within a VPC.
      * </p>
      * <p>
-     * You must specify one of the following targets: Internet gateway or virtual private gateway, NAT instance, NAT
-     * gateway, VPC peering connection, network interface, or egress-only Internet gateway.
+     * You must specify one of the following targets: internet gateway or virtual private gateway, NAT instance, NAT
+     * gateway, VPC peering connection, network interface, or egress-only internet gateway.
      * </p>
      * <p>
      * When determining how to route traffic, we use the route with the most specific match. For example, traffic is
@@ -3334,12 +4235,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about route tables, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param createRouteRequest
-     *        Contains the parameters for CreateRoute.
      * @return Result of the CreateRoute operation returned by the service.
      * @sample AmazonEC2.CreateRoute
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateRoute" target="_top">AWS API
@@ -3366,6 +4266,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateRouteRequestMarshaller().marshall(super.beforeMarshalling(createRouteRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3387,13 +4291,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * table with a subnet.
      * </p>
      * <p>
-     * For more information about route tables, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param createRouteTableRequest
-     *        Contains the parameters for CreateRouteTable.
      * @return Result of the CreateRouteTable operation returned by the service.
      * @sample AmazonEC2.CreateRouteTable
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateRouteTable" target="_top">AWS API
@@ -3420,6 +4323,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateRouteTableRequestMarshaller().marshall(super.beforeMarshalling(createRouteTableRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateRouteTable");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3442,9 +4349,9 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * A security group is for use with instances either in the EC2-Classic platform or in a specific VPC. For more
-     * information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html">Amazon
+     * information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html">Amazon
      * EC2 Security Groups</a> in the <i>Amazon Elastic Compute Cloud User Guide</i> and <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html">Security Groups for Your
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html">Security Groups for Your
      * VPC</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * <important>
@@ -3472,7 +4379,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param createSecurityGroupRequest
-     *        Contains the parameters for CreateSecurityGroup.
      * @return Result of the CreateSecurityGroup operation returned by the service.
      * @sample AmazonEC2.CreateSecurityGroup
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateSecurityGroup" target="_top">AWS API
@@ -3499,6 +4405,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateSecurityGroupRequestMarshaller().marshall(super.beforeMarshalling(createSecurityGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateSecurityGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3543,9 +4453,14 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * remain protected.
      * </p>
      * <p>
-     * For more information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html">Amazon
+     * You can tag your snapshots during creation. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Amazon EC2 Resources</a>
+     * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * </p>
+     * <p>
+     * For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html">Amazon
      * Elastic Block Store</a> and <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS Encryption</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS Encryption</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -3577,6 +4492,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateSnapshotRequestMarshaller().marshall(super.beforeMarshalling(createSnapshotRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateSnapshot");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3597,8 +4516,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Creates a data feed for Spot Instances, enabling you to view Spot Instance usage logs. You can create one data
      * feed per AWS account. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html">Spot Instance Data Feed</a> in the
-     * <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html">Spot Instance Data Feed</a> in
+     * the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * </p>
      * 
      * @param createSpotDatafeedSubscriptionRequest
@@ -3629,6 +4548,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateSpotDatafeedSubscriptionRequestMarshaller().marshall(super.beforeMarshalling(createSpotDatafeedSubscriptionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateSpotDatafeedSubscription");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3650,11 +4573,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Creates a subnet in an existing VPC.
      * </p>
      * <p>
-     * When you create each subnet, you provide the VPC ID and the IPv4 CIDR block you want for the subnet. After you
-     * create a subnet, you can't change its CIDR block. The size of the subnet's IPv4 CIDR block can be the same as a
-     * VPC's IPv4 CIDR block, or a subset of a VPC's IPv4 CIDR block. If you create more than one subnet in a VPC, the
-     * subnets' CIDR blocks must not overlap. The smallest IPv4 subnet (and VPC) you can create uses a /28 netmask (16
-     * IPv4 addresses), and the largest uses a /16 netmask (65,536 IPv4 addresses).
+     * When you create each subnet, you provide the VPC ID and IPv4 CIDR block for the subnet. After you create a
+     * subnet, you can't change its CIDR block. The size of the subnet's IPv4 CIDR block can be the same as a VPC's IPv4
+     * CIDR block, or a subset of a VPC's IPv4 CIDR block. If you create more than one subnet in a VPC, the subnets'
+     * CIDR blocks must not overlap. The smallest IPv4 subnet (and VPC) you can create uses a /28 netmask (16 IPv4
+     * addresses), and the largest uses a /16 netmask (65,536 IPv4 addresses).
      * </p>
      * <p>
      * If you've associated an IPv6 CIDR block with your VPC, you can create a subnet with an IPv6 CIDR block that uses
@@ -3677,12 +4600,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about subnets, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html">Your VPC and Subnets</a> in the
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html">Your VPC and Subnets</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param createSubnetRequest
-     *        Contains the parameters for CreateSubnet.
      * @return Result of the CreateSubnet operation returned by the service.
      * @sample AmazonEC2.CreateSubnet
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateSubnet" target="_top">AWS API
@@ -3709,6 +4631,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateSubnetRequestMarshaller().marshall(super.beforeMarshalling(createSubnetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateSubnet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3726,20 +4652,19 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Adds or overwrites one or more tags for the specified Amazon EC2 resource or resources. Each resource can have a
-     * maximum of 50 tags. Each tag consists of a key and optional value. Tag keys must be unique per resource.
+     * Adds or overwrites the specified tags for the specified Amazon EC2 resource or resources. Each resource can have
+     * a maximum of 50 tags. Each tag consists of a key and optional value. Tag keys must be unique per resource.
      * </p>
      * <p>
      * For more information about tags, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Resources</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Resources</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>. For more information about creating IAM policies that control
      * users' access to resources based on tags, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html">Supported
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html">Supported
      * Resource-Level Permissions for Amazon EC2 API Actions</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param createTagsRequest
-     *        Contains the parameters for CreateTags.
      * @return Result of the CreateTags operation returned by the service.
      * @sample AmazonEC2.CreateTags
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateTags" target="_top">AWS API
@@ -3766,6 +4691,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateTagsRequestMarshaller().marshall(super.beforeMarshalling(createTagsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateTags");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3783,9 +4712,246 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Creates a transit gateway.
+     * </p>
+     * <p>
+     * You can use a transit gateway to interconnect your virtual private clouds (VPC) and on-premises networks. After
+     * the transit gateway enters the <code>available</code> state, you can attach your VPCs and VPN connections to the
+     * transit gateway.
+     * </p>
+     * <p>
+     * To attach your VPCs, use <a>CreateTransitGatewayVpcAttachment</a>.
+     * </p>
+     * <p>
+     * To attach a VPN connection, use <a>CreateCustomerGateway</a> to create a customer gateway and specify the ID of
+     * the customer gateway and the ID of the transit gateway in a call to <a>CreateVpnConnection</a>.
+     * </p>
+     * <p>
+     * When you create a transit gateway, we create a default transit gateway route table and use it as the default
+     * association route table and the default propagation route table. You can use
+     * <a>CreateTransitGatewayRouteTable</a> to create additional transit gateway route tables. If you disable automatic
+     * route propagation, we do not create a default transit gateway route table. You can use
+     * <a>EnableTransitGatewayRouteTablePropagation</a> to propagate routes from a resource attachment to a transit
+     * gateway route table. If you disable automatic associations, you can use <a>AssociateTransitGatewayRouteTable</a>
+     * to associate a resource attachment with a transit gateway route table.
+     * </p>
+     * 
+     * @param createTransitGatewayRequest
+     * @return Result of the CreateTransitGateway operation returned by the service.
+     * @sample AmazonEC2.CreateTransitGateway
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateTransitGateway" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public CreateTransitGatewayResult createTransitGateway(CreateTransitGatewayRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateTransitGateway(request);
+    }
+
+    @SdkInternalApi
+    final CreateTransitGatewayResult executeCreateTransitGateway(CreateTransitGatewayRequest createTransitGatewayRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createTransitGatewayRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateTransitGatewayRequest> request = null;
+        Response<CreateTransitGatewayResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateTransitGatewayRequestMarshaller().marshall(super.beforeMarshalling(createTransitGatewayRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateTransitGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<CreateTransitGatewayResult> responseHandler = new StaxResponseHandler<CreateTransitGatewayResult>(
+                    new CreateTransitGatewayResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a static route for the specified transit gateway route table.
+     * </p>
+     * 
+     * @param createTransitGatewayRouteRequest
+     * @return Result of the CreateTransitGatewayRoute operation returned by the service.
+     * @sample AmazonEC2.CreateTransitGatewayRoute
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateTransitGatewayRoute" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public CreateTransitGatewayRouteResult createTransitGatewayRoute(CreateTransitGatewayRouteRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateTransitGatewayRoute(request);
+    }
+
+    @SdkInternalApi
+    final CreateTransitGatewayRouteResult executeCreateTransitGatewayRoute(CreateTransitGatewayRouteRequest createTransitGatewayRouteRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createTransitGatewayRouteRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateTransitGatewayRouteRequest> request = null;
+        Response<CreateTransitGatewayRouteResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateTransitGatewayRouteRequestMarshaller().marshall(super.beforeMarshalling(createTransitGatewayRouteRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateTransitGatewayRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<CreateTransitGatewayRouteResult> responseHandler = new StaxResponseHandler<CreateTransitGatewayRouteResult>(
+                    new CreateTransitGatewayRouteResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a route table for the specified transit gateway.
+     * </p>
+     * 
+     * @param createTransitGatewayRouteTableRequest
+     * @return Result of the CreateTransitGatewayRouteTable operation returned by the service.
+     * @sample AmazonEC2.CreateTransitGatewayRouteTable
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateTransitGatewayRouteTable"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public CreateTransitGatewayRouteTableResult createTransitGatewayRouteTable(CreateTransitGatewayRouteTableRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateTransitGatewayRouteTable(request);
+    }
+
+    @SdkInternalApi
+    final CreateTransitGatewayRouteTableResult executeCreateTransitGatewayRouteTable(CreateTransitGatewayRouteTableRequest createTransitGatewayRouteTableRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createTransitGatewayRouteTableRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateTransitGatewayRouteTableRequest> request = null;
+        Response<CreateTransitGatewayRouteTableResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateTransitGatewayRouteTableRequestMarshaller().marshall(super.beforeMarshalling(createTransitGatewayRouteTableRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateTransitGatewayRouteTable");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<CreateTransitGatewayRouteTableResult> responseHandler = new StaxResponseHandler<CreateTransitGatewayRouteTableResult>(
+                    new CreateTransitGatewayRouteTableResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Attaches the specified VPC to the specified transit gateway.
+     * </p>
+     * <p>
+     * If you attach a VPC with a CIDR range that overlaps the CIDR range of a VPC that is already attached, the new VPC
+     * CIDR range is not propagated to the default propagation route table.
+     * </p>
+     * <p>
+     * To send VPC traffic to an attached transit gateway, add a route to the VPC route table using <a>CreateRoute</a>.
+     * </p>
+     * 
+     * @param createTransitGatewayVpcAttachmentRequest
+     * @return Result of the CreateTransitGatewayVpcAttachment operation returned by the service.
+     * @sample AmazonEC2.CreateTransitGatewayVpcAttachment
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateTransitGatewayVpcAttachment"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public CreateTransitGatewayVpcAttachmentResult createTransitGatewayVpcAttachment(CreateTransitGatewayVpcAttachmentRequest request) {
+        request = beforeClientExecution(request);
+        return executeCreateTransitGatewayVpcAttachment(request);
+    }
+
+    @SdkInternalApi
+    final CreateTransitGatewayVpcAttachmentResult executeCreateTransitGatewayVpcAttachment(
+            CreateTransitGatewayVpcAttachmentRequest createTransitGatewayVpcAttachmentRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(createTransitGatewayVpcAttachmentRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateTransitGatewayVpcAttachmentRequest> request = null;
+        Response<CreateTransitGatewayVpcAttachmentResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateTransitGatewayVpcAttachmentRequestMarshaller().marshall(super.beforeMarshalling(createTransitGatewayVpcAttachmentRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateTransitGatewayVpcAttachment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<CreateTransitGatewayVpcAttachmentResult> responseHandler = new StaxResponseHandler<CreateTransitGatewayVpcAttachmentResult>(
+                    new CreateTransitGatewayVpcAttachmentResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Creates an EBS volume that can be attached to an instance in the same Availability Zone. The volume is created in
      * the regional endpoint that you send the HTTP request to. For more information see <a
-     * href="http://docs.aws.amazon.com/general/latest/gr/rande.html">Regions and Endpoints</a>.
+     * href="https://docs.aws.amazon.com/general/latest/gr/rande.html">Regions and Endpoints</a>.
      * </p>
      * <p>
      * You can create a new empty volume or restore a volume from an EBS snapshot. Any AWS Marketplace product codes
@@ -3795,16 +4961,17 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * You can create encrypted volumes with the <code>Encrypted</code> parameter. Encrypted volumes may only be
      * attached to instances that support Amazon EBS encryption. Volumes that are created from encrypted snapshots are
      * also automatically encrypted. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS Encryption</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS Encryption</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
      * You can tag your volumes during creation. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Amazon EC2 Resources</a>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Amazon EC2 Resources</a>
+     * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html">Creating an Amazon EBS
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html">Creating an Amazon EBS
      * Volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -3836,6 +5003,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateVolumeRequestMarshaller().marshall(super.beforeMarshalling(createVolumeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateVolume");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3854,8 +5025,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Creates a VPC with the specified IPv4 CIDR block. The smallest VPC you can create uses a /28 netmask (16 IPv4
-     * addresses), and the largest uses a /16 netmask (65,536 IPv4 addresses). To help you decide how big to make your
-     * VPC, see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html">Your VPC and
+     * addresses), and the largest uses a /16 netmask (65,536 IPv4 addresses). For more information about how large to
+     * make your VPC, see <a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html">Your VPC and
      * Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * <p>
@@ -3863,20 +5034,19 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * length, and is allocated from Amazon's pool of IPv6 addresses. You cannot choose the IPv6 range for your VPC.
      * </p>
      * <p>
-     * By default, each instance you launch in the VPC has the default DHCP options, which includes only a default DNS
-     * server that we provide (AmazonProvidedDNS). For more information about DHCP options, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html">DHCP Options Sets</a> in the
+     * By default, each instance you launch in the VPC has the default DHCP options, which include only a default DNS
+     * server that we provide (AmazonProvidedDNS). For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html">DHCP Options Sets</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * <p>
      * You can specify the instance tenancy value for the VPC when you create it. You can't change this value for the
      * VPC after you create it. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html">Dedicated Instances</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html">Dedicated Instances</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param createVpcRequest
-     *        Contains the parameters for CreateVpc.
      * @return Result of the CreateVpc operation returned by the service.
      * @sample AmazonEC2.CreateVpc
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVpc" target="_top">AWS API
@@ -3903,6 +5073,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateVpcRequestMarshaller().marshall(super.beforeMarshalling(createVpcRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateVpc");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3922,7 +5096,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Creates a VPC endpoint for a specified service. An endpoint enables you to create a private connection between
      * your VPC and the service. The service may be provided by AWS, an AWS Marketplace partner, or another AWS account.
-     * For more information, see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html">VPC
+     * For more information, see <a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html">VPC
      * Endpoints</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * <p>
@@ -3967,6 +5141,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateVpcEndpointRequestMarshaller().marshall(super.beforeMarshalling(createVpcEndpointRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateVpcEndpoint");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -3987,7 +5165,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Creates a connection notification for a specified VPC endpoint or VPC endpoint service. A connection notification
      * notifies you of specific endpoint events. You must create an SNS topic to receive notifications. For more
-     * information, see <a href="http://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html">Create a Topic</a> in the
+     * information, see <a href="https://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html">Create a Topic</a> in the
      * <i>Amazon Simple Notification Service Developer Guide</i>.
      * </p>
      * <p>
@@ -4023,6 +5201,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(createVpcEndpointConnectionNotificationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateVpcEndpointConnectionNotification");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4046,7 +5228,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * To create an endpoint service configuration, you must first create a Network Load Balancer for your service. For
-     * more information, see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/endpoint-service.html">VPC
+     * more information, see <a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/endpoint-service.html">VPC
      * Endpoint Services</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
@@ -4079,6 +5261,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(createVpcEndpointServiceConfigurationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateVpcEndpointServiceConfiguration");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4098,9 +5284,16 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Requests a VPC peering connection between two VPCs: a requester VPC that you own and an accepter VPC with which
-     * to create the connection. The accepter VPC can belong to another AWS account and can be in a different region to
+     * to create the connection. The accepter VPC can belong to another AWS account and can be in a different Region to
      * the requester VPC. The requester VPC and accepter VPC cannot have overlapping CIDR blocks.
      * </p>
+     * <note>
+     * <p>
+     * Limitations and rules apply to a VPC peering connection. For more information, see the <a href=
+     * "https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/vpc-peering-basics.html#vpc-peering-limitations"
+     * >limitations</a> section in the <i>VPC Peering Guide</i>.
+     * </p>
+     * </note>
      * <p>
      * The owner of the accepter VPC must accept the peering request to activate the peering connection. The VPC peering
      * connection request expires after 7 days, after which it cannot be accepted or rejected.
@@ -4111,7 +5304,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param createVpcPeeringConnectionRequest
-     *        Contains the parameters for CreateVpcPeeringConnection.
      * @return Result of the CreateVpcPeeringConnection operation returned by the service.
      * @sample AmazonEC2.CreateVpcPeeringConnection
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVpcPeeringConnection" target="_top">AWS
@@ -4138,6 +5330,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateVpcPeeringConnectionRequestMarshaller().marshall(super.beforeMarshalling(createVpcPeeringConnectionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateVpcPeeringConnection");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4182,8 +5378,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error.
      * </p>
      * <p>
-     * For more information, see <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html">AWS
-     * Managed VPN Connections</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html">AWS Site-to-Site
+     * VPN</a> in the <i>AWS Site-to-Site VPN User Guide</i>.
      * </p>
      * 
      * @param createVpnConnectionRequest
@@ -4214,6 +5410,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateVpnConnectionRequestMarshaller().marshall(super.beforeMarshalling(createVpnConnectionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateVpnConnection");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4237,9 +5437,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * customer gateway.
      * </p>
      * <p>
-     * For more information about VPN connections, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html">AWS Managed VPN Connections</a> in the
-     * <i>Amazon Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html">AWS Site-to-Site
+     * VPN</a> in the <i>AWS Site-to-Site VPN User Guide</i>.
      * </p>
      * 
      * @param createVpnConnectionRouteRequest
@@ -4270,6 +5469,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateVpnConnectionRouteRequestMarshaller().marshall(super.beforeMarshalling(createVpnConnectionRouteRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateVpnConnectionRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4292,9 +5495,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * connection. You can create a virtual private gateway before creating the VPC itself.
      * </p>
      * <p>
-     * For more information about virtual private gateways, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html">AWS Managed VPN Connections</a> in the
-     * <i>Amazon Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html">AWS Site-to-Site
+     * VPN</a> in the <i>AWS Site-to-Site VPN User Guide</i>.
      * </p>
      * 
      * @param createVpnGatewayRequest
@@ -4325,12 +5527,124 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new CreateVpnGatewayRequestMarshaller().marshall(super.beforeMarshalling(createVpnGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "CreateVpnGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<CreateVpnGatewayResult> responseHandler = new StaxResponseHandler<CreateVpnGatewayResult>(
                     new CreateVpnGatewayResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes the specified Client VPN endpoint. You must disassociate all target networks before you can delete a
+     * Client VPN endpoint.
+     * </p>
+     * 
+     * @param deleteClientVpnEndpointRequest
+     * @return Result of the DeleteClientVpnEndpoint operation returned by the service.
+     * @sample AmazonEC2.DeleteClientVpnEndpoint
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteClientVpnEndpoint" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DeleteClientVpnEndpointResult deleteClientVpnEndpoint(DeleteClientVpnEndpointRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteClientVpnEndpoint(request);
+    }
+
+    @SdkInternalApi
+    final DeleteClientVpnEndpointResult executeDeleteClientVpnEndpoint(DeleteClientVpnEndpointRequest deleteClientVpnEndpointRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteClientVpnEndpointRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteClientVpnEndpointRequest> request = null;
+        Response<DeleteClientVpnEndpointResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteClientVpnEndpointRequestMarshaller().marshall(super.beforeMarshalling(deleteClientVpnEndpointRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteClientVpnEndpoint");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DeleteClientVpnEndpointResult> responseHandler = new StaxResponseHandler<DeleteClientVpnEndpointResult>(
+                    new DeleteClientVpnEndpointResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes a route from a Client VPN endpoint. You can only delete routes that you manually added using the
+     * <b>CreateClientVpnRoute</b> action. You cannot delete routes that were automatically added when associating a
+     * subnet. To remove routes that have been automatically added, disassociate the target subnet from the Client VPN
+     * endpoint.
+     * </p>
+     * 
+     * @param deleteClientVpnRouteRequest
+     * @return Result of the DeleteClientVpnRoute operation returned by the service.
+     * @sample AmazonEC2.DeleteClientVpnRoute
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteClientVpnRoute" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public DeleteClientVpnRouteResult deleteClientVpnRoute(DeleteClientVpnRouteRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteClientVpnRoute(request);
+    }
+
+    @SdkInternalApi
+    final DeleteClientVpnRouteResult executeDeleteClientVpnRoute(DeleteClientVpnRouteRequest deleteClientVpnRouteRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteClientVpnRouteRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteClientVpnRouteRequest> request = null;
+        Response<DeleteClientVpnRouteResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteClientVpnRouteRequestMarshaller().marshall(super.beforeMarshalling(deleteClientVpnRouteRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteClientVpnRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DeleteClientVpnRouteResult> responseHandler = new StaxResponseHandler<DeleteClientVpnRouteResult>(
+                    new DeleteClientVpnRouteResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -4375,6 +5689,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteCustomerGatewayRequestMarshaller().marshall(super.beforeMarshalling(deleteCustomerGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteCustomerGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4399,7 +5717,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteDhcpOptionsRequest
-     *        Contains the parameters for DeleteDhcpOptions.
      * @return Result of the DeleteDhcpOptions operation returned by the service.
      * @sample AmazonEC2.DeleteDhcpOptions
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteDhcpOptions" target="_top">AWS API
@@ -4426,6 +5743,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteDhcpOptionsRequestMarshaller().marshall(super.beforeMarshalling(deleteDhcpOptionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteDhcpOptions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4444,7 +5765,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Deletes an egress-only Internet gateway.
+     * Deletes an egress-only internet gateway.
      * </p>
      * 
      * @param deleteEgressOnlyInternetGatewayRequest
@@ -4475,6 +5796,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteEgressOnlyInternetGatewayRequestMarshaller().marshall(super.beforeMarshalling(deleteEgressOnlyInternetGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteEgressOnlyInternetGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4493,11 +5818,67 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Deletes the specified EC2 Fleet.
+     * </p>
+     * <p>
+     * After you delete an EC2 Fleet, it launches no new instances. You must specify whether an EC2 Fleet should also
+     * terminate its instances. If you terminate the instances, the EC2 Fleet enters the
+     * <code>deleted_terminating</code> state. Otherwise, the EC2 Fleet enters the <code>deleted_running</code> state,
+     * and the instances continue to run until they are interrupted or you terminate them manually.
+     * </p>
+     * 
+     * @param deleteFleetsRequest
+     * @return Result of the DeleteFleets operation returned by the service.
+     * @sample AmazonEC2.DeleteFleets
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteFleets" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public DeleteFleetsResult deleteFleets(DeleteFleetsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteFleets(request);
+    }
+
+    @SdkInternalApi
+    final DeleteFleetsResult executeDeleteFleets(DeleteFleetsRequest deleteFleetsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteFleetsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteFleetsRequest> request = null;
+        Response<DeleteFleetsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteFleetsRequestMarshaller().marshall(super.beforeMarshalling(deleteFleetsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteFleets");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DeleteFleetsResult> responseHandler = new StaxResponseHandler<DeleteFleetsResult>(new DeleteFleetsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Deletes one or more flow logs.
      * </p>
      * 
      * @param deleteFlowLogsRequest
-     *        Contains the parameters for DeleteFlowLogs.
      * @return Result of the DeleteFlowLogs operation returned by the service.
      * @sample AmazonEC2.DeleteFlowLogs
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteFlowLogs" target="_top">AWS API
@@ -4524,6 +5905,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteFlowLogsRequestMarshaller().marshall(super.beforeMarshalling(deleteFlowLogsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteFlowLogs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4572,6 +5957,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteFpgaImageRequestMarshaller().marshall(super.beforeMarshalling(deleteFpgaImageRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteFpgaImage");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4590,12 +5979,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Deletes the specified Internet gateway. You must detach the Internet gateway from the VPC before you can delete
+     * Deletes the specified internet gateway. You must detach the internet gateway from the VPC before you can delete
      * it.
      * </p>
      * 
      * @param deleteInternetGatewayRequest
-     *        Contains the parameters for DeleteInternetGateway.
      * @return Result of the DeleteInternetGateway operation returned by the service.
      * @sample AmazonEC2.DeleteInternetGateway
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteInternetGateway" target="_top">AWS API
@@ -4622,6 +6010,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteInternetGatewayRequestMarshaller().marshall(super.beforeMarshalling(deleteInternetGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteInternetGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4644,7 +6036,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteKeyPairRequest
-     *        Contains the parameters for DeleteKeyPair.
      * @return Result of the DeleteKeyPair operation returned by the service.
      * @sample AmazonEC2.DeleteKeyPair
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteKeyPair" target="_top">AWS API
@@ -4671,6 +6062,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteKeyPairRequestMarshaller().marshall(super.beforeMarshalling(deleteKeyPairRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteKeyPair");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4718,6 +6113,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteLaunchTemplateRequestMarshaller().marshall(super.beforeMarshalling(deleteLaunchTemplateRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteLaunchTemplate");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4768,6 +6167,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteLaunchTemplateVersionsRequestMarshaller().marshall(super.beforeMarshalling(deleteLaunchTemplateVersionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteLaunchTemplateVersions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4792,7 +6195,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteNatGatewayRequest
-     *        Contains the parameters for DeleteNatGateway.
      * @return Result of the DeleteNatGateway operation returned by the service.
      * @sample AmazonEC2.DeleteNatGateway
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNatGateway" target="_top">AWS API
@@ -4819,6 +6221,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteNatGatewayRequestMarshaller().marshall(super.beforeMarshalling(deleteNatGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteNatGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4842,7 +6248,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteNetworkAclRequest
-     *        Contains the parameters for DeleteNetworkAcl.
      * @return Result of the DeleteNetworkAcl operation returned by the service.
      * @sample AmazonEC2.DeleteNetworkAcl
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNetworkAcl" target="_top">AWS API
@@ -4869,6 +6274,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteNetworkAclRequestMarshaller().marshall(super.beforeMarshalling(deleteNetworkAclRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteNetworkAcl");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4891,7 +6300,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteNetworkAclEntryRequest
-     *        Contains the parameters for DeleteNetworkAclEntry.
      * @return Result of the DeleteNetworkAclEntry operation returned by the service.
      * @sample AmazonEC2.DeleteNetworkAclEntry
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNetworkAclEntry" target="_top">AWS API
@@ -4918,6 +6326,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteNetworkAclEntryRequestMarshaller().marshall(super.beforeMarshalling(deleteNetworkAclEntryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteNetworkAclEntry");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -4967,6 +6379,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteNetworkInterfaceRequestMarshaller().marshall(super.beforeMarshalling(deleteNetworkInterfaceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteNetworkInterface");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5019,6 +6435,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteNetworkInterfacePermissionRequestMarshaller().marshall(super.beforeMarshalling(deleteNetworkInterfacePermissionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteNetworkInterfacePermission");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5039,12 +6459,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Deletes the specified placement group. You must terminate all instances in the placement group before you can
      * delete the placement group. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html">Placement Groups</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html">Placement Groups</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param deletePlacementGroupRequest
-     *        Contains the parameters for DeletePlacementGroup.
      * @return Result of the DeletePlacementGroup operation returned by the service.
      * @sample AmazonEC2.DeletePlacementGroup
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeletePlacementGroup" target="_top">AWS API
@@ -5071,6 +6490,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeletePlacementGroupRequestMarshaller().marshall(super.beforeMarshalling(deletePlacementGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeletePlacementGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5093,7 +6516,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteRouteRequest
-     *        Contains the parameters for DeleteRoute.
      * @return Result of the DeleteRoute operation returned by the service.
      * @sample AmazonEC2.DeleteRoute
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteRoute" target="_top">AWS API
@@ -5120,6 +6542,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteRouteRequestMarshaller().marshall(super.beforeMarshalling(deleteRouteRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5142,7 +6568,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteRouteTableRequest
-     *        Contains the parameters for DeleteRouteTable.
      * @return Result of the DeleteRouteTable operation returned by the service.
      * @sample AmazonEC2.DeleteRouteTable
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteRouteTable" target="_top">AWS API
@@ -5169,6 +6594,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteRouteTableRequestMarshaller().marshall(super.beforeMarshalling(deleteRouteTableRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteRouteTable");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5196,7 +6625,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteSecurityGroupRequest
-     *        Contains the parameters for DeleteSecurityGroup.
      * @return Result of the DeleteSecurityGroup operation returned by the service.
      * @sample AmazonEC2.DeleteSecurityGroup
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteSecurityGroup" target="_top">AWS API
@@ -5223,6 +6651,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteSecurityGroupRequestMarshaller().marshall(super.beforeMarshalling(deleteSecurityGroupRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteSecurityGroup");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5255,7 +6687,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-deleting-snapshot.html">Deleting an Amazon EBS
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-deleting-snapshot.html">Deleting an Amazon EBS
      * Snapshot</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -5287,6 +6719,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteSnapshotRequestMarshaller().marshall(super.beforeMarshalling(deleteSnapshotRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteSnapshot");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5336,6 +6772,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteSpotDatafeedSubscriptionRequestMarshaller().marshall(super.beforeMarshalling(deleteSpotDatafeedSubscriptionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteSpotDatafeedSubscription");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5364,7 +6804,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteSubnetRequest
-     *        Contains the parameters for DeleteSubnet.
      * @return Result of the DeleteSubnet operation returned by the service.
      * @sample AmazonEC2.DeleteSubnet
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteSubnet" target="_top">AWS API
@@ -5391,6 +6830,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteSubnetRequestMarshaller().marshall(super.beforeMarshalling(deleteSubnetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteSubnet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5412,12 +6855,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * To list the current tags, use <a>DescribeTags</a>. For more information about tags, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Resources</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Resources</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param deleteTagsRequest
-     *        Contains the parameters for DeleteTags.
      * @return Result of the DeleteTags operation returned by the service.
      * @sample AmazonEC2.DeleteTags
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteTags" target="_top">AWS API
@@ -5444,6 +6886,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteTagsRequestMarshaller().marshall(super.beforeMarshalling(deleteTagsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteTags");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5461,17 +6907,225 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Deletes the specified transit gateway.
+     * </p>
+     * 
+     * @param deleteTransitGatewayRequest
+     * @return Result of the DeleteTransitGateway operation returned by the service.
+     * @sample AmazonEC2.DeleteTransitGateway
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteTransitGateway" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public DeleteTransitGatewayResult deleteTransitGateway(DeleteTransitGatewayRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteTransitGateway(request);
+    }
+
+    @SdkInternalApi
+    final DeleteTransitGatewayResult executeDeleteTransitGateway(DeleteTransitGatewayRequest deleteTransitGatewayRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteTransitGatewayRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteTransitGatewayRequest> request = null;
+        Response<DeleteTransitGatewayResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteTransitGatewayRequestMarshaller().marshall(super.beforeMarshalling(deleteTransitGatewayRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteTransitGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DeleteTransitGatewayResult> responseHandler = new StaxResponseHandler<DeleteTransitGatewayResult>(
+                    new DeleteTransitGatewayResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes the specified route from the specified transit gateway route table.
+     * </p>
+     * 
+     * @param deleteTransitGatewayRouteRequest
+     * @return Result of the DeleteTransitGatewayRoute operation returned by the service.
+     * @sample AmazonEC2.DeleteTransitGatewayRoute
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteTransitGatewayRoute" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DeleteTransitGatewayRouteResult deleteTransitGatewayRoute(DeleteTransitGatewayRouteRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteTransitGatewayRoute(request);
+    }
+
+    @SdkInternalApi
+    final DeleteTransitGatewayRouteResult executeDeleteTransitGatewayRoute(DeleteTransitGatewayRouteRequest deleteTransitGatewayRouteRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteTransitGatewayRouteRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteTransitGatewayRouteRequest> request = null;
+        Response<DeleteTransitGatewayRouteResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteTransitGatewayRouteRequestMarshaller().marshall(super.beforeMarshalling(deleteTransitGatewayRouteRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteTransitGatewayRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DeleteTransitGatewayRouteResult> responseHandler = new StaxResponseHandler<DeleteTransitGatewayRouteResult>(
+                    new DeleteTransitGatewayRouteResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes the specified transit gateway route table. You must disassociate the route table from any transit gateway
+     * route tables before you can delete it.
+     * </p>
+     * 
+     * @param deleteTransitGatewayRouteTableRequest
+     * @return Result of the DeleteTransitGatewayRouteTable operation returned by the service.
+     * @sample AmazonEC2.DeleteTransitGatewayRouteTable
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteTransitGatewayRouteTable"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DeleteTransitGatewayRouteTableResult deleteTransitGatewayRouteTable(DeleteTransitGatewayRouteTableRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteTransitGatewayRouteTable(request);
+    }
+
+    @SdkInternalApi
+    final DeleteTransitGatewayRouteTableResult executeDeleteTransitGatewayRouteTable(DeleteTransitGatewayRouteTableRequest deleteTransitGatewayRouteTableRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteTransitGatewayRouteTableRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteTransitGatewayRouteTableRequest> request = null;
+        Response<DeleteTransitGatewayRouteTableResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteTransitGatewayRouteTableRequestMarshaller().marshall(super.beforeMarshalling(deleteTransitGatewayRouteTableRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteTransitGatewayRouteTable");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DeleteTransitGatewayRouteTableResult> responseHandler = new StaxResponseHandler<DeleteTransitGatewayRouteTableResult>(
+                    new DeleteTransitGatewayRouteTableResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes the specified VPC attachment.
+     * </p>
+     * 
+     * @param deleteTransitGatewayVpcAttachmentRequest
+     * @return Result of the DeleteTransitGatewayVpcAttachment operation returned by the service.
+     * @sample AmazonEC2.DeleteTransitGatewayVpcAttachment
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteTransitGatewayVpcAttachment"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DeleteTransitGatewayVpcAttachmentResult deleteTransitGatewayVpcAttachment(DeleteTransitGatewayVpcAttachmentRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeleteTransitGatewayVpcAttachment(request);
+    }
+
+    @SdkInternalApi
+    final DeleteTransitGatewayVpcAttachmentResult executeDeleteTransitGatewayVpcAttachment(
+            DeleteTransitGatewayVpcAttachmentRequest deleteTransitGatewayVpcAttachmentRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deleteTransitGatewayVpcAttachmentRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteTransitGatewayVpcAttachmentRequest> request = null;
+        Response<DeleteTransitGatewayVpcAttachmentResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteTransitGatewayVpcAttachmentRequestMarshaller().marshall(super.beforeMarshalling(deleteTransitGatewayVpcAttachmentRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteTransitGatewayVpcAttachment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DeleteTransitGatewayVpcAttachmentResult> responseHandler = new StaxResponseHandler<DeleteTransitGatewayVpcAttachmentResult>(
+                    new DeleteTransitGatewayVpcAttachmentResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Deletes the specified EBS volume. The volume must be in the <code>available</code> state (not attached to an
      * instance).
      * </p>
-     * <note>
      * <p>
-     * The volume may remain in the <code>deleting</code> state for several minutes.
+     * The volume can remain in the <code>deleting</code> state for several minutes.
      * </p>
-     * </note>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-deleting-volume.html">Deleting an Amazon EBS
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-deleting-volume.html">Deleting an Amazon EBS
      * Volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -5503,6 +7157,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteVolumeRequestMarshaller().marshall(super.beforeMarshalling(deleteVolumeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVolume");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5527,7 +7185,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param deleteVpcRequest
-     *        Contains the parameters for DeleteVpc.
      * @return Result of the DeleteVpc operation returned by the service.
      * @sample AmazonEC2.DeleteVpc
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteVpc" target="_top">AWS API
@@ -5554,6 +7211,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteVpcRequestMarshaller().marshall(super.beforeMarshalling(deleteVpcRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVpc");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5603,6 +7264,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(deleteVpcEndpointConnectionNotificationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVpcEndpointConnectionNotifications");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5655,6 +7320,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(deleteVpcEndpointServiceConfigurationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVpcEndpointServiceConfigurations");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5706,6 +7375,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteVpcEndpointsRequestMarshaller().marshall(super.beforeMarshalling(deleteVpcEndpointsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVpcEndpoints");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5726,11 +7399,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Deletes a VPC peering connection. Either the owner of the requester VPC or the owner of the accepter VPC can
      * delete the VPC peering connection if it's in the <code>active</code> state. The owner of the requester VPC can
-     * delete a VPC peering connection in the <code>pending-acceptance</code> state.
+     * delete a VPC peering connection in the <code>pending-acceptance</code> state. You cannot delete a VPC peering
+     * connection that's in the <code>failed</code> state.
      * </p>
      * 
      * @param deleteVpcPeeringConnectionRequest
-     *        Contains the parameters for DeleteVpcPeeringConnection.
      * @return Result of the DeleteVpcPeeringConnection operation returned by the service.
      * @sample AmazonEC2.DeleteVpcPeeringConnection
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteVpcPeeringConnection" target="_top">AWS
@@ -5757,6 +7430,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteVpcPeeringConnectionRequestMarshaller().marshall(super.beforeMarshalling(deleteVpcPeeringConnectionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVpcPeeringConnection");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5814,6 +7491,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteVpnConnectionRequestMarshaller().marshall(super.beforeMarshalling(deleteVpnConnectionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVpnConnection");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5865,6 +7546,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteVpnConnectionRouteRequestMarshaller().marshall(super.beforeMarshalling(deleteVpnConnectionRouteRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVpnConnectionRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -5916,12 +7601,73 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeleteVpnGatewayRequestMarshaller().marshall(super.beforeMarshalling(deleteVpnGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeleteVpnGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<DeleteVpnGatewayResult> responseHandler = new StaxResponseHandler<DeleteVpnGatewayResult>(
                     new DeleteVpnGatewayResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Releases the specified address range that you provisioned for use with your AWS resources through bring your own
+     * IP addresses (BYOIP) and deletes the corresponding address pool.
+     * </p>
+     * <p>
+     * Before you can release an address range, you must stop advertising it using <a>WithdrawByoipCidr</a> and you must
+     * not have any IP addresses allocated from its address range.
+     * </p>
+     * 
+     * @param deprovisionByoipCidrRequest
+     * @return Result of the DeprovisionByoipCidr operation returned by the service.
+     * @sample AmazonEC2.DeprovisionByoipCidr
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeprovisionByoipCidr" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public DeprovisionByoipCidrResult deprovisionByoipCidr(DeprovisionByoipCidrRequest request) {
+        request = beforeClientExecution(request);
+        return executeDeprovisionByoipCidr(request);
+    }
+
+    @SdkInternalApi
+    final DeprovisionByoipCidrResult executeDeprovisionByoipCidr(DeprovisionByoipCidrRequest deprovisionByoipCidrRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(deprovisionByoipCidrRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeprovisionByoipCidrRequest> request = null;
+        Response<DeprovisionByoipCidrResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeprovisionByoipCidrRequestMarshaller().marshall(super.beforeMarshalling(deprovisionByoipCidrRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeprovisionByoipCidr");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DeprovisionByoipCidrResult> responseHandler = new StaxResponseHandler<DeprovisionByoipCidrResult>(
+                    new DeprovisionByoipCidrResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -5972,6 +7718,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DeregisterImageRequestMarshaller().marshall(super.beforeMarshalling(deregisterImageRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DeregisterImage");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6006,7 +7756,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </li>
      * <li>
      * <p>
-     * <code>max-instances</code>: The maximum number of On-Demand instances that you can run.
+     * <code>max-instances</code>: The maximum number of On-Demand Instances that you can run.
      * </p>
      * </li>
      * <li>
@@ -6030,7 +7780,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </ul>
      * 
      * @param describeAccountAttributesRequest
-     *        Contains the parameters for DescribeAccountAttributes.
      * @return Result of the DescribeAccountAttributes operation returned by the service.
      * @sample AmazonEC2.DescribeAccountAttributes
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeAccountAttributes" target="_top">AWS
@@ -6057,6 +7806,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeAccountAttributesRequestMarshaller().marshall(super.beforeMarshalling(describeAccountAttributesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeAccountAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6080,16 +7833,15 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of your Elastic IP addresses.
+     * Describes the specified Elastic IP addresses or all of your Elastic IP addresses.
      * </p>
      * <p>
      * An Elastic IP address is for use in either the EC2-Classic platform or in a VPC. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
      * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeAddressesRequest
-     *        Contains the parameters for DescribeAddresses.
      * @return Result of the DescribeAddresses operation returned by the service.
      * @sample AmazonEC2.DescribeAddresses
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeAddresses" target="_top">AWS API
@@ -6116,6 +7868,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeAddressesRequestMarshaller().marshall(super.beforeMarshalling(describeAddressesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeAddresses");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6139,18 +7895,86 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of the Availability Zones that are available to you. The results include zones only for the
-     * region you're currently using. If there is an event impacting an Availability Zone, you can use this request to
-     * view the state and any provided message for that Availability Zone.
+     * Describes the longer ID format settings for all resource types in a specific region. This request is useful for
+     * performing a quick audit to determine whether a specific region is fully opted in for longer IDs (17-character
+     * IDs).
+     * </p>
+     * <p>
+     * This request only returns information about resource types that support longer IDs.
+     * </p>
+     * <p>
+     * The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> |
+     * <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> |
+     * <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> |
+     * <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> |
+     * <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code>
+     * | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> |
+     * <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code>
+     * | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> |
+     * <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> |
+     * <code>vpn-connection</code> | <code>vpn-gateway</code>.
+     * </p>
+     * 
+     * @param describeAggregateIdFormatRequest
+     * @return Result of the DescribeAggregateIdFormat operation returned by the service.
+     * @sample AmazonEC2.DescribeAggregateIdFormat
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeAggregateIdFormat" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DescribeAggregateIdFormatResult describeAggregateIdFormat(DescribeAggregateIdFormatRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeAggregateIdFormat(request);
+    }
+
+    @SdkInternalApi
+    final DescribeAggregateIdFormatResult executeDescribeAggregateIdFormat(DescribeAggregateIdFormatRequest describeAggregateIdFormatRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeAggregateIdFormatRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeAggregateIdFormatRequest> request = null;
+        Response<DescribeAggregateIdFormatResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeAggregateIdFormatRequestMarshaller().marshall(super.beforeMarshalling(describeAggregateIdFormatRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeAggregateIdFormat");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeAggregateIdFormatResult> responseHandler = new StaxResponseHandler<DescribeAggregateIdFormatResult>(
+                    new DescribeAggregateIdFormatResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes the Availability Zones that are available to you. The results include zones only for the region you're
+     * currently using. If there is an event impacting an Availability Zone, you can use this request to view the state
+     * and any provided message for that Availability Zone.
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html">Regions and
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html">Regions and
      * Availability Zones</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeAvailabilityZonesRequest
-     *        Contains the parameters for DescribeAvailabilityZones.
      * @return Result of the DescribeAvailabilityZones operation returned by the service.
      * @sample AmazonEC2.DescribeAvailabilityZones
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeAvailabilityZones" target="_top">AWS
@@ -6177,6 +8001,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeAvailabilityZonesRequestMarshaller().marshall(super.beforeMarshalling(describeAvailabilityZonesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeAvailabilityZones");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6200,7 +8028,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of your bundling tasks.
+     * Describes the specified bundle tasks or all of your bundle tasks.
      * </p>
      * <note>
      * <p>
@@ -6211,7 +8039,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </note>
      * 
      * @param describeBundleTasksRequest
-     *        Contains the parameters for DescribeBundleTasks.
      * @return Result of the DescribeBundleTasks operation returned by the service.
      * @sample AmazonEC2.DescribeBundleTasks
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeBundleTasks" target="_top">AWS API
@@ -6238,6 +8065,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeBundleTasksRequestMarshaller().marshall(super.beforeMarshalling(describeBundleTasksRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeBundleTasks");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6261,13 +8092,121 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Describes the IP address ranges that were specified in calls to <a>ProvisionByoipCidr</a>.
+     * </p>
+     * <p>
+     * To describe the address pools that were created when you provisioned the address ranges, use
+     * <a>DescribePublicIpv4Pools</a>.
+     * </p>
+     * 
+     * @param describeByoipCidrsRequest
+     * @return Result of the DescribeByoipCidrs operation returned by the service.
+     * @sample AmazonEC2.DescribeByoipCidrs
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeByoipCidrs" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public DescribeByoipCidrsResult describeByoipCidrs(DescribeByoipCidrsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeByoipCidrs(request);
+    }
+
+    @SdkInternalApi
+    final DescribeByoipCidrsResult executeDescribeByoipCidrs(DescribeByoipCidrsRequest describeByoipCidrsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeByoipCidrsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeByoipCidrsRequest> request = null;
+        Response<DescribeByoipCidrsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeByoipCidrsRequestMarshaller().marshall(super.beforeMarshalling(describeByoipCidrsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeByoipCidrs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeByoipCidrsResult> responseHandler = new StaxResponseHandler<DescribeByoipCidrsResult>(
+                    new DescribeByoipCidrsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes one or more of your Capacity Reservations. The results describe only the Capacity Reservations in the
+     * AWS Region that you're currently using.
+     * </p>
+     * 
+     * @param describeCapacityReservationsRequest
+     * @return Result of the DescribeCapacityReservations operation returned by the service.
+     * @sample AmazonEC2.DescribeCapacityReservations
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityReservations"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DescribeCapacityReservationsResult describeCapacityReservations(DescribeCapacityReservationsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeCapacityReservations(request);
+    }
+
+    @SdkInternalApi
+    final DescribeCapacityReservationsResult executeDescribeCapacityReservations(DescribeCapacityReservationsRequest describeCapacityReservationsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeCapacityReservationsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeCapacityReservationsRequest> request = null;
+        Response<DescribeCapacityReservationsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeCapacityReservationsRequestMarshaller().marshall(super.beforeMarshalling(describeCapacityReservationsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeCapacityReservations");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeCapacityReservationsResult> responseHandler = new StaxResponseHandler<DescribeCapacityReservationsResult>(
+                    new DescribeCapacityReservationsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Describes one or more of your linked EC2-Classic instances. This request only returns information about
-     * EC2-Classic instances linked to a VPC through ClassicLink; you cannot use this request to return information
+     * EC2-Classic instances linked to a VPC through ClassicLink. You cannot use this request to return information
      * about other instances.
      * </p>
      * 
      * @param describeClassicLinkInstancesRequest
-     *        Contains the parameters for DescribeClassicLinkInstances.
      * @return Result of the DescribeClassicLinkInstances operation returned by the service.
      * @sample AmazonEC2.DescribeClassicLinkInstances
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeClassicLinkInstances"
@@ -6294,6 +8233,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeClassicLinkInstancesRequestMarshaller().marshall(super.beforeMarshalling(describeClassicLinkInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeClassicLinkInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6317,12 +8260,276 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Describes the authorization rules for a specified Client VPN endpoint.
+     * </p>
+     * 
+     * @param describeClientVpnAuthorizationRulesRequest
+     * @return Result of the DescribeClientVpnAuthorizationRules operation returned by the service.
+     * @sample AmazonEC2.DescribeClientVpnAuthorizationRules
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeClientVpnAuthorizationRules"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DescribeClientVpnAuthorizationRulesResult describeClientVpnAuthorizationRules(DescribeClientVpnAuthorizationRulesRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeClientVpnAuthorizationRules(request);
+    }
+
+    @SdkInternalApi
+    final DescribeClientVpnAuthorizationRulesResult executeDescribeClientVpnAuthorizationRules(
+            DescribeClientVpnAuthorizationRulesRequest describeClientVpnAuthorizationRulesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeClientVpnAuthorizationRulesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeClientVpnAuthorizationRulesRequest> request = null;
+        Response<DescribeClientVpnAuthorizationRulesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeClientVpnAuthorizationRulesRequestMarshaller().marshall(super
+                        .beforeMarshalling(describeClientVpnAuthorizationRulesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeClientVpnAuthorizationRules");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeClientVpnAuthorizationRulesResult> responseHandler = new StaxResponseHandler<DescribeClientVpnAuthorizationRulesResult>(
+                    new DescribeClientVpnAuthorizationRulesResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes active client connections and connections that have been terminated within the last 60 minutes for the
+     * specified Client VPN endpoint.
+     * </p>
+     * 
+     * @param describeClientVpnConnectionsRequest
+     * @return Result of the DescribeClientVpnConnections operation returned by the service.
+     * @sample AmazonEC2.DescribeClientVpnConnections
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeClientVpnConnections"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DescribeClientVpnConnectionsResult describeClientVpnConnections(DescribeClientVpnConnectionsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeClientVpnConnections(request);
+    }
+
+    @SdkInternalApi
+    final DescribeClientVpnConnectionsResult executeDescribeClientVpnConnections(DescribeClientVpnConnectionsRequest describeClientVpnConnectionsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeClientVpnConnectionsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeClientVpnConnectionsRequest> request = null;
+        Response<DescribeClientVpnConnectionsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeClientVpnConnectionsRequestMarshaller().marshall(super.beforeMarshalling(describeClientVpnConnectionsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeClientVpnConnections");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeClientVpnConnectionsResult> responseHandler = new StaxResponseHandler<DescribeClientVpnConnectionsResult>(
+                    new DescribeClientVpnConnectionsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes one or more Client VPN endpoints in the account.
+     * </p>
+     * 
+     * @param describeClientVpnEndpointsRequest
+     * @return Result of the DescribeClientVpnEndpoints operation returned by the service.
+     * @sample AmazonEC2.DescribeClientVpnEndpoints
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeClientVpnEndpoints" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DescribeClientVpnEndpointsResult describeClientVpnEndpoints(DescribeClientVpnEndpointsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeClientVpnEndpoints(request);
+    }
+
+    @SdkInternalApi
+    final DescribeClientVpnEndpointsResult executeDescribeClientVpnEndpoints(DescribeClientVpnEndpointsRequest describeClientVpnEndpointsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeClientVpnEndpointsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeClientVpnEndpointsRequest> request = null;
+        Response<DescribeClientVpnEndpointsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeClientVpnEndpointsRequestMarshaller().marshall(super.beforeMarshalling(describeClientVpnEndpointsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeClientVpnEndpoints");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeClientVpnEndpointsResult> responseHandler = new StaxResponseHandler<DescribeClientVpnEndpointsResult>(
+                    new DescribeClientVpnEndpointsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes the routes for the specified Client VPN endpoint.
+     * </p>
+     * 
+     * @param describeClientVpnRoutesRequest
+     * @return Result of the DescribeClientVpnRoutes operation returned by the service.
+     * @sample AmazonEC2.DescribeClientVpnRoutes
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeClientVpnRoutes" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DescribeClientVpnRoutesResult describeClientVpnRoutes(DescribeClientVpnRoutesRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeClientVpnRoutes(request);
+    }
+
+    @SdkInternalApi
+    final DescribeClientVpnRoutesResult executeDescribeClientVpnRoutes(DescribeClientVpnRoutesRequest describeClientVpnRoutesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeClientVpnRoutesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeClientVpnRoutesRequest> request = null;
+        Response<DescribeClientVpnRoutesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeClientVpnRoutesRequestMarshaller().marshall(super.beforeMarshalling(describeClientVpnRoutesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeClientVpnRoutes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeClientVpnRoutesResult> responseHandler = new StaxResponseHandler<DescribeClientVpnRoutesResult>(
+                    new DescribeClientVpnRoutesResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes the target networks associated with the specified Client VPN endpoint.
+     * </p>
+     * 
+     * @param describeClientVpnTargetNetworksRequest
+     * @return Result of the DescribeClientVpnTargetNetworks operation returned by the service.
+     * @sample AmazonEC2.DescribeClientVpnTargetNetworks
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeClientVpnTargetNetworks"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DescribeClientVpnTargetNetworksResult describeClientVpnTargetNetworks(DescribeClientVpnTargetNetworksRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeClientVpnTargetNetworks(request);
+    }
+
+    @SdkInternalApi
+    final DescribeClientVpnTargetNetworksResult executeDescribeClientVpnTargetNetworks(
+            DescribeClientVpnTargetNetworksRequest describeClientVpnTargetNetworksRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeClientVpnTargetNetworksRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeClientVpnTargetNetworksRequest> request = null;
+        Response<DescribeClientVpnTargetNetworksResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeClientVpnTargetNetworksRequestMarshaller().marshall(super.beforeMarshalling(describeClientVpnTargetNetworksRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeClientVpnTargetNetworks");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeClientVpnTargetNetworksResult> responseHandler = new StaxResponseHandler<DescribeClientVpnTargetNetworksResult>(
+                    new DescribeClientVpnTargetNetworksResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Describes one or more of your conversion tasks. For more information, see the <a
-     * href="http://docs.aws.amazon.com/vm-import/latest/userguide/">VM Import/Export User Guide</a>.
+     * href="https://docs.aws.amazon.com/vm-import/latest/userguide/">VM Import/Export User Guide</a>.
      * </p>
      * <p>
      * For information about the import manifest referenced by this API action, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html">VM Import Manifest</a>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html">VM Import Manifest</a>.
      * </p>
      * 
      * @param describeConversionTasksRequest
@@ -6353,6 +8560,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeConversionTasksRequestMarshaller().marshall(super.beforeMarshalling(describeConversionTasksRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeConversionTasks");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6379,9 +8590,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Describes one or more of your VPN customer gateways.
      * </p>
      * <p>
-     * For more information about VPN customer gateways, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html">AWS Managed VPN Connections</a> in the
-     * <i>Amazon Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html">AWS Site-to-Site
+     * VPN</a> in the <i>AWS Site-to-Site VPN User Guide</i>.
      * </p>
      * 
      * @param describeCustomerGatewaysRequest
@@ -6412,6 +8622,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeCustomerGatewaysRequestMarshaller().marshall(super.beforeMarshalling(describeCustomerGatewaysRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeCustomerGateways");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6438,13 +8652,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Describes one or more of your DHCP options sets.
      * </p>
      * <p>
-     * For more information about DHCP options sets, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html">DHCP Options Sets</a> in the
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html">DHCP Options Sets</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param describeDhcpOptionsRequest
-     *        Contains the parameters for DescribeDhcpOptions.
      * @return Result of the DescribeDhcpOptions operation returned by the service.
      * @sample AmazonEC2.DescribeDhcpOptions
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeDhcpOptions" target="_top">AWS API
@@ -6471,6 +8684,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeDhcpOptionsRequestMarshaller().marshall(super.beforeMarshalling(describeDhcpOptionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeDhcpOptions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6494,7 +8711,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of your egress-only Internet gateways.
+     * Describes one or more of your egress-only internet gateways.
      * </p>
      * 
      * @param describeEgressOnlyInternetGatewaysRequest
@@ -6526,6 +8743,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .marshall(super.beforeMarshalling(describeEgressOnlyInternetGatewaysRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeEgressOnlyInternetGateways");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6544,8 +8765,9 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes the Elastic GPUs associated with your instances. For more information about Elastic GPUs, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/elastic-gpus.html">Amazon EC2 Elastic GPUs</a>.
+     * Describes the Elastic Graphics accelerator associated with your instances. For more information about Elastic
+     * Graphics, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/elastic-graphics.html">Amazon
+     * Elastic Graphics</a>.
      * </p>
      * 
      * @param describeElasticGpusRequest
@@ -6575,6 +8797,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeElasticGpusRequestMarshaller().marshall(super.beforeMarshalling(describeElasticGpusRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeElasticGpus");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6624,6 +8850,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeExportTasksRequestMarshaller().marshall(super.beforeMarshalling(describeExportTasksRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeExportTasks");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6647,12 +8877,167 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Describes the events for the specified EC2 Fleet during the specified time.
+     * </p>
+     * 
+     * @param describeFleetHistoryRequest
+     * @return Result of the DescribeFleetHistory operation returned by the service.
+     * @sample AmazonEC2.DescribeFleetHistory
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeFleetHistory" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public DescribeFleetHistoryResult describeFleetHistory(DescribeFleetHistoryRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeFleetHistory(request);
+    }
+
+    @SdkInternalApi
+    final DescribeFleetHistoryResult executeDescribeFleetHistory(DescribeFleetHistoryRequest describeFleetHistoryRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeFleetHistoryRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeFleetHistoryRequest> request = null;
+        Response<DescribeFleetHistoryResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeFleetHistoryRequestMarshaller().marshall(super.beforeMarshalling(describeFleetHistoryRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeFleetHistory");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeFleetHistoryResult> responseHandler = new StaxResponseHandler<DescribeFleetHistoryResult>(
+                    new DescribeFleetHistoryResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes the running instances for the specified EC2 Fleet.
+     * </p>
+     * 
+     * @param describeFleetInstancesRequest
+     * @return Result of the DescribeFleetInstances operation returned by the service.
+     * @sample AmazonEC2.DescribeFleetInstances
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeFleetInstances" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public DescribeFleetInstancesResult describeFleetInstances(DescribeFleetInstancesRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeFleetInstances(request);
+    }
+
+    @SdkInternalApi
+    final DescribeFleetInstancesResult executeDescribeFleetInstances(DescribeFleetInstancesRequest describeFleetInstancesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeFleetInstancesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeFleetInstancesRequest> request = null;
+        Response<DescribeFleetInstancesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeFleetInstancesRequestMarshaller().marshall(super.beforeMarshalling(describeFleetInstancesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeFleetInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeFleetInstancesResult> responseHandler = new StaxResponseHandler<DescribeFleetInstancesResult>(
+                    new DescribeFleetInstancesResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes one or more of your EC2 Fleets.
+     * </p>
+     * 
+     * @param describeFleetsRequest
+     * @return Result of the DescribeFleets operation returned by the service.
+     * @sample AmazonEC2.DescribeFleets
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeFleets" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public DescribeFleetsResult describeFleets(DescribeFleetsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeFleets(request);
+    }
+
+    @SdkInternalApi
+    final DescribeFleetsResult executeDescribeFleets(DescribeFleetsRequest describeFleetsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeFleetsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeFleetsRequest> request = null;
+        Response<DescribeFleetsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeFleetsRequestMarshaller().marshall(super.beforeMarshalling(describeFleetsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeFleets");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeFleetsResult> responseHandler = new StaxResponseHandler<DescribeFleetsResult>(
+                    new DescribeFleetsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Describes one or more flow logs. To view the information in your flow logs (the log streams for the network
      * interfaces), you must use the CloudWatch Logs console or the CloudWatch Logs API.
      * </p>
      * 
      * @param describeFlowLogsRequest
-     *        Contains the parameters for DescribeFlowLogs.
      * @return Result of the DescribeFlowLogs operation returned by the service.
      * @sample AmazonEC2.DescribeFlowLogs
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeFlowLogs" target="_top">AWS API
@@ -6679,6 +9064,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeFlowLogsRequestMarshaller().marshall(super.beforeMarshalling(describeFlowLogsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeFlowLogs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6732,6 +9121,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeFpgaImageAttributeRequestMarshaller().marshall(super.beforeMarshalling(describeFpgaImageAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeFpgaImageAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6781,6 +9174,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeFpgaImagesRequestMarshaller().marshall(super.beforeMarshalling(describeFpgaImagesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeFpgaImages");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6799,14 +9196,14 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes the Dedicated Host Reservations that are available to purchase.
+     * Describes the Dedicated Host reservations that are available to purchase.
      * </p>
      * <p>
-     * The results describe all the Dedicated Host Reservation offerings, including offerings that may not match the
-     * instance family and region of your Dedicated Hosts. When purchasing an offering, ensure that the the instance
-     * family and region of the offering matches that of the Dedicated Host/s it will be associated with. For an
-     * overview of supported instance types, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html">Dedicated Hosts
+     * The results describe all the Dedicated Host reservation offerings, including offerings that may not match the
+     * instance family and Region of your Dedicated Hosts. When purchasing an offering, ensure that the instance family
+     * and Region of the offering matches that of the Dedicated Hosts with which it is to be associated. For more
+     * information about supported instance types, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html">Dedicated Hosts
      * Overview</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -6838,6 +9235,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeHostReservationOfferingsRequestMarshaller().marshall(super.beforeMarshalling(describeHostReservationOfferingsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeHostReservationOfferings");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6856,7 +9257,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes Dedicated Host Reservations which are associated with Dedicated Hosts in your account.
+     * Describes reservations that are associated with Dedicated Hosts in your account.
      * </p>
      * 
      * @param describeHostReservationsRequest
@@ -6886,6 +9287,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeHostReservationsRequestMarshaller().marshall(super.beforeMarshalling(describeHostReservationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeHostReservations");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6907,13 +9312,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Describes one or more of your Dedicated Hosts.
      * </p>
      * <p>
-     * The results describe only the Dedicated Hosts in the region you're currently using. All listed instances consume
-     * capacity on your Dedicated Host. Dedicated Hosts that have recently been released will be listed with the state
+     * The results describe only the Dedicated Hosts in the Region you're currently using. All listed instances consume
+     * capacity on your Dedicated Host. Dedicated Hosts that have recently been released are listed with the state
      * <code>released</code>.
      * </p>
      * 
      * @param describeHostsRequest
-     *        Contains the parameters for DescribeHosts.
      * @return Result of the DescribeHosts operation returned by the service.
      * @sample AmazonEC2.DescribeHosts
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeHosts" target="_top">AWS API
@@ -6940,6 +9344,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeHostsRequestMarshaller().marshall(super.beforeMarshalling(describeHostsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeHosts");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -6994,6 +9402,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(describeIamInstanceProfileAssociationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeIamInstanceProfileAssociations");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7017,8 +9429,16 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * be modified; it does not return information about other resource types.
      * </p>
      * <p>
-     * The following resource types support longer IDs: <code>instance</code> | <code>reservation</code> |
-     * <code>snapshot</code> | <code>volume</code>.
+     * The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> |
+     * <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> |
+     * <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> |
+     * <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> |
+     * <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code>
+     * | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> |
+     * <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code>
+     * | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> |
+     * <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> |
+     * <code>vpn-connection</code> | <code>vpn-gateway</code>.
      * </p>
      * <p>
      * These settings apply to the IAM user who makes the request; they do not apply to the entire AWS account. By
@@ -7029,7 +9449,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param describeIdFormatRequest
-     *        Contains the parameters for DescribeIdFormat.
      * @return Result of the DescribeIdFormat operation returned by the service.
      * @sample AmazonEC2.DescribeIdFormat
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeIdFormat" target="_top">AWS API
@@ -7056,6 +9475,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeIdFormatRequestMarshaller().marshall(super.beforeMarshalling(describeIdFormatRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeIdFormat");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7082,12 +9505,20 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Describes the ID format settings for resources for the specified IAM user, IAM role, or root user. For example,
      * you can view the resource types that are enabled for longer IDs. This request only returns information about
      * resource types whose ID formats can be modified; it does not return information about other resource types. For
-     * more information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html">Resource
+     * more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html">Resource
      * IDs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
-     * The following resource types support longer IDs: <code>instance</code> | <code>reservation</code> |
-     * <code>snapshot</code> | <code>volume</code>.
+     * The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> |
+     * <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> |
+     * <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> |
+     * <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> |
+     * <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code>
+     * | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> |
+     * <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code>
+     * | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> |
+     * <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> |
+     * <code>vpn-connection</code> | <code>vpn-gateway</code>.
      * </p>
      * <p>
      * These settings apply to the principal specified in the request. They do not apply to the principal that makes the
@@ -7095,7 +9526,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param describeIdentityIdFormatRequest
-     *        Contains the parameters for DescribeIdentityIdFormat.
      * @return Result of the DescribeIdentityIdFormat operation returned by the service.
      * @sample AmazonEC2.DescribeIdentityIdFormat
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeIdentityIdFormat" target="_top">AWS
@@ -7122,6 +9552,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeIdentityIdFormatRequestMarshaller().marshall(super.beforeMarshalling(describeIdentityIdFormatRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeIdentityIdFormat");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7171,6 +9605,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeImageAttributeRequestMarshaller().marshall(super.beforeMarshalling(describeImageAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeImageAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7189,9 +9627,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of the images (AMIs, AKIs, and ARIs) available to you. Images available to you include
-     * public images, private images that you own, and private images owned by other AWS accounts but for which you have
-     * explicit launch permissions.
+     * Describes the specified images (AMIs, AKIs, and ARIs) available to you or all of the images available to you.
+     * </p>
+     * <p>
+     * The images available to you include public images, private images that you own, and private images owned by other
+     * AWS accounts for which you have explicit launch permissions.
      * </p>
      * <note>
      * <p>
@@ -7200,7 +9640,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </note>
      * 
      * @param describeImagesRequest
-     *        Contains the parameters for DescribeImages.
      * @return Result of the DescribeImages operation returned by the service.
      * @sample AmazonEC2.DescribeImages
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeImages" target="_top">AWS API
@@ -7227,6 +9666,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeImagesRequestMarshaller().marshall(super.beforeMarshalling(describeImagesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeImages");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7281,6 +9724,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeImportImageTasksRequestMarshaller().marshall(super.beforeMarshalling(describeImportImageTasksRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeImportImageTasks");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7335,6 +9782,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeImportSnapshotTasksRequestMarshaller().marshall(super.beforeMarshalling(describeImportSnapshotTasksRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeImportSnapshotTasks");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7366,7 +9817,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param describeInstanceAttributeRequest
-     *        Contains the parameters for DescribeInstanceAttribute.
      * @return Result of the DescribeInstanceAttribute operation returned by the service.
      * @sample AmazonEC2.DescribeInstanceAttribute
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeInstanceAttribute" target="_top">AWS
@@ -7393,6 +9843,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeInstanceAttributeRequestMarshaller().marshall(super.beforeMarshalling(describeInstanceAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeInstanceAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7411,14 +9865,19 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes the credit option for CPU usage of one or more of your T2 instances. The credit options are
+     * Describes the credit option for CPU usage of the specified T2 or T3 instances. The credit options are
      * <code>standard</code> and <code>unlimited</code>.
      * </p>
      * <p>
-     * If you do not specify an instance ID, Amazon EC2 returns only the T2 instances with the <code>unlimited</code>
-     * credit option. If you specify one or more instance IDs, Amazon EC2 returns the credit option (
-     * <code>standard</code> or <code>unlimited</code>) of those instances. If you specify an instance ID that is not
-     * valid, such as an instance that is not a T2 instance, an error is returned.
+     * If you do not specify an instance ID, Amazon EC2 returns T2 and T3 instances with the <code>unlimited</code>
+     * credit option, as well as instances that were previously configured as T2 or T3 with the <code>unlimited</code>
+     * credit option. For example, if you resize a T2 instance, while it is configured as <code>unlimited</code>, to an
+     * M4 instance, Amazon EC2 returns the M4 instance.
+     * </p>
+     * <p>
+     * If you specify one or more instance IDs, Amazon EC2 returns the credit option (<code>standard</code> or
+     * <code>unlimited</code>) of those instances. If you specify an instance ID that is not valid, such as an instance
+     * that is not a T2 or T3 instance, an error is returned.
      * </p>
      * <p>
      * Recently terminated instances might appear in the returned results. This interval is usually less than one hour.
@@ -7429,8 +9888,9 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * zone, the call works normally.
      * </p>
      * <p>
-     * For more information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/t2-instances.html">T2
-     * Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html">Burstable
+     * Performance Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeInstanceCreditSpecificationsRequest
@@ -7462,6 +9922,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(describeInstanceCreditSpecificationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeInstanceCreditSpecifications");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7480,8 +9944,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes the status of one or more instances. By default, only running instances are described, unless you
-     * specifically indicate to return the status of all instances.
+     * Describes the status of the specified instances or all of your instances. By default, only running instances are
+     * described, unless you specifically indicate to return the status of all instances.
      * </p>
      * <p>
      * Instance status includes the following components:
@@ -7491,17 +9955,17 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * <b>Status checks</b> - Amazon EC2 performs status checks on running EC2 instances to identify hardware and
      * software issues. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html">Status
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html">Status
      * Checks for Your Instances</a> and <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html">Troubleshooting Instances
-     * with Failed Status Checks</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html">Troubleshooting
+     * Instances with Failed Status Checks</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * </li>
      * <li>
      * <p>
      * <b>Scheduled events</b> - Amazon EC2 can schedule events (such as reboot, stop, or terminate) for your instances
      * related to hardware issues, software updates, or system maintenance. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html">Scheduled
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html">Scheduled
      * Events for Your Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * </li>
@@ -7509,14 +9973,13 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * <b>Instance state</b> - You can manage your instances from the moment you launch them through their termination.
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html">Instance Lifecycle</a> in
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html">Instance Lifecycle</a> in
      * the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * </li>
      * </ul>
      * 
      * @param describeInstanceStatusRequest
-     *        Contains the parameters for DescribeInstanceStatus.
      * @return Result of the DescribeInstanceStatus operation returned by the service.
      * @sample AmazonEC2.DescribeInstanceStatus
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeInstanceStatus" target="_top">AWS API
@@ -7543,6 +10006,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeInstanceStatusRequestMarshaller().marshall(super.beforeMarshalling(describeInstanceStatusRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeInstanceStatus");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7566,7 +10033,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of your instances.
+     * Describes the specified instances or all of your instances.
      * </p>
      * <p>
      * If you specify one or more instance IDs, Amazon EC2 returns information for those instances. If you do not
@@ -7585,7 +10052,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param describeInstancesRequest
-     *        Contains the parameters for DescribeInstances.
      * @return Result of the DescribeInstances operation returned by the service.
      * @sample AmazonEC2.DescribeInstances
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeInstances" target="_top">AWS API
@@ -7612,6 +10078,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeInstancesRequestMarshaller().marshall(super.beforeMarshalling(describeInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7635,11 +10105,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of your Internet gateways.
+     * Describes one or more of your internet gateways.
      * </p>
      * 
      * @param describeInternetGatewaysRequest
-     *        Contains the parameters for DescribeInternetGateways.
      * @return Result of the DescribeInternetGateways operation returned by the service.
      * @sample AmazonEC2.DescribeInternetGateways
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeInternetGateways" target="_top">AWS
@@ -7666,6 +10135,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeInternetGatewaysRequestMarshaller().marshall(super.beforeMarshalling(describeInternetGatewaysRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeInternetGateways");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7689,16 +10162,15 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of your key pairs.
+     * Describes the specified key pairs or all of your key pairs.
      * </p>
      * <p>
      * For more information about key pairs, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Key Pairs</a> in the <i>Amazon
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Key Pairs</a> in the <i>Amazon
      * Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeKeyPairsRequest
-     *        Contains the parameters for DescribeKeyPairs.
      * @return Result of the DescribeKeyPairs operation returned by the service.
      * @sample AmazonEC2.DescribeKeyPairs
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeKeyPairs" target="_top">AWS API
@@ -7725,6 +10197,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeKeyPairsRequestMarshaller().marshall(super.beforeMarshalling(describeKeyPairsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeKeyPairs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7779,6 +10255,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeLaunchTemplateVersionsRequestMarshaller().marshall(super.beforeMarshalling(describeLaunchTemplateVersionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeLaunchTemplateVersions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7827,6 +10307,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeLaunchTemplatesRequestMarshaller().marshall(super.beforeMarshalling(describeLaunchTemplatesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeLaunchTemplates");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7851,7 +10335,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param describeMovingAddressesRequest
-     *        Contains the parameters for DescribeMovingAddresses.
      * @return Result of the DescribeMovingAddresses operation returned by the service.
      * @sample AmazonEC2.DescribeMovingAddresses
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeMovingAddresses" target="_top">AWS
@@ -7878,6 +10361,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeMovingAddressesRequestMarshaller().marshall(super.beforeMarshalling(describeMovingAddressesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeMovingAddresses");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7901,11 +10388,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of the your NAT gateways.
+     * Describes one or more of your NAT gateways.
      * </p>
      * 
      * @param describeNatGatewaysRequest
-     *        Contains the parameters for DescribeNatGateways.
      * @return Result of the DescribeNatGateways operation returned by the service.
      * @sample AmazonEC2.DescribeNatGateways
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNatGateways" target="_top">AWS API
@@ -7932,6 +10418,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeNatGatewaysRequestMarshaller().marshall(super.beforeMarshalling(describeNatGatewaysRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeNatGateways");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -7953,13 +10443,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Describes one or more of your network ACLs.
      * </p>
      * <p>
-     * For more information about network ACLs, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network ACLs</a> in the <i>Amazon
-     * Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network
+     * ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param describeNetworkAclsRequest
-     *        Contains the parameters for DescribeNetworkAcls.
      * @return Result of the DescribeNetworkAcls operation returned by the service.
      * @sample AmazonEC2.DescribeNetworkAcls
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNetworkAcls" target="_top">AWS API
@@ -7986,6 +10474,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeNetworkAclsRequestMarshaller().marshall(super.beforeMarshalling(describeNetworkAclsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeNetworkAcls");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8041,6 +10533,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeNetworkInterfaceAttributeRequestMarshaller().marshall(super.beforeMarshalling(describeNetworkInterfaceAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeNetworkInterfaceAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8092,6 +10588,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(describeNetworkInterfacePermissionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeNetworkInterfacePermissions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8141,6 +10641,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeNetworkInterfacesRequestMarshaller().marshall(super.beforeMarshalling(describeNetworkInterfacesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeNetworkInterfaces");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8164,13 +10668,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of your placement groups. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html">Placement Groups</a> in the
+     * Describes the specified placement groups or all of your placement groups. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html">Placement Groups</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describePlacementGroupsRequest
-     *        Contains the parameters for DescribePlacementGroups.
      * @return Result of the DescribePlacementGroups operation returned by the service.
      * @sample AmazonEC2.DescribePlacementGroups
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribePlacementGroups" target="_top">AWS
@@ -8197,6 +10700,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribePlacementGroupsRequestMarshaller().marshall(super.beforeMarshalling(describePlacementGroupsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribePlacementGroups");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8223,10 +10730,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Describes available AWS services in a prefix list format, which includes the prefix list name and prefix list ID
      * of the service and the IP address range for the service. A prefix list ID is required for creating an outbound
      * security group rule that allows traffic from a VPC to access an AWS service through a gateway VPC endpoint.
+     * Currently, the services that support this action are Amazon S3 and Amazon DynamoDB.
      * </p>
      * 
      * @param describePrefixListsRequest
-     *        Contains the parameters for DescribePrefixLists.
      * @return Result of the DescribePrefixLists operation returned by the service.
      * @sample AmazonEC2.DescribePrefixLists
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribePrefixLists" target="_top">AWS API
@@ -8253,6 +10760,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribePrefixListsRequestMarshaller().marshall(super.beforeMarshalling(describePrefixListsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribePrefixLists");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8276,15 +10787,136 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more regions that are currently available to you.
+     * Describes the ID format settings for the root user and all IAM roles and IAM users that have explicitly specified
+     * a longer ID (17-character ID) preference.
+     * </p>
+     * <p>
+     * By default, all IAM roles and IAM users default to the same ID settings as the root user, unless they explicitly
+     * override the settings. This request is useful for identifying those IAM users and IAM roles that have overridden
+     * the default ID settings.
+     * </p>
+     * <p>
+     * The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> |
+     * <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> |
+     * <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> |
+     * <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> |
+     * <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code>
+     * | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> |
+     * <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code>
+     * | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> |
+     * <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> |
+     * <code>vpn-connection</code> | <code>vpn-gateway</code>.
+     * </p>
+     * 
+     * @param describePrincipalIdFormatRequest
+     * @return Result of the DescribePrincipalIdFormat operation returned by the service.
+     * @sample AmazonEC2.DescribePrincipalIdFormat
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribePrincipalIdFormat" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DescribePrincipalIdFormatResult describePrincipalIdFormat(DescribePrincipalIdFormatRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribePrincipalIdFormat(request);
+    }
+
+    @SdkInternalApi
+    final DescribePrincipalIdFormatResult executeDescribePrincipalIdFormat(DescribePrincipalIdFormatRequest describePrincipalIdFormatRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describePrincipalIdFormatRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribePrincipalIdFormatRequest> request = null;
+        Response<DescribePrincipalIdFormatResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribePrincipalIdFormatRequestMarshaller().marshall(super.beforeMarshalling(describePrincipalIdFormatRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribePrincipalIdFormat");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribePrincipalIdFormatResult> responseHandler = new StaxResponseHandler<DescribePrincipalIdFormatResult>(
+                    new DescribePrincipalIdFormatResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes the specified IPv4 address pools.
+     * </p>
+     * 
+     * @param describePublicIpv4PoolsRequest
+     * @return Result of the DescribePublicIpv4Pools operation returned by the service.
+     * @sample AmazonEC2.DescribePublicIpv4Pools
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribePublicIpv4Pools" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DescribePublicIpv4PoolsResult describePublicIpv4Pools(DescribePublicIpv4PoolsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribePublicIpv4Pools(request);
+    }
+
+    @SdkInternalApi
+    final DescribePublicIpv4PoolsResult executeDescribePublicIpv4Pools(DescribePublicIpv4PoolsRequest describePublicIpv4PoolsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describePublicIpv4PoolsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribePublicIpv4PoolsRequest> request = null;
+        Response<DescribePublicIpv4PoolsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribePublicIpv4PoolsRequestMarshaller().marshall(super.beforeMarshalling(describePublicIpv4PoolsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribePublicIpv4Pools");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribePublicIpv4PoolsResult> responseHandler = new StaxResponseHandler<DescribePublicIpv4PoolsResult>(
+                    new DescribePublicIpv4PoolsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes the regions that are currently available to you.
      * </p>
      * <p>
      * For a list of the regions supported by Amazon EC2, see <a
-     * href="http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region">Regions and Endpoints</a>.
+     * href="https://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region">Regions and Endpoints</a>.
      * </p>
      * 
      * @param describeRegionsRequest
-     *        Contains the parameters for DescribeRegions.
      * @return Result of the DescribeRegions operation returned by the service.
      * @sample AmazonEC2.DescribeRegions
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeRegions" target="_top">AWS API
@@ -8311,6 +10943,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeRegionsRequestMarshaller().marshall(super.beforeMarshalling(describeRegionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeRegions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8338,7 +10974,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about Reserved Instances, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts-on-demand-reserved-instances.html">Reserved
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts-on-demand-reserved-instances.html">Reserved
      * Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -8370,6 +11006,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeReservedInstancesRequestMarshaller().marshall(super.beforeMarshalling(describeReservedInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeReservedInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8413,7 +11053,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved Instance
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved Instance
      * Marketplace</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -8446,6 +11086,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeReservedInstancesListingsRequestMarshaller().marshall(super.beforeMarshalling(describeReservedInstancesListingsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeReservedInstancesListings");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8475,7 +11119,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-modifying.html">Modifying Reserved Instances</a> in
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-modifying.html">Modifying Reserved Instances</a> in
      * the Amazon Elastic Compute Cloud User Guide.
      * </p>
      * 
@@ -8509,6 +11153,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(describeReservedInstancesModificationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeReservedInstancesModifications");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8542,7 +11190,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved Instance
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved Instance
      * Marketplace</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -8576,6 +11224,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .marshall(super.beforeMarshalling(describeReservedInstancesOfferingsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeReservedInstancesOfferings");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8607,13 +11259,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * for implicit associations.
      * </p>
      * <p>
-     * For more information about route tables, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param describeRouteTablesRequest
-     *        Contains the parameters for DescribeRouteTables.
      * @return Result of the DescribeRouteTables operation returned by the service.
      * @sample AmazonEC2.DescribeRouteTables
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeRouteTables" target="_top">AWS API
@@ -8640,6 +11291,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeRouteTablesRequestMarshaller().marshall(super.beforeMarshalling(describeRouteTablesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeRouteTables");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8705,6 +11360,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(describeScheduledInstanceAvailabilityRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeScheduledInstanceAvailability");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8754,6 +11413,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeScheduledInstancesRequestMarshaller().marshall(super.beforeMarshalling(describeScheduledInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeScheduledInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8804,6 +11467,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSecurityGroupReferencesRequestMarshaller().marshall(super.beforeMarshalling(describeSecurityGroupReferencesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSecurityGroupReferences");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8822,18 +11489,17 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of your security groups.
+     * Describes the specified security groups or all of your security groups.
      * </p>
      * <p>
      * A security group is for use with instances either in the EC2-Classic platform or in a specific VPC. For more
-     * information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html">Amazon
+     * information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html">Amazon
      * EC2 Security Groups</a> in the <i>Amazon Elastic Compute Cloud User Guide</i> and <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html">Security Groups for Your
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html">Security Groups for Your
      * VPC</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param describeSecurityGroupsRequest
-     *        Contains the parameters for DescribeSecurityGroups.
      * @return Result of the DescribeSecurityGroups operation returned by the service.
      * @sample AmazonEC2.DescribeSecurityGroups
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeSecurityGroups" target="_top">AWS API
@@ -8860,6 +11526,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSecurityGroupsRequestMarshaller().marshall(super.beforeMarshalling(describeSecurityGroupsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSecurityGroups");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8887,7 +11557,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about EBS snapshots, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html">Amazon EBS Snapshots</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html">Amazon EBS Snapshots</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -8919,6 +11589,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSnapshotAttributeRequestMarshaller().marshall(super.beforeMarshalling(describeSnapshotAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSnapshotAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -8937,9 +11611,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of the EBS snapshots available to you. Available snapshots include public snapshots
-     * available for any AWS account to launch, private snapshots that you own, and private snapshots owned by another
-     * AWS account but for which you've been given explicit create volume permissions.
+     * Describes the specified EBS snapshots available to you or all of the EBS snapshots available to you.
+     * </p>
+     * <p>
+     * The snapshots available to you include public snapshots, private snapshots that you own, and private snapshots
+     * owned by other AWS accounts for which you have explicit create volume permissions.
      * </p>
      * <p>
      * The create volume permissions fall into the following categories:
@@ -8992,12 +11668,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about EBS snapshots, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html">Amazon EBS Snapshots</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html">Amazon EBS Snapshots</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeSnapshotsRequest
-     *        Contains the parameters for DescribeSnapshots.
      * @return Result of the DescribeSnapshots operation returned by the service.
      * @sample AmazonEC2.DescribeSnapshots
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeSnapshots" target="_top">AWS API
@@ -9024,6 +11699,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSnapshotsRequestMarshaller().marshall(super.beforeMarshalling(describeSnapshotsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSnapshots");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9048,8 +11727,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Describes the data feed for Spot Instances. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html">Spot Instance Data Feed</a> in the
-     * <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html">Spot Instance Data Feed</a> in
+     * the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * </p>
      * 
      * @param describeSpotDatafeedSubscriptionRequest
@@ -9081,6 +11760,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSpotDatafeedSubscriptionRequestMarshaller().marshall(super.beforeMarshalling(describeSpotDatafeedSubscriptionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSpotDatafeedSubscription");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9135,6 +11818,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSpotFleetInstancesRequestMarshaller().marshall(super.beforeMarshalling(describeSpotFleetInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSpotFleetInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9157,7 +11844,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * Spot Fleet events are delayed by up to 30 seconds before they can be described. This ensures that you can query
-     * by the last evaluated time and not miss a recorded event.
+     * by the last evaluated time and not miss a recorded event. Spot Fleet events are available for 48 hours.
      * </p>
      * 
      * @param describeSpotFleetRequestHistoryRequest
@@ -9189,6 +11876,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSpotFleetRequestHistoryRequestMarshaller().marshall(super.beforeMarshalling(describeSpotFleetRequestHistoryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSpotFleetRequestHistory");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9241,6 +11932,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSpotFleetRequestsRequestMarshaller().marshall(super.beforeMarshalling(describeSpotFleetRequestsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSpotFleetRequests");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9264,10 +11959,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes the Spot Instance requests that belong to your account. Spot Instances are instances that Amazon EC2
-     * launches when the Spot price that you specify exceeds the current Spot price. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html">Spot Instance Requests</a> in the
-     * <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * Describes the specified Spot Instance requests.
      * </p>
      * <p>
      * You can use <code>DescribeSpotInstanceRequests</code> to find a running Spot Instance by examining the response.
@@ -9276,7 +11968,14 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * look for instances where the instance lifecycle is <code>spot</code>.
      * </p>
      * <p>
-     * Spot Instance requests are deleted 4 hours after they are canceled and their instances are terminated.
+     * We recommend that you set <code>MaxResults</code> to a value between 5 and 1000 to limit the number of results
+     * returned. This paginates the output, which makes the list more manageable and returns the results faster. If the
+     * list of results exceeds your <code>MaxResults</code> value, then that number of results is returned along with a
+     * <code>NextToken</code> value that can be passed to a subsequent <code>DescribeSpotInstanceRequests</code> request
+     * to retrieve the remaining results.
+     * </p>
+     * <p>
+     * Spot Instance requests are deleted four hours after they are canceled and their instances are terminated.
      * </p>
      * 
      * @param describeSpotInstanceRequestsRequest
@@ -9307,6 +12006,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSpotInstanceRequestsRequestMarshaller().marshall(super.beforeMarshalling(describeSpotInstanceRequestsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSpotInstanceRequests");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9331,8 +12034,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Describes the Spot price history. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances-history.html">Spot Instance Pricing
-     * History</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances-history.html">Spot Instance
+     * Pricing History</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * </p>
      * <p>
      * When you specify a start and end time, this operation returns the prices of the instance types within the time
@@ -9368,6 +12071,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSpotPriceHistoryRequestMarshaller().marshall(super.beforeMarshalling(describeSpotPriceHistoryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSpotPriceHistory");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9423,6 +12130,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeStaleSecurityGroupsRequestMarshaller().marshall(super.beforeMarshalling(describeStaleSecurityGroupsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeStaleSecurityGroups");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9444,13 +12155,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Describes one or more of your subnets.
      * </p>
      * <p>
-     * For more information about subnets, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html">Your VPC and Subnets</a> in the
-     * <i>Amazon Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html">Your
+     * VPC and Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param describeSubnetsRequest
-     *        Contains the parameters for DescribeSubnets.
      * @return Result of the DescribeSubnets operation returned by the service.
      * @sample AmazonEC2.DescribeSubnets
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeSubnets" target="_top">AWS API
@@ -9477,6 +12186,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeSubnetsRequestMarshaller().marshall(super.beforeMarshalling(describeSubnetsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeSubnets");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9500,16 +12213,15 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes one or more of the tags for your EC2 resources.
+     * Describes the specified tags for your EC2 resources.
      * </p>
      * <p>
      * For more information about tags, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Resources</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Resources</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeTagsRequest
-     *        Contains the parameters for DescribeTags.
      * @return Result of the DescribeTags operation returned by the service.
      * @sample AmazonEC2.DescribeTags
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeTags" target="_top">AWS API
@@ -9536,6 +12248,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeTagsRequestMarshaller().marshall(super.beforeMarshalling(describeTagsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeTags");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9558,12 +12274,229 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Describes one or more attachments between resources and transit gateways. By default, all attachments are
+     * described. Alternatively, you can filter the results by attachment ID, attachment state, resource ID, or resource
+     * owner.
+     * </p>
+     * 
+     * @param describeTransitGatewayAttachmentsRequest
+     * @return Result of the DescribeTransitGatewayAttachments operation returned by the service.
+     * @sample AmazonEC2.DescribeTransitGatewayAttachments
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeTransitGatewayAttachments"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DescribeTransitGatewayAttachmentsResult describeTransitGatewayAttachments(DescribeTransitGatewayAttachmentsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeTransitGatewayAttachments(request);
+    }
+
+    @SdkInternalApi
+    final DescribeTransitGatewayAttachmentsResult executeDescribeTransitGatewayAttachments(
+            DescribeTransitGatewayAttachmentsRequest describeTransitGatewayAttachmentsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeTransitGatewayAttachmentsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeTransitGatewayAttachmentsRequest> request = null;
+        Response<DescribeTransitGatewayAttachmentsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeTransitGatewayAttachmentsRequestMarshaller().marshall(super.beforeMarshalling(describeTransitGatewayAttachmentsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeTransitGatewayAttachments");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeTransitGatewayAttachmentsResult> responseHandler = new StaxResponseHandler<DescribeTransitGatewayAttachmentsResult>(
+                    new DescribeTransitGatewayAttachmentsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes one or more transit gateway route tables. By default, all transit gateway route tables are described.
+     * Alternatively, you can filter the results.
+     * </p>
+     * 
+     * @param describeTransitGatewayRouteTablesRequest
+     * @return Result of the DescribeTransitGatewayRouteTables operation returned by the service.
+     * @sample AmazonEC2.DescribeTransitGatewayRouteTables
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeTransitGatewayRouteTables"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DescribeTransitGatewayRouteTablesResult describeTransitGatewayRouteTables(DescribeTransitGatewayRouteTablesRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeTransitGatewayRouteTables(request);
+    }
+
+    @SdkInternalApi
+    final DescribeTransitGatewayRouteTablesResult executeDescribeTransitGatewayRouteTables(
+            DescribeTransitGatewayRouteTablesRequest describeTransitGatewayRouteTablesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeTransitGatewayRouteTablesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeTransitGatewayRouteTablesRequest> request = null;
+        Response<DescribeTransitGatewayRouteTablesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeTransitGatewayRouteTablesRequestMarshaller().marshall(super.beforeMarshalling(describeTransitGatewayRouteTablesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeTransitGatewayRouteTables");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeTransitGatewayRouteTablesResult> responseHandler = new StaxResponseHandler<DescribeTransitGatewayRouteTablesResult>(
+                    new DescribeTransitGatewayRouteTablesResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes one or more VPC attachments. By default, all VPC attachments are described. Alternatively, you can
+     * filter the results.
+     * </p>
+     * 
+     * @param describeTransitGatewayVpcAttachmentsRequest
+     * @return Result of the DescribeTransitGatewayVpcAttachments operation returned by the service.
+     * @sample AmazonEC2.DescribeTransitGatewayVpcAttachments
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeTransitGatewayVpcAttachments"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DescribeTransitGatewayVpcAttachmentsResult describeTransitGatewayVpcAttachments(DescribeTransitGatewayVpcAttachmentsRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeTransitGatewayVpcAttachments(request);
+    }
+
+    @SdkInternalApi
+    final DescribeTransitGatewayVpcAttachmentsResult executeDescribeTransitGatewayVpcAttachments(
+            DescribeTransitGatewayVpcAttachmentsRequest describeTransitGatewayVpcAttachmentsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeTransitGatewayVpcAttachmentsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeTransitGatewayVpcAttachmentsRequest> request = null;
+        Response<DescribeTransitGatewayVpcAttachmentsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeTransitGatewayVpcAttachmentsRequestMarshaller().marshall(super
+                        .beforeMarshalling(describeTransitGatewayVpcAttachmentsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeTransitGatewayVpcAttachments");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeTransitGatewayVpcAttachmentsResult> responseHandler = new StaxResponseHandler<DescribeTransitGatewayVpcAttachmentsResult>(
+                    new DescribeTransitGatewayVpcAttachmentsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Describes one or more transit gateways. By default, all transit gateways are described. Alternatively, you can
+     * filter the results.
+     * </p>
+     * 
+     * @param describeTransitGatewaysRequest
+     * @return Result of the DescribeTransitGateways operation returned by the service.
+     * @sample AmazonEC2.DescribeTransitGateways
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeTransitGateways" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public DescribeTransitGatewaysResult describeTransitGateways(DescribeTransitGatewaysRequest request) {
+        request = beforeClientExecution(request);
+        return executeDescribeTransitGateways(request);
+    }
+
+    @SdkInternalApi
+    final DescribeTransitGatewaysResult executeDescribeTransitGateways(DescribeTransitGatewaysRequest describeTransitGatewaysRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(describeTransitGatewaysRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeTransitGatewaysRequest> request = null;
+        Response<DescribeTransitGatewaysResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeTransitGatewaysRequestMarshaller().marshall(super.beforeMarshalling(describeTransitGatewaysRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeTransitGateways");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DescribeTransitGatewaysResult> responseHandler = new StaxResponseHandler<DescribeTransitGatewaysResult>(
+                    new DescribeTransitGatewaysResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Describes the specified attribute of the specified volume. You can specify only one attribute at a time.
      * </p>
      * <p>
      * For more information about EBS volumes, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumes.html">Amazon EBS Volumes</a> in the <i>Amazon
-     * Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumes.html">Amazon EBS Volumes</a> in the
+     * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeVolumeAttributeRequest
@@ -9594,6 +12527,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVolumeAttributeRequestMarshaller().marshall(super.beforeMarshalling(describeVolumeAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVolumeAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9627,9 +12564,9 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <code>impaired</code> , <code>warning</code>, or <code>insufficient-data</code>. If all checks pass, the overall
      * status of the volume is <code>ok</code>. If the check fails, the overall status is <code>impaired</code>. If the
      * status is <code>insufficient-data</code>, then the checks may still be taking place on your volume at the time.
-     * We recommend that you retry the request. For more information on volume status, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-volume-status.html">Monitoring the Status of
-     * Your Volumes</a>.
+     * We recommend that you retry the request. For more information about volume status, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-volume-status.html">Monitoring the Status of
+     * Your Volumes</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
      * <i>Events</i>: Reflect the cause of a volume status and may require you to take action. For example, if your
@@ -9643,16 +12580,13 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * the action shows <code>enable-volume-io</code>. This means that you may want to enable the I/O operations for the
      * volume by calling the <a>EnableVolumeIO</a> action and then check the volume for data consistency.
      * </p>
-     * <note>
      * <p>
      * Volume status is based on the volume status checks, and does not reflect the volume state. Therefore, volume
      * status does not indicate volumes in the <code>error</code> state (for example, when a volume is incapable of
      * accepting I/O.)
      * </p>
-     * </note>
      * 
      * @param describeVolumeStatusRequest
-     *        Contains the parameters for DescribeVolumeStatus.
      * @return Result of the DescribeVolumeStatus operation returned by the service.
      * @sample AmazonEC2.DescribeVolumeStatus
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVolumeStatus" target="_top">AWS API
@@ -9679,6 +12613,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVolumeStatusRequestMarshaller().marshall(super.beforeMarshalling(describeVolumeStatusRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVolumeStatus");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9702,7 +12640,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Describes the specified EBS volumes.
+     * Describes the specified EBS volumes or all of your EBS volumes.
      * </p>
      * <p>
      * If you are describing a long list of volumes, you can paginate the output to make the list more manageable. The
@@ -9713,12 +12651,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about EBS volumes, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumes.html">Amazon EBS Volumes</a> in the <i>Amazon
-     * Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumes.html">Amazon EBS Volumes</a> in the
+     * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeVolumesRequest
-     *        Contains the parameters for DescribeVolumes.
      * @return Result of the DescribeVolumes operation returned by the service.
      * @sample AmazonEC2.DescribeVolumes
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVolumes" target="_top">AWS API
@@ -9745,6 +12682,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVolumesRequestMarshaller().marshall(super.beforeMarshalling(describeVolumesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVolumes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9779,10 +12720,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * You can also use CloudWatch Events to check the status of a modification to an EBS volume. For information about
-     * CloudWatch Events, see the <a href="http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/">Amazon CloudWatch
-     * Events User Guide</a>. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods">Monitoring
-     * Volume Modifications"</a>.
+     * CloudWatch Events, see the <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/">Amazon
+     * CloudWatch Events User Guide</a>. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods">Monitoring
+     * Volume Modifications"</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeVolumesModificationsRequest
@@ -9812,6 +12753,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVolumesModificationsRequestMarshaller().marshall(super.beforeMarshalling(describeVolumesModificationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVolumesModifications");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9834,7 +12779,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param describeVpcAttributeRequest
-     *        Contains the parameters for DescribeVpcAttribute.
      * @return Result of the DescribeVpcAttribute operation returned by the service.
      * @sample AmazonEC2.DescribeVpcAttribute
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcAttribute" target="_top">AWS API
@@ -9861,6 +12805,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpcAttributeRequestMarshaller().marshall(super.beforeMarshalling(describeVpcAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9883,7 +12831,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param describeVpcClassicLinkRequest
-     *        Contains the parameters for DescribeVpcClassicLink.
      * @return Result of the DescribeVpcClassicLink operation returned by the service.
      * @sample AmazonEC2.DescribeVpcClassicLink
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcClassicLink" target="_top">AWS API
@@ -9910,6 +12857,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpcClassicLinkRequestMarshaller().marshall(super.beforeMarshalling(describeVpcClassicLinkRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcClassicLink");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -9937,12 +12888,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * EC2-Classic instance resolves to its private IP address when addressed from an instance in the VPC to which it's
      * linked. Similarly, the DNS hostname of an instance in a VPC resolves to its private IP address when addressed
      * from a linked EC2-Classic instance. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html">ClassicLink</a> in the <i>Amazon
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html">ClassicLink</a> in the <i>Amazon
      * Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param describeVpcClassicLinkDnsSupportRequest
-     *        Contains the parameters for DescribeVpcClassicLinkDnsSupport.
      * @return Result of the DescribeVpcClassicLinkDnsSupport operation returned by the service.
      * @sample AmazonEC2.DescribeVpcClassicLinkDnsSupport
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcClassicLinkDnsSupport"
@@ -9970,6 +12920,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpcClassicLinkDnsSupportRequestMarshaller().marshall(super.beforeMarshalling(describeVpcClassicLinkDnsSupportRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcClassicLinkDnsSupport");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10020,6 +12974,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(describeVpcEndpointConnectionNotificationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcEndpointConnectionNotifications");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10069,6 +13027,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpcEndpointConnectionsRequestMarshaller().marshall(super.beforeMarshalling(describeVpcEndpointConnectionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcEndpointConnections");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10119,6 +13081,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(describeVpcEndpointServiceConfigurationsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcEndpointServiceConfigurations");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10169,6 +13135,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(describeVpcEndpointServicePermissionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcEndpointServicePermissions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10218,6 +13188,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpcEndpointServicesRequestMarshaller().marshall(super.beforeMarshalling(describeVpcEndpointServicesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcEndpointServices");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10272,6 +13246,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpcEndpointsRequestMarshaller().marshall(super.beforeMarshalling(describeVpcEndpointsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcEndpoints");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10299,7 +13277,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param describeVpcPeeringConnectionsRequest
-     *        Contains the parameters for DescribeVpcPeeringConnections.
      * @return Result of the DescribeVpcPeeringConnections operation returned by the service.
      * @sample AmazonEC2.DescribeVpcPeeringConnections
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcPeeringConnections"
@@ -10326,6 +13303,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpcPeeringConnectionsRequestMarshaller().marshall(super.beforeMarshalling(describeVpcPeeringConnectionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcPeeringConnections");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10353,7 +13334,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param describeVpcsRequest
-     *        Contains the parameters for DescribeVpcs.
      * @return Result of the DescribeVpcs operation returned by the service.
      * @sample AmazonEC2.DescribeVpcs
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcs" target="_top">AWS API
@@ -10380,6 +13360,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpcsRequestMarshaller().marshall(super.beforeMarshalling(describeVpcsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpcs");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10405,9 +13389,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Describes one or more of your VPN connections.
      * </p>
      * <p>
-     * For more information about VPN connections, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html">AWS Managed VPN Connections</a> in the
-     * <i>Amazon Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html">AWS Site-to-Site
+     * VPN</a> in the <i>AWS Site-to-Site VPN User Guide</i>.
      * </p>
      * 
      * @param describeVpnConnectionsRequest
@@ -10438,6 +13421,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpnConnectionsRequestMarshaller().marshall(super.beforeMarshalling(describeVpnConnectionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpnConnections");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10464,9 +13451,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Describes one or more of your virtual private gateways.
      * </p>
      * <p>
-     * For more information about virtual private gateways, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html">AWS Managed VPN Connections</a> in the
-     * <i>Amazon Virtual Private Cloud User Guide</i>.
+     * For more information, see <a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html">AWS Site-to-Site
+     * VPN</a> in the <i>AWS Site-to-Site VPN User Guide</i>.
      * </p>
      * 
      * @param describeVpnGatewaysRequest
@@ -10497,6 +13483,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DescribeVpnGatewaysRequestMarshaller().marshall(super.beforeMarshalling(describeVpnGatewaysRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DescribeVpnGateways");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10526,7 +13516,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param detachClassicLinkVpcRequest
-     *        Contains the parameters for DetachClassicLinkVpc.
      * @return Result of the DetachClassicLinkVpc operation returned by the service.
      * @sample AmazonEC2.DetachClassicLinkVpc
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DetachClassicLinkVpc" target="_top">AWS API
@@ -10553,6 +13542,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DetachClassicLinkVpcRequestMarshaller().marshall(super.beforeMarshalling(detachClassicLinkVpcRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DetachClassicLinkVpc");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10571,12 +13564,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Detaches an Internet gateway from a VPC, disabling connectivity between the Internet and the VPC. The VPC must
+     * Detaches an internet gateway from a VPC, disabling connectivity between the internet and the VPC. The VPC must
      * not contain any running instances with Elastic IP addresses or public IPv4 addresses.
      * </p>
      * 
      * @param detachInternetGatewayRequest
-     *        Contains the parameters for DetachInternetGateway.
      * @return Result of the DetachInternetGateway operation returned by the service.
      * @sample AmazonEC2.DetachInternetGateway
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DetachInternetGateway" target="_top">AWS API
@@ -10603,6 +13595,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DetachInternetGatewayRequestMarshaller().marshall(super.beforeMarshalling(detachInternetGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DetachInternetGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10652,6 +13648,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DetachNetworkInterfaceRequestMarshaller().marshall(super.beforeMarshalling(detachNetworkInterfaceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DetachNetworkInterface");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10683,7 +13683,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-detaching-volume.html">Detaching an Amazon EBS
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-detaching-volume.html">Detaching an Amazon EBS
      * Volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -10715,6 +13715,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DetachVolumeRequestMarshaller().marshall(super.beforeMarshalling(detachVolumeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DetachVolume");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10769,12 +13773,70 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DetachVpnGatewayRequestMarshaller().marshall(super.beforeMarshalling(detachVpnGatewayRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DetachVpnGateway");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<DetachVpnGatewayResult> responseHandler = new StaxResponseHandler<DetachVpnGatewayResult>(
                     new DetachVpnGatewayResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Disables the specified resource attachment from propagating routes to the specified propagation route table.
+     * </p>
+     * 
+     * @param disableTransitGatewayRouteTablePropagationRequest
+     * @return Result of the DisableTransitGatewayRouteTablePropagation operation returned by the service.
+     * @sample AmazonEC2.DisableTransitGatewayRouteTablePropagation
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableTransitGatewayRouteTablePropagation"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DisableTransitGatewayRouteTablePropagationResult disableTransitGatewayRouteTablePropagation(DisableTransitGatewayRouteTablePropagationRequest request) {
+        request = beforeClientExecution(request);
+        return executeDisableTransitGatewayRouteTablePropagation(request);
+    }
+
+    @SdkInternalApi
+    final DisableTransitGatewayRouteTablePropagationResult executeDisableTransitGatewayRouteTablePropagation(
+            DisableTransitGatewayRouteTablePropagationRequest disableTransitGatewayRouteTablePropagationRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(disableTransitGatewayRouteTablePropagationRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DisableTransitGatewayRouteTablePropagationRequest> request = null;
+        Response<DisableTransitGatewayRouteTablePropagationResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DisableTransitGatewayRouteTablePropagationRequestMarshaller().marshall(super
+                        .beforeMarshalling(disableTransitGatewayRouteTablePropagationRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisableTransitGatewayRouteTablePropagation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DisableTransitGatewayRouteTablePropagationResult> responseHandler = new StaxResponseHandler<DisableTransitGatewayRouteTablePropagationResult>(
+                    new DisableTransitGatewayRouteTablePropagationResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -10818,6 +13880,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DisableVgwRoutePropagationRequestMarshaller().marshall(super.beforeMarshalling(disableVgwRoutePropagationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisableVgwRoutePropagation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10841,7 +13907,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param disableVpcClassicLinkRequest
-     *        Contains the parameters for DisableVpcClassicLink.
      * @return Result of the DisableVpcClassicLink operation returned by the service.
      * @sample AmazonEC2.DisableVpcClassicLink
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableVpcClassicLink" target="_top">AWS API
@@ -10868,6 +13933,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DisableVpcClassicLinkRequestMarshaller().marshall(super.beforeMarshalling(disableVpcClassicLinkRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisableVpcClassicLink");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10888,13 +13957,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Disables ClassicLink DNS support for a VPC. If disabled, DNS hostnames resolve to public IP addresses when
      * addressed between a linked EC2-Classic instance and instances in the VPC to which it's linked. For more
-     * information about ClassicLink, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html">ClassicLink</a> in the <i>Amazon
+     * information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html">ClassicLink</a> in the <i>Amazon
      * Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param disableVpcClassicLinkDnsSupportRequest
-     *        Contains the parameters for DisableVpcClassicLinkDnsSupport.
      * @return Result of the DisableVpcClassicLinkDnsSupport operation returned by the service.
      * @sample AmazonEC2.DisableVpcClassicLinkDnsSupport
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableVpcClassicLinkDnsSupport"
@@ -10922,6 +13990,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DisableVpcClassicLinkDnsSupportRequestMarshaller().marshall(super.beforeMarshalling(disableVpcClassicLinkDnsSupportRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisableVpcClassicLinkDnsSupport");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -10944,7 +14016,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * An Elastic IP address is for use in either the EC2-Classic platform or in a VPC. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP Addresses</a>
      * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
@@ -10952,7 +14024,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param disassociateAddressRequest
-     *        Contains the parameters for DisassociateAddress.
      * @return Result of the DisassociateAddress operation returned by the service.
      * @sample AmazonEC2.DisassociateAddress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisassociateAddress" target="_top">AWS API
@@ -10979,12 +14050,93 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DisassociateAddressRequestMarshaller().marshall(super.beforeMarshalling(disassociateAddressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisassociateAddress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<DisassociateAddressResult> responseHandler = new StaxResponseHandler<DisassociateAddressResult>(
                     new DisassociateAddressResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Disassociates a target network from the specified Client VPN endpoint. When you disassociate the last target
+     * network from a Client VPN, the following happens:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * The route that was automatically added for the VPC is deleted
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * All active client connections are terminated
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * New client connections are disallowed
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The Client VPN endpoint's status changes to <code>pending-associate</code>
+     * </p>
+     * </li>
+     * </ul>
+     * 
+     * @param disassociateClientVpnTargetNetworkRequest
+     * @return Result of the DisassociateClientVpnTargetNetwork operation returned by the service.
+     * @sample AmazonEC2.DisassociateClientVpnTargetNetwork
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisassociateClientVpnTargetNetwork"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DisassociateClientVpnTargetNetworkResult disassociateClientVpnTargetNetwork(DisassociateClientVpnTargetNetworkRequest request) {
+        request = beforeClientExecution(request);
+        return executeDisassociateClientVpnTargetNetwork(request);
+    }
+
+    @SdkInternalApi
+    final DisassociateClientVpnTargetNetworkResult executeDisassociateClientVpnTargetNetwork(
+            DisassociateClientVpnTargetNetworkRequest disassociateClientVpnTargetNetworkRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(disassociateClientVpnTargetNetworkRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DisassociateClientVpnTargetNetworkRequest> request = null;
+        Response<DisassociateClientVpnTargetNetworkResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DisassociateClientVpnTargetNetworkRequestMarshaller()
+                        .marshall(super.beforeMarshalling(disassociateClientVpnTargetNetworkRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisassociateClientVpnTargetNetwork");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DisassociateClientVpnTargetNetworkResult> responseHandler = new StaxResponseHandler<DisassociateClientVpnTargetNetworkResult>(
+                    new DisassociateClientVpnTargetNetworkResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -11030,6 +14182,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DisassociateIamInstanceProfileRequestMarshaller().marshall(super.beforeMarshalling(disassociateIamInstanceProfileRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisassociateIamInstanceProfile");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11053,12 +14209,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * After you perform this action, the subnet no longer uses the routes in the route table. Instead, it uses the
      * routes in the VPC's main route table. For more information about route tables, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param disassociateRouteTableRequest
-     *        Contains the parameters for DisassociateRouteTable.
      * @return Result of the DisassociateRouteTable operation returned by the service.
      * @sample AmazonEC2.DisassociateRouteTable
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisassociateRouteTable" target="_top">AWS API
@@ -11085,6 +14240,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DisassociateRouteTableRequestMarshaller().marshall(super.beforeMarshalling(disassociateRouteTableRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisassociateRouteTable");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11135,12 +14294,70 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DisassociateSubnetCidrBlockRequestMarshaller().marshall(super.beforeMarshalling(disassociateSubnetCidrBlockRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisassociateSubnetCidrBlock");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<DisassociateSubnetCidrBlockResult> responseHandler = new StaxResponseHandler<DisassociateSubnetCidrBlockResult>(
                     new DisassociateSubnetCidrBlockResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Disassociates a resource attachment from a transit gateway route table.
+     * </p>
+     * 
+     * @param disassociateTransitGatewayRouteTableRequest
+     * @return Result of the DisassociateTransitGatewayRouteTable operation returned by the service.
+     * @sample AmazonEC2.DisassociateTransitGatewayRouteTable
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisassociateTransitGatewayRouteTable"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public DisassociateTransitGatewayRouteTableResult disassociateTransitGatewayRouteTable(DisassociateTransitGatewayRouteTableRequest request) {
+        request = beforeClientExecution(request);
+        return executeDisassociateTransitGatewayRouteTable(request);
+    }
+
+    @SdkInternalApi
+    final DisassociateTransitGatewayRouteTableResult executeDisassociateTransitGatewayRouteTable(
+            DisassociateTransitGatewayRouteTableRequest disassociateTransitGatewayRouteTableRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(disassociateTransitGatewayRouteTableRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DisassociateTransitGatewayRouteTableRequest> request = null;
+        Response<DisassociateTransitGatewayRouteTableResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DisassociateTransitGatewayRouteTableRequestMarshaller().marshall(super
+                        .beforeMarshalling(disassociateTransitGatewayRouteTableRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisassociateTransitGatewayRouteTable");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<DisassociateTransitGatewayRouteTableResult> responseHandler = new StaxResponseHandler<DisassociateTransitGatewayRouteTableResult>(
+                    new DisassociateTransitGatewayRouteTableResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -11188,12 +14405,70 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new DisassociateVpcCidrBlockRequestMarshaller().marshall(super.beforeMarshalling(disassociateVpcCidrBlockRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "DisassociateVpcCidrBlock");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<DisassociateVpcCidrBlockResult> responseHandler = new StaxResponseHandler<DisassociateVpcCidrBlockResult>(
                     new DisassociateVpcCidrBlockResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Enables the specified attachment to propagate routes to the specified propagation route table.
+     * </p>
+     * 
+     * @param enableTransitGatewayRouteTablePropagationRequest
+     * @return Result of the EnableTransitGatewayRouteTablePropagation operation returned by the service.
+     * @sample AmazonEC2.EnableTransitGatewayRouteTablePropagation
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableTransitGatewayRouteTablePropagation"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public EnableTransitGatewayRouteTablePropagationResult enableTransitGatewayRouteTablePropagation(EnableTransitGatewayRouteTablePropagationRequest request) {
+        request = beforeClientExecution(request);
+        return executeEnableTransitGatewayRouteTablePropagation(request);
+    }
+
+    @SdkInternalApi
+    final EnableTransitGatewayRouteTablePropagationResult executeEnableTransitGatewayRouteTablePropagation(
+            EnableTransitGatewayRouteTablePropagationRequest enableTransitGatewayRouteTablePropagationRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(enableTransitGatewayRouteTablePropagationRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<EnableTransitGatewayRouteTablePropagationRequest> request = null;
+        Response<EnableTransitGatewayRouteTablePropagationResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new EnableTransitGatewayRouteTablePropagationRequestMarshaller().marshall(super
+                        .beforeMarshalling(enableTransitGatewayRouteTablePropagationRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "EnableTransitGatewayRouteTablePropagation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<EnableTransitGatewayRouteTablePropagationResult> responseHandler = new StaxResponseHandler<EnableTransitGatewayRouteTablePropagationResult>(
+                    new EnableTransitGatewayRouteTablePropagationResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -11237,6 +14512,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new EnableVgwRoutePropagationRequestMarshaller().marshall(super.beforeMarshalling(enableVgwRoutePropagationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "EnableVgwRoutePropagation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11287,6 +14566,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new EnableVolumeIORequestMarshaller().marshall(super.beforeMarshalling(enableVolumeIORequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "EnableVolumeIO");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11306,16 +14589,15 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Enables a VPC for ClassicLink. You can then link EC2-Classic instances to your ClassicLink-enabled VPC to allow
-     * communication over private IP addresses. You cannot enable your VPC for ClassicLink if any of your VPC's route
+     * communication over private IP addresses. You cannot enable your VPC for ClassicLink if any of your VPC route
      * tables have existing routes for address ranges within the <code>10.0.0.0/8</code> IP address range, excluding
      * local routes for VPCs in the <code>10.0.0.0/16</code> and <code>10.1.0.0/16</code> IP address ranges. For more
      * information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html">ClassicLink</a> in the <i>Amazon
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html">ClassicLink</a> in the <i>Amazon
      * Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param enableVpcClassicLinkRequest
-     *        Contains the parameters for EnableVpcClassicLink.
      * @return Result of the EnableVpcClassicLink operation returned by the service.
      * @sample AmazonEC2.EnableVpcClassicLink
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableVpcClassicLink" target="_top">AWS API
@@ -11342,6 +14624,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new EnableVpcClassicLinkRequestMarshaller().marshall(super.beforeMarshalling(enableVpcClassicLinkRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "EnableVpcClassicLink");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11363,13 +14649,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Enables a VPC to support DNS hostname resolution for ClassicLink. If enabled, the DNS hostname of a linked
      * EC2-Classic instance resolves to its private IP address when addressed from an instance in the VPC to which it's
      * linked. Similarly, the DNS hostname of an instance in a VPC resolves to its private IP address when addressed
-     * from a linked EC2-Classic instance. For more information about ClassicLink, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html">ClassicLink</a> in the <i>Amazon
+     * from a linked EC2-Classic instance. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html">ClassicLink</a> in the <i>Amazon
      * Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param enableVpcClassicLinkDnsSupportRequest
-     *        Contains the parameters for EnableVpcClassicLinkDnsSupport.
      * @return Result of the EnableVpcClassicLinkDnsSupport operation returned by the service.
      * @sample AmazonEC2.EnableVpcClassicLinkDnsSupport
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableVpcClassicLinkDnsSupport"
@@ -11396,6 +14681,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new EnableVpcClassicLinkDnsSupportRequestMarshaller().marshall(super.beforeMarshalling(enableVpcClassicLinkDnsSupportRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "EnableVpcClassicLinkDnsSupport");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11414,28 +14703,191 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Gets the console output for the specified instance.
+     * Downloads the client certificate revocation list for the specified Client VPN endpoint.
+     * </p>
+     * 
+     * @param exportClientVpnClientCertificateRevocationListRequest
+     * @return Result of the ExportClientVpnClientCertificateRevocationList operation returned by the service.
+     * @sample AmazonEC2.ExportClientVpnClientCertificateRevocationList
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ExportClientVpnClientCertificateRevocationList"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public ExportClientVpnClientCertificateRevocationListResult exportClientVpnClientCertificateRevocationList(
+            ExportClientVpnClientCertificateRevocationListRequest request) {
+        request = beforeClientExecution(request);
+        return executeExportClientVpnClientCertificateRevocationList(request);
+    }
+
+    @SdkInternalApi
+    final ExportClientVpnClientCertificateRevocationListResult executeExportClientVpnClientCertificateRevocationList(
+            ExportClientVpnClientCertificateRevocationListRequest exportClientVpnClientCertificateRevocationListRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(exportClientVpnClientCertificateRevocationListRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ExportClientVpnClientCertificateRevocationListRequest> request = null;
+        Response<ExportClientVpnClientCertificateRevocationListResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ExportClientVpnClientCertificateRevocationListRequestMarshaller().marshall(super
+                        .beforeMarshalling(exportClientVpnClientCertificateRevocationListRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ExportClientVpnClientCertificateRevocationList");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ExportClientVpnClientCertificateRevocationListResult> responseHandler = new StaxResponseHandler<ExportClientVpnClientCertificateRevocationListResult>(
+                    new ExportClientVpnClientCertificateRevocationListResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Downloads the contents of the Client VPN endpoint configuration file for the specified Client VPN endpoint. The
+     * Client VPN endpoint configuration file includes the Client VPN endpoint and certificate information clients need
+     * to establish a connection with the Client VPN endpoint.
+     * </p>
+     * 
+     * @param exportClientVpnClientConfigurationRequest
+     * @return Result of the ExportClientVpnClientConfiguration operation returned by the service.
+     * @sample AmazonEC2.ExportClientVpnClientConfiguration
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ExportClientVpnClientConfiguration"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public ExportClientVpnClientConfigurationResult exportClientVpnClientConfiguration(ExportClientVpnClientConfigurationRequest request) {
+        request = beforeClientExecution(request);
+        return executeExportClientVpnClientConfiguration(request);
+    }
+
+    @SdkInternalApi
+    final ExportClientVpnClientConfigurationResult executeExportClientVpnClientConfiguration(
+            ExportClientVpnClientConfigurationRequest exportClientVpnClientConfigurationRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(exportClientVpnClientConfigurationRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ExportClientVpnClientConfigurationRequest> request = null;
+        Response<ExportClientVpnClientConfigurationResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ExportClientVpnClientConfigurationRequestMarshaller()
+                        .marshall(super.beforeMarshalling(exportClientVpnClientConfigurationRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ExportClientVpnClientConfiguration");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ExportClientVpnClientConfigurationResult> responseHandler = new StaxResponseHandler<ExportClientVpnClientConfigurationResult>(
+                    new ExportClientVpnClientConfigurationResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Exports routes from the specified transit gateway route table to the specified S3 bucket. By default, all routes
+     * are exported. Alternatively, you can filter by CIDR range.
+     * </p>
+     * 
+     * @param exportTransitGatewayRoutesRequest
+     * @return Result of the ExportTransitGatewayRoutes operation returned by the service.
+     * @sample AmazonEC2.ExportTransitGatewayRoutes
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ExportTransitGatewayRoutes" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public ExportTransitGatewayRoutesResult exportTransitGatewayRoutes(ExportTransitGatewayRoutesRequest request) {
+        request = beforeClientExecution(request);
+        return executeExportTransitGatewayRoutes(request);
+    }
+
+    @SdkInternalApi
+    final ExportTransitGatewayRoutesResult executeExportTransitGatewayRoutes(ExportTransitGatewayRoutesRequest exportTransitGatewayRoutesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(exportTransitGatewayRoutesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ExportTransitGatewayRoutesRequest> request = null;
+        Response<ExportTransitGatewayRoutesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ExportTransitGatewayRoutesRequestMarshaller().marshall(super.beforeMarshalling(exportTransitGatewayRoutesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ExportTransitGatewayRoutes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ExportTransitGatewayRoutesResult> responseHandler = new StaxResponseHandler<ExportTransitGatewayRoutesResult>(
+                    new ExportTransitGatewayRoutesResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets the console output for the specified instance. For Linux instances, the instance console output displays the
+     * exact console output that would normally be displayed on a physical monitor attached to a computer. For Windows
+     * instances, the instance console output includes the last three system event log errors.
      * </p>
      * <p>
-     * Instances do not have a physical monitor through which you can view their console output. They also lack physical
-     * controls that allow you to power up, reboot, or shut them down. To allow these actions, we provide them through
-     * the Amazon EC2 API and command line interface.
+     * By default, the console output returns buffered information that was posted shortly after an instance transition
+     * state (start, stop, reboot, or terminate). This information is available for at least one hour after the most
+     * recent post. Only the most recent 64 KB of console output is available.
      * </p>
      * <p>
-     * Instance console output is buffered and posted shortly after instance boot, reboot, and termination. Amazon EC2
-     * preserves the most recent 64 KB output, which is available for at least one hour after the most recent post.
+     * You can optionally retrieve the latest serial console output at any time during the instance lifecycle. This
+     * option is supported on instance types that use the Nitro hypervisor.
      * </p>
      * <p>
-     * For Linux instances, the instance console output displays the exact console output that would normally be
-     * displayed on a physical monitor attached to a computer. This output is buffered because the instance produces it
-     * and then posts it to a store where the instance's owner can retrieve it.
-     * </p>
-     * <p>
-     * For Windows instances, the instance console output includes output from the EC2Config service.
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html#instance-console-console-output"
+     * >Instance Console Output</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param getConsoleOutputRequest
-     *        Contains the parameters for GetConsoleOutput.
      * @return Result of the GetConsoleOutput operation returned by the service.
      * @sample AmazonEC2.GetConsoleOutput
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetConsoleOutput" target="_top">AWS API
@@ -11462,6 +14914,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new GetConsoleOutputRequestMarshaller().marshall(super.beforeMarshalling(getConsoleOutputRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetConsoleOutput");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11487,7 +14943,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param getConsoleScreenshotRequest
-     *        Contains the parameters for the request.
      * @return Result of the GetConsoleScreenshot operation returned by the service.
      * @sample AmazonEC2.GetConsoleScreenshot
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetConsoleScreenshot" target="_top">AWS API
@@ -11514,6 +14969,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new GetConsoleScreenshotRequestMarshaller().marshall(super.beforeMarshalling(getConsoleScreenshotRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetConsoleScreenshot");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11568,6 +15027,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new GetHostReservationPurchasePreviewRequestMarshaller().marshall(super.beforeMarshalling(getHostReservationPurchasePreviewRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetHostReservationPurchasePreview");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11616,6 +15079,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new GetLaunchTemplateDataRequestMarshaller().marshall(super.beforeMarshalling(getLaunchTemplateDataRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetLaunchTemplateData");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11640,8 +15107,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * The Windows password is generated at boot by the <code>EC2Config</code> service or <code>EC2Launch</code> scripts
      * (Windows Server 2016 and later). This usually only happens the first time an instance is launched. For more
      * information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_WinAMI.html">EC2Config</a> and <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2launch.html">EC2Launch</a> in the Amazon Elastic
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_WinAMI.html">EC2Config</a> and <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2launch.html">EC2Launch</a> in the Amazon Elastic
      * Compute Cloud User Guide.
      * </p>
      * <p>
@@ -11659,7 +15126,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param getPasswordDataRequest
-     *        Contains the parameters for GetPasswordData.
      * @return Result of the GetPasswordData operation returned by the service.
      * @sample AmazonEC2.GetPasswordData
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetPasswordData" target="_top">AWS API
@@ -11686,6 +15152,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new GetPasswordDataRequestMarshaller().marshall(super.beforeMarshalling(getPasswordDataRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetPasswordData");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11738,6 +15208,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new GetReservedInstancesExchangeQuoteRequestMarshaller().marshall(super.beforeMarshalling(getReservedInstancesExchangeQuoteRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetReservedInstancesExchangeQuote");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11756,9 +15230,231 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Lists the route tables to which the specified resource attachment propagates routes.
+     * </p>
+     * 
+     * @param getTransitGatewayAttachmentPropagationsRequest
+     * @return Result of the GetTransitGatewayAttachmentPropagations operation returned by the service.
+     * @sample AmazonEC2.GetTransitGatewayAttachmentPropagations
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetTransitGatewayAttachmentPropagations"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public GetTransitGatewayAttachmentPropagationsResult getTransitGatewayAttachmentPropagations(GetTransitGatewayAttachmentPropagationsRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetTransitGatewayAttachmentPropagations(request);
+    }
+
+    @SdkInternalApi
+    final GetTransitGatewayAttachmentPropagationsResult executeGetTransitGatewayAttachmentPropagations(
+            GetTransitGatewayAttachmentPropagationsRequest getTransitGatewayAttachmentPropagationsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getTransitGatewayAttachmentPropagationsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetTransitGatewayAttachmentPropagationsRequest> request = null;
+        Response<GetTransitGatewayAttachmentPropagationsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetTransitGatewayAttachmentPropagationsRequestMarshaller().marshall(super
+                        .beforeMarshalling(getTransitGatewayAttachmentPropagationsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetTransitGatewayAttachmentPropagations");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<GetTransitGatewayAttachmentPropagationsResult> responseHandler = new StaxResponseHandler<GetTransitGatewayAttachmentPropagationsResult>(
+                    new GetTransitGatewayAttachmentPropagationsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets information about the associations for the specified transit gateway route table.
+     * </p>
+     * 
+     * @param getTransitGatewayRouteTableAssociationsRequest
+     * @return Result of the GetTransitGatewayRouteTableAssociations operation returned by the service.
+     * @sample AmazonEC2.GetTransitGatewayRouteTableAssociations
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetTransitGatewayRouteTableAssociations"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public GetTransitGatewayRouteTableAssociationsResult getTransitGatewayRouteTableAssociations(GetTransitGatewayRouteTableAssociationsRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetTransitGatewayRouteTableAssociations(request);
+    }
+
+    @SdkInternalApi
+    final GetTransitGatewayRouteTableAssociationsResult executeGetTransitGatewayRouteTableAssociations(
+            GetTransitGatewayRouteTableAssociationsRequest getTransitGatewayRouteTableAssociationsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getTransitGatewayRouteTableAssociationsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetTransitGatewayRouteTableAssociationsRequest> request = null;
+        Response<GetTransitGatewayRouteTableAssociationsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetTransitGatewayRouteTableAssociationsRequestMarshaller().marshall(super
+                        .beforeMarshalling(getTransitGatewayRouteTableAssociationsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetTransitGatewayRouteTableAssociations");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<GetTransitGatewayRouteTableAssociationsResult> responseHandler = new StaxResponseHandler<GetTransitGatewayRouteTableAssociationsResult>(
+                    new GetTransitGatewayRouteTableAssociationsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets information about the route table propagations for the specified transit gateway route table.
+     * </p>
+     * 
+     * @param getTransitGatewayRouteTablePropagationsRequest
+     * @return Result of the GetTransitGatewayRouteTablePropagations operation returned by the service.
+     * @sample AmazonEC2.GetTransitGatewayRouteTablePropagations
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetTransitGatewayRouteTablePropagations"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public GetTransitGatewayRouteTablePropagationsResult getTransitGatewayRouteTablePropagations(GetTransitGatewayRouteTablePropagationsRequest request) {
+        request = beforeClientExecution(request);
+        return executeGetTransitGatewayRouteTablePropagations(request);
+    }
+
+    @SdkInternalApi
+    final GetTransitGatewayRouteTablePropagationsResult executeGetTransitGatewayRouteTablePropagations(
+            GetTransitGatewayRouteTablePropagationsRequest getTransitGatewayRouteTablePropagationsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(getTransitGatewayRouteTablePropagationsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetTransitGatewayRouteTablePropagationsRequest> request = null;
+        Response<GetTransitGatewayRouteTablePropagationsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetTransitGatewayRouteTablePropagationsRequestMarshaller().marshall(super
+                        .beforeMarshalling(getTransitGatewayRouteTablePropagationsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "GetTransitGatewayRouteTablePropagations");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<GetTransitGatewayRouteTablePropagationsResult> responseHandler = new StaxResponseHandler<GetTransitGatewayRouteTablePropagationsResult>(
+                    new GetTransitGatewayRouteTablePropagationsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Uploads a client certificate revocation list to the specified Client VPN endpoint. Uploading a client certificate
+     * revocation list overwrites the existing client certificate revocation list.
+     * </p>
+     * <p>
+     * Uploading a client certificate revocation list resets existing client connections.
+     * </p>
+     * 
+     * @param importClientVpnClientCertificateRevocationListRequest
+     * @return Result of the ImportClientVpnClientCertificateRevocationList operation returned by the service.
+     * @sample AmazonEC2.ImportClientVpnClientCertificateRevocationList
+     * @see <a
+     *      href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ImportClientVpnClientCertificateRevocationList"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public ImportClientVpnClientCertificateRevocationListResult importClientVpnClientCertificateRevocationList(
+            ImportClientVpnClientCertificateRevocationListRequest request) {
+        request = beforeClientExecution(request);
+        return executeImportClientVpnClientCertificateRevocationList(request);
+    }
+
+    @SdkInternalApi
+    final ImportClientVpnClientCertificateRevocationListResult executeImportClientVpnClientCertificateRevocationList(
+            ImportClientVpnClientCertificateRevocationListRequest importClientVpnClientCertificateRevocationListRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(importClientVpnClientCertificateRevocationListRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ImportClientVpnClientCertificateRevocationListRequest> request = null;
+        Response<ImportClientVpnClientCertificateRevocationListResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ImportClientVpnClientCertificateRevocationListRequestMarshaller().marshall(super
+                        .beforeMarshalling(importClientVpnClientCertificateRevocationListRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ImportClientVpnClientCertificateRevocationList");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ImportClientVpnClientCertificateRevocationListResult> responseHandler = new StaxResponseHandler<ImportClientVpnClientCertificateRevocationListResult>(
+                    new ImportClientVpnClientCertificateRevocationListResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Import single or multi-volume disk images or EBS snapshots into an Amazon Machine Image (AMI). For more
      * information, see <a
-     * href="http://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-image-import.html">Importing a VM as an
+     * href="https://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-image-import.html">Importing a VM as an
      * Image Using VM Import/Export</a> in the <i>VM Import/Export User Guide</i>.
      * </p>
      * 
@@ -11790,6 +15486,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ImportImageRequestMarshaller().marshall(super.beforeMarshalling(importImageRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ImportImage");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11814,12 +15514,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Creates an import instance task using metadata from the specified disk image. <code>ImportInstance</code> only
      * supports single-volume VMs. To import multi-volume VMs, use <a>ImportImage</a>. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ec2-cli-vmimport-export.html">Importing a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ec2-cli-vmimport-export.html">Importing a
      * Virtual Machine Using the Amazon EC2 CLI</a>.
      * </p>
      * <p>
      * For information about the import manifest referenced by this API action, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html">VM Import Manifest</a>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html">VM Import Manifest</a>.
      * </p>
      * 
      * @param importInstanceRequest
@@ -11850,6 +15550,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ImportInstanceRequestMarshaller().marshall(super.beforeMarshalling(importInstanceRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ImportInstance");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11875,12 +15579,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about key pairs, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Key Pairs</a> in the <i>Amazon
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Key Pairs</a> in the <i>Amazon
      * Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param importKeyPairRequest
-     *        Contains the parameters for ImportKeyPair.
      * @return Result of the ImportKeyPair operation returned by the service.
      * @sample AmazonEC2.ImportKeyPair
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ImportKeyPair" target="_top">AWS API
@@ -11907,6 +15610,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ImportKeyPairRequestMarshaller().marshall(super.beforeMarshalling(importKeyPairRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ImportKeyPair");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11955,6 +15662,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ImportSnapshotRequestMarshaller().marshall(super.beforeMarshalling(importSnapshotRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ImportSnapshot");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -11979,12 +15690,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Creates an import volume task using metadata from the specified disk image.For more information, see <a href=
-     * "http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/importing-your-volumes-into-amazon-ebs.html"
+     * "https://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/importing-your-volumes-into-amazon-ebs.html"
      * >Importing Disks to Amazon EBS</a>.
      * </p>
      * <p>
      * For information about the import manifest referenced by this API action, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html">VM Import Manifest</a>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html">VM Import Manifest</a>.
      * </p>
      * 
      * @param importVolumeRequest
@@ -12015,11 +15726,178 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ImportVolumeRequestMarshaller().marshall(super.beforeMarshalling(importVolumeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ImportVolume");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<ImportVolumeResult> responseHandler = new StaxResponseHandler<ImportVolumeResult>(new ImportVolumeResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Modifies a Capacity Reservation's capacity and the conditions under which it is to be released. You cannot change
+     * a Capacity Reservation's instance type, EBS optimization, instance store settings, platform, Availability Zone,
+     * or instance eligibility. If you need to modify any of these attributes, we recommend that you cancel the Capacity
+     * Reservation, and then create a new one with the required attributes.
+     * </p>
+     * 
+     * @param modifyCapacityReservationRequest
+     * @return Result of the ModifyCapacityReservation operation returned by the service.
+     * @sample AmazonEC2.ModifyCapacityReservation
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyCapacityReservation" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public ModifyCapacityReservationResult modifyCapacityReservation(ModifyCapacityReservationRequest request) {
+        request = beforeClientExecution(request);
+        return executeModifyCapacityReservation(request);
+    }
+
+    @SdkInternalApi
+    final ModifyCapacityReservationResult executeModifyCapacityReservation(ModifyCapacityReservationRequest modifyCapacityReservationRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(modifyCapacityReservationRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ModifyCapacityReservationRequest> request = null;
+        Response<ModifyCapacityReservationResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ModifyCapacityReservationRequestMarshaller().marshall(super.beforeMarshalling(modifyCapacityReservationRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyCapacityReservation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ModifyCapacityReservationResult> responseHandler = new StaxResponseHandler<ModifyCapacityReservationResult>(
+                    new ModifyCapacityReservationResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Modifies the specified Client VPN endpoint. You can only modify an endpoint's server certificate information,
+     * client connection logging information, DNS server, and description. Modifying the DNS server resets existing
+     * client connections.
+     * </p>
+     * 
+     * @param modifyClientVpnEndpointRequest
+     * @return Result of the ModifyClientVpnEndpoint operation returned by the service.
+     * @sample AmazonEC2.ModifyClientVpnEndpoint
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyClientVpnEndpoint" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public ModifyClientVpnEndpointResult modifyClientVpnEndpoint(ModifyClientVpnEndpointRequest request) {
+        request = beforeClientExecution(request);
+        return executeModifyClientVpnEndpoint(request);
+    }
+
+    @SdkInternalApi
+    final ModifyClientVpnEndpointResult executeModifyClientVpnEndpoint(ModifyClientVpnEndpointRequest modifyClientVpnEndpointRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(modifyClientVpnEndpointRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ModifyClientVpnEndpointRequest> request = null;
+        Response<ModifyClientVpnEndpointResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ModifyClientVpnEndpointRequestMarshaller().marshall(super.beforeMarshalling(modifyClientVpnEndpointRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyClientVpnEndpoint");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ModifyClientVpnEndpointResult> responseHandler = new StaxResponseHandler<ModifyClientVpnEndpointResult>(
+                    new ModifyClientVpnEndpointResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Modifies the specified EC2 Fleet.
+     * </p>
+     * <p>
+     * While the EC2 Fleet is being modified, it is in the <code>modifying</code> state.
+     * </p>
+     * 
+     * @param modifyFleetRequest
+     * @return Result of the ModifyFleet operation returned by the service.
+     * @sample AmazonEC2.ModifyFleet
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyFleet" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public ModifyFleetResult modifyFleet(ModifyFleetRequest request) {
+        request = beforeClientExecution(request);
+        return executeModifyFleet(request);
+    }
+
+    @SdkInternalApi
+    final ModifyFleetResult executeModifyFleet(ModifyFleetRequest modifyFleetRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(modifyFleetRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ModifyFleetRequest> request = null;
+        Response<ModifyFleetResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ModifyFleetRequestMarshaller().marshall(super.beforeMarshalling(modifyFleetRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyFleet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ModifyFleetResult> responseHandler = new StaxResponseHandler<ModifyFleetResult>(new ModifyFleetResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -12062,6 +15940,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyFpgaImageAttributeRequestMarshaller().marshall(super.beforeMarshalling(modifyFpgaImageAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyFpgaImageAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12080,15 +15962,14 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Modify the auto-placement setting of a Dedicated Host. When auto-placement is enabled, AWS will place instances
-     * that you launch with a tenancy of <code>host</code>, but without targeting a specific host ID, onto any available
-     * Dedicated Host in your account which has auto-placement enabled. When auto-placement is disabled, you need to
-     * provide a host ID if you want the instance to launch onto a specific host. If no host ID is provided, the
-     * instance will be launched onto a suitable host which has auto-placement enabled.
+     * Modify the auto-placement setting of a Dedicated Host. When auto-placement is enabled, any instances that you
+     * launch with a tenancy of <code>host</code> but without a specific host ID are placed onto any available Dedicated
+     * Host in your account that has auto-placement enabled. When auto-placement is disabled, you need to provide a host
+     * ID to have the instance launch onto a specific host. If no host ID is provided, the instance is launched onto a
+     * suitable host with auto-placement enabled.
      * </p>
      * 
      * @param modifyHostsRequest
-     *        Contains the parameters for ModifyHosts.
      * @return Result of the ModifyHosts operation returned by the service.
      * @sample AmazonEC2.ModifyHosts
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyHosts" target="_top">AWS API
@@ -12115,6 +15996,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyHostsRequestMarshaller().marshall(super.beforeMarshalling(modifyHostsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyHosts");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12133,15 +16018,26 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Modifies the ID format for the specified resource on a per-region basis. You can specify that resources should
-     * receive longer IDs (17-character IDs) when they are created. The following resource types support longer IDs:
-     * <code>instance</code> | <code>reservation</code> | <code>snapshot</code> | <code>volume</code>.
+     * receive longer IDs (17-character IDs) when they are created.
+     * </p>
+     * <p>
+     * This request can only be used to modify longer ID settings for resource types that are within the opt-in period.
+     * Resources currently in their opt-in period include: <code>bundle</code> | <code>conversion-task</code> |
+     * <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> |
+     * <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> |
+     * <code>import-task</code> | <code>internet-gateway</code> | <code>network-acl</code> |
+     * <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code>
+     * | <code>prefix-list</code> | <code>route-table</code> | <code>route-table-association</code> |
+     * <code>security-group</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>vpc</code>
+     * | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> |
+     * <code>vpn-connection</code> | <code>vpn-gateway</code>.
      * </p>
      * <p>
      * This setting applies to the IAM user who makes the request; it does not apply to the entire AWS account. By
      * default, an IAM user defaults to the same settings as the root user. If you're using this action as the root
      * user, then these settings apply to the entire account, unless an IAM user explicitly overrides these settings for
      * themselves. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html">Resource IDs</a> in the <i>Amazon
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html">Resource IDs</a> in the <i>Amazon
      * Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
@@ -12150,7 +16046,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param modifyIdFormatRequest
-     *        Contains the parameters of ModifyIdFormat.
      * @return Result of the ModifyIdFormat operation returned by the service.
      * @sample AmazonEC2.ModifyIdFormat
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyIdFormat" target="_top">AWS API
@@ -12177,6 +16072,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyIdFormatRequestMarshaller().marshall(super.beforeMarshalling(modifyIdFormatRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyIdFormat");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12200,9 +16099,20 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * (17-character IDs) when they are created.
      * </p>
      * <p>
-     * The following resource types support longer IDs: <code>instance</code> | <code>reservation</code> |
-     * <code>snapshot</code> | <code>volume</code>. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html">Resource IDs</a> in the <i>Amazon
+     * This request can only be used to modify longer ID settings for resource types that are within the opt-in period.
+     * Resources currently in their opt-in period include: <code>bundle</code> | <code>conversion-task</code> |
+     * <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> |
+     * <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> |
+     * <code>import-task</code> | <code>internet-gateway</code> | <code>network-acl</code> |
+     * <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code>
+     * | <code>prefix-list</code> | <code>route-table</code> | <code>route-table-association</code> |
+     * <code>security-group</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>vpc</code>
+     * | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> |
+     * <code>vpn-connection</code> | <code>vpn-gateway</code>.
+     * </p>
+     * <p>
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html">Resource IDs</a> in the <i>Amazon
      * Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
@@ -12215,7 +16125,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param modifyIdentityIdFormatRequest
-     *        Contains the parameters of ModifyIdentityIdFormat.
      * @return Result of the ModifyIdentityIdFormat operation returned by the service.
      * @sample AmazonEC2.ModifyIdentityIdFormat
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyIdentityIdFormat" target="_top">AWS API
@@ -12242,6 +16151,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyIdentityIdFormatRequestMarshaller().marshall(super.beforeMarshalling(modifyIdentityIdFormatRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyIdentityIdFormat");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12301,6 +16214,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyImageAttributeRequestMarshaller().marshall(super.beforeMarshalling(modifyImageAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyImageAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12322,13 +16239,18 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Modifies the specified attribute of the specified instance. You can specify only one attribute at a time.
      * </p>
      * <p>
+     * <b>Note: </b>Using this action to change the security groups associated with an elastic network interface (ENI)
+     * attached to an instance in a VPC can result in an error if the instance has more than one ENI. To change the
+     * security groups associated with an ENI attached to an instance that has multiple ENIs, we recommend that you use
+     * the <a>ModifyNetworkInterfaceAttribute</a> action.
+     * </p>
+     * <p>
      * To modify some attributes, the instance must be stopped. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_ChangingAttributesWhileInstanceStopped.html"
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_ChangingAttributesWhileInstanceStopped.html"
      * >Modifying Attributes of a Stopped Instance</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param modifyInstanceAttributeRequest
-     *        Contains the parameters for ModifyInstanceAttribute.
      * @return Result of the ModifyInstanceAttribute operation returned by the service.
      * @sample AmazonEC2.ModifyInstanceAttribute
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyInstanceAttribute" target="_top">AWS
@@ -12355,6 +16277,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyInstanceAttributeRequestMarshaller().marshall(super.beforeMarshalling(modifyInstanceAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyInstanceAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12373,12 +16299,70 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Modifies the credit option for CPU usage on a running or stopped T2 instance. The credit options are
+     * Modifies the Capacity Reservation settings for a stopped instance. Use this action to configure an instance to
+     * target a specific Capacity Reservation, run in any <code>open</code> Capacity Reservation with matching
+     * attributes, or run On-Demand Instance capacity.
+     * </p>
+     * 
+     * @param modifyInstanceCapacityReservationAttributesRequest
+     * @return Result of the ModifyInstanceCapacityReservationAttributes operation returned by the service.
+     * @sample AmazonEC2.ModifyInstanceCapacityReservationAttributes
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyInstanceCapacityReservationAttributes"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public ModifyInstanceCapacityReservationAttributesResult modifyInstanceCapacityReservationAttributes(
+            ModifyInstanceCapacityReservationAttributesRequest request) {
+        request = beforeClientExecution(request);
+        return executeModifyInstanceCapacityReservationAttributes(request);
+    }
+
+    @SdkInternalApi
+    final ModifyInstanceCapacityReservationAttributesResult executeModifyInstanceCapacityReservationAttributes(
+            ModifyInstanceCapacityReservationAttributesRequest modifyInstanceCapacityReservationAttributesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(modifyInstanceCapacityReservationAttributesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ModifyInstanceCapacityReservationAttributesRequest> request = null;
+        Response<ModifyInstanceCapacityReservationAttributesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ModifyInstanceCapacityReservationAttributesRequestMarshaller().marshall(super
+                        .beforeMarshalling(modifyInstanceCapacityReservationAttributesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyInstanceCapacityReservationAttributes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ModifyInstanceCapacityReservationAttributesResult> responseHandler = new StaxResponseHandler<ModifyInstanceCapacityReservationAttributesResult>(
+                    new ModifyInstanceCapacityReservationAttributesResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Modifies the credit option for CPU usage on a running or stopped T2 or T3 instance. The credit options are
      * <code>standard</code> and <code>unlimited</code>.
      * </p>
      * <p>
-     * For more information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/t2-instances.html">T2
-     * Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html">Burstable
+     * Performance Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param modifyInstanceCreditSpecificationRequest
@@ -12409,6 +16393,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyInstanceCreditSpecificationRequestMarshaller().marshall(super.beforeMarshalling(modifyInstanceCreditSpecificationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyInstanceCreditSpecification");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12427,28 +16415,98 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Set the instance affinity value for a specific stopped instance and modify the instance tenancy setting.
+     * Modifies the start time for a scheduled Amazon EC2 instance event.
+     * </p>
+     * 
+     * @param modifyInstanceEventStartTimeRequest
+     * @return Result of the ModifyInstanceEventStartTime operation returned by the service.
+     * @sample AmazonEC2.ModifyInstanceEventStartTime
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyInstanceEventStartTime"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public ModifyInstanceEventStartTimeResult modifyInstanceEventStartTime(ModifyInstanceEventStartTimeRequest request) {
+        request = beforeClientExecution(request);
+        return executeModifyInstanceEventStartTime(request);
+    }
+
+    @SdkInternalApi
+    final ModifyInstanceEventStartTimeResult executeModifyInstanceEventStartTime(ModifyInstanceEventStartTimeRequest modifyInstanceEventStartTimeRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(modifyInstanceEventStartTimeRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ModifyInstanceEventStartTimeRequest> request = null;
+        Response<ModifyInstanceEventStartTimeResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ModifyInstanceEventStartTimeRequestMarshaller().marshall(super.beforeMarshalling(modifyInstanceEventStartTimeRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyInstanceEventStartTime");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ModifyInstanceEventStartTimeResult> responseHandler = new StaxResponseHandler<ModifyInstanceEventStartTimeResult>(
+                    new ModifyInstanceEventStartTimeResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Modifies the placement attributes for a specified instance. You can do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Modify the affinity between an instance and a <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html">Dedicated Host</a>. When
+     * affinity is set to <code>host</code> and the instance is not associated with a specific Dedicated Host, the next
+     * time the instance is launched, it is automatically associated with the host on which it lands. If the instance is
+     * restarted or rebooted, this relationship persists.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Change the Dedicated Host with which an instance is associated.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Change the instance tenancy of an instance from <code>host</code> to <code>dedicated</code>, or from
+     * <code>dedicated</code> to <code>host</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Move an instance to or from a <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html">placement group</a>.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * At least one attribute for affinity, host ID, tenancy, or placement group name must be specified in the request.
+     * Affinity and tenancy can be modified in the same request.
      * </p>
      * <p>
-     * Instance affinity is disabled by default. When instance affinity is <code>host</code> and it is not associated
-     * with a specific Dedicated Host, the next time it is launched it will automatically be associated with the host it
-     * lands on. This relationship will persist if the instance is stopped/started, or rebooted.
-     * </p>
-     * <p>
-     * You can modify the host ID associated with a stopped instance. If a stopped instance has a new host ID
-     * association, the instance will target that host when restarted.
-     * </p>
-     * <p>
-     * You can modify the tenancy of a stopped instance with a tenancy of <code>host</code> or <code>dedicated</code>.
-     * </p>
-     * <p>
-     * Affinity, hostID, and tenancy are not required parameters, but at least one of them must be specified in the
-     * request. Affinity and tenancy can be modified in the same request, but tenancy can only be modified on instances
-     * that are stopped.
+     * To modify the host ID, tenancy, placement group, or partition for an instance, the instance must be in the
+     * <code>stopped</code> state.
      * </p>
      * 
      * @param modifyInstancePlacementRequest
-     *        Contains the parameters for ModifyInstancePlacement.
      * @return Result of the ModifyInstancePlacement operation returned by the service.
      * @sample AmazonEC2.ModifyInstancePlacement
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyInstancePlacement" target="_top">AWS
@@ -12475,6 +16533,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyInstancePlacementRequestMarshaller().marshall(super.beforeMarshalling(modifyInstancePlacementRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyInstancePlacement");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12524,6 +16586,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyLaunchTemplateRequestMarshaller().marshall(super.beforeMarshalling(modifyLaunchTemplateRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyLaunchTemplate");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12542,7 +16608,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Modifies the specified network interface attribute. You can specify only one attribute at a time.
+     * Modifies the specified network interface attribute. You can specify only one attribute at a time. You can use
+     * this action to attach and detach security groups from an existing EC2 instance.
      * </p>
      * 
      * @param modifyNetworkInterfaceAttributeRequest
@@ -12574,6 +16641,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyNetworkInterfaceAttributeRequestMarshaller().marshall(super.beforeMarshalling(modifyNetworkInterfaceAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyNetworkInterfaceAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12598,7 +16669,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-modifying.html">Modifying Reserved Instances</a> in
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-modifying.html">Modifying Reserved Instances</a> in
      * the Amazon Elastic Compute Cloud User Guide.
      * </p>
      * 
@@ -12630,6 +16701,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyReservedInstancesRequestMarshaller().marshall(super.beforeMarshalling(modifyReservedInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyReservedInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12652,15 +16727,13 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * from a snapshot's list of create volume permissions, but you cannot do both in a single API call. If you need to
      * both add and remove account IDs for a snapshot, you must use multiple API calls.
      * </p>
-     * <note>
      * <p>
      * Encrypted snapshots and snapshots with AWS Marketplace product codes cannot be made public. Snapshots encrypted
      * with your default CMK cannot be shared with other accounts.
      * </p>
-     * </note>
      * <p>
-     * For more information on modifying snapshot permissions, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html">Sharing
+     * For more information about modifying snapshot permissions, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html">Sharing
      * Snapshots</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -12692,6 +16765,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifySnapshotAttributeRequestMarshaller().marshall(super.beforeMarshalling(modifySnapshotAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifySnapshotAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12763,6 +16840,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifySpotFleetRequestRequestMarshaller().marshall(super.beforeMarshalling(modifySpotFleetRequestRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifySpotFleetRequest");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12785,7 +16866,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param modifySubnetAttributeRequest
-     *        Contains the parameters for ModifySubnetAttribute.
      * @return Result of the ModifySubnetAttribute operation returned by the service.
      * @sample AmazonEC2.ModifySubnetAttribute
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifySubnetAttribute" target="_top">AWS API
@@ -12812,6 +16892,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifySubnetAttributeRequestMarshaller().marshall(super.beforeMarshalling(modifySubnetAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifySubnetAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12830,46 +16914,96 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
+     * Modifies the specified VPC attachment.
+     * </p>
+     * 
+     * @param modifyTransitGatewayVpcAttachmentRequest
+     * @return Result of the ModifyTransitGatewayVpcAttachment operation returned by the service.
+     * @sample AmazonEC2.ModifyTransitGatewayVpcAttachment
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyTransitGatewayVpcAttachment"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public ModifyTransitGatewayVpcAttachmentResult modifyTransitGatewayVpcAttachment(ModifyTransitGatewayVpcAttachmentRequest request) {
+        request = beforeClientExecution(request);
+        return executeModifyTransitGatewayVpcAttachment(request);
+    }
+
+    @SdkInternalApi
+    final ModifyTransitGatewayVpcAttachmentResult executeModifyTransitGatewayVpcAttachment(
+            ModifyTransitGatewayVpcAttachmentRequest modifyTransitGatewayVpcAttachmentRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(modifyTransitGatewayVpcAttachmentRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ModifyTransitGatewayVpcAttachmentRequest> request = null;
+        Response<ModifyTransitGatewayVpcAttachmentResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ModifyTransitGatewayVpcAttachmentRequestMarshaller().marshall(super.beforeMarshalling(modifyTransitGatewayVpcAttachmentRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyTransitGatewayVpcAttachment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ModifyTransitGatewayVpcAttachmentResult> responseHandler = new StaxResponseHandler<ModifyTransitGatewayVpcAttachmentResult>(
+                    new ModifyTransitGatewayVpcAttachmentResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * You can modify several parameters of an existing EBS volume, including volume size, volume type, and IOPS
      * capacity. If your EBS volume is attached to a current-generation EC2 instance type, you may be able to apply
      * these changes without stopping the instance or detaching the volume from it. For more information about modifying
      * an EBS volume running Linux, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html">Modifying the Size, IOPS, or
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html">Modifying the Size, IOPS, or
      * Type of an EBS Volume on Linux</a>. For more information about modifying an EBS volume running Windows, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html">Modifying the Size, IOPS, or
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html">Modifying the Size, IOPS, or
      * Type of an EBS Volume on Windows</a>.
      * </p>
      * <p>
      * When you complete a resize operation on your volume, you need to extend the volume's file-system size to take
      * advantage of the new storage capacity. For information about extending a Linux file system, see <a href=
-     * "http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#recognize-expanded-volume-linux"
+     * "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#recognize-expanded-volume-linux"
      * >Extending a Linux File System</a>. For information about extending a Windows file system, see <a href=
-     * "http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html#recognize-expanded-volume-windows"
+     * "https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html#recognize-expanded-volume-windows"
      * >Extending a Windows File System</a>.
      * </p>
      * <p>
      * You can use CloudWatch Events to check the status of a modification to an EBS volume. For information about
-     * CloudWatch Events, see the <a href="http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/">Amazon CloudWatch
-     * Events User Guide</a>. You can also track the status of a modification using the
+     * CloudWatch Events, see the <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/">Amazon
+     * CloudWatch Events User Guide</a>. You can also track the status of a modification using the
      * <a>DescribeVolumesModifications</a> API. For information about tracking status changes using either method, see
-     * <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods">Monitoring
+     * <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods">Monitoring
      * Volume Modifications</a>.
      * </p>
-     * <note>
      * <p>
      * With previous-generation instance types, resizing an EBS volume may require detaching and reattaching the volume
-     * or stopping and restarting the instance. For more information about modifying an EBS volume running Linux, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html">Modifying the Size, IOPS, or
-     * Type of an EBS Volume on Linux</a>. For more information about modifying an EBS volume running Windows, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html">Modifying the Size, IOPS, or
+     * or stopping and restarting the instance. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html">Modifying the Size, IOPS, or
+     * Type of an EBS Volume on Linux</a> and <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html">Modifying the Size, IOPS, or
      * Type of an EBS Volume on Windows</a>.
      * </p>
-     * </note> <note>
      * <p>
      * If you reach the maximum volume modification rate per volume limit, you will need to wait at least six hours
      * before applying further modifications to the affected EBS volume.
      * </p>
-     * </note>
      * 
      * @param modifyVolumeRequest
      * @return Result of the ModifyVolume operation returned by the service.
@@ -12898,6 +17032,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyVolumeRequestMarshaller().marshall(super.beforeMarshalling(modifyVolumeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyVolume");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12955,6 +17093,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyVolumeAttributeRequestMarshaller().marshall(super.beforeMarshalling(modifyVolumeAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyVolumeAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -12977,7 +17119,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param modifyVpcAttributeRequest
-     *        Contains the parameters for ModifyVpcAttribute.
      * @return Result of the ModifyVpcAttribute operation returned by the service.
      * @sample AmazonEC2.ModifyVpcAttribute
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcAttribute" target="_top">AWS API
@@ -13004,6 +17145,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyVpcAttributeRequestMarshaller().marshall(super.beforeMarshalling(modifyVpcAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyVpcAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13024,7 +17169,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Modifies attributes of a specified VPC endpoint. The attributes that you can modify depend on the type of VPC
      * endpoint (interface or gateway). For more information, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html">VPC Endpoints</a> in the
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html">VPC Endpoints</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
@@ -13056,6 +17201,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyVpcEndpointRequestMarshaller().marshall(super.beforeMarshalling(modifyVpcEndpointRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyVpcEndpoint");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13107,6 +17256,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(modifyVpcEndpointConnectionNotificationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyVpcEndpointConnectionNotification");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13159,6 +17312,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(modifyVpcEndpointServiceConfigurationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyVpcEndpointServiceConfiguration");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13177,8 +17334,15 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Modifies the permissions for your VPC endpoint service. You can add or remove permissions for service consumers
-     * (IAM users, IAM roles, and AWS accounts) to discover your endpoint service.
+     * Modifies the permissions for your <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/endpoint-service.html">VPC endpoint service</a>. You
+     * can add or remove permissions for service consumers (IAM users, IAM roles, and AWS accounts) to connect to your
+     * endpoint service.
+     * </p>
+     * <p>
+     * If you grant permissions to all principals, the service is public. Any users who know the name of a public
+     * service can send a request to attach an endpoint. If the service does not require manual approval, attachments
+     * are automatically approved.
      * </p>
      * 
      * @param modifyVpcEndpointServicePermissionsRequest
@@ -13210,6 +17374,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(modifyVpcEndpointServicePermissionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyVpcEndpointServicePermissions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13245,16 +17413,19 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </li>
      * <li>
      * <p>
-     * Enable/disable a local VPC to resolve public DNS hostnames to private IP addresses when queried from instances in
+     * Enable/disable the ability to resolve public DNS hostnames to private IP addresses when queried from instances in
      * the peer VPC.
      * </p>
      * </li>
      * </ul>
      * <p>
-     * If the peered VPCs are in different accounts, each owner must initiate a separate request to modify the peering
-     * connection options, depending on whether their VPC was the requester or accepter for the VPC peering connection.
-     * If the peered VPCs are in the same account, you can modify the requester and accepter options in the same
-     * request. To confirm which VPC is the accepter and requester for a VPC peering connection, use the
+     * If the peered VPCs are in the same AWS account, you can enable DNS resolution for queries from the local VPC.
+     * This ensures that queries from the local VPC resolve to private IP addresses in the peer VPC. This option is not
+     * available if the peered VPCs are in different AWS accounts or different regions. For peered VPCs in different AWS
+     * accounts, each AWS account owner must initiate a separate request to modify the peering connection options. For
+     * inter-region peering connections, you must use the region for the requester VPC to modify the requester VPC
+     * peering options and the region for the accepter VPC to modify the accepter VPC peering options. To verify which
+     * VPCs are the accepter and the requester for a VPC peering connection, use the
      * <a>DescribeVpcPeeringConnections</a> command.
      * </p>
      * 
@@ -13286,6 +17457,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyVpcPeeringConnectionOptionsRequestMarshaller().marshall(super.beforeMarshalling(modifyVpcPeeringConnectionOptionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyVpcPeeringConnectionOptions");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13313,13 +17488,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * VPC is not affected.
      * </p>
      * <p>
-     * For more information about Dedicated Instances, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html">Dedicated Instances</a> in the
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html">Dedicated Instances</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param modifyVpcTenancyRequest
-     *        Contains the parameters for ModifyVpcTenancy.
      * @return Result of the ModifyVpcTenancy operation returned by the service.
      * @sample AmazonEC2.ModifyVpcTenancy
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcTenancy" target="_top">AWS API
@@ -13346,6 +17520,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ModifyVpcTenancyRequestMarshaller().marshall(super.beforeMarshalling(modifyVpcTenancyRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ModifyVpcTenancy");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13365,7 +17543,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Enables detailed monitoring for a running instance. Otherwise, basic monitoring is enabled. For more information,
-     * see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html">Monitoring Your Instances
+     * see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html">Monitoring Your Instances
      * and Volumes</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
@@ -13373,7 +17551,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param monitorInstancesRequest
-     *        Contains the parameters for MonitorInstances.
      * @return Result of the MonitorInstances operation returned by the service.
      * @sample AmazonEC2.MonitorInstances
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/MonitorInstances" target="_top">AWS API
@@ -13400,6 +17577,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new MonitorInstancesRequestMarshaller().marshall(super.beforeMarshalling(monitorInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "MonitorInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13426,7 +17607,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param moveAddressToVpcRequest
-     *        Contains the parameters for MoveAddressToVpc.
      * @return Result of the MoveAddressToVpc operation returned by the service.
      * @sample AmazonEC2.MoveAddressToVpc
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/MoveAddressToVpc" target="_top">AWS API
@@ -13453,12 +17633,84 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new MoveAddressToVpcRequestMarshaller().marshall(super.beforeMarshalling(moveAddressToVpcRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "MoveAddressToVpc");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<MoveAddressToVpcResult> responseHandler = new StaxResponseHandler<MoveAddressToVpcResult>(
                     new MoveAddressToVpcResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Provisions an address range for use with your AWS resources through bring your own IP addresses (BYOIP) and
+     * creates a corresponding address pool. After the address range is provisioned, it is ready to be advertised using
+     * <a>AdvertiseByoipCidr</a>.
+     * </p>
+     * <p>
+     * AWS verifies that you own the address range and are authorized to advertise it. You must ensure that the address
+     * range is registered to you and that you created an RPKI ROA to authorize Amazon ASNs 16509 and 14618 to advertise
+     * the address range. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html">Bring Your Own IP Addresses (BYOIP)</a>
+     * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * </p>
+     * <p>
+     * Provisioning an address range is an asynchronous operation, so the call returns immediately, but the address
+     * range is not ready to use until its status changes from <code>pending-provision</code> to
+     * <code>provisioned</code>. To monitor the status of an address range, use <a>DescribeByoipCidrs</a>. To allocate
+     * an Elastic IP address from your address pool, use <a>AllocateAddress</a> with either the specific address from
+     * the address pool or the ID of the address pool.
+     * </p>
+     * 
+     * @param provisionByoipCidrRequest
+     * @return Result of the ProvisionByoipCidr operation returned by the service.
+     * @sample AmazonEC2.ProvisionByoipCidr
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ProvisionByoipCidr" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public ProvisionByoipCidrResult provisionByoipCidr(ProvisionByoipCidrRequest request) {
+        request = beforeClientExecution(request);
+        return executeProvisionByoipCidr(request);
+    }
+
+    @SdkInternalApi
+    final ProvisionByoipCidrResult executeProvisionByoipCidr(ProvisionByoipCidrRequest provisionByoipCidrRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(provisionByoipCidrRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ProvisionByoipCidrRequest> request = null;
+        Response<ProvisionByoipCidrResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ProvisionByoipCidrRequestMarshaller().marshall(super.beforeMarshalling(provisionByoipCidrRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ProvisionByoipCidr");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ProvisionByoipCidrResult> responseHandler = new StaxResponseHandler<ProvisionByoipCidrResult>(
+                    new ProvisionByoipCidrResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -13503,6 +17755,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new PurchaseHostReservationRequestMarshaller().marshall(super.beforeMarshalling(purchaseHostReservationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "PurchaseHostReservation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13531,8 +17787,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts-on-demand-reserved-instances.html">Reserved
-     * Instances</a> and <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts-on-demand-reserved-instances.html">Reserved
+     * Instances</a> and <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html">Reserved
      * Instance Marketplace</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -13565,6 +17821,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new PurchaseReservedInstancesOfferingRequestMarshaller().marshall(super.beforeMarshalling(purchaseReservedInstancesOfferingRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "PurchaseReservedInstancesOffering");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13623,6 +17883,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new PurchaseScheduledInstancesRequestMarshaller().marshall(super.beforeMarshalling(purchaseScheduledInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "PurchaseScheduledInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13641,7 +17905,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Requests a reboot of one or more instances. This operation is asynchronous; it only queues a request to reboot
+     * Requests a reboot of the specified instances. This operation is asynchronous; it only queues a request to reboot
      * the specified instances. The operation succeeds if the instances are valid and belong to you. Requests to reboot
      * terminated instances are ignored.
      * </p>
@@ -13650,12 +17914,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * <p>
      * For more information about troubleshooting, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html">Getting Console Output and
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html">Getting Console Output and
      * Rebooting Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param rebootInstancesRequest
-     *        Contains the parameters for RebootInstances.
      * @return Result of the RebootInstances operation returned by the service.
      * @sample AmazonEC2.RebootInstances
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RebootInstances" target="_top">AWS API
@@ -13682,6 +17945,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RebootInstancesRequestMarshaller().marshall(super.beforeMarshalling(rebootInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RebootInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13702,7 +17969,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Registers an AMI. When you're creating an AMI, this is the final step you must complete before you can launch an
      * instance from the AMI. For more information about creating AMIs, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami.html">Creating Your Own AMIs</a> in the
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami.html">Creating Your Own AMIs</a> in the
      * <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <note>
@@ -13714,7 +17981,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * You can also use <code>RegisterImage</code> to create an Amazon EBS-backed Linux AMI from a snapshot of a root
      * device volume. You specify the snapshot using the block device mapping. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-launch-snapshot.html">Launching a Linux
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-launch-snapshot.html">Launching a Linux
      * Instance from a Backup</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
@@ -13723,9 +17990,13 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Some Linux distributions, such as Red Hat Enterprise Linux (RHEL) and SUSE Linux Enterprise Server (SLES), use
      * the EC2 billing product code associated with an AMI to verify the subscription status for package updates.
-     * Creating an AMI from an EBS snapshot does not maintain this billing code, and subsequent instances launched from
-     * such an AMI will not be able to connect to package update infrastructure. To create an AMI that must retain
-     * billing codes, see <a>CreateImage</a>.
+     * Creating an AMI from an EBS snapshot does not maintain this billing code, and instances launched from such an AMI
+     * are not able to connect to package update infrastructure. If you purchase a Reserved Instance offering for one of
+     * these Linux distributions and launch instances using an AMI that does not contain the required billing code, your
+     * Reserved Instance is not applied to these instances.
+     * </p>
+     * <p>
+     * To create an AMI for operating systems that require a billing code, see <a>CreateImage</a>.
      * </p>
      * <p>
      * If needed, you can deregister an AMI at any time. Any modifications you make to an AMI backed by an instance
@@ -13761,11 +18032,73 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RegisterImageRequestMarshaller().marshall(super.beforeMarshalling(registerImageRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RegisterImage");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<RegisterImageResult> responseHandler = new StaxResponseHandler<RegisterImageResult>(new RegisterImageResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Rejects a request to attach a VPC to a transit gateway.
+     * </p>
+     * <p>
+     * The VPC attachment must be in the <code>pendingAcceptance</code> state. Use
+     * <a>DescribeTransitGatewayVpcAttachments</a> to view your pending VPC attachment requests. Use
+     * <a>AcceptTransitGatewayVpcAttachment</a> to accept a VPC attachment request.
+     * </p>
+     * 
+     * @param rejectTransitGatewayVpcAttachmentRequest
+     * @return Result of the RejectTransitGatewayVpcAttachment operation returned by the service.
+     * @sample AmazonEC2.RejectTransitGatewayVpcAttachment
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RejectTransitGatewayVpcAttachment"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public RejectTransitGatewayVpcAttachmentResult rejectTransitGatewayVpcAttachment(RejectTransitGatewayVpcAttachmentRequest request) {
+        request = beforeClientExecution(request);
+        return executeRejectTransitGatewayVpcAttachment(request);
+    }
+
+    @SdkInternalApi
+    final RejectTransitGatewayVpcAttachmentResult executeRejectTransitGatewayVpcAttachment(
+            RejectTransitGatewayVpcAttachmentRequest rejectTransitGatewayVpcAttachmentRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(rejectTransitGatewayVpcAttachmentRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<RejectTransitGatewayVpcAttachmentRequest> request = null;
+        Response<RejectTransitGatewayVpcAttachmentResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new RejectTransitGatewayVpcAttachmentRequestMarshaller().marshall(super.beforeMarshalling(rejectTransitGatewayVpcAttachmentRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RejectTransitGatewayVpcAttachment");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<RejectTransitGatewayVpcAttachmentResult> responseHandler = new StaxResponseHandler<RejectTransitGatewayVpcAttachmentResult>(
+                    new RejectTransitGatewayVpcAttachmentResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -13808,6 +18141,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RejectVpcEndpointConnectionsRequestMarshaller().marshall(super.beforeMarshalling(rejectVpcEndpointConnectionsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RejectVpcEndpointConnections");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13833,7 +18170,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param rejectVpcPeeringConnectionRequest
-     *        Contains the parameters for RejectVpcPeeringConnection.
      * @return Result of the RejectVpcPeeringConnection operation returned by the service.
      * @sample AmazonEC2.RejectVpcPeeringConnection
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RejectVpcPeeringConnection" target="_top">AWS
@@ -13860,6 +18196,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RejectVpcPeeringConnectionRequestMarshaller().marshall(super.beforeMarshalling(rejectVpcPeeringConnectionRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RejectVpcPeeringConnection");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13900,7 +18240,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param releaseAddressRequest
-     *        Contains the parameters for ReleaseAddress.
      * @return Result of the ReleaseAddress operation returned by the service.
      * @sample AmazonEC2.ReleaseAddress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReleaseAddress" target="_top">AWS API
@@ -13927,6 +18266,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ReleaseAddressRequestMarshaller().marshall(super.beforeMarshalling(releaseAddressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ReleaseAddress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -13947,20 +18290,18 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * When you no longer want to use an On-Demand Dedicated Host it can be released. On-Demand billing is stopped and
      * the host goes into <code>released</code> state. The host ID of Dedicated Hosts that have been released can no
-     * longer be specified in another request, e.g., ModifyHosts. You must stop or terminate all instances on a host
-     * before it can be released.
+     * longer be specified in another request, for example, to modify the host. You must stop or terminate all instances
+     * on a host before it can be released.
      * </p>
      * <p>
-     * When Dedicated Hosts are released, it make take some time for them to stop counting toward your limit and you may
-     * receive capacity errors when trying to allocate new Dedicated hosts. Try waiting a few minutes, and then try
-     * again.
+     * When Dedicated Hosts are released, it may take some time for them to stop counting toward your limit and you may
+     * receive capacity errors when trying to allocate new Dedicated Hosts. Wait a few minutes and then try again.
      * </p>
      * <p>
-     * Released hosts will still appear in a <a>DescribeHosts</a> response.
+     * Released hosts still appear in a <a>DescribeHosts</a> response.
      * </p>
      * 
      * @param releaseHostsRequest
-     *        Contains the parameters for ReleaseHosts.
      * @return Result of the ReleaseHosts operation returned by the service.
      * @sample AmazonEC2.ReleaseHosts
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReleaseHosts" target="_top">AWS API
@@ -13987,6 +18328,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ReleaseHostsRequestMarshaller().marshall(super.beforeMarshalling(releaseHostsRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ReleaseHosts");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14041,6 +18386,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(replaceIamInstanceProfileAssociationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ReplaceIamInstanceProfileAssociation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14060,13 +18409,15 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Changes which network ACL a subnet is associated with. By default when you create a subnet, it's automatically
-     * associated with the default network ACL. For more information about network ACLs, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network ACLs</a> in the <i>Amazon
+     * associated with the default network ACL. For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network ACLs</a> in the <i>Amazon
      * Virtual Private Cloud User Guide</i>.
+     * </p>
+     * <p>
+     * This is an idempotent operation.
      * </p>
      * 
      * @param replaceNetworkAclAssociationRequest
-     *        Contains the parameters for ReplaceNetworkAclAssociation.
      * @return Result of the ReplaceNetworkAclAssociation operation returned by the service.
      * @sample AmazonEC2.ReplaceNetworkAclAssociation
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReplaceNetworkAclAssociation"
@@ -14093,6 +18444,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ReplaceNetworkAclAssociationRequestMarshaller().marshall(super.beforeMarshalling(replaceNetworkAclAssociationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ReplaceNetworkAclAssociation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14111,13 +18466,12 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Replaces an entry (rule) in a network ACL. For more information about network ACLs, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network ACLs</a> in the <i>Amazon
+     * Replaces an entry (rule) in a network ACL. For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html">Network ACLs</a> in the <i>Amazon
      * Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param replaceNetworkAclEntryRequest
-     *        Contains the parameters for ReplaceNetworkAclEntry.
      * @return Result of the ReplaceNetworkAclEntry operation returned by the service.
      * @sample AmazonEC2.ReplaceNetworkAclEntry
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReplaceNetworkAclEntry" target="_top">AWS API
@@ -14144,6 +18498,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ReplaceNetworkAclEntryRequestMarshaller().marshall(super.beforeMarshalling(replaceNetworkAclEntryRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ReplaceNetworkAclEntry");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14162,18 +18520,17 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Replaces an existing route within a route table in a VPC. You must provide only one of the following: Internet
+     * Replaces an existing route within a route table in a VPC. You must provide only one of the following: internet
      * gateway or virtual private gateway, NAT instance, NAT gateway, VPC peering connection, network interface, or
-     * egress-only Internet gateway.
+     * egress-only internet gateway.
      * </p>
      * <p>
-     * For more information about route tables, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param replaceRouteRequest
-     *        Contains the parameters for ReplaceRoute.
      * @return Result of the ReplaceRoute operation returned by the service.
      * @sample AmazonEC2.ReplaceRoute
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReplaceRoute" target="_top">AWS API
@@ -14200,6 +18557,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ReplaceRouteRequestMarshaller().marshall(super.beforeMarshalling(replaceRouteRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ReplaceRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14219,7 +18580,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Changes the route table associated with a given subnet in a VPC. After the operation completes, the subnet uses
      * the routes in the new route table it's associated with. For more information about route tables, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html">Route Tables</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * <p>
@@ -14228,7 +18589,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param replaceRouteTableAssociationRequest
-     *        Contains the parameters for ReplaceRouteTableAssociation.
      * @return Result of the ReplaceRouteTableAssociation operation returned by the service.
      * @sample AmazonEC2.ReplaceRouteTableAssociation
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReplaceRouteTableAssociation"
@@ -14255,12 +18615,68 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ReplaceRouteTableAssociationRequestMarshaller().marshall(super.beforeMarshalling(replaceRouteTableAssociationRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ReplaceRouteTableAssociation");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<ReplaceRouteTableAssociationResult> responseHandler = new StaxResponseHandler<ReplaceRouteTableAssociationResult>(
                     new ReplaceRouteTableAssociationResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Replaces the specified route in the specified transit gateway route table.
+     * </p>
+     * 
+     * @param replaceTransitGatewayRouteRequest
+     * @return Result of the ReplaceTransitGatewayRoute operation returned by the service.
+     * @sample AmazonEC2.ReplaceTransitGatewayRoute
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReplaceTransitGatewayRoute" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public ReplaceTransitGatewayRouteResult replaceTransitGatewayRoute(ReplaceTransitGatewayRouteRequest request) {
+        request = beforeClientExecution(request);
+        return executeReplaceTransitGatewayRoute(request);
+    }
+
+    @SdkInternalApi
+    final ReplaceTransitGatewayRouteResult executeReplaceTransitGatewayRoute(ReplaceTransitGatewayRouteRequest replaceTransitGatewayRouteRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(replaceTransitGatewayRouteRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ReplaceTransitGatewayRouteRequest> request = null;
+        Response<ReplaceTransitGatewayRouteResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ReplaceTransitGatewayRouteRequestMarshaller().marshall(super.beforeMarshalling(replaceTransitGatewayRouteRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ReplaceTransitGatewayRoute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<ReplaceTransitGatewayRouteResult> responseHandler = new StaxResponseHandler<ReplaceTransitGatewayRouteResult>(
+                    new ReplaceTransitGatewayRouteResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -14283,7 +18699,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param reportInstanceStatusRequest
-     *        Contains the parameters for ReportInstanceStatus.
      * @return Result of the ReportInstanceStatus operation returned by the service.
      * @sample AmazonEC2.ReportInstanceStatus
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReportInstanceStatus" target="_top">AWS API
@@ -14310,6 +18725,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ReportInstanceStatusRequestMarshaller().marshall(super.beforeMarshalling(reportInstanceStatusRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ReportInstanceStatus");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14331,6 +18750,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Creates a Spot Fleet request.
      * </p>
      * <p>
+     * The Spot Fleet request specifies the total target capacity and the On-Demand target capacity. Amazon EC2
+     * calculates the difference between the total capacity and On-Demand capacity, and launches the difference as Spot
+     * capacity.
+     * </p>
+     * <p>
      * You can submit a single request that includes multiple launch specifications that vary by instance type, AMI,
      * Availability Zone, or subnet.
      * </p>
@@ -14345,13 +18769,13 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * you can improve the availability of your fleet.
      * </p>
      * <p>
-     * You can specify tags for the Spot Instances. You cannot tag other resource types in a Spot Fleet request; only
-     * the <code>instance</code> resource type is supported.
+     * You can specify tags for the Spot Instances. You cannot tag other resource types in a Spot Fleet request because
+     * only the <code>instance</code> resource type is supported.
      * </p>
      * <p>
      * For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html">Spot Fleet Requests</a> in the
-     * <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html">Spot Fleet Requests</a> in
+     * the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * </p>
      * 
      * @param requestSpotFleetRequest
@@ -14382,6 +18806,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RequestSpotFleetRequestMarshaller().marshall(super.beforeMarshalling(requestSpotFleetRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RequestSpotFleet");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14400,10 +18828,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Creates a Spot Instance request. Spot Instances are instances that Amazon EC2 launches when the maximum price
-     * that you specify exceeds the current Spot price. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html">Spot Instance Requests</a> in the
-     * <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * Creates a Spot Instance request.
+     * </p>
+     * <p>
+     * For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html">Spot
+     * Instance Requests</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.
      * </p>
      * 
      * @param requestSpotInstancesRequest
@@ -14434,6 +18863,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RequestSpotInstancesRequestMarshaller().marshall(super.beforeMarshalling(requestSpotInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RequestSpotInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14483,6 +18916,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ResetFpgaImageAttributeRequestMarshaller().marshall(super.beforeMarshalling(resetFpgaImageAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ResetFpgaImageAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14537,6 +18974,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ResetImageAttributeRequestMarshaller().marshall(super.beforeMarshalling(resetImageAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ResetImageAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14563,12 +19004,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * The <code>sourceDestCheck</code> attribute controls whether source/destination checking is enabled. The default
      * value is <code>true</code>, which means checking is enabled. This value must be <code>false</code> for a NAT
      * instance to perform NAT. For more information, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_NAT_Instance.html">NAT Instances</a> in the
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_NAT_Instance.html">NAT Instances</a> in the
      * <i>Amazon Virtual Private Cloud User Guide</i>.
      * </p>
      * 
      * @param resetInstanceAttributeRequest
-     *        Contains the parameters for ResetInstanceAttribute.
      * @return Result of the ResetInstanceAttribute operation returned by the service.
      * @sample AmazonEC2.ResetInstanceAttribute
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ResetInstanceAttribute" target="_top">AWS API
@@ -14595,6 +19035,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ResetInstanceAttributeRequestMarshaller().marshall(super.beforeMarshalling(resetInstanceAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ResetInstanceAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14644,6 +19088,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ResetNetworkInterfaceAttributeRequestMarshaller().marshall(super.beforeMarshalling(resetNetworkInterfaceAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ResetNetworkInterfaceAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14665,8 +19113,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Resets permission settings for the specified snapshot.
      * </p>
      * <p>
-     * For more information on modifying snapshot permissions, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html">Sharing
+     * For more information about modifying snapshot permissions, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html">Sharing
      * Snapshots</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
@@ -14698,6 +19146,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new ResetSnapshotAttributeRequestMarshaller().marshall(super.beforeMarshalling(resetSnapshotAttributeRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "ResetSnapshotAttribute");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14722,7 +19174,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param restoreAddressToClassicRequest
-     *        Contains the parameters for RestoreAddressToClassic.
      * @return Result of the RestoreAddressToClassic operation returned by the service.
      * @sample AmazonEC2.RestoreAddressToClassic
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RestoreAddressToClassic" target="_top">AWS
@@ -14749,6 +19200,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RestoreAddressToClassicRequestMarshaller().marshall(super.beforeMarshalling(restoreAddressToClassicRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RestoreAddressToClassic");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14767,7 +19222,59 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * [EC2-VPC only] Removes one or more egress rules from a security group for EC2-VPC. This action doesn't apply to
+     * Removes an ingress authorization rule from a Client VPN endpoint.
+     * </p>
+     * 
+     * @param revokeClientVpnIngressRequest
+     * @return Result of the RevokeClientVpnIngress operation returned by the service.
+     * @sample AmazonEC2.RevokeClientVpnIngress
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RevokeClientVpnIngress" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public RevokeClientVpnIngressResult revokeClientVpnIngress(RevokeClientVpnIngressRequest request) {
+        request = beforeClientExecution(request);
+        return executeRevokeClientVpnIngress(request);
+    }
+
+    @SdkInternalApi
+    final RevokeClientVpnIngressResult executeRevokeClientVpnIngress(RevokeClientVpnIngressRequest revokeClientVpnIngressRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(revokeClientVpnIngressRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<RevokeClientVpnIngressRequest> request = null;
+        Response<RevokeClientVpnIngressResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new RevokeClientVpnIngressRequestMarshaller().marshall(super.beforeMarshalling(revokeClientVpnIngressRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RevokeClientVpnIngress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<RevokeClientVpnIngressResult> responseHandler = new StaxResponseHandler<RevokeClientVpnIngressResult>(
+                    new RevokeClientVpnIngressResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * [EC2-VPC only] Removes the specified egress rules from a security group for EC2-VPC. This action doesn't apply to
      * security groups for use in EC2-Classic. To remove a rule, the values that you specify (for example, ports) must
      * match the existing rule's values exactly.
      * </p>
@@ -14783,7 +19290,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param revokeSecurityGroupEgressRequest
-     *        Contains the parameters for RevokeSecurityGroupEgress.
      * @return Result of the RevokeSecurityGroupEgress operation returned by the service.
      * @sample AmazonEC2.RevokeSecurityGroupEgress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RevokeSecurityGroupEgress" target="_top">AWS
@@ -14810,6 +19316,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RevokeSecurityGroupEgressRequestMarshaller().marshall(super.beforeMarshalling(revokeSecurityGroupEgressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RevokeSecurityGroupEgress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14828,7 +19338,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Removes one or more ingress rules from a security group. To remove a rule, the values that you specify (for
+     * Removes the specified ingress rules from a security group. To remove a rule, the values that you specify (for
      * example, ports) must match the existing rule's values exactly.
      * </p>
      * <note>
@@ -14849,7 +19359,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param revokeSecurityGroupIngressRequest
-     *        Contains the parameters for RevokeSecurityGroupIngress.
      * @return Result of the RevokeSecurityGroupIngress operation returned by the service.
      * @sample AmazonEC2.RevokeSecurityGroupIngress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RevokeSecurityGroupIngress" target="_top">AWS
@@ -14876,6 +19385,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RevokeSecurityGroupIngressRequestMarshaller().marshall(super.beforeMarshalling(revokeSecurityGroupIngressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RevokeSecurityGroupIngress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -14921,7 +19434,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <p>
      * Some instance types must be launched into a VPC. If you do not have a default VPC, or if you do not specify a
      * subnet ID, the request fails. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-vpc.html#vpc-only-instance-types">Instance Types
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-vpc.html#vpc-only-instance-types">Instance Types
      * Available Only in a VPC</a>.
      * </p>
      * </li>
@@ -14934,13 +19447,13 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * <li>
      * <p>
      * Not all instance types support IPv6 addresses. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html">Instance Types</a>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html">Instance Types</a>.
      * </p>
      * </li>
      * <li>
      * <p>
      * If you don't specify a security group ID, we use the default security group. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html">Security Groups</a>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html">Security Groups</a>.
      * </p>
      * </li>
      * <li>
@@ -14950,7 +19463,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </li>
      * </ul>
      * <p>
-     * You can create a <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html">launch
+     * You can create a <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html">launch
      * template</a>, which is a resource that contains the parameters to launch an instance. When you launch an instance
      * using <a>RunInstances</a>, you can specify the launch template instead of specifying the launch parameters.
      * </p>
@@ -14962,24 +19475,23 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * An instance is ready for you to use when it's in the <code>running</code> state. You can check the state of your
      * instance using <a>DescribeInstances</a>. You can tag instances and EBS volumes during launch, after launch, or
      * both. For more information, see <a>CreateTags</a> and <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Amazon EC2 Resources</a>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging Your Amazon EC2 Resources</a>.
      * </p>
      * <p>
      * Linux instances have access to the public key of the key pair at boot. You can use this key to provide secure
      * access to the instance. Amazon EC2 public images use this feature to provide secure access without passwords. For
-     * more information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Key
+     * more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Key
      * Pairs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
      * For troubleshooting, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_InstanceStraightToTerminated.html">What To Do If
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_InstanceStraightToTerminated.html">What To Do If
      * An Instance Immediately Terminates</a>, and <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesConnecting.html">Troubleshooting
-     * Connecting to Your Instance</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesConnecting.html"
+     * >Troubleshooting Connecting to Your Instance</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param runInstancesRequest
-     *        Contains the parameters for RunInstances.
      * @return Result of the RunInstances operation returned by the service.
      * @sample AmazonEC2.RunInstances
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RunInstances" target="_top">AWS API
@@ -15006,6 +19518,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RunInstancesRequestMarshaller().marshall(super.beforeMarshalling(runInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RunInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -15033,8 +19549,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * You must launch a Scheduled Instance during its scheduled time period. You can't stop or reboot a Scheduled
      * Instance, but you can terminate it as needed. If you terminate a Scheduled Instance before the current scheduled
      * time period ends, you can launch it again after a few minutes. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-scheduled-instances.html">Scheduled Instances</a> in
-     * the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-scheduled-instances.html">Scheduled Instances</a>
+     * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param runScheduledInstancesRequest
@@ -15065,12 +19581,68 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new RunScheduledInstancesRequestMarshaller().marshall(super.beforeMarshalling(runScheduledInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "RunScheduledInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<RunScheduledInstancesResult> responseHandler = new StaxResponseHandler<RunScheduledInstancesResult>(
                     new RunScheduledInstancesResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Searches for routes in the specified transit gateway route table.
+     * </p>
+     * 
+     * @param searchTransitGatewayRoutesRequest
+     * @return Result of the SearchTransitGatewayRoutes operation returned by the service.
+     * @sample AmazonEC2.SearchTransitGatewayRoutes
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/SearchTransitGatewayRoutes" target="_top">AWS
+     *      API Documentation</a>
+     */
+    @Override
+    public SearchTransitGatewayRoutesResult searchTransitGatewayRoutes(SearchTransitGatewayRoutesRequest request) {
+        request = beforeClientExecution(request);
+        return executeSearchTransitGatewayRoutes(request);
+    }
+
+    @SdkInternalApi
+    final SearchTransitGatewayRoutesResult executeSearchTransitGatewayRoutes(SearchTransitGatewayRoutesRequest searchTransitGatewayRoutesRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(searchTransitGatewayRoutesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<SearchTransitGatewayRoutesRequest> request = null;
+        Response<SearchTransitGatewayRoutesResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new SearchTransitGatewayRoutesRequestMarshaller().marshall(super.beforeMarshalling(searchTransitGatewayRoutesRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "SearchTransitGatewayRoutes");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<SearchTransitGatewayRoutesResult> responseHandler = new StaxResponseHandler<SearchTransitGatewayRoutesResult>(
+                    new SearchTransitGatewayRoutesResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -15103,12 +19675,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Performing this operation on an instance that uses an instance store as its root device returns an error.
      * </p>
      * <p>
-     * For more information, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html">Stopping
+     * For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html">Stopping
      * Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param startInstancesRequest
-     *        Contains the parameters for StartInstances.
      * @return Result of the StartInstances operation returned by the service.
      * @sample AmazonEC2.StartInstances
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/StartInstances" target="_top">AWS API
@@ -15135,6 +19706,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new StartInstancesRequestMarshaller().marshall(super.beforeMarshalling(startInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "StartInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -15156,6 +19731,15 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Stops an Amazon EBS-backed instance.
      * </p>
      * <p>
+     * You can use the Stop action to hibernate an instance if the instance is <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html#enabling-hibernation">enabled for
+     * hibernation</a> and it meets the <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html#hibernating-prerequisites">hibernation
+     * prerequisites</a>. For more information, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Hibernate.html">Hibernate Your Instance</a> in the
+     * <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * </p>
+     * <p>
      * We don't charge usage for a stopped instance, or data transfer fees; however, your root partition Amazon EBS
      * volume remains and continues to persist your data, and you are charged for Amazon EBS volume usage. Every time
      * you start your Windows instance, Amazon EC2 charges you for a full instance hour. If you stop and restart your
@@ -15164,31 +19748,34 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * Amazon EC2 charges a one-minute minimum for instance usage, and thereafter charges per second for instance usage.
      * </p>
      * <p>
-     * You can't start or stop Spot Instances, and you can't stop instance store-backed instances.
+     * You can't start, stop, or hibernate Spot Instances, and you can't stop or hibernate instance store-backed
+     * instances. For information about using hibernation for Spot Instances, see <a
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#hibernate-spot-instances"
+     * >Hibernating Interrupted Spot Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
-     * When you stop an instance, we shut it down. You can restart your instance at any time. Before stopping an
-     * instance, make sure it is in a state from which it can be restarted. Stopping an instance does not preserve data
-     * stored in RAM.
+     * When you stop or hibernate an instance, we shut it down. You can restart your instance at any time. Before
+     * stopping or hibernating an instance, make sure it is in a state from which it can be restarted. Stopping an
+     * instance does not preserve data stored in RAM, but hibernating an instance does preserve data stored in RAM. If
+     * an instance cannot hibernate successfully, a normal shutdown occurs.
      * </p>
      * <p>
-     * Stopping an instance is different to rebooting or terminating it. For example, when you stop an instance, the
-     * root device and any other devices attached to the instance persist. When you terminate an instance, the root
-     * device and any other devices attached during the instance launch are automatically deleted. For more information
-     * about the differences between rebooting, stopping, and terminating instances, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html">Instance Lifecycle</a> in
-     * the <i>Amazon Elastic Compute Cloud User Guide</i>.
+     * Stopping and hibernating an instance is different to rebooting or terminating it. For example, when you stop or
+     * hibernate an instance, the root device and any other devices attached to the instance persist. When you terminate
+     * an instance, the root device and any other devices attached during the instance launch are automatically deleted.
+     * For more information about the differences between rebooting, stopping, hibernating, and terminating instances,
+     * see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html">Instance
+     * Lifecycle</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
      * When you stop an instance, we attempt to shut it down forcibly after a short while. If your instance appears
      * stuck in the stopping state after a period of time, there may be an issue with the underlying host computer. For
      * more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html">Troubleshooting
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html">Troubleshooting
      * Stopping Your Instance</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param stopInstancesRequest
-     *        Contains the parameters for StopInstances.
      * @return Result of the StopInstances operation returned by the service.
      * @sample AmazonEC2.StopInstances
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/StopInstances" target="_top">AWS API
@@ -15215,6 +19802,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new StopInstancesRequestMarshaller().marshall(super.beforeMarshalling(stopInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "StopInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -15232,8 +19823,61 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
 
     /**
      * <p>
-     * Shuts down one or more instances. This operation is idempotent; if you terminate an instance more than once, each
-     * call succeeds.
+     * Terminates active Client VPN endpoint connections. This action can be used to terminate a specific client
+     * connection, or up to five connections established by a specific user.
+     * </p>
+     * 
+     * @param terminateClientVpnConnectionsRequest
+     * @return Result of the TerminateClientVpnConnections operation returned by the service.
+     * @sample AmazonEC2.TerminateClientVpnConnections
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/TerminateClientVpnConnections"
+     *      target="_top">AWS API Documentation</a>
+     */
+    @Override
+    public TerminateClientVpnConnectionsResult terminateClientVpnConnections(TerminateClientVpnConnectionsRequest request) {
+        request = beforeClientExecution(request);
+        return executeTerminateClientVpnConnections(request);
+    }
+
+    @SdkInternalApi
+    final TerminateClientVpnConnectionsResult executeTerminateClientVpnConnections(TerminateClientVpnConnectionsRequest terminateClientVpnConnectionsRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(terminateClientVpnConnectionsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<TerminateClientVpnConnectionsRequest> request = null;
+        Response<TerminateClientVpnConnectionsResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new TerminateClientVpnConnectionsRequestMarshaller().marshall(super.beforeMarshalling(terminateClientVpnConnectionsRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "TerminateClientVpnConnections");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<TerminateClientVpnConnectionsResult> responseHandler = new StaxResponseHandler<TerminateClientVpnConnectionsResult>(
+                    new TerminateClientVpnConnectionsResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Shuts down the specified instances. This operation is idempotent; if you terminate an instance more than once,
+     * each call succeeds.
      * </p>
      * <p>
      * If you specify multiple instances and the request fails (for example, because of a single incorrect instance ID),
@@ -15252,17 +19896,16 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * root device and any other devices attached to the instance persist. When you terminate an instance, any attached
      * EBS volumes with the <code>DeleteOnTermination</code> block device mapping parameter set to <code>true</code> are
      * automatically deleted. For more information about the differences between stopping and terminating instances, see
-     * <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html">Instance Lifecycle</a>
+     * <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html">Instance Lifecycle</a>
      * in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * <p>
      * For more information about troubleshooting, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesShuttingDown.html"
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesShuttingDown.html"
      * >Troubleshooting Terminating Your Instance</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param terminateInstancesRequest
-     *        Contains the parameters for TerminateInstances.
      * @return Result of the TerminateInstances operation returned by the service.
      * @sample AmazonEC2.TerminateInstances
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/TerminateInstances" target="_top">AWS API
@@ -15289,6 +19932,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new TerminateInstancesRequestMarshaller().marshall(super.beforeMarshalling(terminateInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "TerminateInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -15337,6 +19984,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new UnassignIpv6AddressesRequestMarshaller().marshall(super.beforeMarshalling(unassignIpv6AddressesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UnassignIpv6Addresses");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -15386,6 +20037,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new UnassignPrivateIpAddressesRequestMarshaller().marshall(super.beforeMarshalling(unassignPrivateIpAddressesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UnassignPrivateIpAddresses");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -15405,12 +20060,11 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     /**
      * <p>
      * Disables detailed monitoring for a running instance. For more information, see <a
-     * href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html">Monitoring Your Instances and
+     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html">Monitoring Your Instances and
      * Volumes</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.
      * </p>
      * 
      * @param unmonitorInstancesRequest
-     *        Contains the parameters for UnmonitorInstances.
      * @return Result of the UnmonitorInstances operation returned by the service.
      * @sample AmazonEC2.UnmonitorInstances
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/UnmonitorInstances" target="_top">AWS API
@@ -15437,6 +20091,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 request = new UnmonitorInstancesRequestMarshaller().marshall(super.beforeMarshalling(unmonitorInstancesRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UnmonitorInstances");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -15464,7 +20122,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param updateSecurityGroupRuleDescriptionsEgressRequest
-     *        Contains the parameters for UpdateSecurityGroupRuleDescriptionsEgress.
      * @return Result of the UpdateSecurityGroupRuleDescriptionsEgress operation returned by the service.
      * @sample AmazonEC2.UpdateSecurityGroupRuleDescriptionsEgress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/UpdateSecurityGroupRuleDescriptionsEgress"
@@ -15493,6 +20150,10 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(updateSecurityGroupRuleDescriptionsEgressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateSecurityGroupRuleDescriptionsEgress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
@@ -15520,7 +20181,6 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * </p>
      * 
      * @param updateSecurityGroupRuleDescriptionsIngressRequest
-     *        Contains the parameters for UpdateSecurityGroupRuleDescriptionsIngress.
      * @return Result of the UpdateSecurityGroupRuleDescriptionsIngress operation returned by the service.
      * @sample AmazonEC2.UpdateSecurityGroupRuleDescriptionsIngress
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/UpdateSecurityGroupRuleDescriptionsIngress"
@@ -15549,12 +20209,76 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                         .beforeMarshalling(updateSecurityGroupRuleDescriptionsIngressRequest));
                 // Binds the request metrics to the current request.
                 request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "UpdateSecurityGroupRuleDescriptionsIngress");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
             } finally {
                 awsRequestMetrics.endEvent(Field.RequestMarshallTime);
             }
 
             StaxResponseHandler<UpdateSecurityGroupRuleDescriptionsIngressResult> responseHandler = new StaxResponseHandler<UpdateSecurityGroupRuleDescriptionsIngressResult>(
                     new UpdateSecurityGroupRuleDescriptionsIngressResultStaxUnmarshaller());
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+
+        } finally {
+
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
+     * Stops advertising an IPv4 address range that is provisioned as an address pool.
+     * </p>
+     * <p>
+     * You can perform this operation at most once every 10 seconds, even if you specify different address ranges each
+     * time.
+     * </p>
+     * <p>
+     * It can take a few minutes before traffic to the specified addresses stops routing to AWS because of BGP
+     * propagation delays.
+     * </p>
+     * 
+     * @param withdrawByoipCidrRequest
+     * @return Result of the WithdrawByoipCidr operation returned by the service.
+     * @sample AmazonEC2.WithdrawByoipCidr
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/WithdrawByoipCidr" target="_top">AWS API
+     *      Documentation</a>
+     */
+    @Override
+    public WithdrawByoipCidrResult withdrawByoipCidr(WithdrawByoipCidrRequest request) {
+        request = beforeClientExecution(request);
+        return executeWithdrawByoipCidr(request);
+    }
+
+    @SdkInternalApi
+    final WithdrawByoipCidrResult executeWithdrawByoipCidr(WithdrawByoipCidrRequest withdrawByoipCidrRequest) {
+
+        ExecutionContext executionContext = createExecutionContext(withdrawByoipCidrRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<WithdrawByoipCidrRequest> request = null;
+        Response<WithdrawByoipCidrResult> response = null;
+
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new WithdrawByoipCidrRequestMarshaller().marshall(super.beforeMarshalling(withdrawByoipCidrRequest));
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+                request.addHandlerContext(HandlerContextKey.SIGNING_REGION, getSigningRegion());
+                request.addHandlerContext(HandlerContextKey.SERVICE_ID, "EC2");
+                request.addHandlerContext(HandlerContextKey.OPERATION_NAME, "WithdrawByoipCidr");
+                request.addHandlerContext(HandlerContextKey.ADVANCED_CONFIG, advancedConfig);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+
+            StaxResponseHandler<WithdrawByoipCidrResult> responseHandler = new StaxResponseHandler<WithdrawByoipCidrResult>(
+                    new WithdrawByoipCidrResultStaxUnmarshaller());
             response = invoke(request, responseHandler, executionContext);
 
             return response.getAwsResponse();
@@ -15593,6 +20317,8 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
                 return new DryRunResult<X>(true, request, ase.getMessage(), ase);
             } else if (ase.getErrorCode().equals("UnauthorizedOperation") && ase.getStatusCode() == 403) {
                 return new DryRunResult<X>(false, request, ase.getMessage(), ase);
+            } else if (ase.getErrorCode().equals("AuthFailure")) {
+                return new DryRunResult<X>(false, request, ase.getMessage(), ase);
             }
             throw new AmazonClientException("Unrecognized service response for the dry-run request.", ase);
         }
@@ -15622,9 +20348,18 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
             ExecutionContext executionContext) {
 
+        return invoke(request, responseHandler, executionContext, null, null);
+    }
+
+    /**
+     * Normal invoke with authentication. Credentials are required and may be overriden at the request level.
+     **/
+    private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
+            ExecutionContext executionContext, URI cachedEndpoint, URI uriFromEndpointTrait) {
+
         executionContext.setCredentialsProvider(CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, cachedEndpoint, uriFromEndpointTrait);
     }
 
     /**
@@ -15634,7 +20369,7 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
     private <X, Y extends AmazonWebServiceRequest> Response<X> anonymousInvoke(Request<Y> request,
             HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler, ExecutionContext executionContext) {
 
-        return doInvoke(request, responseHandler, executionContext);
+        return doInvoke(request, responseHandler, executionContext, null, null);
     }
 
     /**
@@ -15642,8 +20377,17 @@ public class AmazonEC2Client extends AmazonWebServiceClient implements AmazonEC2
      * ExecutionContext beforehand.
      **/
     private <X, Y extends AmazonWebServiceRequest> Response<X> doInvoke(Request<Y> request, HttpResponseHandler<AmazonWebServiceResponse<X>> responseHandler,
-            ExecutionContext executionContext) {
-        request.setEndpoint(endpoint);
+            ExecutionContext executionContext, URI discoveredEndpoint, URI uriFromEndpointTrait) {
+
+        if (discoveredEndpoint != null) {
+            request.setEndpoint(discoveredEndpoint);
+            request.getOriginalRequest().getRequestClientOptions().appendUserAgent("endpoint-discovery");
+        } else if (uriFromEndpointTrait != null) {
+            request.setEndpoint(uriFromEndpointTrait);
+        } else {
+            request.setEndpoint(endpoint);
+        }
+
         request.setTimeOffset(timeOffset);
 
         DefaultErrorResponseHandler errorResponseHandler = new DefaultErrorResponseHandler(exceptionUnmarshallers);

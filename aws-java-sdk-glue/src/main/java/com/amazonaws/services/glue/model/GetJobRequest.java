@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -26,18 +26,18 @@ public class GetJobRequest extends com.amazonaws.AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The name of the job to retrieve.
+     * The name of the job definition to retrieve.
      * </p>
      */
     private String jobName;
 
     /**
      * <p>
-     * The name of the job to retrieve.
+     * The name of the job definition to retrieve.
      * </p>
      * 
      * @param jobName
-     *        The name of the job to retrieve.
+     *        The name of the job definition to retrieve.
      */
 
     public void setJobName(String jobName) {
@@ -46,10 +46,10 @@ public class GetJobRequest extends com.amazonaws.AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The name of the job to retrieve.
+     * The name of the job definition to retrieve.
      * </p>
      * 
-     * @return The name of the job to retrieve.
+     * @return The name of the job definition to retrieve.
      */
 
     public String getJobName() {
@@ -58,11 +58,11 @@ public class GetJobRequest extends com.amazonaws.AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The name of the job to retrieve.
+     * The name of the job definition to retrieve.
      * </p>
      * 
      * @param jobName
-     *        The name of the job to retrieve.
+     *        The name of the job definition to retrieve.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -72,7 +72,8 @@ public class GetJobRequest extends com.amazonaws.AmazonWebServiceRequest impleme
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

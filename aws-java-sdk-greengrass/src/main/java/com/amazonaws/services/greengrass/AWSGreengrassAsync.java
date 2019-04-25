@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,18 +25,17 @@ import com.amazonaws.services.greengrass.model.*;
  * {@link com.amazonaws.services.greengrass.AbstractAWSGreengrassAsync} instead.
  * </p>
  * <p>
- * AWS Greengrass seamlessly extends AWS onto physical devices so they can act locally on the data they generate, while
- * still using the cloud for management, analytics, and durable storage. AWS Greengrass ensures your devices can respond
- * quickly to local events and operate with intermittent connectivity. AWS Greengrass minimizes the cost of transmitting
- * data to the cloud by allowing you to author AWS Lambda functions that execute locally.
+ * AWS IoT Greengrass seamlessly extends AWS onto physical devices so they can act locally on the data they generate,
+ * while still using the cloud for management, analytics, and durable storage. AWS IoT Greengrass ensures your devices
+ * can respond quickly to local events and operate with intermittent connectivity. AWS IoT Greengrass minimizes the cost
+ * of transmitting data to the cloud by allowing you to author AWS Lambda functions that execute locally.
  */
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public interface AWSGreengrassAsync extends AWSGreengrass {
 
     /**
-     * Associates a role with a group. The role will be used by the AWS Greengrass core in order to access AWS cloud
-     * services. The role's permissions will allow Greengrass core Lambda functions to perform actions against the
-     * cloud.
+     * Associates a role with a group. Your Greengrass core will use the role to access AWS cloud services. The role's
+     * permissions should allow Greengrass core Lambda functions to perform actions against the cloud.
      * 
      * @param associateRoleToGroupRequest
      * @return A Java Future containing the result of the AssociateRoleToGroup operation returned by the service.
@@ -47,9 +46,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<AssociateRoleToGroupResult> associateRoleToGroupAsync(AssociateRoleToGroupRequest associateRoleToGroupRequest);
 
     /**
-     * Associates a role with a group. The role will be used by the AWS Greengrass core in order to access AWS cloud
-     * services. The role's permissions will allow Greengrass core Lambda functions to perform actions against the
-     * cloud.
+     * Associates a role with a group. Your Greengrass core will use the role to access AWS cloud services. The role's
+     * permissions should allow Greengrass core Lambda functions to perform actions against the cloud.
      * 
      * @param associateRoleToGroupRequest
      * @param asyncHandler
@@ -65,9 +63,9 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<AssociateRoleToGroupRequest, AssociateRoleToGroupResult> asyncHandler);
 
     /**
-     * Associates a role which is used by AWS Greengrass. AWS Greengrass uses the role to access your Lambda functions
-     * and AWS IoT resources. This is necessary for deployments to succeed. It needs to have minimum permissions in
-     * policy ``AWSGreengrassResourceAccessRolePolicy``
+     * Associates a role with your account. AWS IoT Greengrass will use the role to access your Lambda functions and AWS
+     * IoT resources. This is necessary for deployments to succeed. The role must have at least minimum permissions in
+     * the policy ''AWSGreengrassResourceAccessRolePolicy''.
      * 
      * @param associateServiceRoleToAccountRequest
      * @return A Java Future containing the result of the AssociateServiceRoleToAccount operation returned by the
@@ -80,9 +78,9 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             AssociateServiceRoleToAccountRequest associateServiceRoleToAccountRequest);
 
     /**
-     * Associates a role which is used by AWS Greengrass. AWS Greengrass uses the role to access your Lambda functions
-     * and AWS IoT resources. This is necessary for deployments to succeed. It needs to have minimum permissions in
-     * policy ``AWSGreengrassResourceAccessRolePolicy``
+     * Associates a role with your account. AWS IoT Greengrass will use the role to access your Lambda functions and AWS
+     * IoT resources. This is necessary for deployments to succeed. The role must have at least minimum permissions in
+     * the policy ''AWSGreengrassResourceAccessRolePolicy''.
      * 
      * @param associateServiceRoleToAccountRequest
      * @param asyncHandler
@@ -100,12 +98,73 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<AssociateServiceRoleToAccountRequest, AssociateServiceRoleToAccountResult> asyncHandler);
 
     /**
-     * Creates a core definition. You may optionally provide the initial version of the core definition or use
-     * ''CreateCoreDefinitionVersion'' at a later time. AWS Greengrass Groups must each contain exactly 1 AWS Greengrass
-     * Core.
+     * Creates a connector definition. You may provide the initial version of the connector definition now or use
+     * ''CreateConnectorDefinitionVersion'' at a later time.
+     * 
+     * @param createConnectorDefinitionRequest
+     * @return A Java Future containing the result of the CreateConnectorDefinition operation returned by the service.
+     * @sample AWSGreengrassAsync.CreateConnectorDefinition
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/CreateConnectorDefinition"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateConnectorDefinitionResult> createConnectorDefinitionAsync(
+            CreateConnectorDefinitionRequest createConnectorDefinitionRequest);
+
+    /**
+     * Creates a connector definition. You may provide the initial version of the connector definition now or use
+     * ''CreateConnectorDefinitionVersion'' at a later time.
+     * 
+     * @param createConnectorDefinitionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the CreateConnectorDefinition operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.CreateConnectorDefinition
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/CreateConnectorDefinition"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateConnectorDefinitionResult> createConnectorDefinitionAsync(
+            CreateConnectorDefinitionRequest createConnectorDefinitionRequest,
+            com.amazonaws.handlers.AsyncHandler<CreateConnectorDefinitionRequest, CreateConnectorDefinitionResult> asyncHandler);
+
+    /**
+     * Creates a version of a connector definition which has already been defined.
+     * 
+     * @param createConnectorDefinitionVersionRequest
+     * @return A Java Future containing the result of the CreateConnectorDefinitionVersion operation returned by the
+     *         service.
+     * @sample AWSGreengrassAsync.CreateConnectorDefinitionVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/CreateConnectorDefinitionVersion"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateConnectorDefinitionVersionResult> createConnectorDefinitionVersionAsync(
+            CreateConnectorDefinitionVersionRequest createConnectorDefinitionVersionRequest);
+
+    /**
+     * Creates a version of a connector definition which has already been defined.
+     * 
+     * @param createConnectorDefinitionVersionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the CreateConnectorDefinitionVersion operation returned by the
+     *         service.
+     * @sample AWSGreengrassAsyncHandler.CreateConnectorDefinitionVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/CreateConnectorDefinitionVersion"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<CreateConnectorDefinitionVersionResult> createConnectorDefinitionVersionAsync(
+            CreateConnectorDefinitionVersionRequest createConnectorDefinitionVersionRequest,
+            com.amazonaws.handlers.AsyncHandler<CreateConnectorDefinitionVersionRequest, CreateConnectorDefinitionVersionResult> asyncHandler);
+
+    /**
+     * Creates a core definition. You may provide the initial version of the core definition now or use
+     * ''CreateCoreDefinitionVersion'' at a later time. Greengrass groups must each contain exactly one Greengrass core.
      * 
      * @param createCoreDefinitionRequest
-     *        Information on the core definition request
+     *        Information needed to create a core definition.
      * @return A Java Future containing the result of the CreateCoreDefinition operation returned by the service.
      * @sample AWSGreengrassAsync.CreateCoreDefinition
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/CreateCoreDefinition"
@@ -114,12 +173,11 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<CreateCoreDefinitionResult> createCoreDefinitionAsync(CreateCoreDefinitionRequest createCoreDefinitionRequest);
 
     /**
-     * Creates a core definition. You may optionally provide the initial version of the core definition or use
-     * ''CreateCoreDefinitionVersion'' at a later time. AWS Greengrass Groups must each contain exactly 1 AWS Greengrass
-     * Core.
+     * Creates a core definition. You may provide the initial version of the core definition now or use
+     * ''CreateCoreDefinitionVersion'' at a later time. Greengrass groups must each contain exactly one Greengrass core.
      * 
      * @param createCoreDefinitionRequest
-     *        Information on the core definition request
+     *        Information needed to create a core definition.
      * @param asyncHandler
      *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
      *        implementation of the callback methods in this interface to receive notification of successful or
@@ -133,8 +191,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateCoreDefinitionRequest, CreateCoreDefinitionResult> asyncHandler);
 
     /**
-     * Creates a version of a core definition that has already been defined. AWS Greengrass Groups must each contain
-     * exactly 1 AWS Greengrass Core.
+     * Creates a version of a core definition that has already been defined. Greengrass groups must each contain exactly
+     * one Greengrass core.
      * 
      * @param createCoreDefinitionVersionRequest
      * @return A Java Future containing the result of the CreateCoreDefinitionVersion operation returned by the service.
@@ -146,8 +204,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             CreateCoreDefinitionVersionRequest createCoreDefinitionVersionRequest);
 
     /**
-     * Creates a version of a core definition that has already been defined. AWS Greengrass Groups must each contain
-     * exactly 1 AWS Greengrass Core.
+     * Creates a version of a core definition that has already been defined. Greengrass groups must each contain exactly
+     * one Greengrass core.
      * 
      * @param createCoreDefinitionVersionRequest
      * @param asyncHandler
@@ -164,7 +222,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateCoreDefinitionVersionRequest, CreateCoreDefinitionVersionResult> asyncHandler);
 
     /**
-     * Creates a deployment.
+     * Creates a deployment. ''CreateDeployment'' requests are idempotent with respect to the ''X-Amzn-Client-Token''
+     * token and the request parameters.
      * 
      * @param createDeploymentRequest
      * @return A Java Future containing the result of the CreateDeployment operation returned by the service.
@@ -175,7 +234,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<CreateDeploymentResult> createDeploymentAsync(CreateDeploymentRequest createDeploymentRequest);
 
     /**
-     * Creates a deployment.
+     * Creates a deployment. ''CreateDeployment'' requests are idempotent with respect to the ''X-Amzn-Client-Token''
+     * token and the request parameters.
      * 
      * @param createDeploymentRequest
      * @param asyncHandler
@@ -191,8 +251,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateDeploymentRequest, CreateDeploymentResult> asyncHandler);
 
     /**
-     * Creates a device definition. You may optinally provide the initial version of the device definition or use
-     * ``CreateDeviceDefinitionVersion`` at a later time.
+     * Creates a device definition. You may provide the initial version of the device definition now or use
+     * ''CreateDeviceDefinitionVersion'' at a later time.
      * 
      * @param createDeviceDefinitionRequest
      * @return A Java Future containing the result of the CreateDeviceDefinition operation returned by the service.
@@ -203,8 +263,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<CreateDeviceDefinitionResult> createDeviceDefinitionAsync(CreateDeviceDefinitionRequest createDeviceDefinitionRequest);
 
     /**
-     * Creates a device definition. You may optinally provide the initial version of the device definition or use
-     * ``CreateDeviceDefinitionVersion`` at a later time.
+     * Creates a device definition. You may provide the initial version of the device definition now or use
+     * ''CreateDeviceDefinitionVersion'' at a later time.
      * 
      * @param createDeviceDefinitionRequest
      * @param asyncHandler
@@ -253,7 +313,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     /**
      * Creates a Lambda function definition which contains a list of Lambda functions and their configurations to be
      * used in a group. You can create an initial version of the definition by providing a list of Lambda functions and
-     * their configurations now, or use ``CreateFunctionDefinitionVersion`` later.
+     * their configurations now, or use ''CreateFunctionDefinitionVersion'' later.
      * 
      * @param createFunctionDefinitionRequest
      * @return A Java Future containing the result of the CreateFunctionDefinition operation returned by the service.
@@ -266,7 +326,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     /**
      * Creates a Lambda function definition which contains a list of Lambda functions and their configurations to be
      * used in a group. You can create an initial version of the definition by providing a list of Lambda functions and
-     * their configurations now, or use ``CreateFunctionDefinitionVersion`` later.
+     * their configurations now, or use ''CreateFunctionDefinitionVersion'' later.
      * 
      * @param createFunctionDefinitionRequest
      * @param asyncHandler
@@ -282,10 +342,10 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateFunctionDefinitionRequest, CreateFunctionDefinitionResult> asyncHandler);
 
     /**
-     * Create a version of a Lambda function definition that has already been defined.
+     * Creates a version of a Lambda function definition that has already been defined.
      * 
      * @param createFunctionDefinitionVersionRequest
-     *        Function definition version
+     *        Information needed to create a function definition version.
      * @return A Java Future containing the result of the CreateFunctionDefinitionVersion operation returned by the
      *         service.
      * @sample AWSGreengrassAsync.CreateFunctionDefinitionVersion
@@ -296,10 +356,10 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             CreateFunctionDefinitionVersionRequest createFunctionDefinitionVersionRequest);
 
     /**
-     * Create a version of a Lambda function definition that has already been defined.
+     * Creates a version of a Lambda function definition that has already been defined.
      * 
      * @param createFunctionDefinitionVersionRequest
-     *        Function definition version
+     *        Information needed to create a function definition version.
      * @param asyncHandler
      *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
      *        implementation of the callback methods in this interface to receive notification of successful or
@@ -315,8 +375,9 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateFunctionDefinitionVersionRequest, CreateFunctionDefinitionVersionResult> asyncHandler);
 
     /**
-     * Creates a group. You may optionally provide the initial version of the group or use ''CreateGroupVersion'' at a
-     * later time.
+     * Creates a group. You may provide the initial version of the group or use ''CreateGroupVersion'' at a later time.
+     * Tip: You can use the ''gg_group_setup'' package (https://github.com/awslabs/aws-greengrass-group-setup) as a
+     * library or command-line application to create and deploy Greengrass groups.
      * 
      * @param createGroupRequest
      * @return A Java Future containing the result of the CreateGroup operation returned by the service.
@@ -327,8 +388,9 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<CreateGroupResult> createGroupAsync(CreateGroupRequest createGroupRequest);
 
     /**
-     * Creates a group. You may optionally provide the initial version of the group or use ''CreateGroupVersion'' at a
-     * later time.
+     * Creates a group. You may provide the initial version of the group or use ''CreateGroupVersion'' at a later time.
+     * Tip: You can use the ''gg_group_setup'' package (https://github.com/awslabs/aws-greengrass-group-setup) as a
+     * library or command-line application to create and deploy Greengrass groups.
      * 
      * @param createGroupRequest
      * @param asyncHandler
@@ -402,8 +464,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateGroupVersionRequest, CreateGroupVersionResult> asyncHandler);
 
     /**
-     * Creates a logger definition. You may optionally provide the initial version of the logger definition or use
-     * ``CreateLoggerDefinitionVersion`` at a later time.
+     * Creates a logger definition. You may provide the initial version of the logger definition now or use
+     * ''CreateLoggerDefinitionVersion'' at a later time.
      * 
      * @param createLoggerDefinitionRequest
      * @return A Java Future containing the result of the CreateLoggerDefinition operation returned by the service.
@@ -414,8 +476,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<CreateLoggerDefinitionResult> createLoggerDefinitionAsync(CreateLoggerDefinitionRequest createLoggerDefinitionRequest);
 
     /**
-     * Creates a logger definition. You may optionally provide the initial version of the logger definition or use
-     * ``CreateLoggerDefinitionVersion`` at a later time.
+     * Creates a logger definition. You may provide the initial version of the logger definition now or use
+     * ''CreateLoggerDefinitionVersion'' at a later time.
      * 
      * @param createLoggerDefinitionRequest
      * @param asyncHandler
@@ -463,7 +525,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
 
     /**
      * Creates a resource definition which contains a list of resources to be used in a group. You can create an initial
-     * version of the definition by providing a list of resources now, or use ``CreateResourceDefinitionVersion`` later.
+     * version of the definition by providing a list of resources now, or use ''CreateResourceDefinitionVersion'' later.
      * 
      * @param createResourceDefinitionRequest
      * @return A Java Future containing the result of the CreateResourceDefinition operation returned by the service.
@@ -475,7 +537,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
 
     /**
      * Creates a resource definition which contains a list of resources to be used in a group. You can create an initial
-     * version of the definition by providing a list of resources now, or use ``CreateResourceDefinitionVersion`` later.
+     * version of the definition by providing a list of resources now, or use ''CreateResourceDefinitionVersion'' later.
      * 
      * @param createResourceDefinitionRequest
      * @param asyncHandler
@@ -491,7 +553,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateResourceDefinitionRequest, CreateResourceDefinitionResult> asyncHandler);
 
     /**
-     * Create a version of a resource definition that has already been defined.
+     * Creates a version of a resource definition that has already been defined.
      * 
      * @param createResourceDefinitionVersionRequest
      * @return A Java Future containing the result of the CreateResourceDefinitionVersion operation returned by the
@@ -504,7 +566,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             CreateResourceDefinitionVersionRequest createResourceDefinitionVersionRequest);
 
     /**
-     * Create a version of a resource definition that has already been defined.
+     * Creates a version of a resource definition that has already been defined.
      * 
      * @param createResourceDefinitionVersionRequest
      * @param asyncHandler
@@ -522,7 +584,9 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateResourceDefinitionVersionRequest, CreateResourceDefinitionVersionResult> asyncHandler);
 
     /**
-     * Creates an Iot Job that will trigger your Greengrass Cores to update the software they are running.
+     * Creates a software update for a core or group of cores (specified as an IoT thing group.) Use this to update the
+     * OTA Agent as well as the Greengrass core software. It makes use of the IoT Jobs feature which provides additional
+     * commands to manage a Greengrass core software update job.
      * 
      * @param createSoftwareUpdateJobRequest
      * @return A Java Future containing the result of the CreateSoftwareUpdateJob operation returned by the service.
@@ -533,7 +597,9 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<CreateSoftwareUpdateJobResult> createSoftwareUpdateJobAsync(CreateSoftwareUpdateJobRequest createSoftwareUpdateJobRequest);
 
     /**
-     * Creates an Iot Job that will trigger your Greengrass Cores to update the software they are running.
+     * Creates a software update for a core or group of cores (specified as an IoT thing group.) Use this to update the
+     * OTA Agent as well as the Greengrass core software. It makes use of the IoT Jobs feature which provides additional
+     * commands to manage a Greengrass core software update job.
      * 
      * @param createSoftwareUpdateJobRequest
      * @param asyncHandler
@@ -549,8 +615,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateSoftwareUpdateJobRequest, CreateSoftwareUpdateJobResult> asyncHandler);
 
     /**
-     * Creates a subscription definition. You may optionally provide the initial version of the subscription definition
-     * or use ``CreateSubscriptionDefinitionVersion`` at a later time.
+     * Creates a subscription definition. You may provide the initial version of the subscription definition now or use
+     * ''CreateSubscriptionDefinitionVersion'' at a later time.
      * 
      * @param createSubscriptionDefinitionRequest
      * @return A Java Future containing the result of the CreateSubscriptionDefinition operation returned by the
@@ -563,8 +629,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             CreateSubscriptionDefinitionRequest createSubscriptionDefinitionRequest);
 
     /**
-     * Creates a subscription definition. You may optionally provide the initial version of the subscription definition
-     * or use ``CreateSubscriptionDefinitionVersion`` at a later time.
+     * Creates a subscription definition. You may provide the initial version of the subscription definition now or use
+     * ''CreateSubscriptionDefinitionVersion'' at a later time.
      * 
      * @param createSubscriptionDefinitionRequest
      * @param asyncHandler
@@ -613,7 +679,36 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<CreateSubscriptionDefinitionVersionRequest, CreateSubscriptionDefinitionVersionResult> asyncHandler);
 
     /**
-     * Deletes a core definition. The core definition must not have been used in a deployment.
+     * Deletes a connector definition.
+     * 
+     * @param deleteConnectorDefinitionRequest
+     * @return A Java Future containing the result of the DeleteConnectorDefinition operation returned by the service.
+     * @sample AWSGreengrassAsync.DeleteConnectorDefinition
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/DeleteConnectorDefinition"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteConnectorDefinitionResult> deleteConnectorDefinitionAsync(
+            DeleteConnectorDefinitionRequest deleteConnectorDefinitionRequest);
+
+    /**
+     * Deletes a connector definition.
+     * 
+     * @param deleteConnectorDefinitionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the DeleteConnectorDefinition operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.DeleteConnectorDefinition
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/DeleteConnectorDefinition"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<DeleteConnectorDefinitionResult> deleteConnectorDefinitionAsync(
+            DeleteConnectorDefinitionRequest deleteConnectorDefinitionRequest,
+            com.amazonaws.handlers.AsyncHandler<DeleteConnectorDefinitionRequest, DeleteConnectorDefinitionResult> asyncHandler);
+
+    /**
+     * Deletes a core definition.
      * 
      * @param deleteCoreDefinitionRequest
      * @return A Java Future containing the result of the DeleteCoreDefinition operation returned by the service.
@@ -624,7 +719,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<DeleteCoreDefinitionResult> deleteCoreDefinitionAsync(DeleteCoreDefinitionRequest deleteCoreDefinitionRequest);
 
     /**
-     * Deletes a core definition. The core definition must not have been used in a deployment.
+     * Deletes a core definition.
      * 
      * @param deleteCoreDefinitionRequest
      * @param asyncHandler
@@ -640,7 +735,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<DeleteCoreDefinitionRequest, DeleteCoreDefinitionResult> asyncHandler);
 
     /**
-     * Deletes a device definition. The device definition must not have been used in a deployment.
+     * Deletes a device definition.
      * 
      * @param deleteDeviceDefinitionRequest
      * @return A Java Future containing the result of the DeleteDeviceDefinition operation returned by the service.
@@ -651,7 +746,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<DeleteDeviceDefinitionResult> deleteDeviceDefinitionAsync(DeleteDeviceDefinitionRequest deleteDeviceDefinitionRequest);
 
     /**
-     * Deletes a device definition. The device definition must not have been used in a deployment.
+     * Deletes a device definition.
      * 
      * @param deleteDeviceDefinitionRequest
      * @param asyncHandler
@@ -667,7 +762,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<DeleteDeviceDefinitionRequest, DeleteDeviceDefinitionResult> asyncHandler);
 
     /**
-     * Deletes a Lambda function definition. The Lambda function definition must not have been used in a deployment.
+     * Deletes a Lambda function definition.
      * 
      * @param deleteFunctionDefinitionRequest
      * @return A Java Future containing the result of the DeleteFunctionDefinition operation returned by the service.
@@ -678,7 +773,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<DeleteFunctionDefinitionResult> deleteFunctionDefinitionAsync(DeleteFunctionDefinitionRequest deleteFunctionDefinitionRequest);
 
     /**
-     * Deletes a Lambda function definition. The Lambda function definition must not have been used in a deployment.
+     * Deletes a Lambda function definition.
      * 
      * @param deleteFunctionDefinitionRequest
      * @param asyncHandler
@@ -694,7 +789,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<DeleteFunctionDefinitionRequest, DeleteFunctionDefinitionResult> asyncHandler);
 
     /**
-     * Deletes a group. The group must not have been used in deployment.
+     * Deletes a group.
      * 
      * @param deleteGroupRequest
      * @return A Java Future containing the result of the DeleteGroup operation returned by the service.
@@ -705,7 +800,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<DeleteGroupResult> deleteGroupAsync(DeleteGroupRequest deleteGroupRequest);
 
     /**
-     * Deletes a group. The group must not have been used in deployment.
+     * Deletes a group.
      * 
      * @param deleteGroupRequest
      * @param asyncHandler
@@ -721,7 +816,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<DeleteGroupRequest, DeleteGroupResult> asyncHandler);
 
     /**
-     * Deletes a logger definition. The logger definition must not have been used in a deployment.
+     * Deletes a logger definition.
      * 
      * @param deleteLoggerDefinitionRequest
      * @return A Java Future containing the result of the DeleteLoggerDefinition operation returned by the service.
@@ -732,7 +827,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<DeleteLoggerDefinitionResult> deleteLoggerDefinitionAsync(DeleteLoggerDefinitionRequest deleteLoggerDefinitionRequest);
 
     /**
-     * Deletes a logger definition. The logger definition must not have been used in a deployment.
+     * Deletes a logger definition.
      * 
      * @param deleteLoggerDefinitionRequest
      * @param asyncHandler
@@ -775,7 +870,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<DeleteResourceDefinitionRequest, DeleteResourceDefinitionResult> asyncHandler);
 
     /**
-     * Deletes a subscription definition. The subscription definition must not have been used in a deployment.
+     * Deletes a subscription definition.
      * 
      * @param deleteSubscriptionDefinitionRequest
      * @return A Java Future containing the result of the DeleteSubscriptionDefinition operation returned by the
@@ -788,7 +883,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             DeleteSubscriptionDefinitionRequest deleteSubscriptionDefinitionRequest);
 
     /**
-     * Deletes a subscription definition. The subscription definition must not have been used in a deployment.
+     * Deletes a subscription definition.
      * 
      * @param deleteSubscriptionDefinitionRequest
      * @param asyncHandler
@@ -835,7 +930,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<DisassociateRoleFromGroupRequest, DisassociateRoleFromGroupResult> asyncHandler);
 
     /**
-     * Disassociates the service role from the account. Without a service role, deployments will not work.
+     * Disassociates the service role from your account. Without a service role, deployments will not work.
      * 
      * @param disassociateServiceRoleFromAccountRequest
      * @return A Java Future containing the result of the DisassociateServiceRoleFromAccount operation returned by the
@@ -848,7 +943,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             DisassociateServiceRoleFromAccountRequest disassociateServiceRoleFromAccountRequest);
 
     /**
-     * Disassociates the service role from the account. Without a service role, deployments will not work.
+     * Disassociates the service role from your account. Without a service role, deployments will not work.
      * 
      * @param disassociateServiceRoleFromAccountRequest
      * @param asyncHandler
@@ -893,6 +988,33 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<GetAssociatedRoleRequest, GetAssociatedRoleResult> asyncHandler);
 
     /**
+     * Returns the status of a bulk deployment.
+     * 
+     * @param getBulkDeploymentStatusRequest
+     * @return A Java Future containing the result of the GetBulkDeploymentStatus operation returned by the service.
+     * @sample AWSGreengrassAsync.GetBulkDeploymentStatus
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/GetBulkDeploymentStatus"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetBulkDeploymentStatusResult> getBulkDeploymentStatusAsync(GetBulkDeploymentStatusRequest getBulkDeploymentStatusRequest);
+
+    /**
+     * Returns the status of a bulk deployment.
+     * 
+     * @param getBulkDeploymentStatusRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetBulkDeploymentStatus operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.GetBulkDeploymentStatus
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/GetBulkDeploymentStatus"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetBulkDeploymentStatusResult> getBulkDeploymentStatusAsync(GetBulkDeploymentStatusRequest getBulkDeploymentStatusRequest,
+            com.amazonaws.handlers.AsyncHandler<GetBulkDeploymentStatusRequest, GetBulkDeploymentStatusResult> asyncHandler);
+
+    /**
      * Retrieves the connectivity information for a core.
      * 
      * @param getConnectivityInfoRequest
@@ -918,6 +1040,68 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
      */
     java.util.concurrent.Future<GetConnectivityInfoResult> getConnectivityInfoAsync(GetConnectivityInfoRequest getConnectivityInfoRequest,
             com.amazonaws.handlers.AsyncHandler<GetConnectivityInfoRequest, GetConnectivityInfoResult> asyncHandler);
+
+    /**
+     * Retrieves information about a connector definition.
+     * 
+     * @param getConnectorDefinitionRequest
+     * @return A Java Future containing the result of the GetConnectorDefinition operation returned by the service.
+     * @sample AWSGreengrassAsync.GetConnectorDefinition
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/GetConnectorDefinition"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetConnectorDefinitionResult> getConnectorDefinitionAsync(GetConnectorDefinitionRequest getConnectorDefinitionRequest);
+
+    /**
+     * Retrieves information about a connector definition.
+     * 
+     * @param getConnectorDefinitionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetConnectorDefinition operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.GetConnectorDefinition
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/GetConnectorDefinition"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetConnectorDefinitionResult> getConnectorDefinitionAsync(GetConnectorDefinitionRequest getConnectorDefinitionRequest,
+            com.amazonaws.handlers.AsyncHandler<GetConnectorDefinitionRequest, GetConnectorDefinitionResult> asyncHandler);
+
+    /**
+     * Retrieves information about a connector definition version, including the connectors that the version contains.
+     * Connectors are prebuilt modules that interact with local infrastructure, device protocols, AWS, and other cloud
+     * services.
+     * 
+     * @param getConnectorDefinitionVersionRequest
+     * @return A Java Future containing the result of the GetConnectorDefinitionVersion operation returned by the
+     *         service.
+     * @sample AWSGreengrassAsync.GetConnectorDefinitionVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/GetConnectorDefinitionVersion"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetConnectorDefinitionVersionResult> getConnectorDefinitionVersionAsync(
+            GetConnectorDefinitionVersionRequest getConnectorDefinitionVersionRequest);
+
+    /**
+     * Retrieves information about a connector definition version, including the connectors that the version contains.
+     * Connectors are prebuilt modules that interact with local infrastructure, device protocols, AWS, and other cloud
+     * services.
+     * 
+     * @param getConnectorDefinitionVersionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the GetConnectorDefinitionVersion operation returned by the
+     *         service.
+     * @sample AWSGreengrassAsyncHandler.GetConnectorDefinitionVersion
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/GetConnectorDefinitionVersion"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<GetConnectorDefinitionVersionResult> getConnectorDefinitionVersionAsync(
+            GetConnectorDefinitionVersionRequest getConnectorDefinitionVersionRequest,
+            com.amazonaws.handlers.AsyncHandler<GetConnectorDefinitionVersionRequest, GetConnectorDefinitionVersionResult> asyncHandler);
 
     /**
      * Retrieves information about a core definition version.
@@ -1057,7 +1241,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<GetDeviceDefinitionVersionRequest, GetDeviceDefinitionVersionResult> asyncHandler);
 
     /**
-     * Retrieves information about a Lambda function definition, such as its creation time and latest version.
+     * Retrieves information about a Lambda function definition, including its creation time and latest version.
      * 
      * @param getFunctionDefinitionRequest
      * @return A Java Future containing the result of the GetFunctionDefinition operation returned by the service.
@@ -1068,7 +1252,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<GetFunctionDefinitionResult> getFunctionDefinitionAsync(GetFunctionDefinitionRequest getFunctionDefinitionRequest);
 
     /**
-     * Retrieves information about a Lambda function definition, such as its creation time and latest version.
+     * Retrieves information about a Lambda function definition, including its creation time and latest version.
      * 
      * @param getFunctionDefinitionRequest
      * @param asyncHandler
@@ -1084,8 +1268,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<GetFunctionDefinitionRequest, GetFunctionDefinitionResult> asyncHandler);
 
     /**
-     * Retrieves information about a Lambda function definition version, such as which Lambda functions are included in
-     * the version and their configurations.
+     * Retrieves information about a Lambda function definition version, including which Lambda functions are included
+     * in the version and their configurations.
      * 
      * @param getFunctionDefinitionVersionRequest
      * @return A Java Future containing the result of the GetFunctionDefinitionVersion operation returned by the
@@ -1098,8 +1282,8 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             GetFunctionDefinitionVersionRequest getFunctionDefinitionVersionRequest);
 
     /**
-     * Retrieves information about a Lambda function definition version, such as which Lambda functions are included in
-     * the version and their configurations.
+     * Retrieves information about a Lambda function definition version, including which Lambda functions are included
+     * in the version and their configurations.
      * 
      * @param getFunctionDefinitionVersionRequest
      * @param asyncHandler
@@ -1289,7 +1473,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<GetLoggerDefinitionVersionRequest, GetLoggerDefinitionVersionResult> asyncHandler);
 
     /**
-     * Retrieves information about a resource definition, such as its creation time and latest version.
+     * Retrieves information about a resource definition, including its creation time and latest version.
      * 
      * @param getResourceDefinitionRequest
      * @return A Java Future containing the result of the GetResourceDefinition operation returned by the service.
@@ -1300,7 +1484,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<GetResourceDefinitionResult> getResourceDefinitionAsync(GetResourceDefinitionRequest getResourceDefinitionRequest);
 
     /**
-     * Retrieves information about a resource definition, such as its creation time and latest version.
+     * Retrieves information about a resource definition, including its creation time and latest version.
      * 
      * @param getResourceDefinitionRequest
      * @param asyncHandler
@@ -1316,7 +1500,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<GetResourceDefinitionRequest, GetResourceDefinitionResult> asyncHandler);
 
     /**
-     * Retrieves information about a resource definition version, such as which resources are included in the version.
+     * Retrieves information about a resource definition version, including which resources are included in the version.
      * 
      * @param getResourceDefinitionVersionRequest
      * @return A Java Future containing the result of the GetResourceDefinitionVersion operation returned by the
@@ -1329,7 +1513,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             GetResourceDefinitionVersionRequest getResourceDefinitionVersionRequest);
 
     /**
-     * Retrieves information about a resource definition version, such as which resources are included in the version.
+     * Retrieves information about a resource definition version, including which resources are included in the version.
      * 
      * @param getResourceDefinitionVersionRequest
      * @param asyncHandler
@@ -1347,7 +1531,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<GetResourceDefinitionVersionRequest, GetResourceDefinitionVersionResult> asyncHandler);
 
     /**
-     * Retrieves the service role that is attached to the account.
+     * Retrieves the service role that is attached to your account.
      * 
      * @param getServiceRoleForAccountRequest
      * @return A Java Future containing the result of the GetServiceRoleForAccount operation returned by the service.
@@ -1358,7 +1542,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<GetServiceRoleForAccountResult> getServiceRoleForAccountAsync(GetServiceRoleForAccountRequest getServiceRoleForAccountRequest);
 
     /**
-     * Retrieves the service role that is attached to the account.
+     * Retrieves the service role that is attached to your account.
      * 
      * @param getServiceRoleForAccountRequest
      * @param asyncHandler
@@ -1434,7 +1618,129 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<GetSubscriptionDefinitionVersionRequest, GetSubscriptionDefinitionVersionResult> asyncHandler);
 
     /**
-     * Lists versions of a core definition.
+     * Gets a paginated list of the deployments that have been started in a bulk deployment operation, and their current
+     * deployment status.
+     * 
+     * @param listBulkDeploymentDetailedReportsRequest
+     * @return A Java Future containing the result of the ListBulkDeploymentDetailedReports operation returned by the
+     *         service.
+     * @sample AWSGreengrassAsync.ListBulkDeploymentDetailedReports
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListBulkDeploymentDetailedReports"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListBulkDeploymentDetailedReportsResult> listBulkDeploymentDetailedReportsAsync(
+            ListBulkDeploymentDetailedReportsRequest listBulkDeploymentDetailedReportsRequest);
+
+    /**
+     * Gets a paginated list of the deployments that have been started in a bulk deployment operation, and their current
+     * deployment status.
+     * 
+     * @param listBulkDeploymentDetailedReportsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListBulkDeploymentDetailedReports operation returned by the
+     *         service.
+     * @sample AWSGreengrassAsyncHandler.ListBulkDeploymentDetailedReports
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListBulkDeploymentDetailedReports"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListBulkDeploymentDetailedReportsResult> listBulkDeploymentDetailedReportsAsync(
+            ListBulkDeploymentDetailedReportsRequest listBulkDeploymentDetailedReportsRequest,
+            com.amazonaws.handlers.AsyncHandler<ListBulkDeploymentDetailedReportsRequest, ListBulkDeploymentDetailedReportsResult> asyncHandler);
+
+    /**
+     * Returns a list of bulk deployments.
+     * 
+     * @param listBulkDeploymentsRequest
+     * @return A Java Future containing the result of the ListBulkDeployments operation returned by the service.
+     * @sample AWSGreengrassAsync.ListBulkDeployments
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListBulkDeployments" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<ListBulkDeploymentsResult> listBulkDeploymentsAsync(ListBulkDeploymentsRequest listBulkDeploymentsRequest);
+
+    /**
+     * Returns a list of bulk deployments.
+     * 
+     * @param listBulkDeploymentsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListBulkDeployments operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.ListBulkDeployments
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListBulkDeployments" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<ListBulkDeploymentsResult> listBulkDeploymentsAsync(ListBulkDeploymentsRequest listBulkDeploymentsRequest,
+            com.amazonaws.handlers.AsyncHandler<ListBulkDeploymentsRequest, ListBulkDeploymentsResult> asyncHandler);
+
+    /**
+     * Lists the versions of a connector definition, which are containers for connectors. Connectors run on the
+     * Greengrass core and contain built-in integration with local infrastructure, device protocols, AWS, and other
+     * cloud services.
+     * 
+     * @param listConnectorDefinitionVersionsRequest
+     * @return A Java Future containing the result of the ListConnectorDefinitionVersions operation returned by the
+     *         service.
+     * @sample AWSGreengrassAsync.ListConnectorDefinitionVersions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListConnectorDefinitionVersions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListConnectorDefinitionVersionsResult> listConnectorDefinitionVersionsAsync(
+            ListConnectorDefinitionVersionsRequest listConnectorDefinitionVersionsRequest);
+
+    /**
+     * Lists the versions of a connector definition, which are containers for connectors. Connectors run on the
+     * Greengrass core and contain built-in integration with local infrastructure, device protocols, AWS, and other
+     * cloud services.
+     * 
+     * @param listConnectorDefinitionVersionsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListConnectorDefinitionVersions operation returned by the
+     *         service.
+     * @sample AWSGreengrassAsyncHandler.ListConnectorDefinitionVersions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListConnectorDefinitionVersions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListConnectorDefinitionVersionsResult> listConnectorDefinitionVersionsAsync(
+            ListConnectorDefinitionVersionsRequest listConnectorDefinitionVersionsRequest,
+            com.amazonaws.handlers.AsyncHandler<ListConnectorDefinitionVersionsRequest, ListConnectorDefinitionVersionsResult> asyncHandler);
+
+    /**
+     * Retrieves a list of connector definitions.
+     * 
+     * @param listConnectorDefinitionsRequest
+     * @return A Java Future containing the result of the ListConnectorDefinitions operation returned by the service.
+     * @sample AWSGreengrassAsync.ListConnectorDefinitions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListConnectorDefinitions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListConnectorDefinitionsResult> listConnectorDefinitionsAsync(ListConnectorDefinitionsRequest listConnectorDefinitionsRequest);
+
+    /**
+     * Retrieves a list of connector definitions.
+     * 
+     * @param listConnectorDefinitionsRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListConnectorDefinitions operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.ListConnectorDefinitions
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListConnectorDefinitions"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<ListConnectorDefinitionsResult> listConnectorDefinitionsAsync(ListConnectorDefinitionsRequest listConnectorDefinitionsRequest,
+            com.amazonaws.handlers.AsyncHandler<ListConnectorDefinitionsRequest, ListConnectorDefinitionsResult> asyncHandler);
+
+    /**
+     * Lists the versions of a core definition.
      * 
      * @param listCoreDefinitionVersionsRequest
      * @return A Java Future containing the result of the ListCoreDefinitionVersions operation returned by the service.
@@ -1446,7 +1752,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             ListCoreDefinitionVersionsRequest listCoreDefinitionVersionsRequest);
 
     /**
-     * Lists versions of a core definition.
+     * Lists the versions of a core definition.
      * 
      * @param listCoreDefinitionVersionsRequest
      * @param asyncHandler
@@ -1664,7 +1970,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<ListGroupCertificateAuthoritiesRequest, ListGroupCertificateAuthoritiesResult> asyncHandler);
 
     /**
-     * List the versions of a group.
+     * Lists the versions of a group.
      * 
      * @param listGroupVersionsRequest
      * @return A Java Future containing the result of the ListGroupVersions operation returned by the service.
@@ -1675,7 +1981,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
     java.util.concurrent.Future<ListGroupVersionsResult> listGroupVersionsAsync(ListGroupVersionsRequest listGroupVersionsRequest);
 
     /**
-     * List the versions of a group.
+     * Lists the versions of a group.
      * 
      * @param listGroupVersionsRequest
      * @param asyncHandler
@@ -1894,10 +2200,37 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<ListSubscriptionDefinitionsRequest, ListSubscriptionDefinitionsResult> asyncHandler);
 
     /**
+     * Retrieves the tags for a resource.
+     * 
+     * @param listTagsForResourceRequest
+     * @return A Java Future containing the result of the ListTagsForResource operation returned by the service.
+     * @sample AWSGreengrassAsync.ListTagsForResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListTagsForResource" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<ListTagsForResourceResult> listTagsForResourceAsync(ListTagsForResourceRequest listTagsForResourceRequest);
+
+    /**
+     * Retrieves the tags for a resource.
+     * 
+     * @param listTagsForResourceRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the ListTagsForResource operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.ListTagsForResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ListTagsForResource" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<ListTagsForResourceResult> listTagsForResourceAsync(ListTagsForResourceRequest listTagsForResourceRequest,
+            com.amazonaws.handlers.AsyncHandler<ListTagsForResourceRequest, ListTagsForResourceResult> asyncHandler);
+
+    /**
      * Resets a group's deployments.
      * 
      * @param resetDeploymentsRequest
-     *        Information needed to perform a reset of a group's deployments.
+     *        Information needed to reset deployments.
      * @return A Java Future containing the result of the ResetDeployments operation returned by the service.
      * @sample AWSGreengrassAsync.ResetDeployments
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/ResetDeployments" target="_top">AWS
@@ -1909,7 +2242,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
      * Resets a group's deployments.
      * 
      * @param resetDeploymentsRequest
-     *        Information needed to perform a reset of a group's deployments.
+     *        Information needed to reset deployments.
      * @param asyncHandler
      *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
      *        implementation of the callback methods in this interface to receive notification of successful or
@@ -1923,11 +2256,129 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<ResetDeploymentsRequest, ResetDeploymentsResult> asyncHandler);
 
     /**
+     * Deploys multiple groups in one operation. This action starts the bulk deployment of a specified set of group
+     * versions. Each group version deployment will be triggered with an adaptive rate that has a fixed upper limit. We
+     * recommend that you include an ''X-Amzn-Client-Token'' token in every ''StartBulkDeployment'' request. These
+     * requests are idempotent with respect to the token and the request parameters.
+     * 
+     * @param startBulkDeploymentRequest
+     * @return A Java Future containing the result of the StartBulkDeployment operation returned by the service.
+     * @sample AWSGreengrassAsync.StartBulkDeployment
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/StartBulkDeployment" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<StartBulkDeploymentResult> startBulkDeploymentAsync(StartBulkDeploymentRequest startBulkDeploymentRequest);
+
+    /**
+     * Deploys multiple groups in one operation. This action starts the bulk deployment of a specified set of group
+     * versions. Each group version deployment will be triggered with an adaptive rate that has a fixed upper limit. We
+     * recommend that you include an ''X-Amzn-Client-Token'' token in every ''StartBulkDeployment'' request. These
+     * requests are idempotent with respect to the token and the request parameters.
+     * 
+     * @param startBulkDeploymentRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the StartBulkDeployment operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.StartBulkDeployment
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/StartBulkDeployment" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<StartBulkDeploymentResult> startBulkDeploymentAsync(StartBulkDeploymentRequest startBulkDeploymentRequest,
+            com.amazonaws.handlers.AsyncHandler<StartBulkDeploymentRequest, StartBulkDeploymentResult> asyncHandler);
+
+    /**
+     * Stops the execution of a bulk deployment. This action returns a status of ''Stopping'' until the deployment is
+     * stopped. You cannot start a new bulk deployment while a previous deployment is in the ''Stopping'' state. This
+     * action doesn't rollback completed deployments or cancel pending deployments.
+     * 
+     * @param stopBulkDeploymentRequest
+     * @return A Java Future containing the result of the StopBulkDeployment operation returned by the service.
+     * @sample AWSGreengrassAsync.StopBulkDeployment
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/StopBulkDeployment" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<StopBulkDeploymentResult> stopBulkDeploymentAsync(StopBulkDeploymentRequest stopBulkDeploymentRequest);
+
+    /**
+     * Stops the execution of a bulk deployment. This action returns a status of ''Stopping'' until the deployment is
+     * stopped. You cannot start a new bulk deployment while a previous deployment is in the ''Stopping'' state. This
+     * action doesn't rollback completed deployments or cancel pending deployments.
+     * 
+     * @param stopBulkDeploymentRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the StopBulkDeployment operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.StopBulkDeployment
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/StopBulkDeployment" target="_top">AWS
+     *      API Documentation</a>
+     */
+    java.util.concurrent.Future<StopBulkDeploymentResult> stopBulkDeploymentAsync(StopBulkDeploymentRequest stopBulkDeploymentRequest,
+            com.amazonaws.handlers.AsyncHandler<StopBulkDeploymentRequest, StopBulkDeploymentResult> asyncHandler);
+
+    /**
+     * Add tags to a resource.
+     * 
+     * @param tagResourceRequest
+     * @return A Java Future containing the result of the TagResource operation returned by the service.
+     * @sample AWSGreengrassAsync.TagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/TagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<TagResourceResult> tagResourceAsync(TagResourceRequest tagResourceRequest);
+
+    /**
+     * Add tags to a resource.
+     * 
+     * @param tagResourceRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the TagResource operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.TagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/TagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<TagResourceResult> tagResourceAsync(TagResourceRequest tagResourceRequest,
+            com.amazonaws.handlers.AsyncHandler<TagResourceRequest, TagResourceResult> asyncHandler);
+
+    /**
+     * Remove tags with specified keys from a resource.
+     * 
+     * @param untagResourceRequest
+     * @return A Java Future containing the result of the UntagResource operation returned by the service.
+     * @sample AWSGreengrassAsync.UntagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/UntagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<UntagResourceResult> untagResourceAsync(UntagResourceRequest untagResourceRequest);
+
+    /**
+     * Remove tags with specified keys from a resource.
+     * 
+     * @param untagResourceRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the UntagResource operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.UntagResource
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/UntagResource" target="_top">AWS API
+     *      Documentation</a>
+     */
+    java.util.concurrent.Future<UntagResourceResult> untagResourceAsync(UntagResourceRequest untagResourceRequest,
+            com.amazonaws.handlers.AsyncHandler<UntagResourceRequest, UntagResourceResult> asyncHandler);
+
+    /**
      * Updates the connectivity information for the core. Any devices that belong to the group which has this core will
      * receive this information in order to find the location of the core and connect to it.
      * 
      * @param updateConnectivityInfoRequest
-     *        connectivity info request
+     *        Connectivity information.
      * @return A Java Future containing the result of the UpdateConnectivityInfo operation returned by the service.
      * @sample AWSGreengrassAsync.UpdateConnectivityInfo
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/UpdateConnectivityInfo"
@@ -1940,7 +2391,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
      * receive this information in order to find the location of the core and connect to it.
      * 
      * @param updateConnectivityInfoRequest
-     *        connectivity info request
+     *        Connectivity information.
      * @param asyncHandler
      *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
      *        implementation of the callback methods in this interface to receive notification of successful or
@@ -1952,6 +2403,35 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
      */
     java.util.concurrent.Future<UpdateConnectivityInfoResult> updateConnectivityInfoAsync(UpdateConnectivityInfoRequest updateConnectivityInfoRequest,
             com.amazonaws.handlers.AsyncHandler<UpdateConnectivityInfoRequest, UpdateConnectivityInfoResult> asyncHandler);
+
+    /**
+     * Updates a connector definition.
+     * 
+     * @param updateConnectorDefinitionRequest
+     * @return A Java Future containing the result of the UpdateConnectorDefinition operation returned by the service.
+     * @sample AWSGreengrassAsync.UpdateConnectorDefinition
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/UpdateConnectorDefinition"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<UpdateConnectorDefinitionResult> updateConnectorDefinitionAsync(
+            UpdateConnectorDefinitionRequest updateConnectorDefinitionRequest);
+
+    /**
+     * Updates a connector definition.
+     * 
+     * @param updateConnectorDefinitionRequest
+     * @param asyncHandler
+     *        Asynchronous callback handler for events in the lifecycle of the request. Users can provide an
+     *        implementation of the callback methods in this interface to receive notification of successful or
+     *        unsuccessful completion of the operation.
+     * @return A Java Future containing the result of the UpdateConnectorDefinition operation returned by the service.
+     * @sample AWSGreengrassAsyncHandler.UpdateConnectorDefinition
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/UpdateConnectorDefinition"
+     *      target="_top">AWS API Documentation</a>
+     */
+    java.util.concurrent.Future<UpdateConnectorDefinitionResult> updateConnectorDefinitionAsync(
+            UpdateConnectorDefinitionRequest updateConnectorDefinitionRequest,
+            com.amazonaws.handlers.AsyncHandler<UpdateConnectorDefinitionRequest, UpdateConnectorDefinitionResult> asyncHandler);
 
     /**
      * Updates a core definition.
@@ -2062,7 +2542,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             com.amazonaws.handlers.AsyncHandler<UpdateGroupRequest, UpdateGroupResult> asyncHandler);
 
     /**
-     * Updates the Cert expiry time for a group.
+     * Updates the Certificate expiry time for a group.
      * 
      * @param updateGroupCertificateConfigurationRequest
      * @return A Java Future containing the result of the UpdateGroupCertificateConfiguration operation returned by the
@@ -2075,7 +2555,7 @@ public interface AWSGreengrassAsync extends AWSGreengrass {
             UpdateGroupCertificateConfigurationRequest updateGroupCertificateConfigurationRequest);
 
     /**
-     * Updates the Cert expiry time for a group.
+     * Updates the Certificate expiry time for a group.
      * 
      * @param updateGroupCertificateConfigurationRequest
      * @param asyncHandler

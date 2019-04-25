@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -65,10 +65,24 @@ public class ElasticsearchDomainConfig implements Serializable, Cloneable, Struc
     private VPCDerivedInfoStatus vPCOptions;
     /**
      * <p>
+     * The <code>CognitoOptions</code> for the specified domain. For more information, see <a
+     * href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     * target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * </p>
+     */
+    private CognitoOptionsStatus cognitoOptions;
+    /**
+     * <p>
      * Specifies the <code>EncryptionAtRestOptions</code> for the Elasticsearch domain.
      * </p>
      */
     private EncryptionAtRestOptionsStatus encryptionAtRestOptions;
+    /**
+     * <p>
+     * Specifies the <code>NodeToNodeEncryptionOptions</code> for the Elasticsearch domain.
+     * </p>
+     */
+    private NodeToNodeEncryptionOptionsStatus nodeToNodeEncryptionOptions;
     /**
      * <p>
      * Specifies the <code>AdvancedOptions</code> for the domain. See <a href=
@@ -338,6 +352,58 @@ public class ElasticsearchDomainConfig implements Serializable, Cloneable, Struc
 
     /**
      * <p>
+     * The <code>CognitoOptions</code> for the specified domain. For more information, see <a
+     * href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     * target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * </p>
+     * 
+     * @param cognitoOptions
+     *        The <code>CognitoOptions</code> for the specified domain. For more information, see <a
+     *        href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     *        target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     */
+
+    public void setCognitoOptions(CognitoOptionsStatus cognitoOptions) {
+        this.cognitoOptions = cognitoOptions;
+    }
+
+    /**
+     * <p>
+     * The <code>CognitoOptions</code> for the specified domain. For more information, see <a
+     * href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     * target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * </p>
+     * 
+     * @return The <code>CognitoOptions</code> for the specified domain. For more information, see <a
+     *         href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     *         target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     */
+
+    public CognitoOptionsStatus getCognitoOptions() {
+        return this.cognitoOptions;
+    }
+
+    /**
+     * <p>
+     * The <code>CognitoOptions</code> for the specified domain. For more information, see <a
+     * href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     * target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * </p>
+     * 
+     * @param cognitoOptions
+     *        The <code>CognitoOptions</code> for the specified domain. For more information, see <a
+     *        href="http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-cognito-auth.html"
+     *        target="_blank">Amazon Cognito Authentication for Kibana</a>.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public ElasticsearchDomainConfig withCognitoOptions(CognitoOptionsStatus cognitoOptions) {
+        setCognitoOptions(cognitoOptions);
+        return this;
+    }
+
+    /**
+     * <p>
      * Specifies the <code>EncryptionAtRestOptions</code> for the Elasticsearch domain.
      * </p>
      * 
@@ -373,6 +439,46 @@ public class ElasticsearchDomainConfig implements Serializable, Cloneable, Struc
 
     public ElasticsearchDomainConfig withEncryptionAtRestOptions(EncryptionAtRestOptionsStatus encryptionAtRestOptions) {
         setEncryptionAtRestOptions(encryptionAtRestOptions);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies the <code>NodeToNodeEncryptionOptions</code> for the Elasticsearch domain.
+     * </p>
+     * 
+     * @param nodeToNodeEncryptionOptions
+     *        Specifies the <code>NodeToNodeEncryptionOptions</code> for the Elasticsearch domain.
+     */
+
+    public void setNodeToNodeEncryptionOptions(NodeToNodeEncryptionOptionsStatus nodeToNodeEncryptionOptions) {
+        this.nodeToNodeEncryptionOptions = nodeToNodeEncryptionOptions;
+    }
+
+    /**
+     * <p>
+     * Specifies the <code>NodeToNodeEncryptionOptions</code> for the Elasticsearch domain.
+     * </p>
+     * 
+     * @return Specifies the <code>NodeToNodeEncryptionOptions</code> for the Elasticsearch domain.
+     */
+
+    public NodeToNodeEncryptionOptionsStatus getNodeToNodeEncryptionOptions() {
+        return this.nodeToNodeEncryptionOptions;
+    }
+
+    /**
+     * <p>
+     * Specifies the <code>NodeToNodeEncryptionOptions</code> for the Elasticsearch domain.
+     * </p>
+     * 
+     * @param nodeToNodeEncryptionOptions
+     *        Specifies the <code>NodeToNodeEncryptionOptions</code> for the Elasticsearch domain.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public ElasticsearchDomainConfig withNodeToNodeEncryptionOptions(NodeToNodeEncryptionOptionsStatus nodeToNodeEncryptionOptions) {
+        setNodeToNodeEncryptionOptions(nodeToNodeEncryptionOptions);
         return this;
     }
 
@@ -469,7 +575,8 @@ public class ElasticsearchDomainConfig implements Serializable, Cloneable, Struc
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -491,8 +598,12 @@ public class ElasticsearchDomainConfig implements Serializable, Cloneable, Struc
             sb.append("SnapshotOptions: ").append(getSnapshotOptions()).append(",");
         if (getVPCOptions() != null)
             sb.append("VPCOptions: ").append(getVPCOptions()).append(",");
+        if (getCognitoOptions() != null)
+            sb.append("CognitoOptions: ").append(getCognitoOptions()).append(",");
         if (getEncryptionAtRestOptions() != null)
             sb.append("EncryptionAtRestOptions: ").append(getEncryptionAtRestOptions()).append(",");
+        if (getNodeToNodeEncryptionOptions() != null)
+            sb.append("NodeToNodeEncryptionOptions: ").append(getNodeToNodeEncryptionOptions()).append(",");
         if (getAdvancedOptions() != null)
             sb.append("AdvancedOptions: ").append(getAdvancedOptions()).append(",");
         if (getLogPublishingOptions() != null)
@@ -535,9 +646,17 @@ public class ElasticsearchDomainConfig implements Serializable, Cloneable, Struc
             return false;
         if (other.getVPCOptions() != null && other.getVPCOptions().equals(this.getVPCOptions()) == false)
             return false;
+        if (other.getCognitoOptions() == null ^ this.getCognitoOptions() == null)
+            return false;
+        if (other.getCognitoOptions() != null && other.getCognitoOptions().equals(this.getCognitoOptions()) == false)
+            return false;
         if (other.getEncryptionAtRestOptions() == null ^ this.getEncryptionAtRestOptions() == null)
             return false;
         if (other.getEncryptionAtRestOptions() != null && other.getEncryptionAtRestOptions().equals(this.getEncryptionAtRestOptions()) == false)
+            return false;
+        if (other.getNodeToNodeEncryptionOptions() == null ^ this.getNodeToNodeEncryptionOptions() == null)
+            return false;
+        if (other.getNodeToNodeEncryptionOptions() != null && other.getNodeToNodeEncryptionOptions().equals(this.getNodeToNodeEncryptionOptions()) == false)
             return false;
         if (other.getAdvancedOptions() == null ^ this.getAdvancedOptions() == null)
             return false;
@@ -561,7 +680,9 @@ public class ElasticsearchDomainConfig implements Serializable, Cloneable, Struc
         hashCode = prime * hashCode + ((getAccessPolicies() == null) ? 0 : getAccessPolicies().hashCode());
         hashCode = prime * hashCode + ((getSnapshotOptions() == null) ? 0 : getSnapshotOptions().hashCode());
         hashCode = prime * hashCode + ((getVPCOptions() == null) ? 0 : getVPCOptions().hashCode());
+        hashCode = prime * hashCode + ((getCognitoOptions() == null) ? 0 : getCognitoOptions().hashCode());
         hashCode = prime * hashCode + ((getEncryptionAtRestOptions() == null) ? 0 : getEncryptionAtRestOptions().hashCode());
+        hashCode = prime * hashCode + ((getNodeToNodeEncryptionOptions() == null) ? 0 : getNodeToNodeEncryptionOptions().hashCode());
         hashCode = prime * hashCode + ((getAdvancedOptions() == null) ? 0 : getAdvancedOptions().hashCode());
         hashCode = prime * hashCode + ((getLogPublishingOptions() == null) ? 0 : getLogPublishingOptions().hashCode());
         return hashCode;

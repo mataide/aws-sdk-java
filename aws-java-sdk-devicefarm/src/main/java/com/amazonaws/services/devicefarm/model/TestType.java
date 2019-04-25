@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -22,18 +22,25 @@ public enum TestType {
 
     BUILTIN_FUZZ("BUILTIN_FUZZ"),
     BUILTIN_EXPLORER("BUILTIN_EXPLORER"),
+    WEB_PERFORMANCE_PROFILE("WEB_PERFORMANCE_PROFILE"),
     APPIUM_JAVA_JUNIT("APPIUM_JAVA_JUNIT"),
     APPIUM_JAVA_TESTNG("APPIUM_JAVA_TESTNG"),
     APPIUM_PYTHON("APPIUM_PYTHON"),
+    APPIUM_NODE("APPIUM_NODE"),
+    APPIUM_RUBY("APPIUM_RUBY"),
     APPIUM_WEB_JAVA_JUNIT("APPIUM_WEB_JAVA_JUNIT"),
     APPIUM_WEB_JAVA_TESTNG("APPIUM_WEB_JAVA_TESTNG"),
     APPIUM_WEB_PYTHON("APPIUM_WEB_PYTHON"),
+    APPIUM_WEB_NODE("APPIUM_WEB_NODE"),
+    APPIUM_WEB_RUBY("APPIUM_WEB_RUBY"),
     CALABASH("CALABASH"),
     INSTRUMENTATION("INSTRUMENTATION"),
     UIAUTOMATION("UIAUTOMATION"),
     UIAUTOMATOR("UIAUTOMATOR"),
     XCTEST("XCTEST"),
-    XCTEST_UI("XCTEST_UI");
+    XCTEST_UI("XCTEST_UI"),
+    REMOTE_ACCESS_RECORD("REMOTE_ACCESS_RECORD"),
+    REMOTE_ACCESS_REPLAY("REMOTE_ACCESS_REPLAY");
 
     private String value;
 

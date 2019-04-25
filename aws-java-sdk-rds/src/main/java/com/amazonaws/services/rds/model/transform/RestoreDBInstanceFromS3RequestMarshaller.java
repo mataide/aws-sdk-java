@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -68,9 +68,10 @@ public class RestoreDBInstanceFromS3RequestMarshaller implements Marshaller<Requ
             request.addParameter("MasterUserPassword", StringUtils.fromString(restoreDBInstanceFromS3Request.getMasterUserPassword()));
         }
 
-        com.amazonaws.internal.SdkInternalList<String> dBSecurityGroupsList = (com.amazonaws.internal.SdkInternalList<String>) restoreDBInstanceFromS3Request
-                .getDBSecurityGroups();
-        if (!dBSecurityGroupsList.isEmpty() || !dBSecurityGroupsList.isAutoConstruct()) {
+        if (!restoreDBInstanceFromS3Request.getDBSecurityGroups().isEmpty()
+                || !((com.amazonaws.internal.SdkInternalList<String>) restoreDBInstanceFromS3Request.getDBSecurityGroups()).isAutoConstruct()) {
+            com.amazonaws.internal.SdkInternalList<String> dBSecurityGroupsList = (com.amazonaws.internal.SdkInternalList<String>) restoreDBInstanceFromS3Request
+                    .getDBSecurityGroups();
             int dBSecurityGroupsListIndex = 1;
 
             for (String dBSecurityGroupsListValue : dBSecurityGroupsList) {
@@ -81,9 +82,10 @@ public class RestoreDBInstanceFromS3RequestMarshaller implements Marshaller<Requ
             }
         }
 
-        com.amazonaws.internal.SdkInternalList<String> vpcSecurityGroupIdsList = (com.amazonaws.internal.SdkInternalList<String>) restoreDBInstanceFromS3Request
-                .getVpcSecurityGroupIds();
-        if (!vpcSecurityGroupIdsList.isEmpty() || !vpcSecurityGroupIdsList.isAutoConstruct()) {
+        if (!restoreDBInstanceFromS3Request.getVpcSecurityGroupIds().isEmpty()
+                || !((com.amazonaws.internal.SdkInternalList<String>) restoreDBInstanceFromS3Request.getVpcSecurityGroupIds()).isAutoConstruct()) {
+            com.amazonaws.internal.SdkInternalList<String> vpcSecurityGroupIdsList = (com.amazonaws.internal.SdkInternalList<String>) restoreDBInstanceFromS3Request
+                    .getVpcSecurityGroupIds();
             int vpcSecurityGroupIdsListIndex = 1;
 
             for (String vpcSecurityGroupIdsListValue : vpcSecurityGroupIdsList) {
@@ -151,8 +153,9 @@ public class RestoreDBInstanceFromS3RequestMarshaller implements Marshaller<Requ
             request.addParameter("PubliclyAccessible", StringUtils.fromBoolean(restoreDBInstanceFromS3Request.getPubliclyAccessible()));
         }
 
-        com.amazonaws.internal.SdkInternalList<Tag> tagsList = (com.amazonaws.internal.SdkInternalList<Tag>) restoreDBInstanceFromS3Request.getTags();
-        if (!tagsList.isEmpty() || !tagsList.isAutoConstruct()) {
+        if (!restoreDBInstanceFromS3Request.getTags().isEmpty()
+                || !((com.amazonaws.internal.SdkInternalList<Tag>) restoreDBInstanceFromS3Request.getTags()).isAutoConstruct()) {
+            com.amazonaws.internal.SdkInternalList<Tag> tagsList = (com.amazonaws.internal.SdkInternalList<Tag>) restoreDBInstanceFromS3Request.getTags();
             int tagsListIndex = 1;
 
             for (Tag tagsListValue : tagsList) {
@@ -223,6 +226,55 @@ public class RestoreDBInstanceFromS3RequestMarshaller implements Marshaller<Requ
 
         if (restoreDBInstanceFromS3Request.getPerformanceInsightsKMSKeyId() != null) {
             request.addParameter("PerformanceInsightsKMSKeyId", StringUtils.fromString(restoreDBInstanceFromS3Request.getPerformanceInsightsKMSKeyId()));
+        }
+
+        if (restoreDBInstanceFromS3Request.getPerformanceInsightsRetentionPeriod() != null) {
+            request.addParameter("PerformanceInsightsRetentionPeriod",
+                    StringUtils.fromInteger(restoreDBInstanceFromS3Request.getPerformanceInsightsRetentionPeriod()));
+        }
+
+        if (!restoreDBInstanceFromS3Request.getEnableCloudwatchLogsExports().isEmpty()
+                || !((com.amazonaws.internal.SdkInternalList<String>) restoreDBInstanceFromS3Request.getEnableCloudwatchLogsExports()).isAutoConstruct()) {
+            com.amazonaws.internal.SdkInternalList<String> enableCloudwatchLogsExportsList = (com.amazonaws.internal.SdkInternalList<String>) restoreDBInstanceFromS3Request
+                    .getEnableCloudwatchLogsExports();
+            int enableCloudwatchLogsExportsListIndex = 1;
+
+            for (String enableCloudwatchLogsExportsListValue : enableCloudwatchLogsExportsList) {
+                if (enableCloudwatchLogsExportsListValue != null) {
+                    request.addParameter("EnableCloudwatchLogsExports.member." + enableCloudwatchLogsExportsListIndex,
+                            StringUtils.fromString(enableCloudwatchLogsExportsListValue));
+                }
+                enableCloudwatchLogsExportsListIndex++;
+            }
+        }
+
+        if (!restoreDBInstanceFromS3Request.getProcessorFeatures().isEmpty()
+                || !((com.amazonaws.internal.SdkInternalList<ProcessorFeature>) restoreDBInstanceFromS3Request.getProcessorFeatures()).isAutoConstruct()) {
+            com.amazonaws.internal.SdkInternalList<ProcessorFeature> processorFeaturesList = (com.amazonaws.internal.SdkInternalList<ProcessorFeature>) restoreDBInstanceFromS3Request
+                    .getProcessorFeatures();
+            int processorFeaturesListIndex = 1;
+
+            for (ProcessorFeature processorFeaturesListValue : processorFeaturesList) {
+
+                if (processorFeaturesListValue.getName() != null) {
+                    request.addParameter("ProcessorFeatures.ProcessorFeature." + processorFeaturesListIndex + ".Name",
+                            StringUtils.fromString(processorFeaturesListValue.getName()));
+                }
+
+                if (processorFeaturesListValue.getValue() != null) {
+                    request.addParameter("ProcessorFeatures.ProcessorFeature." + processorFeaturesListIndex + ".Value",
+                            StringUtils.fromString(processorFeaturesListValue.getValue()));
+                }
+                processorFeaturesListIndex++;
+            }
+        }
+
+        if (restoreDBInstanceFromS3Request.getUseDefaultProcessorFeatures() != null) {
+            request.addParameter("UseDefaultProcessorFeatures", StringUtils.fromBoolean(restoreDBInstanceFromS3Request.getUseDefaultProcessorFeatures()));
+        }
+
+        if (restoreDBInstanceFromS3Request.getDeletionProtection() != null) {
+            request.addParameter("DeletionProtection", StringUtils.fromBoolean(restoreDBInstanceFromS3Request.getDeletionProtection()));
         }
 
         return request;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -44,7 +44,7 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
     private String description;
     /**
      * <p>
-     * Amazon Resource Name (<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
+     * Amazon Resource Name (<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
      * is assigned to a game session queue and uniquely identifies it. Format is
      * <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. These queues are
      * used when placing game sessions for matches that are created with this matchmaking configuration. Queues can be
@@ -109,10 +109,9 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
     private java.util.Date creationTime;
     /**
      * <p>
-     * Set of developer-defined properties for a game session, formatted as a set of type:value pairs. These properties
-     * are included in the <a>GameSession</a> object, which is passed to the game server with a request to start a new
-     * game session (see <a href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * Set of custom properties for a game session, formatted as key:value pairs. These properties are passed to a game
+     * server process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      * >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created for a
      * successful match.
      * </p>
@@ -120,10 +119,9 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
     private java.util.List<GameProperty> gameProperties;
     /**
      * <p>
-     * Set of developer-defined game session properties, formatted as a single string value. This data is included in
-     * the <a>GameSession</a> object, which is passed to the game server with a request to start a new game session (see
-     * <a href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * Set of custom game session properties, formatted as a single string value. This data is passed to a game server
+     * process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      * >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created for a
      * successful match.
      * </p>
@@ -218,7 +216,7 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Amazon Resource Name (<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
+     * Amazon Resource Name (<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
      * is assigned to a game session queue and uniquely identifies it. Format is
      * <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. These queues are
      * used when placing game sessions for matches that are created with this matchmaking configuration. Queues can be
@@ -226,7 +224,7 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
      * </p>
      * 
      * @return Amazon Resource Name (<a
-     *         href="http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that is assigned to a
+     *         href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that is assigned to a
      *         game session queue and uniquely identifies it. Format is
      *         <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. These
      *         queues are used when placing game sessions for matches that are created with this matchmaking
@@ -239,7 +237,7 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Amazon Resource Name (<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
+     * Amazon Resource Name (<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
      * is assigned to a game session queue and uniquely identifies it. Format is
      * <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. These queues are
      * used when placing game sessions for matches that are created with this matchmaking configuration. Queues can be
@@ -247,8 +245,9 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
      * </p>
      * 
      * @param gameSessionQueueArns
-     *        Amazon Resource Name (<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>)
-     *        that is assigned to a game session queue and uniquely identifies it. Format is
+     *        Amazon Resource Name (<a
+     *        href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that is assigned to a
+     *        game session queue and uniquely identifies it. Format is
      *        <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. These
      *        queues are used when placing game sessions for matches that are created with this matchmaking
      *        configuration. Queues can be located in any region.
@@ -265,7 +264,7 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Amazon Resource Name (<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
+     * Amazon Resource Name (<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
      * is assigned to a game session queue and uniquely identifies it. Format is
      * <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. These queues are
      * used when placing game sessions for matches that are created with this matchmaking configuration. Queues can be
@@ -278,8 +277,9 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
      * </p>
      * 
      * @param gameSessionQueueArns
-     *        Amazon Resource Name (<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>)
-     *        that is assigned to a game session queue and uniquely identifies it. Format is
+     *        Amazon Resource Name (<a
+     *        href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that is assigned to a
+     *        game session queue and uniquely identifies it. Format is
      *        <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. These
      *        queues are used when placing game sessions for matches that are created with this matchmaking
      *        configuration. Queues can be located in any region.
@@ -298,7 +298,7 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Amazon Resource Name (<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
+     * Amazon Resource Name (<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that
      * is assigned to a game session queue and uniquely identifies it. Format is
      * <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. These queues are
      * used when placing game sessions for matches that are created with this matchmaking configuration. Queues can be
@@ -306,8 +306,9 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
      * </p>
      * 
      * @param gameSessionQueueArns
-     *        Amazon Resource Name (<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>)
-     *        that is assigned to a game session queue and uniquely identifies it. Format is
+     *        Amazon Resource Name (<a
+     *        href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>) that is assigned to a
+     *        game session queue and uniquely identifies it. Format is
      *        <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>. These
      *        queues are used when placing game sessions for matches that are created with this matchmaking
      *        configuration. Queues can be located in any region.
@@ -697,18 +698,17 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Set of developer-defined properties for a game session, formatted as a set of type:value pairs. These properties
-     * are included in the <a>GameSession</a> object, which is passed to the game server with a request to start a new
-     * game session (see <a href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * Set of custom properties for a game session, formatted as key:value pairs. These properties are passed to a game
+     * server process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      * >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created for a
      * successful match.
      * </p>
      * 
-     * @return Set of developer-defined properties for a game session, formatted as a set of type:value pairs. These
-     *         properties are included in the <a>GameSession</a> object, which is passed to the game server with a
-     *         request to start a new game session (see <a href=
-     *         "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * @return Set of custom properties for a game session, formatted as key:value pairs. These properties are passed to
+     *         a game server process in the <a>GameSession</a> object with a request to start a new game session (see <a
+     *         href=
+     *         "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      *         >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is
      *         created for a successful match.
      */
@@ -719,19 +719,18 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Set of developer-defined properties for a game session, formatted as a set of type:value pairs. These properties
-     * are included in the <a>GameSession</a> object, which is passed to the game server with a request to start a new
-     * game session (see <a href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * Set of custom properties for a game session, formatted as key:value pairs. These properties are passed to a game
+     * server process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      * >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created for a
      * successful match.
      * </p>
      * 
      * @param gameProperties
-     *        Set of developer-defined properties for a game session, formatted as a set of type:value pairs. These
-     *        properties are included in the <a>GameSession</a> object, which is passed to the game server with a
-     *        request to start a new game session (see <a href=
-     *        "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     *        Set of custom properties for a game session, formatted as key:value pairs. These properties are passed to
+     *        a game server process in the <a>GameSession</a> object with a request to start a new game session (see <a
+     *        href=
+     *        "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      *        >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created
      *        for a successful match.
      */
@@ -747,10 +746,9 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Set of developer-defined properties for a game session, formatted as a set of type:value pairs. These properties
-     * are included in the <a>GameSession</a> object, which is passed to the game server with a request to start a new
-     * game session (see <a href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * Set of custom properties for a game session, formatted as key:value pairs. These properties are passed to a game
+     * server process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      * >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created for a
      * successful match.
      * </p>
@@ -761,10 +759,10 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
      * </p>
      * 
      * @param gameProperties
-     *        Set of developer-defined properties for a game session, formatted as a set of type:value pairs. These
-     *        properties are included in the <a>GameSession</a> object, which is passed to the game server with a
-     *        request to start a new game session (see <a href=
-     *        "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     *        Set of custom properties for a game session, formatted as key:value pairs. These properties are passed to
+     *        a game server process in the <a>GameSession</a> object with a request to start a new game session (see <a
+     *        href=
+     *        "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      *        >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created
      *        for a successful match.
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -782,19 +780,18 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Set of developer-defined properties for a game session, formatted as a set of type:value pairs. These properties
-     * are included in the <a>GameSession</a> object, which is passed to the game server with a request to start a new
-     * game session (see <a href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * Set of custom properties for a game session, formatted as key:value pairs. These properties are passed to a game
+     * server process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      * >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created for a
      * successful match.
      * </p>
      * 
      * @param gameProperties
-     *        Set of developer-defined properties for a game session, formatted as a set of type:value pairs. These
-     *        properties are included in the <a>GameSession</a> object, which is passed to the game server with a
-     *        request to start a new game session (see <a href=
-     *        "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     *        Set of custom properties for a game session, formatted as key:value pairs. These properties are passed to
+     *        a game server process in the <a>GameSession</a> object with a request to start a new game session (see <a
+     *        href=
+     *        "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      *        >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created
      *        for a successful match.
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -807,19 +804,17 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Set of developer-defined game session properties, formatted as a single string value. This data is included in
-     * the <a>GameSession</a> object, which is passed to the game server with a request to start a new game session (see
-     * <a href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * Set of custom game session properties, formatted as a single string value. This data is passed to a game server
+     * process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      * >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created for a
      * successful match.
      * </p>
      * 
      * @param gameSessionData
-     *        Set of developer-defined game session properties, formatted as a single string value. This data is
-     *        included in the <a>GameSession</a> object, which is passed to the game server with a request to start a
-     *        new game session (see <a href=
-     *        "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     *        Set of custom game session properties, formatted as a single string value. This data is passed to a game
+     *        server process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     *        "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      *        >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created
      *        for a successful match.
      */
@@ -830,18 +825,16 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Set of developer-defined game session properties, formatted as a single string value. This data is included in
-     * the <a>GameSession</a> object, which is passed to the game server with a request to start a new game session (see
-     * <a href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * Set of custom game session properties, formatted as a single string value. This data is passed to a game server
+     * process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      * >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created for a
      * successful match.
      * </p>
      * 
-     * @return Set of developer-defined game session properties, formatted as a single string value. This data is
-     *         included in the <a>GameSession</a> object, which is passed to the game server with a request to start a
-     *         new game session (see <a href=
-     *         "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * @return Set of custom game session properties, formatted as a single string value. This data is passed to a game
+     *         server process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     *         "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      *         >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is
      *         created for a successful match.
      */
@@ -852,19 +845,17 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
 
     /**
      * <p>
-     * Set of developer-defined game session properties, formatted as a single string value. This data is included in
-     * the <a>GameSession</a> object, which is passed to the game server with a request to start a new game session (see
-     * <a href=
-     * "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     * Set of custom game session properties, formatted as a single string value. This data is passed to a game server
+     * process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     * "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      * >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created for a
      * successful match.
      * </p>
      * 
      * @param gameSessionData
-     *        Set of developer-defined game session properties, formatted as a single string value. This data is
-     *        included in the <a>GameSession</a> object, which is passed to the game server with a request to start a
-     *        new game session (see <a href=
-     *        "http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
+     *        Set of custom game session properties, formatted as a single string value. This data is passed to a game
+     *        server process in the <a>GameSession</a> object with a request to start a new game session (see <a href=
+     *        "https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession"
      *        >Start a Game Session</a>). This information is added to the new <a>GameSession</a> object that is created
      *        for a successful match.
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -876,7 +867,8 @@ public class MatchmakingConfiguration implements Serializable, Cloneable, Struct
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

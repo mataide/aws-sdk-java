@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -63,7 +63,7 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
     /**
      * <p>
      * The network configuration for the service. This parameter is required for task definitions that use the
-     * <code>awsvpc</code> network mode to receive their own Elastic Network Interface, and it is not supported for
+     * <code>awsvpc</code> network mode to receive their own elastic network interface, and it is not supported for
      * other network modes. For more information, see <a
      * href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html">Task Networking</a> in the
      * <i>Amazon Elastic Container Service Developer Guide</i>.
@@ -79,16 +79,34 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
     private NetworkConfiguration networkConfiguration;
     /**
      * <p>
-     * The platform version you want to update your service to run.
+     * The platform version on which your tasks in the service are running. A platform version is only specified for
+     * tasks using the Fargate launch type. If one is not specified, the <code>LATEST</code> platform version is used by
+     * default. For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html">AWS Fargate Platform
+     * Versions</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.
      * </p>
      */
     private String platformVersion;
     /**
      * <p>
-     * Whether or not to force a new deployment of the service.
+     * Whether to force a new deployment of the service. Deployments are not forced by default. You can use this option
+     * to trigger a new deployment with no service definition changes. For example, you can update a service's tasks to
+     * use a newer Docker image with the same image/tag combination (<code>my_image:latest</code>) or to roll Fargate
+     * tasks onto a newer platform version.
      * </p>
      */
     private Boolean forceNewDeployment;
+    /**
+     * <p>
+     * The period of time, in seconds, that the Amazon ECS service scheduler should ignore unhealthy Elastic Load
+     * Balancing target health checks after a task has first started. This is only valid if your service is configured
+     * to use a load balancer. If your service's tasks take a while to start and respond to Elastic Load Balancing
+     * health checks, you can specify a health check grace period of up to 1,800 seconds. During that time, the ECS
+     * service scheduler ignores the Elastic Load Balancing health check status. This grace period can prevent the ECS
+     * service scheduler from marking tasks as unhealthy and stopping them before they have time to come up.
+     * </p>
+     */
+    private Integer healthCheckGracePeriodSeconds;
 
     /**
      * <p>
@@ -326,7 +344,7 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
     /**
      * <p>
      * The network configuration for the service. This parameter is required for task definitions that use the
-     * <code>awsvpc</code> network mode to receive their own Elastic Network Interface, and it is not supported for
+     * <code>awsvpc</code> network mode to receive their own elastic network interface, and it is not supported for
      * other network modes. For more information, see <a
      * href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html">Task Networking</a> in the
      * <i>Amazon Elastic Container Service Developer Guide</i>.
@@ -341,7 +359,7 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
      * 
      * @param networkConfiguration
      *        The network configuration for the service. This parameter is required for task definitions that use the
-     *        <code>awsvpc</code> network mode to receive their own Elastic Network Interface, and it is not supported
+     *        <code>awsvpc</code> network mode to receive their own elastic network interface, and it is not supported
      *        for other network modes. For more information, see <a
      *        href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html">Task Networking</a>
      *        in the <i>Amazon Elastic Container Service Developer Guide</i>.</p> <note>
@@ -359,7 +377,7 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
     /**
      * <p>
      * The network configuration for the service. This parameter is required for task definitions that use the
-     * <code>awsvpc</code> network mode to receive their own Elastic Network Interface, and it is not supported for
+     * <code>awsvpc</code> network mode to receive their own elastic network interface, and it is not supported for
      * other network modes. For more information, see <a
      * href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html">Task Networking</a> in the
      * <i>Amazon Elastic Container Service Developer Guide</i>.
@@ -373,7 +391,7 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
      * </note>
      * 
      * @return The network configuration for the service. This parameter is required for task definitions that use the
-     *         <code>awsvpc</code> network mode to receive their own Elastic Network Interface, and it is not supported
+     *         <code>awsvpc</code> network mode to receive their own elastic network interface, and it is not supported
      *         for other network modes. For more information, see <a
      *         href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html">Task
      *         Networking</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p> <note>
@@ -391,7 +409,7 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
     /**
      * <p>
      * The network configuration for the service. This parameter is required for task definitions that use the
-     * <code>awsvpc</code> network mode to receive their own Elastic Network Interface, and it is not supported for
+     * <code>awsvpc</code> network mode to receive their own elastic network interface, and it is not supported for
      * other network modes. For more information, see <a
      * href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html">Task Networking</a> in the
      * <i>Amazon Elastic Container Service Developer Guide</i>.
@@ -406,7 +424,7 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
      * 
      * @param networkConfiguration
      *        The network configuration for the service. This parameter is required for task definitions that use the
-     *        <code>awsvpc</code> network mode to receive their own Elastic Network Interface, and it is not supported
+     *        <code>awsvpc</code> network mode to receive their own elastic network interface, and it is not supported
      *        for other network modes. For more information, see <a
      *        href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html">Task Networking</a>
      *        in the <i>Amazon Elastic Container Service Developer Guide</i>.</p> <note>
@@ -425,11 +443,19 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The platform version you want to update your service to run.
+     * The platform version on which your tasks in the service are running. A platform version is only specified for
+     * tasks using the Fargate launch type. If one is not specified, the <code>LATEST</code> platform version is used by
+     * default. For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html">AWS Fargate Platform
+     * Versions</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.
      * </p>
      * 
      * @param platformVersion
-     *        The platform version you want to update your service to run.
+     *        The platform version on which your tasks in the service are running. A platform version is only specified
+     *        for tasks using the Fargate launch type. If one is not specified, the <code>LATEST</code> platform version
+     *        is used by default. For more information, see <a
+     *        href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html">AWS Fargate
+     *        Platform Versions</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.
      */
 
     public void setPlatformVersion(String platformVersion) {
@@ -438,10 +464,18 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The platform version you want to update your service to run.
+     * The platform version on which your tasks in the service are running. A platform version is only specified for
+     * tasks using the Fargate launch type. If one is not specified, the <code>LATEST</code> platform version is used by
+     * default. For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html">AWS Fargate Platform
+     * Versions</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.
      * </p>
      * 
-     * @return The platform version you want to update your service to run.
+     * @return The platform version on which your tasks in the service are running. A platform version is only specified
+     *         for tasks using the Fargate launch type. If one is not specified, the <code>LATEST</code> platform
+     *         version is used by default. For more information, see <a
+     *         href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html">AWS Fargate
+     *         Platform Versions</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.
      */
 
     public String getPlatformVersion() {
@@ -450,11 +484,19 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The platform version you want to update your service to run.
+     * The platform version on which your tasks in the service are running. A platform version is only specified for
+     * tasks using the Fargate launch type. If one is not specified, the <code>LATEST</code> platform version is used by
+     * default. For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html">AWS Fargate Platform
+     * Versions</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.
      * </p>
      * 
      * @param platformVersion
-     *        The platform version you want to update your service to run.
+     *        The platform version on which your tasks in the service are running. A platform version is only specified
+     *        for tasks using the Fargate launch type. If one is not specified, the <code>LATEST</code> platform version
+     *        is used by default. For more information, see <a
+     *        href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html">AWS Fargate
+     *        Platform Versions</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -465,11 +507,17 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Whether or not to force a new deployment of the service.
+     * Whether to force a new deployment of the service. Deployments are not forced by default. You can use this option
+     * to trigger a new deployment with no service definition changes. For example, you can update a service's tasks to
+     * use a newer Docker image with the same image/tag combination (<code>my_image:latest</code>) or to roll Fargate
+     * tasks onto a newer platform version.
      * </p>
      * 
      * @param forceNewDeployment
-     *        Whether or not to force a new deployment of the service.
+     *        Whether to force a new deployment of the service. Deployments are not forced by default. You can use this
+     *        option to trigger a new deployment with no service definition changes. For example, you can update a
+     *        service's tasks to use a newer Docker image with the same image/tag combination (
+     *        <code>my_image:latest</code>) or to roll Fargate tasks onto a newer platform version.
      */
 
     public void setForceNewDeployment(Boolean forceNewDeployment) {
@@ -478,10 +526,16 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Whether or not to force a new deployment of the service.
+     * Whether to force a new deployment of the service. Deployments are not forced by default. You can use this option
+     * to trigger a new deployment with no service definition changes. For example, you can update a service's tasks to
+     * use a newer Docker image with the same image/tag combination (<code>my_image:latest</code>) or to roll Fargate
+     * tasks onto a newer platform version.
      * </p>
      * 
-     * @return Whether or not to force a new deployment of the service.
+     * @return Whether to force a new deployment of the service. Deployments are not forced by default. You can use this
+     *         option to trigger a new deployment with no service definition changes. For example, you can update a
+     *         service's tasks to use a newer Docker image with the same image/tag combination (
+     *         <code>my_image:latest</code>) or to roll Fargate tasks onto a newer platform version.
      */
 
     public Boolean getForceNewDeployment() {
@@ -490,11 +544,17 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Whether or not to force a new deployment of the service.
+     * Whether to force a new deployment of the service. Deployments are not forced by default. You can use this option
+     * to trigger a new deployment with no service definition changes. For example, you can update a service's tasks to
+     * use a newer Docker image with the same image/tag combination (<code>my_image:latest</code>) or to roll Fargate
+     * tasks onto a newer platform version.
      * </p>
      * 
      * @param forceNewDeployment
-     *        Whether or not to force a new deployment of the service.
+     *        Whether to force a new deployment of the service. Deployments are not forced by default. You can use this
+     *        option to trigger a new deployment with no service definition changes. For example, you can update a
+     *        service's tasks to use a newer Docker image with the same image/tag combination (
+     *        <code>my_image:latest</code>) or to roll Fargate tasks onto a newer platform version.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -505,10 +565,16 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Whether or not to force a new deployment of the service.
+     * Whether to force a new deployment of the service. Deployments are not forced by default. You can use this option
+     * to trigger a new deployment with no service definition changes. For example, you can update a service's tasks to
+     * use a newer Docker image with the same image/tag combination (<code>my_image:latest</code>) or to roll Fargate
+     * tasks onto a newer platform version.
      * </p>
      * 
-     * @return Whether or not to force a new deployment of the service.
+     * @return Whether to force a new deployment of the service. Deployments are not forced by default. You can use this
+     *         option to trigger a new deployment with no service definition changes. For example, you can update a
+     *         service's tasks to use a newer Docker image with the same image/tag combination (
+     *         <code>my_image:latest</code>) or to roll Fargate tasks onto a newer platform version.
      */
 
     public Boolean isForceNewDeployment() {
@@ -516,7 +582,81 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The period of time, in seconds, that the Amazon ECS service scheduler should ignore unhealthy Elastic Load
+     * Balancing target health checks after a task has first started. This is only valid if your service is configured
+     * to use a load balancer. If your service's tasks take a while to start and respond to Elastic Load Balancing
+     * health checks, you can specify a health check grace period of up to 1,800 seconds. During that time, the ECS
+     * service scheduler ignores the Elastic Load Balancing health check status. This grace period can prevent the ECS
+     * service scheduler from marking tasks as unhealthy and stopping them before they have time to come up.
+     * </p>
+     * 
+     * @param healthCheckGracePeriodSeconds
+     *        The period of time, in seconds, that the Amazon ECS service scheduler should ignore unhealthy Elastic Load
+     *        Balancing target health checks after a task has first started. This is only valid if your service is
+     *        configured to use a load balancer. If your service's tasks take a while to start and respond to Elastic
+     *        Load Balancing health checks, you can specify a health check grace period of up to 1,800 seconds. During
+     *        that time, the ECS service scheduler ignores the Elastic Load Balancing health check status. This grace
+     *        period can prevent the ECS service scheduler from marking tasks as unhealthy and stopping them before they
+     *        have time to come up.
+     */
+
+    public void setHealthCheckGracePeriodSeconds(Integer healthCheckGracePeriodSeconds) {
+        this.healthCheckGracePeriodSeconds = healthCheckGracePeriodSeconds;
+    }
+
+    /**
+     * <p>
+     * The period of time, in seconds, that the Amazon ECS service scheduler should ignore unhealthy Elastic Load
+     * Balancing target health checks after a task has first started. This is only valid if your service is configured
+     * to use a load balancer. If your service's tasks take a while to start and respond to Elastic Load Balancing
+     * health checks, you can specify a health check grace period of up to 1,800 seconds. During that time, the ECS
+     * service scheduler ignores the Elastic Load Balancing health check status. This grace period can prevent the ECS
+     * service scheduler from marking tasks as unhealthy and stopping them before they have time to come up.
+     * </p>
+     * 
+     * @return The period of time, in seconds, that the Amazon ECS service scheduler should ignore unhealthy Elastic
+     *         Load Balancing target health checks after a task has first started. This is only valid if your service is
+     *         configured to use a load balancer. If your service's tasks take a while to start and respond to Elastic
+     *         Load Balancing health checks, you can specify a health check grace period of up to 1,800 seconds. During
+     *         that time, the ECS service scheduler ignores the Elastic Load Balancing health check status. This grace
+     *         period can prevent the ECS service scheduler from marking tasks as unhealthy and stopping them before
+     *         they have time to come up.
+     */
+
+    public Integer getHealthCheckGracePeriodSeconds() {
+        return this.healthCheckGracePeriodSeconds;
+    }
+
+    /**
+     * <p>
+     * The period of time, in seconds, that the Amazon ECS service scheduler should ignore unhealthy Elastic Load
+     * Balancing target health checks after a task has first started. This is only valid if your service is configured
+     * to use a load balancer. If your service's tasks take a while to start and respond to Elastic Load Balancing
+     * health checks, you can specify a health check grace period of up to 1,800 seconds. During that time, the ECS
+     * service scheduler ignores the Elastic Load Balancing health check status. This grace period can prevent the ECS
+     * service scheduler from marking tasks as unhealthy and stopping them before they have time to come up.
+     * </p>
+     * 
+     * @param healthCheckGracePeriodSeconds
+     *        The period of time, in seconds, that the Amazon ECS service scheduler should ignore unhealthy Elastic Load
+     *        Balancing target health checks after a task has first started. This is only valid if your service is
+     *        configured to use a load balancer. If your service's tasks take a while to start and respond to Elastic
+     *        Load Balancing health checks, you can specify a health check grace period of up to 1,800 seconds. During
+     *        that time, the ECS service scheduler ignores the Elastic Load Balancing health check status. This grace
+     *        period can prevent the ECS service scheduler from marking tasks as unhealthy and stopping them before they
+     *        have time to come up.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public UpdateServiceRequest withHealthCheckGracePeriodSeconds(Integer healthCheckGracePeriodSeconds) {
+        setHealthCheckGracePeriodSeconds(healthCheckGracePeriodSeconds);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -541,7 +681,9 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
         if (getPlatformVersion() != null)
             sb.append("PlatformVersion: ").append(getPlatformVersion()).append(",");
         if (getForceNewDeployment() != null)
-            sb.append("ForceNewDeployment: ").append(getForceNewDeployment());
+            sb.append("ForceNewDeployment: ").append(getForceNewDeployment()).append(",");
+        if (getHealthCheckGracePeriodSeconds() != null)
+            sb.append("HealthCheckGracePeriodSeconds: ").append(getHealthCheckGracePeriodSeconds());
         sb.append("}");
         return sb.toString();
     }
@@ -588,6 +730,11 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
             return false;
         if (other.getForceNewDeployment() != null && other.getForceNewDeployment().equals(this.getForceNewDeployment()) == false)
             return false;
+        if (other.getHealthCheckGracePeriodSeconds() == null ^ this.getHealthCheckGracePeriodSeconds() == null)
+            return false;
+        if (other.getHealthCheckGracePeriodSeconds() != null
+                && other.getHealthCheckGracePeriodSeconds().equals(this.getHealthCheckGracePeriodSeconds()) == false)
+            return false;
         return true;
     }
 
@@ -604,6 +751,7 @@ public class UpdateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
         hashCode = prime * hashCode + ((getNetworkConfiguration() == null) ? 0 : getNetworkConfiguration().hashCode());
         hashCode = prime * hashCode + ((getPlatformVersion() == null) ? 0 : getPlatformVersion().hashCode());
         hashCode = prime * hashCode + ((getForceNewDeployment() == null) ? 0 : getForceNewDeployment().hashCode());
+        hashCode = prime * hashCode + ((getHealthCheckGracePeriodSeconds() == null) ? 0 : getHealthCheckGracePeriodSeconds().hashCode());
         return hashCode;
     }
 

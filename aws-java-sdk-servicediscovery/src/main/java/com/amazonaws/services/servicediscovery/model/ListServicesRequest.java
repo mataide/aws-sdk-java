@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -30,16 +30,22 @@ public class ListServicesRequest extends com.amazonaws.AmazonWebServiceRequest i
      * For the first <code>ListServices</code> request, omit this value.
      * </p>
      * <p>
-     * If more than <code>MaxResults</code> services match the specified criteria, you can submit another
-     * <code>ListServices</code> request to get the next group of results. Specify the value of <code>NextToken</code>
-     * from the previous response in the next request.
+     * If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get the next
+     * group of results. Specify the value of <code>NextToken</code> from the previous response in the next request.
      * </p>
+     * <note>
+     * <p>
+     * AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria. It's
+     * possible that no services in the first <code>MaxResults</code> services matched the specified criteria but that
+     * subsequent groups of <code>MaxResults</code> services do contain services that match the criteria.
+     * </p>
+     * </note>
      */
     private String nextToken;
     /**
      * <p>
-     * The maximum number of services that you want Amazon Route 53 to return in the response to a
-     * <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, Amazon Route 53
+     * The maximum number of services that you want AWS Cloud Map to return in the response to a
+     * <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, AWS Cloud Map
      * returns up to 100 services.
      * </p>
      */
@@ -60,17 +66,31 @@ public class ListServicesRequest extends com.amazonaws.AmazonWebServiceRequest i
      * For the first <code>ListServices</code> request, omit this value.
      * </p>
      * <p>
-     * If more than <code>MaxResults</code> services match the specified criteria, you can submit another
-     * <code>ListServices</code> request to get the next group of results. Specify the value of <code>NextToken</code>
-     * from the previous response in the next request.
+     * If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get the next
+     * group of results. Specify the value of <code>NextToken</code> from the previous response in the next request.
      * </p>
+     * <note>
+     * <p>
+     * AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria. It's
+     * possible that no services in the first <code>MaxResults</code> services matched the specified criteria but that
+     * subsequent groups of <code>MaxResults</code> services do contain services that match the criteria.
+     * </p>
+     * </note>
      * 
      * @param nextToken
      *        For the first <code>ListServices</code> request, omit this value.</p>
      *        <p>
-     *        If more than <code>MaxResults</code> services match the specified criteria, you can submit another
-     *        <code>ListServices</code> request to get the next group of results. Specify the value of
-     *        <code>NextToken</code> from the previous response in the next request.
+     *        If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get
+     *        the next group of results. Specify the value of <code>NextToken</code> from the previous response in the
+     *        next request.
+     *        </p>
+     *        <note>
+     *        <p>
+     *        AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria.
+     *        It's possible that no services in the first <code>MaxResults</code> services matched the specified
+     *        criteria but that subsequent groups of <code>MaxResults</code> services do contain services that match the
+     *        criteria.
+     *        </p>
      */
 
     public void setNextToken(String nextToken) {
@@ -82,16 +102,30 @@ public class ListServicesRequest extends com.amazonaws.AmazonWebServiceRequest i
      * For the first <code>ListServices</code> request, omit this value.
      * </p>
      * <p>
-     * If more than <code>MaxResults</code> services match the specified criteria, you can submit another
-     * <code>ListServices</code> request to get the next group of results. Specify the value of <code>NextToken</code>
-     * from the previous response in the next request.
+     * If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get the next
+     * group of results. Specify the value of <code>NextToken</code> from the previous response in the next request.
      * </p>
+     * <note>
+     * <p>
+     * AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria. It's
+     * possible that no services in the first <code>MaxResults</code> services matched the specified criteria but that
+     * subsequent groups of <code>MaxResults</code> services do contain services that match the criteria.
+     * </p>
+     * </note>
      * 
      * @return For the first <code>ListServices</code> request, omit this value.</p>
      *         <p>
-     *         If more than <code>MaxResults</code> services match the specified criteria, you can submit another
-     *         <code>ListServices</code> request to get the next group of results. Specify the value of
-     *         <code>NextToken</code> from the previous response in the next request.
+     *         If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get
+     *         the next group of results. Specify the value of <code>NextToken</code> from the previous response in the
+     *         next request.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified
+     *         criteria. It's possible that no services in the first <code>MaxResults</code> services matched the
+     *         specified criteria but that subsequent groups of <code>MaxResults</code> services do contain services
+     *         that match the criteria.
+     *         </p>
      */
 
     public String getNextToken() {
@@ -103,17 +137,31 @@ public class ListServicesRequest extends com.amazonaws.AmazonWebServiceRequest i
      * For the first <code>ListServices</code> request, omit this value.
      * </p>
      * <p>
-     * If more than <code>MaxResults</code> services match the specified criteria, you can submit another
-     * <code>ListServices</code> request to get the next group of results. Specify the value of <code>NextToken</code>
-     * from the previous response in the next request.
+     * If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get the next
+     * group of results. Specify the value of <code>NextToken</code> from the previous response in the next request.
      * </p>
+     * <note>
+     * <p>
+     * AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria. It's
+     * possible that no services in the first <code>MaxResults</code> services matched the specified criteria but that
+     * subsequent groups of <code>MaxResults</code> services do contain services that match the criteria.
+     * </p>
+     * </note>
      * 
      * @param nextToken
      *        For the first <code>ListServices</code> request, omit this value.</p>
      *        <p>
-     *        If more than <code>MaxResults</code> services match the specified criteria, you can submit another
-     *        <code>ListServices</code> request to get the next group of results. Specify the value of
-     *        <code>NextToken</code> from the previous response in the next request.
+     *        If the response contains <code>NextToken</code>, submit another <code>ListServices</code> request to get
+     *        the next group of results. Specify the value of <code>NextToken</code> from the previous response in the
+     *        next request.
+     *        </p>
+     *        <note>
+     *        <p>
+     *        AWS Cloud Map gets <code>MaxResults</code> services and then filters them based on the specified criteria.
+     *        It's possible that no services in the first <code>MaxResults</code> services matched the specified
+     *        criteria but that subsequent groups of <code>MaxResults</code> services do contain services that match the
+     *        criteria.
+     *        </p>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -124,15 +172,15 @@ public class ListServicesRequest extends com.amazonaws.AmazonWebServiceRequest i
 
     /**
      * <p>
-     * The maximum number of services that you want Amazon Route 53 to return in the response to a
-     * <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, Amazon Route 53
+     * The maximum number of services that you want AWS Cloud Map to return in the response to a
+     * <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, AWS Cloud Map
      * returns up to 100 services.
      * </p>
      * 
      * @param maxResults
-     *        The maximum number of services that you want Amazon Route 53 to return in the response to a
-     *        <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, Amazon Route
-     *        53 returns up to 100 services.
+     *        The maximum number of services that you want AWS Cloud Map to return in the response to a
+     *        <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, AWS Cloud Map
+     *        returns up to 100 services.
      */
 
     public void setMaxResults(Integer maxResults) {
@@ -141,14 +189,14 @@ public class ListServicesRequest extends com.amazonaws.AmazonWebServiceRequest i
 
     /**
      * <p>
-     * The maximum number of services that you want Amazon Route 53 to return in the response to a
-     * <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, Amazon Route 53
+     * The maximum number of services that you want AWS Cloud Map to return in the response to a
+     * <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, AWS Cloud Map
      * returns up to 100 services.
      * </p>
      * 
-     * @return The maximum number of services that you want Amazon Route 53 to return in the response to a
-     *         <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, Amazon Route
-     *         53 returns up to 100 services.
+     * @return The maximum number of services that you want AWS Cloud Map to return in the response to a
+     *         <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, AWS Cloud
+     *         Map returns up to 100 services.
      */
 
     public Integer getMaxResults() {
@@ -157,15 +205,15 @@ public class ListServicesRequest extends com.amazonaws.AmazonWebServiceRequest i
 
     /**
      * <p>
-     * The maximum number of services that you want Amazon Route 53 to return in the response to a
-     * <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, Amazon Route 53
+     * The maximum number of services that you want AWS Cloud Map to return in the response to a
+     * <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, AWS Cloud Map
      * returns up to 100 services.
      * </p>
      * 
      * @param maxResults
-     *        The maximum number of services that you want Amazon Route 53 to return in the response to a
-     *        <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, Amazon Route
-     *        53 returns up to 100 services.
+     *        The maximum number of services that you want AWS Cloud Map to return in the response to a
+     *        <code>ListServices</code> request. If you don't specify a value for <code>MaxResults</code>, AWS Cloud Map
+     *        returns up to 100 services.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -273,7 +321,8 @@ public class ListServicesRequest extends com.amazonaws.AmazonWebServiceRequest i
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

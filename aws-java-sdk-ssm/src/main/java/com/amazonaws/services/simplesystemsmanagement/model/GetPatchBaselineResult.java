@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -67,10 +67,24 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
     private String approvedPatchesComplianceLevel;
     /**
      * <p>
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
+     * </p>
+     */
+    private Boolean approvedPatchesEnableNonSecurity;
+    /**
+     * <p>
      * A list of explicitly rejected patches for the baseline.
      * </p>
      */
     private com.amazonaws.internal.SdkInternalList<String> rejectedPatches;
+    /**
+     * <p>
+     * The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only if it
+     * is a dependency of another package, or blocked entirely along with packages that include it as a dependency.
+     * </p>
+     */
+    private String rejectedPatchesAction;
     /**
      * <p>
      * Patch groups included in the patch baseline.
@@ -95,6 +109,13 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
      * </p>
      */
     private String description;
+    /**
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     */
+    private com.amazonaws.internal.SdkInternalList<PatchSource> sources;
 
     /**
      * <p>
@@ -477,6 +498,66 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
 
     /**
      * <p>
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
+     * </p>
+     * 
+     * @param approvedPatchesEnableNonSecurity
+     *        Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     *        instances. The default value is 'false'. Applies to Linux instances only.
+     */
+
+    public void setApprovedPatchesEnableNonSecurity(Boolean approvedPatchesEnableNonSecurity) {
+        this.approvedPatchesEnableNonSecurity = approvedPatchesEnableNonSecurity;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
+     * </p>
+     * 
+     * @return Indicates whether the list of approved patches includes non-security updates that should be applied to
+     *         the instances. The default value is 'false'. Applies to Linux instances only.
+     */
+
+    public Boolean getApprovedPatchesEnableNonSecurity() {
+        return this.approvedPatchesEnableNonSecurity;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
+     * </p>
+     * 
+     * @param approvedPatchesEnableNonSecurity
+     *        Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     *        instances. The default value is 'false'. Applies to Linux instances only.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public GetPatchBaselineResult withApprovedPatchesEnableNonSecurity(Boolean approvedPatchesEnableNonSecurity) {
+        setApprovedPatchesEnableNonSecurity(approvedPatchesEnableNonSecurity);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
+     * </p>
+     * 
+     * @return Indicates whether the list of approved patches includes non-security updates that should be applied to
+     *         the instances. The default value is 'false'. Applies to Linux instances only.
+     */
+
+    public Boolean isApprovedPatchesEnableNonSecurity() {
+        return this.approvedPatchesEnableNonSecurity;
+    }
+
+    /**
+     * <p>
      * A list of explicitly rejected patches for the baseline.
      * </p>
      * 
@@ -545,6 +626,94 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
 
     public GetPatchBaselineResult withRejectedPatches(java.util.Collection<String> rejectedPatches) {
         setRejectedPatches(rejectedPatches);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only if it
+     * is a dependency of another package, or blocked entirely along with packages that include it as a dependency.
+     * </p>
+     * 
+     * @param rejectedPatchesAction
+     *        The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only
+     *        if it is a dependency of another package, or blocked entirely along with packages that include it as a
+     *        dependency.
+     * @see PatchAction
+     */
+
+    public void setRejectedPatchesAction(String rejectedPatchesAction) {
+        this.rejectedPatchesAction = rejectedPatchesAction;
+    }
+
+    /**
+     * <p>
+     * The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only if it
+     * is a dependency of another package, or blocked entirely along with packages that include it as a dependency.
+     * </p>
+     * 
+     * @return The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only
+     *         if it is a dependency of another package, or blocked entirely along with packages that include it as a
+     *         dependency.
+     * @see PatchAction
+     */
+
+    public String getRejectedPatchesAction() {
+        return this.rejectedPatchesAction;
+    }
+
+    /**
+     * <p>
+     * The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only if it
+     * is a dependency of another package, or blocked entirely along with packages that include it as a dependency.
+     * </p>
+     * 
+     * @param rejectedPatchesAction
+     *        The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only
+     *        if it is a dependency of another package, or blocked entirely along with packages that include it as a
+     *        dependency.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see PatchAction
+     */
+
+    public GetPatchBaselineResult withRejectedPatchesAction(String rejectedPatchesAction) {
+        setRejectedPatchesAction(rejectedPatchesAction);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only if it
+     * is a dependency of another package, or blocked entirely along with packages that include it as a dependency.
+     * </p>
+     * 
+     * @param rejectedPatchesAction
+     *        The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only
+     *        if it is a dependency of another package, or blocked entirely along with packages that include it as a
+     *        dependency.
+     * @see PatchAction
+     */
+
+    public void setRejectedPatchesAction(PatchAction rejectedPatchesAction) {
+        withRejectedPatchesAction(rejectedPatchesAction);
+    }
+
+    /**
+     * <p>
+     * The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only if it
+     * is a dependency of another package, or blocked entirely along with packages that include it as a dependency.
+     * </p>
+     * 
+     * @param rejectedPatchesAction
+     *        The action specified to take on patches included in the RejectedPatches list. A patch can be allowed only
+     *        if it is a dependency of another package, or blocked entirely along with packages that include it as a
+     *        dependency.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see PatchAction
+     */
+
+    public GetPatchBaselineResult withRejectedPatchesAction(PatchAction rejectedPatchesAction) {
+        this.rejectedPatchesAction = rejectedPatchesAction.toString();
         return this;
     }
 
@@ -742,7 +911,89 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     * 
+     * @return Information about the patches to use to update the instances, including target operating systems and
+     *         source repositories. Applies to Linux instances only.
+     */
+
+    public java.util.List<PatchSource> getSources() {
+        if (sources == null) {
+            sources = new com.amazonaws.internal.SdkInternalList<PatchSource>();
+        }
+        return sources;
+    }
+
+    /**
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     * 
+     * @param sources
+     *        Information about the patches to use to update the instances, including target operating systems and
+     *        source repositories. Applies to Linux instances only.
+     */
+
+    public void setSources(java.util.Collection<PatchSource> sources) {
+        if (sources == null) {
+            this.sources = null;
+            return;
+        }
+
+        this.sources = new com.amazonaws.internal.SdkInternalList<PatchSource>(sources);
+    }
+
+    /**
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setSources(java.util.Collection)} or {@link #withSources(java.util.Collection)} if you want to override
+     * the existing values.
+     * </p>
+     * 
+     * @param sources
+     *        Information about the patches to use to update the instances, including target operating systems and
+     *        source repositories. Applies to Linux instances only.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public GetPatchBaselineResult withSources(PatchSource... sources) {
+        if (this.sources == null) {
+            setSources(new com.amazonaws.internal.SdkInternalList<PatchSource>(sources.length));
+        }
+        for (PatchSource ele : sources) {
+            this.sources.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     * 
+     * @param sources
+     *        Information about the patches to use to update the instances, including target operating systems and
+     *        source repositories. Applies to Linux instances only.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public GetPatchBaselineResult withSources(java.util.Collection<PatchSource> sources) {
+        setSources(sources);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -766,8 +1017,12 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
             sb.append("ApprovedPatches: ").append(getApprovedPatches()).append(",");
         if (getApprovedPatchesComplianceLevel() != null)
             sb.append("ApprovedPatchesComplianceLevel: ").append(getApprovedPatchesComplianceLevel()).append(",");
+        if (getApprovedPatchesEnableNonSecurity() != null)
+            sb.append("ApprovedPatchesEnableNonSecurity: ").append(getApprovedPatchesEnableNonSecurity()).append(",");
         if (getRejectedPatches() != null)
             sb.append("RejectedPatches: ").append(getRejectedPatches()).append(",");
+        if (getRejectedPatchesAction() != null)
+            sb.append("RejectedPatchesAction: ").append(getRejectedPatchesAction()).append(",");
         if (getPatchGroups() != null)
             sb.append("PatchGroups: ").append(getPatchGroups()).append(",");
         if (getCreatedDate() != null)
@@ -775,7 +1030,9 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
         if (getModifiedDate() != null)
             sb.append("ModifiedDate: ").append(getModifiedDate()).append(",");
         if (getDescription() != null)
-            sb.append("Description: ").append(getDescription());
+            sb.append("Description: ").append(getDescription()).append(",");
+        if (getSources() != null)
+            sb.append("Sources: ").append(getSources());
         sb.append("}");
         return sb.toString();
     }
@@ -819,9 +1076,18 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
         if (other.getApprovedPatchesComplianceLevel() != null
                 && other.getApprovedPatchesComplianceLevel().equals(this.getApprovedPatchesComplianceLevel()) == false)
             return false;
+        if (other.getApprovedPatchesEnableNonSecurity() == null ^ this.getApprovedPatchesEnableNonSecurity() == null)
+            return false;
+        if (other.getApprovedPatchesEnableNonSecurity() != null
+                && other.getApprovedPatchesEnableNonSecurity().equals(this.getApprovedPatchesEnableNonSecurity()) == false)
+            return false;
         if (other.getRejectedPatches() == null ^ this.getRejectedPatches() == null)
             return false;
         if (other.getRejectedPatches() != null && other.getRejectedPatches().equals(this.getRejectedPatches()) == false)
+            return false;
+        if (other.getRejectedPatchesAction() == null ^ this.getRejectedPatchesAction() == null)
+            return false;
+        if (other.getRejectedPatchesAction() != null && other.getRejectedPatchesAction().equals(this.getRejectedPatchesAction()) == false)
             return false;
         if (other.getPatchGroups() == null ^ this.getPatchGroups() == null)
             return false;
@@ -839,6 +1105,10 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
             return false;
         if (other.getDescription() != null && other.getDescription().equals(this.getDescription()) == false)
             return false;
+        if (other.getSources() == null ^ this.getSources() == null)
+            return false;
+        if (other.getSources() != null && other.getSources().equals(this.getSources()) == false)
+            return false;
         return true;
     }
 
@@ -854,11 +1124,14 @@ public class GetPatchBaselineResult extends com.amazonaws.AmazonWebServiceResult
         hashCode = prime * hashCode + ((getApprovalRules() == null) ? 0 : getApprovalRules().hashCode());
         hashCode = prime * hashCode + ((getApprovedPatches() == null) ? 0 : getApprovedPatches().hashCode());
         hashCode = prime * hashCode + ((getApprovedPatchesComplianceLevel() == null) ? 0 : getApprovedPatchesComplianceLevel().hashCode());
+        hashCode = prime * hashCode + ((getApprovedPatchesEnableNonSecurity() == null) ? 0 : getApprovedPatchesEnableNonSecurity().hashCode());
         hashCode = prime * hashCode + ((getRejectedPatches() == null) ? 0 : getRejectedPatches().hashCode());
+        hashCode = prime * hashCode + ((getRejectedPatchesAction() == null) ? 0 : getRejectedPatchesAction().hashCode());
         hashCode = prime * hashCode + ((getPatchGroups() == null) ? 0 : getPatchGroups().hashCode());
         hashCode = prime * hashCode + ((getCreatedDate() == null) ? 0 : getCreatedDate().hashCode());
         hashCode = prime * hashCode + ((getModifiedDate() == null) ? 0 : getModifiedDate().hashCode());
         hashCode = prime * hashCode + ((getDescription() == null) ? 0 : getDescription().hashCode());
+        hashCode = prime * hashCode + ((getSources() == null) ? 0 : getSources().hashCode());
         return hashCode;
     }
 

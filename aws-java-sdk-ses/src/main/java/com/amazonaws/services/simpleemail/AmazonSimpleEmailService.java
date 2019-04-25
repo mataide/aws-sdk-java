@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -29,8 +29,8 @@ import com.amazonaws.services.simpleemail.waiters.AmazonSimpleEmailServiceWaiter
  * <p>
  * <fullname>Amazon Simple Email Service</fullname>
  * <p>
- * This is the API Reference for <a href="https://aws.amazon.com/ses/">Amazon Simple Email Service</a> (Amazon SES).
- * This documentation is intended to be used in conjunction with the <a
+ * This document contains reference information for the <a href="https://aws.amazon.com/ses/">Amazon Simple Email
+ * Service</a> (Amazon SES) API, version 2010-12-01. This document is best used in conjunction with the <a
  * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html">Amazon SES Developer Guide</a>.
  * </p>
  * <note>
@@ -61,9 +61,10 @@ public interface AmazonSimpleEmailService {
      * this client's {@link ClientConfiguration} will be used, which by default is HTTPS.
      * <p>
      * For more information on using AWS regions with the AWS SDK for Java, and a complete list of all available
-     * endpoints for all AWS services, see: <a
-     * href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3912">
-     * http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3912</a>
+     * endpoints for all AWS services, see: <a href=
+     * "https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-region-selection.html#region-selection-choose-endpoint"
+     * > https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-region-selection.html#region-selection-
+     * choose-endpoint</a>
      * <p>
      * <b>This method is not threadsafe. An endpoint should be configured when the client is created and before any
      * service requests are made. Changing it afterwards creates inevitable race conditions for any service requests in
@@ -177,7 +178,7 @@ public interface AmazonSimpleEmailService {
      * <note>
      * <p>
      * When you create or update an event destination, you must provide one, and only one, destination. The destination
-     * can be Amazon CloudWatch, Amazon Kinesis Firehose, or Amazon Simple Notification Service (Amazon SNS).
+     * can be CloudWatch, Amazon Kinesis Firehose, or Amazon Simple Notification Service (Amazon SNS).
      * </p>
      * </note>
      * <p>
@@ -226,11 +227,10 @@ public interface AmazonSimpleEmailService {
      * </p>
      * <p>
      * By default, images and links used for tracking open and click events are hosted on domains operated by Amazon
-     * SES. You can configure a subdomain of your own to handle these events. For information about using configuration
-     * sets, see <a
-     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/configure-custom-open-click-domains.html">Configuring
-     * Custom Domains to Handle Open and Click Tracking</a> in the <a
-     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html">Amazon SES Developer Guide</a>.
+     * SES. You can configure a subdomain of your own to handle these events. For information about using custom
+     * domains, see the <a
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/configure-custom-open-click-domains.html">Amazon SES
+     * Developer Guide</a>.
      * </p>
      * 
      * @param createConfigurationSetTrackingOptionsRequest
@@ -267,7 +267,7 @@ public interface AmazonSimpleEmailService {
      * </p>
      * <p>
      * For more information about custom verification email templates, see <a
-     * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
      * Verification Email Templates</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * <p>
@@ -427,7 +427,8 @@ public interface AmazonSimpleEmailService {
      * @throws AlreadyExistsException
      *         Indicates that a resource could not be created because of a naming conflict.
      * @throws InvalidTemplateException
-     *         Indicates that a template could not be created because it contained invalid JSON.
+     *         Indicates that the template that you specified could not be rendered. This issue may occur when a
+     *         template refers to a partial that does not exist.
      * @throws LimitExceededException
      *         Indicates that a resource could not be created because of service limits. For a list of Amazon SES
      *         limits, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html">Amazon SES
@@ -498,11 +499,10 @@ public interface AmazonSimpleEmailService {
      * </p>
      * <p>
      * By default, images and links used for tracking open and click events are hosted on domains operated by Amazon
-     * SES. You can configure a subdomain of your own to handle these events. For information about using configuration
-     * sets, see <a
-     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/configure-custom-open-click-domains.html">Configuring
-     * Custom Domains to Handle Open and Click Tracking</a> in the <a
-     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html">Amazon SES Developer Guide</a>.
+     * SES. You can configure a subdomain of your own to handle these events. For information about using custom
+     * domains, see the <a
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/configure-custom-open-click-domains.html">Amazon SES
+     * Developer Guide</a>.
      * </p>
      * <note>
      * <p>
@@ -531,7 +531,7 @@ public interface AmazonSimpleEmailService {
      * </p>
      * <p>
      * For more information about custom verification email templates, see <a
-     * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
      * Verification Email Templates</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * <p>
@@ -822,7 +822,7 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Returns the email sending status of the Amazon SES account.
+     * Returns the email sending status of the Amazon SES account for the current region.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -842,7 +842,7 @@ public interface AmazonSimpleEmailService {
      * </p>
      * <p>
      * For more information about custom verification email templates, see <a
-     * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
      * Verification Email Templates</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * <p>
@@ -1055,7 +1055,7 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Provides sending statistics for the Amazon SES account. The result is a list of data points, representing the
+     * Provides sending statistics for the current AWS Region. The result is a list of data points, representing the
      * last two weeks of sending activity. Each data point in the list contains statistics for a 15-minute period of
      * time.
      * </p>
@@ -1099,8 +1099,8 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Provides a list of the configuration sets associated with your Amazon SES account. For information about using
-     * configuration sets, see <a
+     * Provides a list of the configuration sets associated with your Amazon SES account in the current AWS Region. For
+     * information about using configuration sets, see <a
      * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html">Monitoring Your Amazon
      * SES Sending Activity</a> in the <i>Amazon SES Developer Guide.</i>
      * </p>
@@ -1126,11 +1126,11 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Lists the existing custom verification email templates for your account.
+     * Lists the existing custom verification email templates for your account in the current AWS Region.
      * </p>
      * <p>
      * For more information about custom verification email templates, see <a
-     * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
      * Verification Email Templates</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * <p>
@@ -1141,8 +1141,8 @@ public interface AmazonSimpleEmailService {
      *        Represents a request to list the existing custom verification email templates for your account.</p>
      *        <p>
      *        For more information about custom verification email templates, see <a
-     *        href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
-     *        Verification Email Templates</a> in the <i>Amazon SES Developer Guide</i>.
+     *        href="ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom Verification Email
+     *        Templates</a> in the <i>Amazon SES Developer Guide</i>.
      * @return Result of the ListCustomVerificationEmailTemplates operation returned by the service.
      * @sample AmazonSimpleEmailService.ListCustomVerificationEmailTemplates
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/email-2010-12-01/ListCustomVerificationEmailTemplates"
@@ -1153,8 +1153,8 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Returns a list containing all of the identities (email addresses and domains) for your AWS account, regardless of
-     * verification status.
+     * Returns a list containing all of the identities (email addresses and domains) for your AWS account in the current
+     * AWS Region, regardless of verification status.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -1213,7 +1213,7 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Lists the IP address filters associated with your AWS account.
+     * Lists the IP address filters associated with your AWS account in the current AWS Region.
      * </p>
      * <p>
      * For information about managing IP address filters, see the <a
@@ -1238,9 +1238,9 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Lists the receipt rule sets that exist under your AWS account. If there are additional receipt rule sets to be
-     * retrieved, you will receive a <code>NextToken</code> that you can provide to the next call to
-     * <code>ListReceiptRuleSets</code> to retrieve the additional entries.
+     * Lists the receipt rule sets that exist under your AWS account in the current AWS Region. If there are additional
+     * receipt rule sets to be retrieved, you will receive a <code>NextToken</code> that you can provide to the next
+     * call to <code>ListReceiptRuleSets</code> to retrieve the additional entries.
      * </p>
      * <p>
      * For information about managing receipt rule sets, see the <a
@@ -1265,7 +1265,7 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Lists the email templates present in your Amazon SES account.
+     * Lists the email templates present in your Amazon SES account in the current AWS Region.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -1430,7 +1430,7 @@ public interface AmazonSimpleEmailService {
      * </li>
      * <li>
      * <p>
-     * The total size of the message, including attachments, must be less than 10 MB.
+     * The maximum message size is 10 MB.
      * </p>
      * </li>
      * <li>
@@ -1439,6 +1439,19 @@ public interface AmazonSimpleEmailService {
      * can be a To: address, a CC: address, or a BCC: address. If a recipient email address is invalid (that is, it is
      * not in the format <i>UserName@[SubDomain.]Domain.TopLevelDomain</i>), the entire message will be rejected, even
      * if the message contains other recipients that are valid.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The message may not include more than 50 recipients, across the To:, CC: and BCC: fields. If you need to send an
+     * email message to a larger audience, you can divide your recipient list into groups of 50 or fewer, and then call
+     * the <code>SendBulkTemplatedEmail</code> operation several times to send the message to each group.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The number of destinations you can contact in a single call to the API may be limited by your account's maximum
+     * sending rate.
      * </p>
      * </li>
      * </ul>
@@ -1481,13 +1494,14 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Adds an email address to the list of identities for your Amazon SES account and attempts to verify it. As a
-     * result of executing this operation, a customized verification email is sent to the specified address.
+     * Adds an email address to the list of identities for your Amazon SES account in the current AWS Region and
+     * attempts to verify it. As a result of executing this operation, a customized verification email is sent to the
+     * specified address.
      * </p>
      * <p>
      * To use this operation, you must first create a custom verification email template. For more information about
      * creating and using custom verification email templates, see <a
-     * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
      * Verification Email Templates</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * <p>
@@ -1537,7 +1551,7 @@ public interface AmazonSimpleEmailService {
      * </li>
      * <li>
      * <p>
-     * The total size of the message, including attachments, must be smaller than 10 MB.
+     * The maximum message size is 10 MB.
      * </p>
      * </li>
      * <li>
@@ -1601,59 +1615,71 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Composes an email message and immediately queues it for sending. When calling this operation, you may specify the
-     * message headers as well as the content. The <code>SendRawEmail</code> operation is particularly useful for
-     * sending multipart MIME emails (such as those that contain both a plain-text and an HTML version).
+     * Composes an email message and immediately queues it for sending.
      * </p>
      * <p>
-     * In order to send email using the <code>SendRawEmail</code> operation, your message must meet the following
-     * requirements:
+     * This operation is more flexible than the <code>SendEmail</code> API operation. When you use the
+     * <code>SendRawEmail</code> operation, you can specify the headers of the message as well as its content. This
+     * flexibility is useful, for example, when you want to send a multipart MIME email (such a message that contains
+     * both a text and an HTML version). You can also use this operation to send messages that include attachments.
+     * </p>
+     * <p>
+     * The <code>SendRawEmail</code> operation has the following requirements:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * The message must be sent from a verified email address or domain. If you attempt to send email using a
-     * non-verified address or domain, the operation will result in an "Email address not verified" error.
+     * You can only send email from <a
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html">verified email
+     * addresses or domains</a>. If you try to send email from an address that isn't verified, the operation results in
+     * an "Email address not verified" error.
      * </p>
      * </li>
      * <li>
      * <p>
-     * If your account is still in the Amazon SES sandbox, you may only send to verified addresses or domains, or to
-     * email addresses associated with the Amazon SES Mailbox Simulator. For more information, see <a
-     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html">Verifying Email
-     * Addresses and Domains</a> in the <i>Amazon SES Developer Guide.</i>
+     * If your account is still in the <a
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/request-production-access.html">Amazon SES
+     * sandbox</a>, you can only send email to other verified addresses in your account, or to addresses that are
+     * associated with the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mailbox-simulator.html">Amazon
+     * SES mailbox simulator</a>.
      * </p>
      * </li>
      * <li>
      * <p>
-     * The total size of the message, including attachments, must be smaller than 10 MB.
+     * The maximum message size, including attachments, is 10 MB.
      * </p>
      * </li>
      * <li>
      * <p>
-     * The message must include at least one recipient email address. The recipient address can be a To: address, a CC:
-     * address, or a BCC: address. If a recipient email address is invalid (that is, it is not in the format
-     * <i>UserName@[SubDomain.]Domain.TopLevelDomain</i>), the entire message will be rejected, even if the message
-     * contains other recipients that are valid.
+     * Each message has to include at least one recipient address. A recipient address includes any address on the To:,
+     * CC:, or BCC: lines.
      * </p>
      * </li>
      * <li>
      * <p>
-     * The message may not include more than 50 recipients, across the To:, CC: and BCC: fields. If you need to send an
-     * email message to a larger audience, you can divide your recipient list into groups of 50 or fewer, and then call
-     * the <code>SendRawEmail</code> operation several times to send the message to each group.
+     * If you send a single message to more than one recipient address, and one of the recipient addresses isn't in a
+     * valid format (that is, it's not in the format <i>UserName@[SubDomain.]Domain.TopLevelDomain</i>), Amazon SES
+     * rejects the entire message, even if the other addresses are valid.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Each message can include up to 50 recipient addresses across the To:, CC:, or BCC: lines. If you need to send a
+     * single message to more than 50 recipients, you have to split the list of recipient addresses into groups of less
+     * than 50 recipients, and send separate messages to each group.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon SES allows you to specify 8-bit Content-Transfer-Encoding for MIME message parts. However, if Amazon SES
+     * has to modify the contents of your message (for example, if you use open and click tracking), 8-bit content isn't
+     * preserved. For this reason, we highly recommend that you encode all content that isn't 7-bit ASCII. For more
+     * information, see <a
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html#send-email-mime-encoding">MIME
+     * Encoding</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * </li>
      * </ul>
-     * <important>
-     * <p>
-     * For every message that you send, the total number of recipients (including each recipient in the To:, CC: and
-     * BCC: fields) is counted against the maximum number of emails you can send in a 24-hour period (your <i>sending
-     * quota</i>). For more information about sending quotas in Amazon SES, see <a
-     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/manage-sending-limits.html">Managing Your Amazon SES
-     * Sending Limits</a> in the <i>Amazon SES Developer Guide.</i>
-     * </p>
-     * </important>
      * <p>
      * Additionally, keep the following considerations in mind when using the <code>SendRawEmail</code> operation:
      * </p>
@@ -1702,6 +1728,15 @@ public interface AmazonSimpleEmailService {
      * the identity specified in <code>SourceIdentityArn</code>. For more information about sending authorization, see
      * the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html">Using Sending
      * Authorization with Amazon SES</a> in the <i>Amazon SES Developer Guide.</i>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For every message that you send, the total number of recipients (including each recipient in the To:, CC: and
+     * BCC: fields) is counted against the maximum number of emails you can send in a 24-hour period (your <i>sending
+     * quota</i>). For more information about sending quotas in Amazon SES, see <a
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/manage-sending-limits.html">Managing Your Amazon SES
+     * Sending Limits</a> in the <i>Amazon SES Developer Guide.</i>
      * </p>
      * </li>
      * </ul>
@@ -1769,7 +1804,7 @@ public interface AmazonSimpleEmailService {
      * </li>
      * <li>
      * <p>
-     * The total size of the message, including attachments, must be less than 10 MB.
+     * The maximum message size is 10 MB.
      * </p>
      * </li>
      * <li>
@@ -1788,6 +1823,20 @@ public interface AmazonSimpleEmailService {
      * </p>
      * </li>
      * </ul>
+     * <important>
+     * <p>
+     * If your call to the <code>SendTemplatedEmail</code> operation includes all of the required parameters, Amazon SES
+     * accepts it and returns a Message ID. However, if Amazon SES can't render the email because the template contains
+     * errors, it doesn't send the email. Additionally, because it already accepted the message, Amazon SES doesn't
+     * return a message stating that it was unable to send the email.
+     * </p>
+     * <p>
+     * For these reasons, we highly recommend that you set up Amazon SES to send you notifications when Rendering
+     * Failure events occur. For more information, see <a
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html">Sending Personalized
+     * Email Using the Amazon SES API</a> in the <i>Amazon Simple Email Service Developer Guide</i>.
+     * </p>
+     * </important>
      * 
      * @param sendTemplatedEmailRequest
      *        Represents a request to send a templated email using Amazon SES. For more information, see the <a
@@ -1987,16 +2036,12 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Given an identity (an email address or a domain), sets the Amazon Simple Notification Service (Amazon SNS) topic
-     * to which Amazon SES will publish bounce, complaint, and/or delivery notifications for emails sent with that
-     * identity as the <code>Source</code>.
+     * Sets an Amazon Simple Notification Service (Amazon SNS) topic to use when delivering notifications. When you use
+     * this operation, you specify a verified identity, such as an email address or domain. When you send an email that
+     * uses the chosen identity in the Source field, Amazon SES sends notifications to the topic you specified. You can
+     * send bounce, complaint, or delivery notifications (or any combination of the three) to the Amazon SNS topic that
+     * you specify.
      * </p>
-     * <note>
-     * <p>
-     * Unless feedback forwarding is enabled, you must specify Amazon SNS topics for bounce and complaint notifications.
-     * For more information, see <code>SetIdentityFeedbackForwardingEnabled</code>.
-     * </p>
-     * </note>
      * <p>
      * You can execute this operation no more than once per second.
      * </p>
@@ -2074,9 +2119,10 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Enables or disables email sending across your entire Amazon SES account. You can use this operation in
-     * conjunction with Amazon CloudWatch alarms to temporarily pause email sending across your Amazon SES account when
-     * reputation metrics (such as your bounce on complaint rate) reach certain thresholds.
+     * Enables or disables email sending across your entire Amazon SES account in the current AWS Region. You can use
+     * this operation in conjunction with Amazon CloudWatch alarms to temporarily pause email sending across your Amazon
+     * SES account in a given AWS Region when reputation metrics (such as your bounce or complaint rates) reach certain
+     * thresholds.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -2136,9 +2182,9 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Enables or disables the publishing of reputation metrics for emails sent using a specific configuration set.
-     * Reputation metrics include bounce and complaint rates. These metrics are published to Amazon CloudWatch. By using
-     * Amazon CloudWatch, you can create alarms when bounce or complaint rates exceed a certain threshold.
+     * Enables or disables the publishing of reputation metrics for emails sent using a specific configuration set in a
+     * given AWS Region. Reputation metrics include bounce and complaint rates. These metrics are published to Amazon
+     * CloudWatch. By using CloudWatch, you can create alarms when bounce or complaint rates exceed certain thresholds.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -2159,10 +2205,10 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Enables or disables email sending for messages sent using a specific configuration set. You can use this
-     * operation in conjunction with Amazon CloudWatch alarms to temporarily pause email sending for a configuration set
-     * when the reputation metrics for that configuration set (such as your bounce on complaint rate) reach certain
-     * thresholds.
+     * Enables or disables email sending for messages sent using a specific configuration set in a given AWS Region. You
+     * can use this operation in conjunction with Amazon CloudWatch alarms to temporarily pause email sending for a
+     * configuration set when the reputation metrics for that configuration set (such as your bounce on complaint rate)
+     * exceed certain thresholds.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -2186,11 +2232,10 @@ public interface AmazonSimpleEmailService {
      * </p>
      * <p>
      * By default, images and links used for tracking open and click events are hosted on domains operated by Amazon
-     * SES. You can configure a subdomain of your own to handle these events. For information about using configuration
-     * sets, see <a
-     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/configure-custom-open-click-domains.html">Configuring
-     * Custom Domains to Handle Open and Click Tracking</a> in the <a
-     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html">Amazon SES Developer Guide</a>.
+     * SES. You can configure a subdomain of your own to handle these events. For information about using custom
+     * domains, see the <a
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/configure-custom-open-click-domains.html">Amazon SES
+     * Developer Guide</a>.
      * </p>
      * 
      * @param updateConfigurationSetTrackingOptionsRequest
@@ -2227,7 +2272,7 @@ public interface AmazonSimpleEmailService {
      * </p>
      * <p>
      * For more information about custom verification email templates, see <a
-     * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
+     * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html">Using Custom
      * Verification Email Templates</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * <p>
@@ -2316,7 +2361,8 @@ public interface AmazonSimpleEmailService {
      * @throws TemplateDoesNotExistException
      *         Indicates that the Template object you specified does not exist in your Amazon SES account.
      * @throws InvalidTemplateException
-     *         Indicates that a template could not be created because it contained invalid JSON.
+     *         Indicates that the template that you specified could not be rendered. This issue may occur when a
+     *         template refers to a partial that does not exist.
      * @sample AmazonSimpleEmailService.UpdateTemplate
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/email-2010-12-01/UpdateTemplate" target="_top">AWS API
      *      Documentation</a>
@@ -2356,8 +2402,8 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Adds a domain to the list of identities for your Amazon SES account and attempts to verify it. For more
-     * information about verifying domains, see <a
+     * Adds a domain to the list of identities for your Amazon SES account in the current AWS Region and attempts to
+     * verify it. For more information about verifying domains, see <a
      * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html">Verifying Email
      * Addresses and Domains</a> in the <i>Amazon SES Developer Guide.</i>
      * </p>
@@ -2397,8 +2443,9 @@ public interface AmazonSimpleEmailService {
 
     /**
      * <p>
-     * Adds an email address to the list of identities for your Amazon SES account and attempts to verify it. As a
-     * result of executing this operation, a verification email is sent to the specified address.
+     * Adds an email address to the list of identities for your Amazon SES account in the current AWS region and
+     * attempts to verify it. As a result of executing this operation, a verification email is sent to the specified
+     * address.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.

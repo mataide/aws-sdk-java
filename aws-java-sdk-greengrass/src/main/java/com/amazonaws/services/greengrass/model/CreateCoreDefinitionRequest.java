@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,7 +18,7 @@ import javax.annotation.Generated;
 import com.amazonaws.AmazonWebServiceRequest;
 
 /**
- * Information on the core definition request
+ * Information needed to create a core definition.
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/CreateCoreDefinition" target="_top">AWS
  *      API Documentation</a>
@@ -26,18 +26,20 @@ import com.amazonaws.AmazonWebServiceRequest;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceRequest implements Serializable, Cloneable {
 
-    /** The client token used to request idempotent operations. */
+    /** A client token used to correlate requests and responses. */
     private String amznClientToken;
-    /** Information on the initial version */
+    /** Information about the initial version of the core definition. */
     private CoreDefinitionVersion initialVersion;
-    /** name of the core definition */
+    /** The name of the core definition. */
     private String name;
+    /** Tag(s) to add to the new resource */
+    private java.util.Map<String, String> tags;
 
     /**
-     * The client token used to request idempotent operations.
+     * A client token used to correlate requests and responses.
      * 
      * @param amznClientToken
-     *        The client token used to request idempotent operations.
+     *        A client token used to correlate requests and responses.
      */
 
     public void setAmznClientToken(String amznClientToken) {
@@ -45,9 +47,9 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * The client token used to request idempotent operations.
+     * A client token used to correlate requests and responses.
      * 
-     * @return The client token used to request idempotent operations.
+     * @return A client token used to correlate requests and responses.
      */
 
     public String getAmznClientToken() {
@@ -55,10 +57,10 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * The client token used to request idempotent operations.
+     * A client token used to correlate requests and responses.
      * 
      * @param amznClientToken
-     *        The client token used to request idempotent operations.
+     *        A client token used to correlate requests and responses.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -68,10 +70,10 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * Information on the initial version
+     * Information about the initial version of the core definition.
      * 
      * @param initialVersion
-     *        Information on the initial version
+     *        Information about the initial version of the core definition.
      */
 
     public void setInitialVersion(CoreDefinitionVersion initialVersion) {
@@ -79,9 +81,9 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * Information on the initial version
+     * Information about the initial version of the core definition.
      * 
-     * @return Information on the initial version
+     * @return Information about the initial version of the core definition.
      */
 
     public CoreDefinitionVersion getInitialVersion() {
@@ -89,10 +91,10 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * Information on the initial version
+     * Information about the initial version of the core definition.
      * 
      * @param initialVersion
-     *        Information on the initial version
+     *        Information about the initial version of the core definition.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -102,10 +104,10 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * name of the core definition
+     * The name of the core definition.
      * 
      * @param name
-     *        name of the core definition
+     *        The name of the core definition.
      */
 
     public void setName(String name) {
@@ -113,9 +115,9 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * name of the core definition
+     * The name of the core definition.
      * 
-     * @return name of the core definition
+     * @return The name of the core definition.
      */
 
     public String getName() {
@@ -123,10 +125,10 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * name of the core definition
+     * The name of the core definition.
      * 
      * @param name
-     *        name of the core definition
+     *        The name of the core definition.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -136,7 +138,63 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Tag(s) to add to the new resource
+     * 
+     * @return Tag(s) to add to the new resource
+     */
+
+    public java.util.Map<String, String> getTags() {
+        return tags;
+    }
+
+    /**
+     * Tag(s) to add to the new resource
+     * 
+     * @param tags
+     *        Tag(s) to add to the new resource
+     */
+
+    public void setTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+    }
+
+    /**
+     * Tag(s) to add to the new resource
+     * 
+     * @param tags
+     *        Tag(s) to add to the new resource
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateCoreDefinitionRequest withTags(java.util.Map<String, String> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    public CreateCoreDefinitionRequest addTagsEntry(String key, String value) {
+        if (null == this.tags) {
+            this.tags = new java.util.HashMap<String, String>();
+        }
+        if (this.tags.containsKey(key))
+            throw new IllegalArgumentException("Duplicated keys (" + key.toString() + ") are provided.");
+        this.tags.put(key, value);
+        return this;
+    }
+
+    /**
+     * Removes all the entries added into Tags.
+     *
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateCoreDefinitionRequest clearTagsEntries() {
+        this.tags = null;
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -151,7 +209,9 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
         if (getInitialVersion() != null)
             sb.append("InitialVersion: ").append(getInitialVersion()).append(",");
         if (getName() != null)
-            sb.append("Name: ").append(getName());
+            sb.append("Name: ").append(getName()).append(",");
+        if (getTags() != null)
+            sb.append("Tags: ").append(getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -178,6 +238,10 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
             return false;
         if (other.getName() != null && other.getName().equals(this.getName()) == false)
             return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
+            return false;
         return true;
     }
 
@@ -189,6 +253,7 @@ public class CreateCoreDefinitionRequest extends com.amazonaws.AmazonWebServiceR
         hashCode = prime * hashCode + ((getAmznClientToken() == null) ? 0 : getAmznClientToken().hashCode());
         hashCode = prime * hashCode + ((getInitialVersion() == null) ? 0 : getInitialVersion().hashCode());
         hashCode = prime * hashCode + ((getName() == null) ? 0 : getName().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 

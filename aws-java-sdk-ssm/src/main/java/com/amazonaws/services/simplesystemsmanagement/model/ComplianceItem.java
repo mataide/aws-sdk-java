@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -51,15 +51,14 @@ public class ComplianceItem implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * An ID for the compliance item. For example, if the compliance item is a Windows patch, the ID could be the number
-     * of the KB article. Here's an example: KB4010320.
+     * of the KB article; for example: KB4010320.
      * </p>
      */
     private String id;
     /**
      * <p>
      * A title for the compliance item. For example, if the compliance item is a Windows patch, the title could be the
-     * title of the KB article for the patch. Here's an example: Security Update for Active Directory Federation
-     * Services.
+     * title of the KB article for the patch; for example: Security Update for Active Directory Federation Services.
      * </p>
      */
     private String title;
@@ -219,12 +218,12 @@ public class ComplianceItem implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * An ID for the compliance item. For example, if the compliance item is a Windows patch, the ID could be the number
-     * of the KB article. Here's an example: KB4010320.
+     * of the KB article; for example: KB4010320.
      * </p>
      * 
      * @param id
      *        An ID for the compliance item. For example, if the compliance item is a Windows patch, the ID could be the
-     *        number of the KB article. Here's an example: KB4010320.
+     *        number of the KB article; for example: KB4010320.
      */
 
     public void setId(String id) {
@@ -234,11 +233,11 @@ public class ComplianceItem implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * An ID for the compliance item. For example, if the compliance item is a Windows patch, the ID could be the number
-     * of the KB article. Here's an example: KB4010320.
+     * of the KB article; for example: KB4010320.
      * </p>
      * 
      * @return An ID for the compliance item. For example, if the compliance item is a Windows patch, the ID could be
-     *         the number of the KB article. Here's an example: KB4010320.
+     *         the number of the KB article; for example: KB4010320.
      */
 
     public String getId() {
@@ -248,12 +247,12 @@ public class ComplianceItem implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * An ID for the compliance item. For example, if the compliance item is a Windows patch, the ID could be the number
-     * of the KB article. Here's an example: KB4010320.
+     * of the KB article; for example: KB4010320.
      * </p>
      * 
      * @param id
      *        An ID for the compliance item. For example, if the compliance item is a Windows patch, the ID could be the
-     *        number of the KB article. Here's an example: KB4010320.
+     *        number of the KB article; for example: KB4010320.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -265,14 +264,13 @@ public class ComplianceItem implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * A title for the compliance item. For example, if the compliance item is a Windows patch, the title could be the
-     * title of the KB article for the patch. Here's an example: Security Update for Active Directory Federation
-     * Services.
+     * title of the KB article for the patch; for example: Security Update for Active Directory Federation Services.
      * </p>
      * 
      * @param title
      *        A title for the compliance item. For example, if the compliance item is a Windows patch, the title could
-     *        be the title of the KB article for the patch. Here's an example: Security Update for Active Directory
-     *        Federation Services.
+     *        be the title of the KB article for the patch; for example: Security Update for Active Directory Federation
+     *        Services.
      */
 
     public void setTitle(String title) {
@@ -282,12 +280,11 @@ public class ComplianceItem implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * A title for the compliance item. For example, if the compliance item is a Windows patch, the title could be the
-     * title of the KB article for the patch. Here's an example: Security Update for Active Directory Federation
-     * Services.
+     * title of the KB article for the patch; for example: Security Update for Active Directory Federation Services.
      * </p>
      * 
      * @return A title for the compliance item. For example, if the compliance item is a Windows patch, the title could
-     *         be the title of the KB article for the patch. Here's an example: Security Update for Active Directory
+     *         be the title of the KB article for the patch; for example: Security Update for Active Directory
      *         Federation Services.
      */
 
@@ -298,14 +295,13 @@ public class ComplianceItem implements Serializable, Cloneable, StructuredPojo {
     /**
      * <p>
      * A title for the compliance item. For example, if the compliance item is a Windows patch, the title could be the
-     * title of the KB article for the patch. Here's an example: Security Update for Active Directory Federation
-     * Services.
+     * title of the KB article for the patch; for example: Security Update for Active Directory Federation Services.
      * </p>
      * 
      * @param title
      *        A title for the compliance item. For example, if the compliance item is a Windows patch, the title could
-     *        be the title of the KB article for the patch. Here's an example: Security Update for Active Directory
-     *        Federation Services.
+     *        be the title of the KB article for the patch; for example: Security Update for Active Directory Federation
+     *        Services.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -548,7 +544,8 @@ public class ComplianceItem implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

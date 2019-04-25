@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -33,8 +33,15 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
     private String name;
     /**
      * <p>
-     * An optional parameter that you can use to resolve concurrent creation requests. <code>CreatorRequestId</code>
-     * helps to determine if a specific client owns the namespace.
+     * The ID of the namespace that you want to use to create the service.
+     * </p>
+     */
+    private String namespaceId;
+    /**
+     * <p>
+     * A unique string that identifies the request and that allows failed <code>CreateService</code> requests to be
+     * retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be any unique
+     * string, for example, a date/time stamp.
      * </p>
      */
     private String creatorRequestId;
@@ -46,33 +53,41 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
     private String description;
     /**
      * <p>
-     * A complex type that contains information about the resource record sets that you want Amazon Route 53 to create
+     * A complex type that contains information about the Amazon Route 53 records that you want AWS Cloud Map to create
      * when you register an instance.
      * </p>
      */
     private DnsConfig dnsConfig;
     /**
      * <p>
-     * <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional health check. If you
-     * specify settings for a health check, Amazon Route 53 associates the health check with all the resource record
-     * sets that you specify in <code>DnsConfig</code>.
+     * <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional Route 53 health check.
+     * If you specify settings for a health check, AWS Cloud Map associates the health check with all the Route 53 DNS
+     * records that you specify in <code>DnsConfig</code>.
      * </p>
-     * <note>
+     * <important>
      * <p>
-     * The health check uses 30 seconds as the request interval. This is the number of seconds between the time that
-     * each Amazon Route 53 health checker gets a response from your endpoint and the time that it sends the next health
-     * check request. A health checker in each data center around the world sends your endpoint a health check request
-     * every 30 seconds. On average, your endpoint receives a health check request about every two seconds. Health
-     * checkers in different data centers don't coordinate with one another, so you'll sometimes see several requests
-     * per second followed by a few seconds with no health checks at all.
+     * If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code> or
+     * <code>HealthCheckConfig</code> but not both.
      * </p>
-     * </note>
+     * </important>
      * <p>
-     * For information about the charges for health checks, see <a href="http://aws.amazon.com/route53/pricing">Amazon
-     * Route 53 Pricing</a>.
+     * For information about the charges for health checks, see <a href="http://aws.amazon.com/cloud-map/pricing/">AWS
+     * Cloud Map Pricing</a>.
      * </p>
      */
     private HealthCheckConfig healthCheckConfig;
+    /**
+     * <p>
+     * A complex type that contains information about an optional custom health check.
+     * </p>
+     * <important>
+     * <p>
+     * If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code> or
+     * <code>HealthCheckConfig</code> but not both.
+     * </p>
+     * </important>
+     */
+    private HealthCheckCustomConfig healthCheckCustomConfig;
 
     /**
      * <p>
@@ -116,13 +131,55 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * An optional parameter that you can use to resolve concurrent creation requests. <code>CreatorRequestId</code>
-     * helps to determine if a specific client owns the namespace.
+     * The ID of the namespace that you want to use to create the service.
+     * </p>
+     * 
+     * @param namespaceId
+     *        The ID of the namespace that you want to use to create the service.
+     */
+
+    public void setNamespaceId(String namespaceId) {
+        this.namespaceId = namespaceId;
+    }
+
+    /**
+     * <p>
+     * The ID of the namespace that you want to use to create the service.
+     * </p>
+     * 
+     * @return The ID of the namespace that you want to use to create the service.
+     */
+
+    public String getNamespaceId() {
+        return this.namespaceId;
+    }
+
+    /**
+     * <p>
+     * The ID of the namespace that you want to use to create the service.
+     * </p>
+     * 
+     * @param namespaceId
+     *        The ID of the namespace that you want to use to create the service.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateServiceRequest withNamespaceId(String namespaceId) {
+        setNamespaceId(namespaceId);
+        return this;
+    }
+
+    /**
+     * <p>
+     * A unique string that identifies the request and that allows failed <code>CreateService</code> requests to be
+     * retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be any unique
+     * string, for example, a date/time stamp.
      * </p>
      * 
      * @param creatorRequestId
-     *        An optional parameter that you can use to resolve concurrent creation requests.
-     *        <code>CreatorRequestId</code> helps to determine if a specific client owns the namespace.
+     *        A unique string that identifies the request and that allows failed <code>CreateService</code> requests to
+     *        be retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be any
+     *        unique string, for example, a date/time stamp.
      */
 
     public void setCreatorRequestId(String creatorRequestId) {
@@ -131,12 +188,14 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * An optional parameter that you can use to resolve concurrent creation requests. <code>CreatorRequestId</code>
-     * helps to determine if a specific client owns the namespace.
+     * A unique string that identifies the request and that allows failed <code>CreateService</code> requests to be
+     * retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be any unique
+     * string, for example, a date/time stamp.
      * </p>
      * 
-     * @return An optional parameter that you can use to resolve concurrent creation requests.
-     *         <code>CreatorRequestId</code> helps to determine if a specific client owns the namespace.
+     * @return A unique string that identifies the request and that allows failed <code>CreateService</code> requests to
+     *         be retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be any
+     *         unique string, for example, a date/time stamp.
      */
 
     public String getCreatorRequestId() {
@@ -145,13 +204,15 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * An optional parameter that you can use to resolve concurrent creation requests. <code>CreatorRequestId</code>
-     * helps to determine if a specific client owns the namespace.
+     * A unique string that identifies the request and that allows failed <code>CreateService</code> requests to be
+     * retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be any unique
+     * string, for example, a date/time stamp.
      * </p>
      * 
      * @param creatorRequestId
-     *        An optional parameter that you can use to resolve concurrent creation requests.
-     *        <code>CreatorRequestId</code> helps to determine if a specific client owns the namespace.
+     *        A unique string that identifies the request and that allows failed <code>CreateService</code> requests to
+     *        be retried without the risk of executing the operation twice. <code>CreatorRequestId</code> can be any
+     *        unique string, for example, a date/time stamp.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -202,12 +263,12 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A complex type that contains information about the resource record sets that you want Amazon Route 53 to create
+     * A complex type that contains information about the Amazon Route 53 records that you want AWS Cloud Map to create
      * when you register an instance.
      * </p>
      * 
      * @param dnsConfig
-     *        A complex type that contains information about the resource record sets that you want Amazon Route 53 to
+     *        A complex type that contains information about the Amazon Route 53 records that you want AWS Cloud Map to
      *        create when you register an instance.
      */
 
@@ -217,11 +278,11 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A complex type that contains information about the resource record sets that you want Amazon Route 53 to create
+     * A complex type that contains information about the Amazon Route 53 records that you want AWS Cloud Map to create
      * when you register an instance.
      * </p>
      * 
-     * @return A complex type that contains information about the resource record sets that you want Amazon Route 53 to
+     * @return A complex type that contains information about the Amazon Route 53 records that you want AWS Cloud Map to
      *         create when you register an instance.
      */
 
@@ -231,12 +292,12 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A complex type that contains information about the resource record sets that you want Amazon Route 53 to create
+     * A complex type that contains information about the Amazon Route 53 records that you want AWS Cloud Map to create
      * when you register an instance.
      * </p>
      * 
      * @param dnsConfig
-     *        A complex type that contains information about the resource record sets that you want Amazon Route 53 to
+     *        A complex type that contains information about the Amazon Route 53 records that you want AWS Cloud Map to
      *        create when you register an instance.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
@@ -248,41 +309,33 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional health check. If you
-     * specify settings for a health check, Amazon Route 53 associates the health check with all the resource record
-     * sets that you specify in <code>DnsConfig</code>.
+     * <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional Route 53 health check.
+     * If you specify settings for a health check, AWS Cloud Map associates the health check with all the Route 53 DNS
+     * records that you specify in <code>DnsConfig</code>.
      * </p>
-     * <note>
+     * <important>
      * <p>
-     * The health check uses 30 seconds as the request interval. This is the number of seconds between the time that
-     * each Amazon Route 53 health checker gets a response from your endpoint and the time that it sends the next health
-     * check request. A health checker in each data center around the world sends your endpoint a health check request
-     * every 30 seconds. On average, your endpoint receives a health check request about every two seconds. Health
-     * checkers in different data centers don't coordinate with one another, so you'll sometimes see several requests
-     * per second followed by a few seconds with no health checks at all.
+     * If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code> or
+     * <code>HealthCheckConfig</code> but not both.
      * </p>
-     * </note>
+     * </important>
      * <p>
-     * For information about the charges for health checks, see <a href="http://aws.amazon.com/route53/pricing">Amazon
-     * Route 53 Pricing</a>.
+     * For information about the charges for health checks, see <a href="http://aws.amazon.com/cloud-map/pricing/">AWS
+     * Cloud Map Pricing</a>.
      * </p>
      * 
      * @param healthCheckConfig
-     *        <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional health check. If
-     *        you specify settings for a health check, Amazon Route 53 associates the health check with all the resource
-     *        record sets that you specify in <code>DnsConfig</code>.</p> <note>
+     *        <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional Route 53 health
+     *        check. If you specify settings for a health check, AWS Cloud Map associates the health check with all the
+     *        Route 53 DNS records that you specify in <code>DnsConfig</code>.</p> <important>
      *        <p>
-     *        The health check uses 30 seconds as the request interval. This is the number of seconds between the time
-     *        that each Amazon Route 53 health checker gets a response from your endpoint and the time that it sends the
-     *        next health check request. A health checker in each data center around the world sends your endpoint a
-     *        health check request every 30 seconds. On average, your endpoint receives a health check request about
-     *        every two seconds. Health checkers in different data centers don't coordinate with one another, so you'll
-     *        sometimes see several requests per second followed by a few seconds with no health checks at all.
+     *        If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code>
+     *        or <code>HealthCheckConfig</code> but not both.
      *        </p>
-     *        </note>
+     *        </important>
      *        <p>
      *        For information about the charges for health checks, see <a
-     *        href="http://aws.amazon.com/route53/pricing">Amazon Route 53 Pricing</a>.
+     *        href="http://aws.amazon.com/cloud-map/pricing/">AWS Cloud Map Pricing</a>.
      */
 
     public void setHealthCheckConfig(HealthCheckConfig healthCheckConfig) {
@@ -291,40 +344,32 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional health check. If you
-     * specify settings for a health check, Amazon Route 53 associates the health check with all the resource record
-     * sets that you specify in <code>DnsConfig</code>.
+     * <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional Route 53 health check.
+     * If you specify settings for a health check, AWS Cloud Map associates the health check with all the Route 53 DNS
+     * records that you specify in <code>DnsConfig</code>.
      * </p>
-     * <note>
+     * <important>
      * <p>
-     * The health check uses 30 seconds as the request interval. This is the number of seconds between the time that
-     * each Amazon Route 53 health checker gets a response from your endpoint and the time that it sends the next health
-     * check request. A health checker in each data center around the world sends your endpoint a health check request
-     * every 30 seconds. On average, your endpoint receives a health check request about every two seconds. Health
-     * checkers in different data centers don't coordinate with one another, so you'll sometimes see several requests
-     * per second followed by a few seconds with no health checks at all.
+     * If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code> or
+     * <code>HealthCheckConfig</code> but not both.
      * </p>
-     * </note>
+     * </important>
      * <p>
-     * For information about the charges for health checks, see <a href="http://aws.amazon.com/route53/pricing">Amazon
-     * Route 53 Pricing</a>.
+     * For information about the charges for health checks, see <a href="http://aws.amazon.com/cloud-map/pricing/">AWS
+     * Cloud Map Pricing</a>.
      * </p>
      * 
-     * @return <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional health check. If
-     *         you specify settings for a health check, Amazon Route 53 associates the health check with all the
-     *         resource record sets that you specify in <code>DnsConfig</code>.</p> <note>
+     * @return <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional Route 53 health
+     *         check. If you specify settings for a health check, AWS Cloud Map associates the health check with all the
+     *         Route 53 DNS records that you specify in <code>DnsConfig</code>.</p> <important>
      *         <p>
-     *         The health check uses 30 seconds as the request interval. This is the number of seconds between the time
-     *         that each Amazon Route 53 health checker gets a response from your endpoint and the time that it sends
-     *         the next health check request. A health checker in each data center around the world sends your endpoint
-     *         a health check request every 30 seconds. On average, your endpoint receives a health check request about
-     *         every two seconds. Health checkers in different data centers don't coordinate with one another, so you'll
-     *         sometimes see several requests per second followed by a few seconds with no health checks at all.
+     *         If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code>
+     *         or <code>HealthCheckConfig</code> but not both.
      *         </p>
-     *         </note>
+     *         </important>
      *         <p>
      *         For information about the charges for health checks, see <a
-     *         href="http://aws.amazon.com/route53/pricing">Amazon Route 53 Pricing</a>.
+     *         href="http://aws.amazon.com/cloud-map/pricing/">AWS Cloud Map Pricing</a>.
      */
 
     public HealthCheckConfig getHealthCheckConfig() {
@@ -333,41 +378,33 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
 
     /**
      * <p>
-     * <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional health check. If you
-     * specify settings for a health check, Amazon Route 53 associates the health check with all the resource record
-     * sets that you specify in <code>DnsConfig</code>.
+     * <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional Route 53 health check.
+     * If you specify settings for a health check, AWS Cloud Map associates the health check with all the Route 53 DNS
+     * records that you specify in <code>DnsConfig</code>.
      * </p>
-     * <note>
+     * <important>
      * <p>
-     * The health check uses 30 seconds as the request interval. This is the number of seconds between the time that
-     * each Amazon Route 53 health checker gets a response from your endpoint and the time that it sends the next health
-     * check request. A health checker in each data center around the world sends your endpoint a health check request
-     * every 30 seconds. On average, your endpoint receives a health check request about every two seconds. Health
-     * checkers in different data centers don't coordinate with one another, so you'll sometimes see several requests
-     * per second followed by a few seconds with no health checks at all.
+     * If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code> or
+     * <code>HealthCheckConfig</code> but not both.
      * </p>
-     * </note>
+     * </important>
      * <p>
-     * For information about the charges for health checks, see <a href="http://aws.amazon.com/route53/pricing">Amazon
-     * Route 53 Pricing</a>.
+     * For information about the charges for health checks, see <a href="http://aws.amazon.com/cloud-map/pricing/">AWS
+     * Cloud Map Pricing</a>.
      * </p>
      * 
      * @param healthCheckConfig
-     *        <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional health check. If
-     *        you specify settings for a health check, Amazon Route 53 associates the health check with all the resource
-     *        record sets that you specify in <code>DnsConfig</code>.</p> <note>
+     *        <i>Public DNS namespaces only.</i> A complex type that contains settings for an optional Route 53 health
+     *        check. If you specify settings for a health check, AWS Cloud Map associates the health check with all the
+     *        Route 53 DNS records that you specify in <code>DnsConfig</code>.</p> <important>
      *        <p>
-     *        The health check uses 30 seconds as the request interval. This is the number of seconds between the time
-     *        that each Amazon Route 53 health checker gets a response from your endpoint and the time that it sends the
-     *        next health check request. A health checker in each data center around the world sends your endpoint a
-     *        health check request every 30 seconds. On average, your endpoint receives a health check request about
-     *        every two seconds. Health checkers in different data centers don't coordinate with one another, so you'll
-     *        sometimes see several requests per second followed by a few seconds with no health checks at all.
+     *        If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code>
+     *        or <code>HealthCheckConfig</code> but not both.
      *        </p>
-     *        </note>
+     *        </important>
      *        <p>
      *        For information about the charges for health checks, see <a
-     *        href="http://aws.amazon.com/route53/pricing">Amazon Route 53 Pricing</a>.
+     *        href="http://aws.amazon.com/cloud-map/pricing/">AWS Cloud Map Pricing</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -377,7 +414,78 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * A complex type that contains information about an optional custom health check.
+     * </p>
+     * <important>
+     * <p>
+     * If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code> or
+     * <code>HealthCheckConfig</code> but not both.
+     * </p>
+     * </important>
+     * 
+     * @param healthCheckCustomConfig
+     *        A complex type that contains information about an optional custom health check.</p> <important>
+     *        <p>
+     *        If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code>
+     *        or <code>HealthCheckConfig</code> but not both.
+     *        </p>
+     */
+
+    public void setHealthCheckCustomConfig(HealthCheckCustomConfig healthCheckCustomConfig) {
+        this.healthCheckCustomConfig = healthCheckCustomConfig;
+    }
+
+    /**
+     * <p>
+     * A complex type that contains information about an optional custom health check.
+     * </p>
+     * <important>
+     * <p>
+     * If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code> or
+     * <code>HealthCheckConfig</code> but not both.
+     * </p>
+     * </important>
+     * 
+     * @return A complex type that contains information about an optional custom health check.</p> <important>
+     *         <p>
+     *         If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code>
+     *         or <code>HealthCheckConfig</code> but not both.
+     *         </p>
+     */
+
+    public HealthCheckCustomConfig getHealthCheckCustomConfig() {
+        return this.healthCheckCustomConfig;
+    }
+
+    /**
+     * <p>
+     * A complex type that contains information about an optional custom health check.
+     * </p>
+     * <important>
+     * <p>
+     * If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code> or
+     * <code>HealthCheckConfig</code> but not both.
+     * </p>
+     * </important>
+     * 
+     * @param healthCheckCustomConfig
+     *        A complex type that contains information about an optional custom health check.</p> <important>
+     *        <p>
+     *        If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code>
+     *        or <code>HealthCheckConfig</code> but not both.
+     *        </p>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateServiceRequest withHealthCheckCustomConfig(HealthCheckCustomConfig healthCheckCustomConfig) {
+        setHealthCheckCustomConfig(healthCheckCustomConfig);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -389,6 +497,8 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
         sb.append("{");
         if (getName() != null)
             sb.append("Name: ").append(getName()).append(",");
+        if (getNamespaceId() != null)
+            sb.append("NamespaceId: ").append(getNamespaceId()).append(",");
         if (getCreatorRequestId() != null)
             sb.append("CreatorRequestId: ").append(getCreatorRequestId()).append(",");
         if (getDescription() != null)
@@ -396,7 +506,9 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
         if (getDnsConfig() != null)
             sb.append("DnsConfig: ").append(getDnsConfig()).append(",");
         if (getHealthCheckConfig() != null)
-            sb.append("HealthCheckConfig: ").append(getHealthCheckConfig());
+            sb.append("HealthCheckConfig: ").append(getHealthCheckConfig()).append(",");
+        if (getHealthCheckCustomConfig() != null)
+            sb.append("HealthCheckCustomConfig: ").append(getHealthCheckCustomConfig());
         sb.append("}");
         return sb.toString();
     }
@@ -415,6 +527,10 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
             return false;
         if (other.getName() != null && other.getName().equals(this.getName()) == false)
             return false;
+        if (other.getNamespaceId() == null ^ this.getNamespaceId() == null)
+            return false;
+        if (other.getNamespaceId() != null && other.getNamespaceId().equals(this.getNamespaceId()) == false)
+            return false;
         if (other.getCreatorRequestId() == null ^ this.getCreatorRequestId() == null)
             return false;
         if (other.getCreatorRequestId() != null && other.getCreatorRequestId().equals(this.getCreatorRequestId()) == false)
@@ -431,6 +547,10 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
             return false;
         if (other.getHealthCheckConfig() != null && other.getHealthCheckConfig().equals(this.getHealthCheckConfig()) == false)
             return false;
+        if (other.getHealthCheckCustomConfig() == null ^ this.getHealthCheckCustomConfig() == null)
+            return false;
+        if (other.getHealthCheckCustomConfig() != null && other.getHealthCheckCustomConfig().equals(this.getHealthCheckCustomConfig()) == false)
+            return false;
         return true;
     }
 
@@ -440,10 +560,12 @@ public class CreateServiceRequest extends com.amazonaws.AmazonWebServiceRequest 
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getName() == null) ? 0 : getName().hashCode());
+        hashCode = prime * hashCode + ((getNamespaceId() == null) ? 0 : getNamespaceId().hashCode());
         hashCode = prime * hashCode + ((getCreatorRequestId() == null) ? 0 : getCreatorRequestId().hashCode());
         hashCode = prime * hashCode + ((getDescription() == null) ? 0 : getDescription().hashCode());
         hashCode = prime * hashCode + ((getDnsConfig() == null) ? 0 : getDnsConfig().hashCode());
         hashCode = prime * hashCode + ((getHealthCheckConfig() == null) ? 0 : getHealthCheckConfig().hashCode());
+        hashCode = prime * hashCode + ((getHealthCheckCustomConfig() == null) ? 0 : getHealthCheckCustomConfig().hashCode());
         return hashCode;
     }
 

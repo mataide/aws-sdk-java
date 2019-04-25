@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -44,18 +44,66 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).
      * </p>
+     * <p>
+     * For Lightsail load balancers, the value looks like
+     * <code>ab1234c56789c6b86aba6fb203d443bc-123456789.us-east-2.elb.amazonaws.com</code>. Be sure to also set
+     * <code>isAlias</code> to <code>true</code> when setting up an A record for a load balancer.
+     * </p>
      */
     private String target;
     /**
      * <p>
-     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer.
+     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer. You
+     * can include an alias (A type) record in your request, which points to a load balancer DNS name and routes traffic
+     * to your load balancer
      * </p>
      */
     private Boolean isAlias;
     /**
      * <p>
-     * The type of domain entry (e.g., <code>SOA</code> or <code>NS</code>).
+     * The type of domain entry, such as address (A), canonical name (CNAME), mail exchanger (MX), name server (NS),
+     * start of authority (SOA), service locator (SRV), or text (TXT).
      * </p>
+     * <p>
+     * The following domain entry types can be used:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>A</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CNAME</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>MX</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>NS</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>SOA</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>SRV</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>TXT</code>
+     * </p>
+     * </li>
+     * </ul>
      */
     private String type;
     /**
@@ -156,9 +204,18 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).
      * </p>
+     * <p>
+     * For Lightsail load balancers, the value looks like
+     * <code>ab1234c56789c6b86aba6fb203d443bc-123456789.us-east-2.elb.amazonaws.com</code>. Be sure to also set
+     * <code>isAlias</code> to <code>true</code> when setting up an A record for a load balancer.
+     * </p>
      * 
      * @param target
-     *        The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).
+     *        The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).</p>
+     *        <p>
+     *        For Lightsail load balancers, the value looks like
+     *        <code>ab1234c56789c6b86aba6fb203d443bc-123456789.us-east-2.elb.amazonaws.com</code>. Be sure to also set
+     *        <code>isAlias</code> to <code>true</code> when setting up an A record for a load balancer.
      */
 
     public void setTarget(String target) {
@@ -169,8 +226,17 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).
      * </p>
+     * <p>
+     * For Lightsail load balancers, the value looks like
+     * <code>ab1234c56789c6b86aba6fb203d443bc-123456789.us-east-2.elb.amazonaws.com</code>. Be sure to also set
+     * <code>isAlias</code> to <code>true</code> when setting up an A record for a load balancer.
+     * </p>
      * 
-     * @return The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).
+     * @return The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).</p>
+     *         <p>
+     *         For Lightsail load balancers, the value looks like
+     *         <code>ab1234c56789c6b86aba6fb203d443bc-123456789.us-east-2.elb.amazonaws.com</code>. Be sure to also set
+     *         <code>isAlias</code> to <code>true</code> when setting up an A record for a load balancer.
      */
 
     public String getTarget() {
@@ -181,9 +247,18 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).
      * </p>
+     * <p>
+     * For Lightsail load balancers, the value looks like
+     * <code>ab1234c56789c6b86aba6fb203d443bc-123456789.us-east-2.elb.amazonaws.com</code>. Be sure to also set
+     * <code>isAlias</code> to <code>true</code> when setting up an A record for a load balancer.
+     * </p>
      * 
      * @param target
-     *        The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).
+     *        The target AWS name server (e.g., <code>ns-111.awsdns-22.com.</code>).</p>
+     *        <p>
+     *        For Lightsail load balancers, the value looks like
+     *        <code>ab1234c56789c6b86aba6fb203d443bc-123456789.us-east-2.elb.amazonaws.com</code>. Be sure to also set
+     *        <code>isAlias</code> to <code>true</code> when setting up an A record for a load balancer.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -194,12 +269,15 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer.
+     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer. You
+     * can include an alias (A type) record in your request, which points to a load balancer DNS name and routes traffic
+     * to your load balancer
      * </p>
      * 
      * @param isAlias
      *        When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load
-     *        balancer.
+     *        balancer. You can include an alias (A type) record in your request, which points to a load balancer DNS
+     *        name and routes traffic to your load balancer
      */
 
     public void setIsAlias(Boolean isAlias) {
@@ -208,11 +286,14 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer.
+     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer. You
+     * can include an alias (A type) record in your request, which points to a load balancer DNS name and routes traffic
+     * to your load balancer
      * </p>
      * 
      * @return When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load
-     *         balancer.
+     *         balancer. You can include an alias (A type) record in your request, which points to a load balancer DNS
+     *         name and routes traffic to your load balancer
      */
 
     public Boolean getIsAlias() {
@@ -221,12 +302,15 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer.
+     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer. You
+     * can include an alias (A type) record in your request, which points to a load balancer DNS name and routes traffic
+     * to your load balancer
      * </p>
      * 
      * @param isAlias
      *        When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load
-     *        balancer.
+     *        balancer. You can include an alias (A type) record in your request, which points to a load balancer DNS
+     *        name and routes traffic to your load balancer
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -237,11 +321,14 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer.
+     * When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load balancer. You
+     * can include an alias (A type) record in your request, which points to a load balancer DNS name and routes traffic
+     * to your load balancer
      * </p>
      * 
      * @return When <code>true</code>, specifies whether the domain entry is an alias used by the Lightsail load
-     *         balancer.
+     *         balancer. You can include an alias (A type) record in your request, which points to a load balancer DNS
+     *         name and routes traffic to your load balancer
      */
 
     public Boolean isAlias() {
@@ -250,11 +337,92 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The type of domain entry (e.g., <code>SOA</code> or <code>NS</code>).
+     * The type of domain entry, such as address (A), canonical name (CNAME), mail exchanger (MX), name server (NS),
+     * start of authority (SOA), service locator (SRV), or text (TXT).
      * </p>
+     * <p>
+     * The following domain entry types can be used:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>A</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CNAME</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>MX</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>NS</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>SOA</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>SRV</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>TXT</code>
+     * </p>
+     * </li>
+     * </ul>
      * 
      * @param type
-     *        The type of domain entry (e.g., <code>SOA</code> or <code>NS</code>).
+     *        The type of domain entry, such as address (A), canonical name (CNAME), mail exchanger (MX), name server
+     *        (NS), start of authority (SOA), service locator (SRV), or text (TXT).</p>
+     *        <p>
+     *        The following domain entry types can be used:
+     *        </p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <code>A</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>CNAME</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>MX</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>NS</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>SOA</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>SRV</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>TXT</code>
+     *        </p>
+     *        </li>
      */
 
     public void setType(String type) {
@@ -263,10 +431,91 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The type of domain entry (e.g., <code>SOA</code> or <code>NS</code>).
+     * The type of domain entry, such as address (A), canonical name (CNAME), mail exchanger (MX), name server (NS),
+     * start of authority (SOA), service locator (SRV), or text (TXT).
      * </p>
+     * <p>
+     * The following domain entry types can be used:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>A</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CNAME</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>MX</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>NS</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>SOA</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>SRV</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>TXT</code>
+     * </p>
+     * </li>
+     * </ul>
      * 
-     * @return The type of domain entry (e.g., <code>SOA</code> or <code>NS</code>).
+     * @return The type of domain entry, such as address (A), canonical name (CNAME), mail exchanger (MX), name server
+     *         (NS), start of authority (SOA), service locator (SRV), or text (TXT).</p>
+     *         <p>
+     *         The following domain entry types can be used:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <code>A</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>CNAME</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>MX</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>NS</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>SOA</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>SRV</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>TXT</code>
+     *         </p>
+     *         </li>
      */
 
     public String getType() {
@@ -275,11 +524,92 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The type of domain entry (e.g., <code>SOA</code> or <code>NS</code>).
+     * The type of domain entry, such as address (A), canonical name (CNAME), mail exchanger (MX), name server (NS),
+     * start of authority (SOA), service locator (SRV), or text (TXT).
      * </p>
+     * <p>
+     * The following domain entry types can be used:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>A</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CNAME</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>MX</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>NS</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>SOA</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>SRV</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>TXT</code>
+     * </p>
+     * </li>
+     * </ul>
      * 
      * @param type
-     *        The type of domain entry (e.g., <code>SOA</code> or <code>NS</code>).
+     *        The type of domain entry, such as address (A), canonical name (CNAME), mail exchanger (MX), name server
+     *        (NS), start of authority (SOA), service locator (SRV), or text (TXT).</p>
+     *        <p>
+     *        The following domain entry types can be used:
+     *        </p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <code>A</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>CNAME</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>MX</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>NS</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>SOA</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>SRV</code>
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <code>TXT</code>
+     *        </p>
+     *        </li>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -381,7 +711,8 @@ public class DomainEntry implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

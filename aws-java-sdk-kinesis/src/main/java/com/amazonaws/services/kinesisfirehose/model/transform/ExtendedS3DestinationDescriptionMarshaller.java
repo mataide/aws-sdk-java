@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -33,6 +33,8 @@ public class ExtendedS3DestinationDescriptionMarshaller {
             .marshallLocationName("BucketARN").build();
     private static final MarshallingInfo<String> PREFIX_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
             .marshallLocationName("Prefix").build();
+    private static final MarshallingInfo<String> ERROROUTPUTPREFIX_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("ErrorOutputPrefix").build();
     private static final MarshallingInfo<StructuredPojo> BUFFERINGHINTS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("BufferingHints").build();
     private static final MarshallingInfo<String> COMPRESSIONFORMAT_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
@@ -47,6 +49,8 @@ public class ExtendedS3DestinationDescriptionMarshaller {
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("S3BackupMode").build();
     private static final MarshallingInfo<StructuredPojo> S3BACKUPDESCRIPTION_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("S3BackupDescription").build();
+    private static final MarshallingInfo<StructuredPojo> DATAFORMATCONVERSIONCONFIGURATION_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("DataFormatConversionConfiguration").build();
 
     private static final ExtendedS3DestinationDescriptionMarshaller instance = new ExtendedS3DestinationDescriptionMarshaller();
 
@@ -67,6 +71,7 @@ public class ExtendedS3DestinationDescriptionMarshaller {
             protocolMarshaller.marshall(extendedS3DestinationDescription.getRoleARN(), ROLEARN_BINDING);
             protocolMarshaller.marshall(extendedS3DestinationDescription.getBucketARN(), BUCKETARN_BINDING);
             protocolMarshaller.marshall(extendedS3DestinationDescription.getPrefix(), PREFIX_BINDING);
+            protocolMarshaller.marshall(extendedS3DestinationDescription.getErrorOutputPrefix(), ERROROUTPUTPREFIX_BINDING);
             protocolMarshaller.marshall(extendedS3DestinationDescription.getBufferingHints(), BUFFERINGHINTS_BINDING);
             protocolMarshaller.marshall(extendedS3DestinationDescription.getCompressionFormat(), COMPRESSIONFORMAT_BINDING);
             protocolMarshaller.marshall(extendedS3DestinationDescription.getEncryptionConfiguration(), ENCRYPTIONCONFIGURATION_BINDING);
@@ -74,6 +79,7 @@ public class ExtendedS3DestinationDescriptionMarshaller {
             protocolMarshaller.marshall(extendedS3DestinationDescription.getProcessingConfiguration(), PROCESSINGCONFIGURATION_BINDING);
             protocolMarshaller.marshall(extendedS3DestinationDescription.getS3BackupMode(), S3BACKUPMODE_BINDING);
             protocolMarshaller.marshall(extendedS3DestinationDescription.getS3BackupDescription(), S3BACKUPDESCRIPTION_BINDING);
+            protocolMarshaller.marshall(extendedS3DestinationDescription.getDataFormatConversionConfiguration(), DATAFORMATCONVERSIONCONFIGURATION_BINDING);
         } catch (Exception e) {
             throw new SdkClientException("Unable to marshall request to JSON: " + e.getMessage(), e);
         }

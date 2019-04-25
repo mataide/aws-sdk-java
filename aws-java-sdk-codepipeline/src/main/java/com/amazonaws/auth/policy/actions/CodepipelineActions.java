@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -37,6 +37,10 @@ public enum CodepipelineActions implements Action {
     DeleteCustomActionType("codepipeline:DeleteCustomActionType"),
     /** Action for the DeletePipeline operation. */
     DeletePipeline("codepipeline:DeletePipeline"),
+    /** Action for the DeleteWebhook operation. */
+    DeleteWebhook("codepipeline:DeleteWebhook"),
+    /** Action for the DeregisterWebhookWithThirdParty operation. */
+    DeregisterWebhookWithThirdParty("codepipeline:DeregisterWebhookWithThirdParty"),
     /** Action for the DisableStageTransition operation. */
     DisableStageTransition("codepipeline:DisableStageTransition"),
     /** Action for the EnableStageTransition operation. */
@@ -51,12 +55,16 @@ public enum CodepipelineActions implements Action {
     GetPipelineState("codepipeline:GetPipelineState"),
     /** Action for the GetThirdPartyJobDetails operation. */
     GetThirdPartyJobDetails("codepipeline:GetThirdPartyJobDetails"),
+    /** Action for the ListActionExecutions operation. */
+    ListActionExecutions("codepipeline:ListActionExecutions"),
     /** Action for the ListActionTypes operation. */
     ListActionTypes("codepipeline:ListActionTypes"),
     /** Action for the ListPipelineExecutions operation. */
     ListPipelineExecutions("codepipeline:ListPipelineExecutions"),
     /** Action for the ListPipelines operation. */
     ListPipelines("codepipeline:ListPipelines"),
+    /** Action for the ListWebhooks operation. */
+    ListWebhooks("codepipeline:ListWebhooks"),
     /** Action for the PollForJobs operation. */
     PollForJobs("codepipeline:PollForJobs"),
     /** Action for the PollForThirdPartyJobs operation. */
@@ -73,6 +81,10 @@ public enum CodepipelineActions implements Action {
     PutThirdPartyJobFailureResult("codepipeline:PutThirdPartyJobFailureResult"),
     /** Action for the PutThirdPartyJobSuccessResult operation. */
     PutThirdPartyJobSuccessResult("codepipeline:PutThirdPartyJobSuccessResult"),
+    /** Action for the PutWebhook operation. */
+    PutWebhook("codepipeline:PutWebhook"),
+    /** Action for the RegisterWebhookWithThirdParty operation. */
+    RegisterWebhookWithThirdParty("codepipeline:RegisterWebhookWithThirdParty"),
     /** Action for the RetryStageExecution operation. */
     RetryStageExecution("codepipeline:RetryStageExecution"),
     /** Action for the StartPipelineExecution operation. */

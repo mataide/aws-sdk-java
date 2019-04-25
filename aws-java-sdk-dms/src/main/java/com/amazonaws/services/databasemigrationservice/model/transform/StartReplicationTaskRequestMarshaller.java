@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -32,7 +32,11 @@ public class StartReplicationTaskRequestMarshaller {
     private static final MarshallingInfo<String> STARTREPLICATIONTASKTYPE_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("StartReplicationTaskType").build();
     private static final MarshallingInfo<java.util.Date> CDCSTARTTIME_BINDING = MarshallingInfo.builder(MarshallingType.DATE)
-            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("CdcStartTime").build();
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("CdcStartTime").timestampFormat("unixTimestamp").build();
+    private static final MarshallingInfo<String> CDCSTARTPOSITION_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("CdcStartPosition").build();
+    private static final MarshallingInfo<String> CDCSTOPPOSITION_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("CdcStopPosition").build();
 
     private static final StartReplicationTaskRequestMarshaller instance = new StartReplicationTaskRequestMarshaller();
 
@@ -53,6 +57,8 @@ public class StartReplicationTaskRequestMarshaller {
             protocolMarshaller.marshall(startReplicationTaskRequest.getReplicationTaskArn(), REPLICATIONTASKARN_BINDING);
             protocolMarshaller.marshall(startReplicationTaskRequest.getStartReplicationTaskType(), STARTREPLICATIONTASKTYPE_BINDING);
             protocolMarshaller.marshall(startReplicationTaskRequest.getCdcStartTime(), CDCSTARTTIME_BINDING);
+            protocolMarshaller.marshall(startReplicationTaskRequest.getCdcStartPosition(), CDCSTARTPOSITION_BINDING);
+            protocolMarshaller.marshall(startReplicationTaskRequest.getCdcStopPosition(), CDCSTOPPOSITION_BINDING);
         } catch (Exception e) {
             throw new SdkClientException("Unable to marshall request to JSON: " + e.getMessage(), e);
         }

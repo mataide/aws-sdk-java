@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,22 +25,25 @@ import com.amazonaws.AmazonWebServiceRequest;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceRequest implements Serializable, Cloneable {
 
-    /** The client token used to request idempotent operations. */
+    /** A client token used to correlate requests and responses. */
     private String amznClientToken;
-    /** Id of the deployment if you wish to redeploy a previous deployment. */
+    /** The ID of the deployment if you wish to redeploy a previous deployment. */
     private String deploymentId;
-    /** Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid. */
+    /**
+     * The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment'' are
+     * valid.
+     */
     private String deploymentType;
-    /** The unique Id of the AWS Greengrass Group */
+    /** The ID of the Greengrass group. */
     private String groupId;
-    /** Group Version you wish to deploy. */
+    /** The ID of the group version to be deployed. */
     private String groupVersionId;
 
     /**
-     * The client token used to request idempotent operations.
+     * A client token used to correlate requests and responses.
      * 
      * @param amznClientToken
-     *        The client token used to request idempotent operations.
+     *        A client token used to correlate requests and responses.
      */
 
     public void setAmznClientToken(String amznClientToken) {
@@ -48,9 +51,9 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * The client token used to request idempotent operations.
+     * A client token used to correlate requests and responses.
      * 
-     * @return The client token used to request idempotent operations.
+     * @return A client token used to correlate requests and responses.
      */
 
     public String getAmznClientToken() {
@@ -58,10 +61,10 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * The client token used to request idempotent operations.
+     * A client token used to correlate requests and responses.
      * 
      * @param amznClientToken
-     *        The client token used to request idempotent operations.
+     *        A client token used to correlate requests and responses.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -71,10 +74,10 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Id of the deployment if you wish to redeploy a previous deployment.
+     * The ID of the deployment if you wish to redeploy a previous deployment.
      * 
      * @param deploymentId
-     *        Id of the deployment if you wish to redeploy a previous deployment.
+     *        The ID of the deployment if you wish to redeploy a previous deployment.
      */
 
     public void setDeploymentId(String deploymentId) {
@@ -82,9 +85,9 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Id of the deployment if you wish to redeploy a previous deployment.
+     * The ID of the deployment if you wish to redeploy a previous deployment.
      * 
-     * @return Id of the deployment if you wish to redeploy a previous deployment.
+     * @return The ID of the deployment if you wish to redeploy a previous deployment.
      */
 
     public String getDeploymentId() {
@@ -92,10 +95,10 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Id of the deployment if you wish to redeploy a previous deployment.
+     * The ID of the deployment if you wish to redeploy a previous deployment.
      * 
      * @param deploymentId
-     *        Id of the deployment if you wish to redeploy a previous deployment.
+     *        The ID of the deployment if you wish to redeploy a previous deployment.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -105,10 +108,12 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     * The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment'' are
+     * valid.
      * 
      * @param deploymentType
-     *        Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     *        The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment''
+     *        are valid.
      * @see DeploymentType
      */
 
@@ -117,9 +122,11 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     * The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment'' are
+     * valid.
      * 
-     * @return Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     * @return The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment''
+     *         are valid.
      * @see DeploymentType
      */
 
@@ -128,10 +135,12 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     * The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment'' are
+     * valid.
      * 
      * @param deploymentType
-     *        Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     *        The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment''
+     *        are valid.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see DeploymentType
      */
@@ -142,10 +151,12 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     * The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment'' are
+     * valid.
      * 
      * @param deploymentType
-     *        Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     *        The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment''
+     *        are valid.
      * @see DeploymentType
      */
 
@@ -154,10 +165,12 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     * The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment'' are
+     * valid.
      * 
      * @param deploymentType
-     *        Type of deployment. When used in CreateDeployment, only NewDeployment and Redeployment are valid.
+     *        The type of deployment. When used for ''CreateDeployment'', only ''NewDeployment'' and ''Redeployment''
+     *        are valid.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see DeploymentType
      */
@@ -168,10 +181,10 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * The unique Id of the AWS Greengrass Group
+     * The ID of the Greengrass group.
      * 
      * @param groupId
-     *        The unique Id of the AWS Greengrass Group
+     *        The ID of the Greengrass group.
      */
 
     public void setGroupId(String groupId) {
@@ -179,9 +192,9 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * The unique Id of the AWS Greengrass Group
+     * The ID of the Greengrass group.
      * 
-     * @return The unique Id of the AWS Greengrass Group
+     * @return The ID of the Greengrass group.
      */
 
     public String getGroupId() {
@@ -189,10 +202,10 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * The unique Id of the AWS Greengrass Group
+     * The ID of the Greengrass group.
      * 
      * @param groupId
-     *        The unique Id of the AWS Greengrass Group
+     *        The ID of the Greengrass group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -202,10 +215,10 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Group Version you wish to deploy.
+     * The ID of the group version to be deployed.
      * 
      * @param groupVersionId
-     *        Group Version you wish to deploy.
+     *        The ID of the group version to be deployed.
      */
 
     public void setGroupVersionId(String groupVersionId) {
@@ -213,9 +226,9 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Group Version you wish to deploy.
+     * The ID of the group version to be deployed.
      * 
-     * @return Group Version you wish to deploy.
+     * @return The ID of the group version to be deployed.
      */
 
     public String getGroupVersionId() {
@@ -223,10 +236,10 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Group Version you wish to deploy.
+     * The ID of the group version to be deployed.
      * 
      * @param groupVersionId
-     *        Group Version you wish to deploy.
+     *        The ID of the group version to be deployed.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -236,7 +249,8 @@ public class CreateDeploymentRequest extends com.amazonaws.AmazonWebServiceReque
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

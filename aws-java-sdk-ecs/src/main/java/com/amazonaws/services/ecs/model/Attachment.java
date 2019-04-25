@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -36,7 +36,7 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
     private String id;
     /**
      * <p>
-     * The type of the attachment, such as an <code>ElasticNetworkInterface</code>.
+     * The type of the attachment, such as <code>ElasticNetworkInterface</code>.
      * </p>
      */
     private String type;
@@ -50,7 +50,7 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
     private String status;
     /**
      * <p>
-     * Details of the attachment. For Elastic Network Interfaces, this includes the network interface ID, the MAC
+     * Details of the attachment. For elastic network interfaces, this includes the network interface ID, the MAC
      * address, the subnet ID, and the private IPv4 address.
      * </p>
      */
@@ -98,11 +98,11 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The type of the attachment, such as an <code>ElasticNetworkInterface</code>.
+     * The type of the attachment, such as <code>ElasticNetworkInterface</code>.
      * </p>
      * 
      * @param type
-     *        The type of the attachment, such as an <code>ElasticNetworkInterface</code>.
+     *        The type of the attachment, such as <code>ElasticNetworkInterface</code>.
      */
 
     public void setType(String type) {
@@ -111,10 +111,10 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The type of the attachment, such as an <code>ElasticNetworkInterface</code>.
+     * The type of the attachment, such as <code>ElasticNetworkInterface</code>.
      * </p>
      * 
-     * @return The type of the attachment, such as an <code>ElasticNetworkInterface</code>.
+     * @return The type of the attachment, such as <code>ElasticNetworkInterface</code>.
      */
 
     public String getType() {
@@ -123,11 +123,11 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * The type of the attachment, such as an <code>ElasticNetworkInterface</code>.
+     * The type of the attachment, such as <code>ElasticNetworkInterface</code>.
      * </p>
      * 
      * @param type
-     *        The type of the attachment, such as an <code>ElasticNetworkInterface</code>.
+     *        The type of the attachment, such as <code>ElasticNetworkInterface</code>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -190,11 +190,11 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * Details of the attachment. For Elastic Network Interfaces, this includes the network interface ID, the MAC
+     * Details of the attachment. For elastic network interfaces, this includes the network interface ID, the MAC
      * address, the subnet ID, and the private IPv4 address.
      * </p>
      * 
-     * @return Details of the attachment. For Elastic Network Interfaces, this includes the network interface ID, the
+     * @return Details of the attachment. For elastic network interfaces, this includes the network interface ID, the
      *         MAC address, the subnet ID, and the private IPv4 address.
      */
 
@@ -207,12 +207,12 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * Details of the attachment. For Elastic Network Interfaces, this includes the network interface ID, the MAC
+     * Details of the attachment. For elastic network interfaces, this includes the network interface ID, the MAC
      * address, the subnet ID, and the private IPv4 address.
      * </p>
      * 
      * @param details
-     *        Details of the attachment. For Elastic Network Interfaces, this includes the network interface ID, the MAC
+     *        Details of the attachment. For elastic network interfaces, this includes the network interface ID, the MAC
      *        address, the subnet ID, and the private IPv4 address.
      */
 
@@ -227,7 +227,7 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * Details of the attachment. For Elastic Network Interfaces, this includes the network interface ID, the MAC
+     * Details of the attachment. For elastic network interfaces, this includes the network interface ID, the MAC
      * address, the subnet ID, and the private IPv4 address.
      * </p>
      * <p>
@@ -237,7 +237,7 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
      * </p>
      * 
      * @param details
-     *        Details of the attachment. For Elastic Network Interfaces, this includes the network interface ID, the MAC
+     *        Details of the attachment. For elastic network interfaces, this includes the network interface ID, the MAC
      *        address, the subnet ID, and the private IPv4 address.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
@@ -254,12 +254,12 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
 
     /**
      * <p>
-     * Details of the attachment. For Elastic Network Interfaces, this includes the network interface ID, the MAC
+     * Details of the attachment. For elastic network interfaces, this includes the network interface ID, the MAC
      * address, the subnet ID, and the private IPv4 address.
      * </p>
      * 
      * @param details
-     *        Details of the attachment. For Elastic Network Interfaces, this includes the network interface ID, the MAC
+     *        Details of the attachment. For elastic network interfaces, this includes the network interface ID, the MAC
      *        address, the subnet ID, and the private IPv4 address.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
@@ -270,7 +270,8 @@ public class Attachment implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

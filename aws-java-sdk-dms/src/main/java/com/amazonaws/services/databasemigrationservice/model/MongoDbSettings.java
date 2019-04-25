@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -121,6 +121,15 @@ public class MongoDbSettings implements Serializable, Cloneable, StructuredPojo 
      * </p>
      */
     private String authSource;
+    /**
+     * <p>
+     * The AWS KMS key identifier that is used to encrypt the content on the replication instance. If you don't specify
+     * a value for the <code>KmsKeyId</code> parameter, then AWS DMS uses your default encryption key. AWS KMS creates
+     * the default encryption key for your AWS account. Your AWS account has a different default encryption key for each
+     * AWS Region.
+     * </p>
+     */
+    private String kmsKeyId;
 
     /**
      * <p>
@@ -888,7 +897,66 @@ public class MongoDbSettings implements Serializable, Cloneable, StructuredPojo 
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The AWS KMS key identifier that is used to encrypt the content on the replication instance. If you don't specify
+     * a value for the <code>KmsKeyId</code> parameter, then AWS DMS uses your default encryption key. AWS KMS creates
+     * the default encryption key for your AWS account. Your AWS account has a different default encryption key for each
+     * AWS Region.
+     * </p>
+     * 
+     * @param kmsKeyId
+     *        The AWS KMS key identifier that is used to encrypt the content on the replication instance. If you don't
+     *        specify a value for the <code>KmsKeyId</code> parameter, then AWS DMS uses your default encryption key.
+     *        AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default
+     *        encryption key for each AWS Region.
+     */
+
+    public void setKmsKeyId(String kmsKeyId) {
+        this.kmsKeyId = kmsKeyId;
+    }
+
+    /**
+     * <p>
+     * The AWS KMS key identifier that is used to encrypt the content on the replication instance. If you don't specify
+     * a value for the <code>KmsKeyId</code> parameter, then AWS DMS uses your default encryption key. AWS KMS creates
+     * the default encryption key for your AWS account. Your AWS account has a different default encryption key for each
+     * AWS Region.
+     * </p>
+     * 
+     * @return The AWS KMS key identifier that is used to encrypt the content on the replication instance. If you don't
+     *         specify a value for the <code>KmsKeyId</code> parameter, then AWS DMS uses your default encryption key.
+     *         AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default
+     *         encryption key for each AWS Region.
+     */
+
+    public String getKmsKeyId() {
+        return this.kmsKeyId;
+    }
+
+    /**
+     * <p>
+     * The AWS KMS key identifier that is used to encrypt the content on the replication instance. If you don't specify
+     * a value for the <code>KmsKeyId</code> parameter, then AWS DMS uses your default encryption key. AWS KMS creates
+     * the default encryption key for your AWS account. Your AWS account has a different default encryption key for each
+     * AWS Region.
+     * </p>
+     * 
+     * @param kmsKeyId
+     *        The AWS KMS key identifier that is used to encrypt the content on the replication instance. If you don't
+     *        specify a value for the <code>KmsKeyId</code> parameter, then AWS DMS uses your default encryption key.
+     *        AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default
+     *        encryption key for each AWS Region.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public MongoDbSettings withKmsKeyId(String kmsKeyId) {
+        setKmsKeyId(kmsKeyId);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -901,7 +969,7 @@ public class MongoDbSettings implements Serializable, Cloneable, StructuredPojo 
         if (getUsername() != null)
             sb.append("Username: ").append(getUsername()).append(",");
         if (getPassword() != null)
-            sb.append("Password: ").append(getPassword()).append(",");
+            sb.append("Password: ").append("***Sensitive Data Redacted***").append(",");
         if (getServerName() != null)
             sb.append("ServerName: ").append(getServerName()).append(",");
         if (getPort() != null)
@@ -919,7 +987,9 @@ public class MongoDbSettings implements Serializable, Cloneable, StructuredPojo 
         if (getDocsToInvestigate() != null)
             sb.append("DocsToInvestigate: ").append(getDocsToInvestigate()).append(",");
         if (getAuthSource() != null)
-            sb.append("AuthSource: ").append(getAuthSource());
+            sb.append("AuthSource: ").append(getAuthSource()).append(",");
+        if (getKmsKeyId() != null)
+            sb.append("KmsKeyId: ").append(getKmsKeyId());
         sb.append("}");
         return sb.toString();
     }
@@ -978,6 +1048,10 @@ public class MongoDbSettings implements Serializable, Cloneable, StructuredPojo 
             return false;
         if (other.getAuthSource() != null && other.getAuthSource().equals(this.getAuthSource()) == false)
             return false;
+        if (other.getKmsKeyId() == null ^ this.getKmsKeyId() == null)
+            return false;
+        if (other.getKmsKeyId() != null && other.getKmsKeyId().equals(this.getKmsKeyId()) == false)
+            return false;
         return true;
     }
 
@@ -997,6 +1071,7 @@ public class MongoDbSettings implements Serializable, Cloneable, StructuredPojo 
         hashCode = prime * hashCode + ((getExtractDocId() == null) ? 0 : getExtractDocId().hashCode());
         hashCode = prime * hashCode + ((getDocsToInvestigate() == null) ? 0 : getDocsToInvestigate().hashCode());
         hashCode = prime * hashCode + ((getAuthSource() == null) ? 0 : getAuthSource().hashCode());
+        hashCode = prime * hashCode + ((getKmsKeyId() == null) ? 0 : getKmsKeyId().hashCode());
         return hashCode;
     }
 

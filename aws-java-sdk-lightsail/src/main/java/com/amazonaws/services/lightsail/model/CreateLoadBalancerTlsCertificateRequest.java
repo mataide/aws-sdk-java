@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -27,36 +27,53 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * The load balancer name where you want to create the TLS/SSL certificate.
+     * The load balancer name where you want to create the SSL/TLS certificate.
      * </p>
      */
     private String loadBalancerName;
     /**
      * <p>
-     * The TLS/SSL certificate name.
+     * The SSL/TLS certificate name.
+     * </p>
+     * <p>
+     * You can have up to 10 certificates in your account at one time. Each Lightsail load balancer can have up to 2
+     * certificates associated with it at one time. There is also an overall limit to the number of certificates that
+     * can be issue in a 365-day period. For more information, see <a
+     * href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a>.
      * </p>
      */
     private String certificateName;
     /**
      * <p>
-     * The domain name (e.g., <code>example.com</code>) for your TLS/SSL certificate.
+     * The domain name (e.g., <code>example.com</code>) for your SSL/TLS certificate.
      * </p>
      */
     private String certificateDomainName;
     /**
      * <p>
-     * An array of strings listing alternative domain names for your TLS/SSL certificate.
+     * An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail will
+     * de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1 primary domain).
+     * We do not support wildcards (e.g., <code>*.example.com</code>).
      * </p>
      */
     private java.util.List<String> certificateAlternativeNames;
+    /**
+     * <p>
+     * The tag keys and optional values to add to the resource during create.
+     * </p>
+     * <p>
+     * To tag a resource after it has been created, see the <code>tag resource</code> operation.
+     * </p>
+     */
+    private java.util.List<Tag> tags;
 
     /**
      * <p>
-     * The load balancer name where you want to create the TLS/SSL certificate.
+     * The load balancer name where you want to create the SSL/TLS certificate.
      * </p>
      * 
      * @param loadBalancerName
-     *        The load balancer name where you want to create the TLS/SSL certificate.
+     *        The load balancer name where you want to create the SSL/TLS certificate.
      */
 
     public void setLoadBalancerName(String loadBalancerName) {
@@ -65,10 +82,10 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * The load balancer name where you want to create the TLS/SSL certificate.
+     * The load balancer name where you want to create the SSL/TLS certificate.
      * </p>
      * 
-     * @return The load balancer name where you want to create the TLS/SSL certificate.
+     * @return The load balancer name where you want to create the SSL/TLS certificate.
      */
 
     public String getLoadBalancerName() {
@@ -77,11 +94,11 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * The load balancer name where you want to create the TLS/SSL certificate.
+     * The load balancer name where you want to create the SSL/TLS certificate.
      * </p>
      * 
      * @param loadBalancerName
-     *        The load balancer name where you want to create the TLS/SSL certificate.
+     *        The load balancer name where you want to create the SSL/TLS certificate.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -92,11 +109,22 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * The TLS/SSL certificate name.
+     * The SSL/TLS certificate name.
+     * </p>
+     * <p>
+     * You can have up to 10 certificates in your account at one time. Each Lightsail load balancer can have up to 2
+     * certificates associated with it at one time. There is also an overall limit to the number of certificates that
+     * can be issue in a 365-day period. For more information, see <a
+     * href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a>.
      * </p>
      * 
      * @param certificateName
-     *        The TLS/SSL certificate name.
+     *        The SSL/TLS certificate name.</p>
+     *        <p>
+     *        You can have up to 10 certificates in your account at one time. Each Lightsail load balancer can have up
+     *        to 2 certificates associated with it at one time. There is also an overall limit to the number of
+     *        certificates that can be issue in a 365-day period. For more information, see <a
+     *        href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a>.
      */
 
     public void setCertificateName(String certificateName) {
@@ -105,10 +133,21 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * The TLS/SSL certificate name.
+     * The SSL/TLS certificate name.
+     * </p>
+     * <p>
+     * You can have up to 10 certificates in your account at one time. Each Lightsail load balancer can have up to 2
+     * certificates associated with it at one time. There is also an overall limit to the number of certificates that
+     * can be issue in a 365-day period. For more information, see <a
+     * href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a>.
      * </p>
      * 
-     * @return The TLS/SSL certificate name.
+     * @return The SSL/TLS certificate name.</p>
+     *         <p>
+     *         You can have up to 10 certificates in your account at one time. Each Lightsail load balancer can have up
+     *         to 2 certificates associated with it at one time. There is also an overall limit to the number of
+     *         certificates that can be issue in a 365-day period. For more information, see <a
+     *         href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a>.
      */
 
     public String getCertificateName() {
@@ -117,11 +156,22 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * The TLS/SSL certificate name.
+     * The SSL/TLS certificate name.
+     * </p>
+     * <p>
+     * You can have up to 10 certificates in your account at one time. Each Lightsail load balancer can have up to 2
+     * certificates associated with it at one time. There is also an overall limit to the number of certificates that
+     * can be issue in a 365-day period. For more information, see <a
+     * href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a>.
      * </p>
      * 
      * @param certificateName
-     *        The TLS/SSL certificate name.
+     *        The SSL/TLS certificate name.</p>
+     *        <p>
+     *        You can have up to 10 certificates in your account at one time. Each Lightsail load balancer can have up
+     *        to 2 certificates associated with it at one time. There is also an overall limit to the number of
+     *        certificates that can be issue in a 365-day period. For more information, see <a
+     *        href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -132,11 +182,11 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * The domain name (e.g., <code>example.com</code>) for your TLS/SSL certificate.
+     * The domain name (e.g., <code>example.com</code>) for your SSL/TLS certificate.
      * </p>
      * 
      * @param certificateDomainName
-     *        The domain name (e.g., <code>example.com</code>) for your TLS/SSL certificate.
+     *        The domain name (e.g., <code>example.com</code>) for your SSL/TLS certificate.
      */
 
     public void setCertificateDomainName(String certificateDomainName) {
@@ -145,10 +195,10 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * The domain name (e.g., <code>example.com</code>) for your TLS/SSL certificate.
+     * The domain name (e.g., <code>example.com</code>) for your SSL/TLS certificate.
      * </p>
      * 
-     * @return The domain name (e.g., <code>example.com</code>) for your TLS/SSL certificate.
+     * @return The domain name (e.g., <code>example.com</code>) for your SSL/TLS certificate.
      */
 
     public String getCertificateDomainName() {
@@ -157,11 +207,11 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * The domain name (e.g., <code>example.com</code>) for your TLS/SSL certificate.
+     * The domain name (e.g., <code>example.com</code>) for your SSL/TLS certificate.
      * </p>
      * 
      * @param certificateDomainName
-     *        The domain name (e.g., <code>example.com</code>) for your TLS/SSL certificate.
+     *        The domain name (e.g., <code>example.com</code>) for your SSL/TLS certificate.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -172,10 +222,14 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * An array of strings listing alternative domain names for your TLS/SSL certificate.
+     * An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail will
+     * de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1 primary domain).
+     * We do not support wildcards (e.g., <code>*.example.com</code>).
      * </p>
      * 
-     * @return An array of strings listing alternative domain names for your TLS/SSL certificate.
+     * @return An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail
+     *         will de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1
+     *         primary domain). We do not support wildcards (e.g., <code>*.example.com</code>).
      */
 
     public java.util.List<String> getCertificateAlternativeNames() {
@@ -184,11 +238,15 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * An array of strings listing alternative domain names for your TLS/SSL certificate.
+     * An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail will
+     * de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1 primary domain).
+     * We do not support wildcards (e.g., <code>*.example.com</code>).
      * </p>
      * 
      * @param certificateAlternativeNames
-     *        An array of strings listing alternative domain names for your TLS/SSL certificate.
+     *        An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail
+     *        will de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1
+     *        primary domain). We do not support wildcards (e.g., <code>*.example.com</code>).
      */
 
     public void setCertificateAlternativeNames(java.util.Collection<String> certificateAlternativeNames) {
@@ -202,7 +260,9 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * An array of strings listing alternative domain names for your TLS/SSL certificate.
+     * An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail will
+     * de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1 primary domain).
+     * We do not support wildcards (e.g., <code>*.example.com</code>).
      * </p>
      * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
@@ -211,7 +271,9 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
      * </p>
      * 
      * @param certificateAlternativeNames
-     *        An array of strings listing alternative domain names for your TLS/SSL certificate.
+     *        An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail
+     *        will de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1
+     *        primary domain). We do not support wildcards (e.g., <code>*.example.com</code>).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -227,11 +289,15 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
 
     /**
      * <p>
-     * An array of strings listing alternative domain names for your TLS/SSL certificate.
+     * An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail will
+     * de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1 primary domain).
+     * We do not support wildcards (e.g., <code>*.example.com</code>).
      * </p>
      * 
      * @param certificateAlternativeNames
-     *        An array of strings listing alternative domain names for your TLS/SSL certificate.
+     *        An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail
+     *        will de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1
+     *        primary domain). We do not support wildcards (e.g., <code>*.example.com</code>).
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -241,7 +307,98 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * The tag keys and optional values to add to the resource during create.
+     * </p>
+     * <p>
+     * To tag a resource after it has been created, see the <code>tag resource</code> operation.
+     * </p>
+     * 
+     * @return The tag keys and optional values to add to the resource during create.</p>
+     *         <p>
+     *         To tag a resource after it has been created, see the <code>tag resource</code> operation.
+     */
+
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * The tag keys and optional values to add to the resource during create.
+     * </p>
+     * <p>
+     * To tag a resource after it has been created, see the <code>tag resource</code> operation.
+     * </p>
+     * 
+     * @param tags
+     *        The tag keys and optional values to add to the resource during create.</p>
+     *        <p>
+     *        To tag a resource after it has been created, see the <code>tag resource</code> operation.
+     */
+
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * The tag keys and optional values to add to the resource during create.
+     * </p>
+     * <p>
+     * To tag a resource after it has been created, see the <code>tag resource</code> operation.
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setTags(java.util.Collection)} or {@link #withTags(java.util.Collection)} if you want to override the
+     * existing values.
+     * </p>
+     * 
+     * @param tags
+     *        The tag keys and optional values to add to the resource during create.</p>
+     *        <p>
+     *        To tag a resource after it has been created, see the <code>tag resource</code> operation.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateLoadBalancerTlsCertificateRequest withTags(Tag... tags) {
+        if (this.tags == null) {
+            setTags(new java.util.ArrayList<Tag>(tags.length));
+        }
+        for (Tag ele : tags) {
+            this.tags.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * The tag keys and optional values to add to the resource during create.
+     * </p>
+     * <p>
+     * To tag a resource after it has been created, see the <code>tag resource</code> operation.
+     * </p>
+     * 
+     * @param tags
+     *        The tag keys and optional values to add to the resource during create.</p>
+     *        <p>
+     *        To tag a resource after it has been created, see the <code>tag resource</code> operation.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public CreateLoadBalancerTlsCertificateRequest withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -258,7 +415,9 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
         if (getCertificateDomainName() != null)
             sb.append("CertificateDomainName: ").append(getCertificateDomainName()).append(",");
         if (getCertificateAlternativeNames() != null)
-            sb.append("CertificateAlternativeNames: ").append(getCertificateAlternativeNames());
+            sb.append("CertificateAlternativeNames: ").append(getCertificateAlternativeNames()).append(",");
+        if (getTags() != null)
+            sb.append("Tags: ").append(getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -289,6 +448,10 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
             return false;
         if (other.getCertificateAlternativeNames() != null && other.getCertificateAlternativeNames().equals(this.getCertificateAlternativeNames()) == false)
             return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
+            return false;
         return true;
     }
 
@@ -301,6 +464,7 @@ public class CreateLoadBalancerTlsCertificateRequest extends com.amazonaws.Amazo
         hashCode = prime * hashCode + ((getCertificateName() == null) ? 0 : getCertificateName().hashCode());
         hashCode = prime * hashCode + ((getCertificateDomainName() == null) ? 0 : getCertificateDomainName().hashCode());
         hashCode = prime * hashCode + ((getCertificateAlternativeNames() == null) ? 0 : getCertificateAlternativeNames().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 

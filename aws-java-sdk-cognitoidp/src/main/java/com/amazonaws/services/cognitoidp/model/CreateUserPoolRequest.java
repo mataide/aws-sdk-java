@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -44,6 +44,21 @@ public class CreateUserPoolRequest extends com.amazonaws.AmazonWebServiceRequest
      * <p>
      * The Lambda trigger configuration information for the new user pool.
      * </p>
+     * <note>
+     * <p>
+     * In a push model, event sources (such as Amazon S3 and custom applications) need permission to invoke a function.
+     * So you will need to make an extra call to add permission for these event sources to invoke your Lambda function.
+     * </p>
+     * <p/>
+     * <p>
+     * For more information on using the Lambda API to add permission, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html"> AddPermission </a>.
+     * </p>
+     * <p>
+     * For adding permission using the AWS CLI, see <a
+     * href="https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html"> add-permission </a>.
+     * </p>
+     * </note>
      */
     private LambdaConfigType lambdaConfig;
     /**
@@ -122,9 +137,8 @@ public class CreateUserPoolRequest extends com.amazonaws.AmazonWebServiceRequest
     private SmsConfigurationType smsConfiguration;
     /**
      * <p>
-     * The cost allocation tags for the user pool. For more information, see <a
-     * href="http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html"
-     * >Adding Cost Allocation Tags to Your User Pool</a>
+     * The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and manage
+     * user pools in different ways, such as by purpose, owner, environment, or other criteria.
      * </p>
      */
     private java.util.Map<String, String> userPoolTags;
@@ -232,9 +246,38 @@ public class CreateUserPoolRequest extends com.amazonaws.AmazonWebServiceRequest
      * <p>
      * The Lambda trigger configuration information for the new user pool.
      * </p>
+     * <note>
+     * <p>
+     * In a push model, event sources (such as Amazon S3 and custom applications) need permission to invoke a function.
+     * So you will need to make an extra call to add permission for these event sources to invoke your Lambda function.
+     * </p>
+     * <p/>
+     * <p>
+     * For more information on using the Lambda API to add permission, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html"> AddPermission </a>.
+     * </p>
+     * <p>
+     * For adding permission using the AWS CLI, see <a
+     * href="https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html"> add-permission </a>.
+     * </p>
+     * </note>
      * 
      * @param lambdaConfig
-     *        The Lambda trigger configuration information for the new user pool.
+     *        The Lambda trigger configuration information for the new user pool.</p> <note>
+     *        <p>
+     *        In a push model, event sources (such as Amazon S3 and custom applications) need permission to invoke a
+     *        function. So you will need to make an extra call to add permission for these event sources to invoke your
+     *        Lambda function.
+     *        </p>
+     *        <p/>
+     *        <p>
+     *        For more information on using the Lambda API to add permission, see <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html"> AddPermission </a>.
+     *        </p>
+     *        <p>
+     *        For adding permission using the AWS CLI, see <a
+     *        href="https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html"> add-permission </a>.
+     *        </p>
      */
 
     public void setLambdaConfig(LambdaConfigType lambdaConfig) {
@@ -245,8 +288,37 @@ public class CreateUserPoolRequest extends com.amazonaws.AmazonWebServiceRequest
      * <p>
      * The Lambda trigger configuration information for the new user pool.
      * </p>
+     * <note>
+     * <p>
+     * In a push model, event sources (such as Amazon S3 and custom applications) need permission to invoke a function.
+     * So you will need to make an extra call to add permission for these event sources to invoke your Lambda function.
+     * </p>
+     * <p/>
+     * <p>
+     * For more information on using the Lambda API to add permission, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html"> AddPermission </a>.
+     * </p>
+     * <p>
+     * For adding permission using the AWS CLI, see <a
+     * href="https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html"> add-permission </a>.
+     * </p>
+     * </note>
      * 
-     * @return The Lambda trigger configuration information for the new user pool.
+     * @return The Lambda trigger configuration information for the new user pool.</p> <note>
+     *         <p>
+     *         In a push model, event sources (such as Amazon S3 and custom applications) need permission to invoke a
+     *         function. So you will need to make an extra call to add permission for these event sources to invoke your
+     *         Lambda function.
+     *         </p>
+     *         <p/>
+     *         <p>
+     *         For more information on using the Lambda API to add permission, see <a
+     *         href="https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html"> AddPermission </a>.
+     *         </p>
+     *         <p>
+     *         For adding permission using the AWS CLI, see <a
+     *         href="https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html"> add-permission </a>.
+     *         </p>
      */
 
     public LambdaConfigType getLambdaConfig() {
@@ -257,9 +329,38 @@ public class CreateUserPoolRequest extends com.amazonaws.AmazonWebServiceRequest
      * <p>
      * The Lambda trigger configuration information for the new user pool.
      * </p>
+     * <note>
+     * <p>
+     * In a push model, event sources (such as Amazon S3 and custom applications) need permission to invoke a function.
+     * So you will need to make an extra call to add permission for these event sources to invoke your Lambda function.
+     * </p>
+     * <p/>
+     * <p>
+     * For more information on using the Lambda API to add permission, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html"> AddPermission </a>.
+     * </p>
+     * <p>
+     * For adding permission using the AWS CLI, see <a
+     * href="https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html"> add-permission </a>.
+     * </p>
+     * </note>
      * 
      * @param lambdaConfig
-     *        The Lambda trigger configuration information for the new user pool.
+     *        The Lambda trigger configuration information for the new user pool.</p> <note>
+     *        <p>
+     *        In a push model, event sources (such as Amazon S3 and custom applications) need permission to invoke a
+     *        function. So you will need to make an extra call to add permission for these event sources to invoke your
+     *        Lambda function.
+     *        </p>
+     *        <p/>
+     *        <p>
+     *        For more information on using the Lambda API to add permission, see <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html"> AddPermission </a>.
+     *        </p>
+     *        <p>
+     *        For adding permission using the AWS CLI, see <a
+     *        href="https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html"> add-permission </a>.
+     *        </p>
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -973,14 +1074,12 @@ public class CreateUserPoolRequest extends com.amazonaws.AmazonWebServiceRequest
 
     /**
      * <p>
-     * The cost allocation tags for the user pool. For more information, see <a
-     * href="http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html"
-     * >Adding Cost Allocation Tags to Your User Pool</a>
+     * The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and manage
+     * user pools in different ways, such as by purpose, owner, environment, or other criteria.
      * </p>
      * 
-     * @return The cost allocation tags for the user pool. For more information, see <a
-     *         href="http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html"
-     *         >Adding Cost Allocation Tags to Your User Pool</a>
+     * @return The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and
+     *         manage user pools in different ways, such as by purpose, owner, environment, or other criteria.
      */
 
     public java.util.Map<String, String> getUserPoolTags() {
@@ -989,15 +1088,13 @@ public class CreateUserPoolRequest extends com.amazonaws.AmazonWebServiceRequest
 
     /**
      * <p>
-     * The cost allocation tags for the user pool. For more information, see <a
-     * href="http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html"
-     * >Adding Cost Allocation Tags to Your User Pool</a>
+     * The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and manage
+     * user pools in different ways, such as by purpose, owner, environment, or other criteria.
      * </p>
      * 
      * @param userPoolTags
-     *        The cost allocation tags for the user pool. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html"
-     *        >Adding Cost Allocation Tags to Your User Pool</a>
+     *        The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and
+     *        manage user pools in different ways, such as by purpose, owner, environment, or other criteria.
      */
 
     public void setUserPoolTags(java.util.Map<String, String> userPoolTags) {
@@ -1006,15 +1103,13 @@ public class CreateUserPoolRequest extends com.amazonaws.AmazonWebServiceRequest
 
     /**
      * <p>
-     * The cost allocation tags for the user pool. For more information, see <a
-     * href="http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html"
-     * >Adding Cost Allocation Tags to Your User Pool</a>
+     * The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and manage
+     * user pools in different ways, such as by purpose, owner, environment, or other criteria.
      * </p>
      * 
      * @param userPoolTags
-     *        The cost allocation tags for the user pool. For more information, see <a href=
-     *        "http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html"
-     *        >Adding Cost Allocation Tags to Your User Pool</a>
+     *        The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and
+     *        manage user pools in different ways, such as by purpose, owner, environment, or other criteria.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -1205,7 +1300,8 @@ public class CreateUserPoolRequest extends com.amazonaws.AmazonWebServiceRequest
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

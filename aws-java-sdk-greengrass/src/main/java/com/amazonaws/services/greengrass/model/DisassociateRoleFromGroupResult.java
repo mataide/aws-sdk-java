@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -23,14 +23,14 @@ import javax.annotation.Generated;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class DisassociateRoleFromGroupResult extends com.amazonaws.AmazonWebServiceResult<com.amazonaws.ResponseMetadata> implements Serializable, Cloneable {
 
-    /** Time when the role was disassociated from the group. */
+    /** The time, in milliseconds since the epoch, when the role was disassociated from the group. */
     private String disassociatedAt;
 
     /**
-     * Time when the role was disassociated from the group.
+     * The time, in milliseconds since the epoch, when the role was disassociated from the group.
      * 
      * @param disassociatedAt
-     *        Time when the role was disassociated from the group.
+     *        The time, in milliseconds since the epoch, when the role was disassociated from the group.
      */
 
     public void setDisassociatedAt(String disassociatedAt) {
@@ -38,9 +38,9 @@ public class DisassociateRoleFromGroupResult extends com.amazonaws.AmazonWebServ
     }
 
     /**
-     * Time when the role was disassociated from the group.
+     * The time, in milliseconds since the epoch, when the role was disassociated from the group.
      * 
-     * @return Time when the role was disassociated from the group.
+     * @return The time, in milliseconds since the epoch, when the role was disassociated from the group.
      */
 
     public String getDisassociatedAt() {
@@ -48,10 +48,10 @@ public class DisassociateRoleFromGroupResult extends com.amazonaws.AmazonWebServ
     }
 
     /**
-     * Time when the role was disassociated from the group.
+     * The time, in milliseconds since the epoch, when the role was disassociated from the group.
      * 
      * @param disassociatedAt
-     *        Time when the role was disassociated from the group.
+     *        The time, in milliseconds since the epoch, when the role was disassociated from the group.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -61,7 +61,8 @@ public class DisassociateRoleFromGroupResult extends com.amazonaws.AmazonWebServ
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

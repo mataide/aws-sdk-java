@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -26,27 +26,33 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class EndpointBatchItem implements Serializable, Cloneable, StructuredPojo {
 
-    /** The address or token of the endpoint as provided by your push provider (e.g. DeviceToken or RegistrationId). */
+    /**
+     * The destination for messages that you send to this endpoint. The address varies by channel. For mobile push
+     * channels, use the token provided by the push notification service, such as the APNs device token or the FCM
+     * registration token. For the SMS channel, use a phone number in E.164 format, such as +12065550100. For the email
+     * channel, use an email address.
+     */
     private String address;
     /**
-     * Custom attributes that your app reports to Amazon Pinpoint. You can use these attributes as selection criteria
-     * when you create a segment.
+     * Custom attributes that describe the endpoint by associating a name with an array of values. For example, an
+     * attribute named "interests" might have the values ["science", "politics", "travel"]. You can use these attributes
+     * as selection criteria when you create a segment of users to engage with a messaging campaign.
+     * 
+     * The following characters are not recommended in attribute names: # : ? \ /. The Amazon Pinpoint console does not
+     * display attributes that include these characters in the name. This limitation does not apply to attribute values.
      */
     private java.util.Map<String, java.util.List<String>> attributes;
     /**
      * The channel type.
      * 
-     * Valid values: GCM | APNS | SMS | EMAIL
+     * Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      */
     private String channelType;
     /** The endpoint demographic attributes. */
     private EndpointDemographic demographic;
     /** The last time the endpoint was updated. Provided in ISO 8601 format. */
     private String effectiveDate;
-    /**
-     * The endpoint status. Can be either ACTIVE or INACTIVE. Will be set to INACTIVE if a delivery fails. Will be set
-     * to ACTIVE if the address is updated.
-     */
+    /** Unused. */
     private String endpointStatus;
     /** The unique Id for the Endpoint in the batch. */
     private String id;
@@ -68,11 +74,16 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     private EndpointUser user;
 
     /**
-     * The address or token of the endpoint as provided by your push provider (e.g. DeviceToken or RegistrationId).
+     * The destination for messages that you send to this endpoint. The address varies by channel. For mobile push
+     * channels, use the token provided by the push notification service, such as the APNs device token or the FCM
+     * registration token. For the SMS channel, use a phone number in E.164 format, such as +12065550100. For the email
+     * channel, use an email address.
      * 
      * @param address
-     *        The address or token of the endpoint as provided by your push provider (e.g. DeviceToken or
-     *        RegistrationId).
+     *        The destination for messages that you send to this endpoint. The address varies by channel. For mobile
+     *        push channels, use the token provided by the push notification service, such as the APNs device token or
+     *        the FCM registration token. For the SMS channel, use a phone number in E.164 format, such as +12065550100.
+     *        For the email channel, use an email address.
      */
 
     public void setAddress(String address) {
@@ -80,10 +91,15 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * The address or token of the endpoint as provided by your push provider (e.g. DeviceToken or RegistrationId).
+     * The destination for messages that you send to this endpoint. The address varies by channel. For mobile push
+     * channels, use the token provided by the push notification service, such as the APNs device token or the FCM
+     * registration token. For the SMS channel, use a phone number in E.164 format, such as +12065550100. For the email
+     * channel, use an email address.
      * 
-     * @return The address or token of the endpoint as provided by your push provider (e.g. DeviceToken or
-     *         RegistrationId).
+     * @return The destination for messages that you send to this endpoint. The address varies by channel. For mobile
+     *         push channels, use the token provided by the push notification service, such as the APNs device token or
+     *         the FCM registration token. For the SMS channel, use a phone number in E.164 format, such as
+     *         +12065550100. For the email channel, use an email address.
      */
 
     public String getAddress() {
@@ -91,11 +107,16 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * The address or token of the endpoint as provided by your push provider (e.g. DeviceToken or RegistrationId).
+     * The destination for messages that you send to this endpoint. The address varies by channel. For mobile push
+     * channels, use the token provided by the push notification service, such as the APNs device token or the FCM
+     * registration token. For the SMS channel, use a phone number in E.164 format, such as +12065550100. For the email
+     * channel, use an email address.
      * 
      * @param address
-     *        The address or token of the endpoint as provided by your push provider (e.g. DeviceToken or
-     *        RegistrationId).
+     *        The destination for messages that you send to this endpoint. The address varies by channel. For mobile
+     *        push channels, use the token provided by the push notification service, such as the APNs device token or
+     *        the FCM registration token. For the SMS channel, use a phone number in E.164 format, such as +12065550100.
+     *        For the email channel, use an email address.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -105,11 +126,20 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * Custom attributes that your app reports to Amazon Pinpoint. You can use these attributes as selection criteria
-     * when you create a segment.
+     * Custom attributes that describe the endpoint by associating a name with an array of values. For example, an
+     * attribute named "interests" might have the values ["science", "politics", "travel"]. You can use these attributes
+     * as selection criteria when you create a segment of users to engage with a messaging campaign.
      * 
-     * @return Custom attributes that your app reports to Amazon Pinpoint. You can use these attributes as selection
-     *         criteria when you create a segment.
+     * The following characters are not recommended in attribute names: # : ? \ /. The Amazon Pinpoint console does not
+     * display attributes that include these characters in the name. This limitation does not apply to attribute values.
+     * 
+     * @return Custom attributes that describe the endpoint by associating a name with an array of values. For example,
+     *         an attribute named "interests" might have the values ["science", "politics", "travel"]. You can use these
+     *         attributes as selection criteria when you create a segment of users to engage with a messaging campaign.
+     * 
+     *         The following characters are not recommended in attribute names: # : ? \ /. The Amazon Pinpoint console
+     *         does not display attributes that include these characters in the name. This limitation does not apply to
+     *         attribute values.
      */
 
     public java.util.Map<String, java.util.List<String>> getAttributes() {
@@ -117,12 +147,21 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * Custom attributes that your app reports to Amazon Pinpoint. You can use these attributes as selection criteria
-     * when you create a segment.
+     * Custom attributes that describe the endpoint by associating a name with an array of values. For example, an
+     * attribute named "interests" might have the values ["science", "politics", "travel"]. You can use these attributes
+     * as selection criteria when you create a segment of users to engage with a messaging campaign.
+     * 
+     * The following characters are not recommended in attribute names: # : ? \ /. The Amazon Pinpoint console does not
+     * display attributes that include these characters in the name. This limitation does not apply to attribute values.
      * 
      * @param attributes
-     *        Custom attributes that your app reports to Amazon Pinpoint. You can use these attributes as selection
-     *        criteria when you create a segment.
+     *        Custom attributes that describe the endpoint by associating a name with an array of values. For example,
+     *        an attribute named "interests" might have the values ["science", "politics", "travel"]. You can use these
+     *        attributes as selection criteria when you create a segment of users to engage with a messaging campaign.
+     * 
+     *        The following characters are not recommended in attribute names: # : ? \ /. The Amazon Pinpoint console
+     *        does not display attributes that include these characters in the name. This limitation does not apply to
+     *        attribute values.
      */
 
     public void setAttributes(java.util.Map<String, java.util.List<String>> attributes) {
@@ -130,12 +169,21 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * Custom attributes that your app reports to Amazon Pinpoint. You can use these attributes as selection criteria
-     * when you create a segment.
+     * Custom attributes that describe the endpoint by associating a name with an array of values. For example, an
+     * attribute named "interests" might have the values ["science", "politics", "travel"]. You can use these attributes
+     * as selection criteria when you create a segment of users to engage with a messaging campaign.
+     * 
+     * The following characters are not recommended in attribute names: # : ? \ /. The Amazon Pinpoint console does not
+     * display attributes that include these characters in the name. This limitation does not apply to attribute values.
      * 
      * @param attributes
-     *        Custom attributes that your app reports to Amazon Pinpoint. You can use these attributes as selection
-     *        criteria when you create a segment.
+     *        Custom attributes that describe the endpoint by associating a name with an array of values. For example,
+     *        an attribute named "interests" might have the values ["science", "politics", "travel"]. You can use these
+     *        attributes as selection criteria when you create a segment of users to engage with a messaging campaign.
+     * 
+     *        The following characters are not recommended in attribute names: # : ? \ /. The Amazon Pinpoint console
+     *        does not display attributes that include these characters in the name. This limitation does not apply to
+     *        attribute values.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -168,12 +216,12 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     /**
      * The channel type.
      * 
-     * Valid values: GCM | APNS | SMS | EMAIL
+     * Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * 
      * @param channelType
      *        The channel type.
      * 
-     *        Valid values: GCM | APNS | SMS | EMAIL
+     *        Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * @see ChannelType
      */
 
@@ -184,11 +232,11 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     /**
      * The channel type.
      * 
-     * Valid values: GCM | APNS | SMS | EMAIL
+     * Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * 
      * @return The channel type.
      * 
-     *         Valid values: GCM | APNS | SMS | EMAIL
+     *         Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * @see ChannelType
      */
 
@@ -199,12 +247,12 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     /**
      * The channel type.
      * 
-     * Valid values: GCM | APNS | SMS | EMAIL
+     * Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * 
      * @param channelType
      *        The channel type.
      * 
-     *        Valid values: GCM | APNS | SMS | EMAIL
+     *        Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see ChannelType
      */
@@ -217,12 +265,12 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     /**
      * The channel type.
      * 
-     * Valid values: GCM | APNS | SMS | EMAIL
+     * Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * 
      * @param channelType
      *        The channel type.
      * 
-     *        Valid values: GCM | APNS | SMS | EMAIL
+     *        Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * @see ChannelType
      */
 
@@ -233,12 +281,12 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     /**
      * The channel type.
      * 
-     * Valid values: GCM | APNS | SMS | EMAIL
+     * Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * 
      * @param channelType
      *        The channel type.
      * 
-     *        Valid values: GCM | APNS | SMS | EMAIL
+     *        Valid values: GCM | APNS | APNS_SANDBOX | APNS_VOIP | APNS_VOIP_SANDBOX | ADM | SMS | EMAIL | BAIDU
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see ChannelType
      */
@@ -317,12 +365,10 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * The endpoint status. Can be either ACTIVE or INACTIVE. Will be set to INACTIVE if a delivery fails. Will be set
-     * to ACTIVE if the address is updated.
+     * Unused.
      * 
      * @param endpointStatus
-     *        The endpoint status. Can be either ACTIVE or INACTIVE. Will be set to INACTIVE if a delivery fails. Will
-     *        be set to ACTIVE if the address is updated.
+     *        Unused.
      */
 
     public void setEndpointStatus(String endpointStatus) {
@@ -330,11 +376,9 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * The endpoint status. Can be either ACTIVE or INACTIVE. Will be set to INACTIVE if a delivery fails. Will be set
-     * to ACTIVE if the address is updated.
+     * Unused.
      * 
-     * @return The endpoint status. Can be either ACTIVE or INACTIVE. Will be set to INACTIVE if a delivery fails. Will
-     *         be set to ACTIVE if the address is updated.
+     * @return Unused.
      */
 
     public String getEndpointStatus() {
@@ -342,12 +386,10 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * The endpoint status. Can be either ACTIVE or INACTIVE. Will be set to INACTIVE if a delivery fails. Will be set
-     * to ACTIVE if the address is updated.
+     * Unused.
      * 
      * @param endpointStatus
-     *        The endpoint status. Can be either ACTIVE or INACTIVE. Will be set to INACTIVE if a delivery fails. Will
-     *        be set to ACTIVE if the address is updated.
+     *        Unused.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -606,7 +648,8 @@ public class EndpointBatchItem implements Serializable, Cloneable, StructuredPoj
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

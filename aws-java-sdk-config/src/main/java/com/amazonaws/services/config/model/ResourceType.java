@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -61,7 +61,29 @@ public enum ResourceType {
     AWSAutoScalingLaunchConfiguration("AWS::AutoScaling::LaunchConfiguration"),
     AWSAutoScalingScalingPolicy("AWS::AutoScaling::ScalingPolicy"),
     AWSAutoScalingScheduledAction("AWS::AutoScaling::ScheduledAction"),
-    AWSCodeBuildProject("AWS::CodeBuild::Project");
+    AWSCodeBuildProject("AWS::CodeBuild::Project"),
+    AWSWAFRateBasedRule("AWS::WAF::RateBasedRule"),
+    AWSWAFRule("AWS::WAF::Rule"),
+    AWSWAFWebACL("AWS::WAF::WebACL"),
+    AWSWAFRegionalRateBasedRule("AWS::WAFRegional::RateBasedRule"),
+    AWSWAFRegionalRule("AWS::WAFRegional::Rule"),
+    AWSWAFRegionalWebACL("AWS::WAFRegional::WebACL"),
+    AWSCloudFrontDistribution("AWS::CloudFront::Distribution"),
+    AWSCloudFrontStreamingDistribution("AWS::CloudFront::StreamingDistribution"),
+    AWSWAFRuleGroup("AWS::WAF::RuleGroup"),
+    AWSWAFRegionalRuleGroup("AWS::WAFRegional::RuleGroup"),
+    AWSLambdaFunction("AWS::Lambda::Function"),
+    AWSElasticBeanstalkApplication("AWS::ElasticBeanstalk::Application"),
+    AWSElasticBeanstalkApplicationVersion("AWS::ElasticBeanstalk::ApplicationVersion"),
+    AWSElasticBeanstalkEnvironment("AWS::ElasticBeanstalk::Environment"),
+    AWSElasticLoadBalancingLoadBalancer("AWS::ElasticLoadBalancing::LoadBalancer"),
+    AWSXRayEncryptionConfig("AWS::XRay::EncryptionConfig"),
+    AWSSSMAssociationCompliance("AWS::SSM::AssociationCompliance"),
+    AWSSSMPatchCompliance("AWS::SSM::PatchCompliance"),
+    AWSShieldProtection("AWS::Shield::Protection"),
+    AWSShieldRegionalProtection("AWS::ShieldRegional::Protection"),
+    AWSConfigResourceCompliance("AWS::Config::ResourceCompliance"),
+    AWSCodePipelinePipeline("AWS::CodePipeline::Pipeline");
 
     private String value;
 

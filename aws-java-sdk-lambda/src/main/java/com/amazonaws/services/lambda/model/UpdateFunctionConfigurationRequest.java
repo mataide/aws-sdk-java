@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,7 +18,6 @@ import javax.annotation.Generated;
 import com.amazonaws.AmazonWebServiceRequest;
 
 /**
- * <p/>
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/UpdateFunctionConfiguration" target="_top">AWS
  *      API Documentation</a>
@@ -30,119 +29,177 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The name of the Lambda function.
      * </p>
+     * <p class="title">
+     * <b>Name formats</b>
+     * </p>
+     * <ul>
+     * <li>
      * <p>
-     * You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name
-     * (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS
-     * Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the
-     * length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character
-     * in length.
+     * <b>Function name</b> - <code>my-function</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Partial ARN</b> - <code>123456789012:function:my-function</code>.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64
+     * characters in length.
      * </p>
      */
     private String functionName;
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the IAM role that Lambda will assume when it executes your function.
+     * The Amazon Resource Name (ARN) of the function's execution role.
      * </p>
      */
     private String role;
     /**
      * <p>
-     * The function that Lambda calls to begin executing your function. For Node.js, it is the
-     * <code>module-name.export</code> value in your function.
+     * The name of the method within your code that Lambda calls to execute your function. The format includes the file
+     * name. It can also include namespaces and other qualifiers, depending on the runtime. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/programming-model-v2.html">Programming Model</a>.
      * </p>
      */
     private String handler;
     /**
      * <p>
-     * A short user-defined function description. AWS Lambda does not use this value. Assign a meaningful description as
-     * you see fit.
+     * A description of the function.
      * </p>
      */
     private String description;
     /**
      * <p>
-     * The function execution time at which AWS Lambda should terminate the function. Because the execution time has
-     * cost implications, we recommend you set this value based on your expected execution time. The default is 3
-     * seconds.
+     * The amount of time that Lambda allows a function to run before stopping it. The default is 3 seconds. The maximum
+     * allowed value is 900 seconds.
      * </p>
      */
     private Integer timeout;
     /**
      * <p>
-     * The amount of memory, in MB, your Lambda function is given. AWS Lambda uses this memory size to infer the amount
-     * of CPU allocated to your function. Your function use-case determines your CPU and memory requirements. For
-     * example, a database operation might need less memory compared to an image processing function. The default value
-     * is 128 MB. The value must be a multiple of 64 MB.
+     * The amount of memory that your function has access to. Increasing the function's memory also increases its CPU
+     * allocation. The default value is 128 MB. The value must be a multiple of 64 MB.
      * </p>
      */
     private Integer memorySize;
-
+    /**
+     * <p>
+     * For network connectivity to AWS resources in a VPC, specify a list of security groups and subnets in the VPC.
+     * When you connect a function to a VPC, it can only access resources and the internet through that VPC. For more
+     * information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/vpc.html">VPC Settings</a>.
+     * </p>
+     */
     private VpcConfig vpcConfig;
     /**
      * <p>
-     * The parent object that contains your environment's configuration settings.
+     * Environment variables that are accessible from function code during execution.
      * </p>
      */
     private Environment environment;
     /**
      * <p>
-     * The runtime environment for the Lambda function.
+     * The identifier of the function's <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * </p>
-     * <p>
-     * To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the value to
-     * "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js runtime v4.3,
-     * set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     * </p>
-     * <note>
-     * <p>
-     * Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js runtime
-     * versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so will result in
-     * an invalid parameter error being returned. Note that you will have to follow this procedure for each region that
-     * contains functions written in the Node v0.10.42 runtime.
-     * </p>
-     * </note>
      */
     private String runtime;
     /**
      * <p>
-     * The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic.
+     * A dead letter queue configuration that specifies the queue or topic where Lambda sends asynchronous events when
+     * they fail processing. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/dlq.html">Dead Letter Queues</a>.
      * </p>
      */
     private DeadLetterConfig deadLetterConfig;
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the KMS key used to encrypt your function's environment variables. If you elect
-     * to use the AWS Lambda default service key, pass in an empty string ("") for this parameter.
+     * The ARN of the AWS Key Management Service (AWS KMS) key that's used to encrypt your function's environment
+     * variables. If it's not provided, AWS Lambda uses a default service key.
      * </p>
      */
     private String kMSKeyArn;
     /**
      * <p>
-     * The parent object that contains your function's tracing settings.
+     * Set <code>Mode</code> to <code>Active</code> to sample and trace a subset of incoming requests with AWS X-Ray.
      * </p>
      */
     private TracingConfig tracingConfig;
+    /**
+     * <p>
+     * Only update the function if the revision ID matches the ID that's specified. Use this option to avoid modifying a
+     * function that has changed since you last read it.
+     * </p>
+     */
+    private String revisionId;
+    /**
+     * <p>
+     * A list of <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">function layers</a> to
+     * add to the function's execution environment. Specify each layer by its ARN, including the version.
+     * </p>
+     */
+    private com.amazonaws.internal.SdkInternalList<String> layers;
 
     /**
      * <p>
      * The name of the Lambda function.
      * </p>
+     * <p class="title">
+     * <b>Name formats</b>
+     * </p>
+     * <ul>
+     * <li>
      * <p>
-     * You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name
-     * (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS
-     * Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the
-     * length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character
-     * in length.
+     * <b>Function name</b> - <code>my-function</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Partial ARN</b> - <code>123456789012:function:my-function</code>.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64
+     * characters in length.
      * </p>
      * 
      * @param functionName
      *        The name of the Lambda function.</p>
+     *        <p class="title">
+     *        <b>Name formats</b>
+     *        </p>
+     *        <ul>
+     *        <li>
      *        <p>
-     *        You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource
-     *        Name (ARN) of the function (for example,
-     *        <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to
-     *        specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint
-     *        applies only to the ARN. If you specify only the function name, it is limited to 64 character in length.
+     *        <b>Function name</b> - <code>my-function</code>.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b>Partial ARN</b> - <code>123456789012:function:my-function</code>.
+     *        </p>
+     *        </li>
+     *        </ul>
+     *        <p>
+     *        The length constraint applies only to the full ARN. If you specify only the function name, it is limited
+     *        to 64 characters in length.
      */
 
     public void setFunctionName(String functionName) {
@@ -153,21 +210,55 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The name of the Lambda function.
      * </p>
+     * <p class="title">
+     * <b>Name formats</b>
+     * </p>
+     * <ul>
+     * <li>
      * <p>
-     * You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name
-     * (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS
-     * Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the
-     * length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character
-     * in length.
+     * <b>Function name</b> - <code>my-function</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Partial ARN</b> - <code>123456789012:function:my-function</code>.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64
+     * characters in length.
      * </p>
      * 
      * @return The name of the Lambda function.</p>
+     *         <p class="title">
+     *         <b>Name formats</b>
+     *         </p>
+     *         <ul>
+     *         <li>
      *         <p>
-     *         You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource
-     *         Name (ARN) of the function (for example,
-     *         <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to
-     *         specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint
-     *         applies only to the ARN. If you specify only the function name, it is limited to 64 character in length.
+     *         <b>Function name</b> - <code>my-function</code>.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <b>Partial ARN</b> - <code>123456789012:function:my-function</code>.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         The length constraint applies only to the full ARN. If you specify only the function name, it is limited
+     *         to 64 characters in length.
      */
 
     public String getFunctionName() {
@@ -178,22 +269,56 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
      * <p>
      * The name of the Lambda function.
      * </p>
+     * <p class="title">
+     * <b>Name formats</b>
+     * </p>
+     * <ul>
+     * <li>
      * <p>
-     * You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name
-     * (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS
-     * Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the
-     * length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character
-     * in length.
+     * <b>Function name</b> - <code>my-function</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Partial ARN</b> - <code>123456789012:function:my-function</code>.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64
+     * characters in length.
      * </p>
      * 
      * @param functionName
      *        The name of the Lambda function.</p>
+     *        <p class="title">
+     *        <b>Name formats</b>
+     *        </p>
+     *        <ul>
+     *        <li>
      *        <p>
-     *        You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource
-     *        Name (ARN) of the function (for example,
-     *        <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to
-     *        specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint
-     *        applies only to the ARN. If you specify only the function name, it is limited to 64 character in length.
+     *        <b>Function name</b> - <code>my-function</code>.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b>Partial ARN</b> - <code>123456789012:function:my-function</code>.
+     *        </p>
+     *        </li>
+     *        </ul>
+     *        <p>
+     *        The length constraint applies only to the full ARN. If you specify only the function name, it is limited
+     *        to 64 characters in length.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -204,11 +329,11 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the IAM role that Lambda will assume when it executes your function.
+     * The Amazon Resource Name (ARN) of the function's execution role.
      * </p>
      * 
      * @param role
-     *        The Amazon Resource Name (ARN) of the IAM role that Lambda will assume when it executes your function.
+     *        The Amazon Resource Name (ARN) of the function's execution role.
      */
 
     public void setRole(String role) {
@@ -217,10 +342,10 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the IAM role that Lambda will assume when it executes your function.
+     * The Amazon Resource Name (ARN) of the function's execution role.
      * </p>
      * 
-     * @return The Amazon Resource Name (ARN) of the IAM role that Lambda will assume when it executes your function.
+     * @return The Amazon Resource Name (ARN) of the function's execution role.
      */
 
     public String getRole() {
@@ -229,11 +354,11 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the IAM role that Lambda will assume when it executes your function.
+     * The Amazon Resource Name (ARN) of the function's execution role.
      * </p>
      * 
      * @param role
-     *        The Amazon Resource Name (ARN) of the IAM role that Lambda will assume when it executes your function.
+     *        The Amazon Resource Name (ARN) of the function's execution role.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -244,13 +369,16 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The function that Lambda calls to begin executing your function. For Node.js, it is the
-     * <code>module-name.export</code> value in your function.
+     * The name of the method within your code that Lambda calls to execute your function. The format includes the file
+     * name. It can also include namespaces and other qualifiers, depending on the runtime. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/programming-model-v2.html">Programming Model</a>.
      * </p>
      * 
      * @param handler
-     *        The function that Lambda calls to begin executing your function. For Node.js, it is the
-     *        <code>module-name.export</code> value in your function.
+     *        The name of the method within your code that Lambda calls to execute your function. The format includes
+     *        the file name. It can also include namespaces and other qualifiers, depending on the runtime. For more
+     *        information, see <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/programming-model-v2.html">Programming Model</a>.
      */
 
     public void setHandler(String handler) {
@@ -259,12 +387,15 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The function that Lambda calls to begin executing your function. For Node.js, it is the
-     * <code>module-name.export</code> value in your function.
+     * The name of the method within your code that Lambda calls to execute your function. The format includes the file
+     * name. It can also include namespaces and other qualifiers, depending on the runtime. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/programming-model-v2.html">Programming Model</a>.
      * </p>
      * 
-     * @return The function that Lambda calls to begin executing your function. For Node.js, it is the
-     *         <code>module-name.export</code> value in your function.
+     * @return The name of the method within your code that Lambda calls to execute your function. The format includes
+     *         the file name. It can also include namespaces and other qualifiers, depending on the runtime. For more
+     *         information, see <a
+     *         href="https://docs.aws.amazon.com/lambda/latest/dg/programming-model-v2.html">Programming Model</a>.
      */
 
     public String getHandler() {
@@ -273,13 +404,16 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The function that Lambda calls to begin executing your function. For Node.js, it is the
-     * <code>module-name.export</code> value in your function.
+     * The name of the method within your code that Lambda calls to execute your function. The format includes the file
+     * name. It can also include namespaces and other qualifiers, depending on the runtime. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/programming-model-v2.html">Programming Model</a>.
      * </p>
      * 
      * @param handler
-     *        The function that Lambda calls to begin executing your function. For Node.js, it is the
-     *        <code>module-name.export</code> value in your function.
+     *        The name of the method within your code that Lambda calls to execute your function. The format includes
+     *        the file name. It can also include namespaces and other qualifiers, depending on the runtime. For more
+     *        information, see <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/programming-model-v2.html">Programming Model</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -290,13 +424,11 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * A short user-defined function description. AWS Lambda does not use this value. Assign a meaningful description as
-     * you see fit.
+     * A description of the function.
      * </p>
      * 
      * @param description
-     *        A short user-defined function description. AWS Lambda does not use this value. Assign a meaningful
-     *        description as you see fit.
+     *        A description of the function.
      */
 
     public void setDescription(String description) {
@@ -305,12 +437,10 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * A short user-defined function description. AWS Lambda does not use this value. Assign a meaningful description as
-     * you see fit.
+     * A description of the function.
      * </p>
      * 
-     * @return A short user-defined function description. AWS Lambda does not use this value. Assign a meaningful
-     *         description as you see fit.
+     * @return A description of the function.
      */
 
     public String getDescription() {
@@ -319,13 +449,11 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * A short user-defined function description. AWS Lambda does not use this value. Assign a meaningful description as
-     * you see fit.
+     * A description of the function.
      * </p>
      * 
      * @param description
-     *        A short user-defined function description. AWS Lambda does not use this value. Assign a meaningful
-     *        description as you see fit.
+     *        A description of the function.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -336,15 +464,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The function execution time at which AWS Lambda should terminate the function. Because the execution time has
-     * cost implications, we recommend you set this value based on your expected execution time. The default is 3
-     * seconds.
+     * The amount of time that Lambda allows a function to run before stopping it. The default is 3 seconds. The maximum
+     * allowed value is 900 seconds.
      * </p>
      * 
      * @param timeout
-     *        The function execution time at which AWS Lambda should terminate the function. Because the execution time
-     *        has cost implications, we recommend you set this value based on your expected execution time. The default
-     *        is 3 seconds.
+     *        The amount of time that Lambda allows a function to run before stopping it. The default is 3 seconds. The
+     *        maximum allowed value is 900 seconds.
      */
 
     public void setTimeout(Integer timeout) {
@@ -353,14 +479,12 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The function execution time at which AWS Lambda should terminate the function. Because the execution time has
-     * cost implications, we recommend you set this value based on your expected execution time. The default is 3
-     * seconds.
+     * The amount of time that Lambda allows a function to run before stopping it. The default is 3 seconds. The maximum
+     * allowed value is 900 seconds.
      * </p>
      * 
-     * @return The function execution time at which AWS Lambda should terminate the function. Because the execution time
-     *         has cost implications, we recommend you set this value based on your expected execution time. The default
-     *         is 3 seconds.
+     * @return The amount of time that Lambda allows a function to run before stopping it. The default is 3 seconds. The
+     *         maximum allowed value is 900 seconds.
      */
 
     public Integer getTimeout() {
@@ -369,15 +493,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The function execution time at which AWS Lambda should terminate the function. Because the execution time has
-     * cost implications, we recommend you set this value based on your expected execution time. The default is 3
-     * seconds.
+     * The amount of time that Lambda allows a function to run before stopping it. The default is 3 seconds. The maximum
+     * allowed value is 900 seconds.
      * </p>
      * 
      * @param timeout
-     *        The function execution time at which AWS Lambda should terminate the function. Because the execution time
-     *        has cost implications, we recommend you set this value based on your expected execution time. The default
-     *        is 3 seconds.
+     *        The amount of time that Lambda allows a function to run before stopping it. The default is 3 seconds. The
+     *        maximum allowed value is 900 seconds.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -388,17 +510,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The amount of memory, in MB, your Lambda function is given. AWS Lambda uses this memory size to infer the amount
-     * of CPU allocated to your function. Your function use-case determines your CPU and memory requirements. For
-     * example, a database operation might need less memory compared to an image processing function. The default value
-     * is 128 MB. The value must be a multiple of 64 MB.
+     * The amount of memory that your function has access to. Increasing the function's memory also increases its CPU
+     * allocation. The default value is 128 MB. The value must be a multiple of 64 MB.
      * </p>
      * 
      * @param memorySize
-     *        The amount of memory, in MB, your Lambda function is given. AWS Lambda uses this memory size to infer the
-     *        amount of CPU allocated to your function. Your function use-case determines your CPU and memory
-     *        requirements. For example, a database operation might need less memory compared to an image processing
-     *        function. The default value is 128 MB. The value must be a multiple of 64 MB.
+     *        The amount of memory that your function has access to. Increasing the function's memory also increases its
+     *        CPU allocation. The default value is 128 MB. The value must be a multiple of 64 MB.
      */
 
     public void setMemorySize(Integer memorySize) {
@@ -407,16 +525,12 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The amount of memory, in MB, your Lambda function is given. AWS Lambda uses this memory size to infer the amount
-     * of CPU allocated to your function. Your function use-case determines your CPU and memory requirements. For
-     * example, a database operation might need less memory compared to an image processing function. The default value
-     * is 128 MB. The value must be a multiple of 64 MB.
+     * The amount of memory that your function has access to. Increasing the function's memory also increases its CPU
+     * allocation. The default value is 128 MB. The value must be a multiple of 64 MB.
      * </p>
      * 
-     * @return The amount of memory, in MB, your Lambda function is given. AWS Lambda uses this memory size to infer the
-     *         amount of CPU allocated to your function. Your function use-case determines your CPU and memory
-     *         requirements. For example, a database operation might need less memory compared to an image processing
-     *         function. The default value is 128 MB. The value must be a multiple of 64 MB.
+     * @return The amount of memory that your function has access to. Increasing the function's memory also increases
+     *         its CPU allocation. The default value is 128 MB. The value must be a multiple of 64 MB.
      */
 
     public Integer getMemorySize() {
@@ -425,17 +539,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The amount of memory, in MB, your Lambda function is given. AWS Lambda uses this memory size to infer the amount
-     * of CPU allocated to your function. Your function use-case determines your CPU and memory requirements. For
-     * example, a database operation might need less memory compared to an image processing function. The default value
-     * is 128 MB. The value must be a multiple of 64 MB.
+     * The amount of memory that your function has access to. Increasing the function's memory also increases its CPU
+     * allocation. The default value is 128 MB. The value must be a multiple of 64 MB.
      * </p>
      * 
      * @param memorySize
-     *        The amount of memory, in MB, your Lambda function is given. AWS Lambda uses this memory size to infer the
-     *        amount of CPU allocated to your function. Your function use-case determines your CPU and memory
-     *        requirements. For example, a database operation might need less memory compared to an image processing
-     *        function. The default value is 128 MB. The value must be a multiple of 64 MB.
+     *        The amount of memory that your function has access to. Increasing the function's memory also increases its
+     *        CPU allocation. The default value is 128 MB. The value must be a multiple of 64 MB.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -445,7 +555,17 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
     }
 
     /**
+     * <p>
+     * For network connectivity to AWS resources in a VPC, specify a list of security groups and subnets in the VPC.
+     * When you connect a function to a VPC, it can only access resources and the internet through that VPC. For more
+     * information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/vpc.html">VPC Settings</a>.
+     * </p>
+     * 
      * @param vpcConfig
+     *        For network connectivity to AWS resources in a VPC, specify a list of security groups and subnets in the
+     *        VPC. When you connect a function to a VPC, it can only access resources and the internet through that VPC.
+     *        For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/vpc.html">VPC
+     *        Settings</a>.
      */
 
     public void setVpcConfig(VpcConfig vpcConfig) {
@@ -453,7 +573,16 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
     }
 
     /**
-     * @return
+     * <p>
+     * For network connectivity to AWS resources in a VPC, specify a list of security groups and subnets in the VPC.
+     * When you connect a function to a VPC, it can only access resources and the internet through that VPC. For more
+     * information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/vpc.html">VPC Settings</a>.
+     * </p>
+     * 
+     * @return For network connectivity to AWS resources in a VPC, specify a list of security groups and subnets in the
+     *         VPC. When you connect a function to a VPC, it can only access resources and the internet through that
+     *         VPC. For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/vpc.html">VPC
+     *         Settings</a>.
      */
 
     public VpcConfig getVpcConfig() {
@@ -461,7 +590,17 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
     }
 
     /**
+     * <p>
+     * For network connectivity to AWS resources in a VPC, specify a list of security groups and subnets in the VPC.
+     * When you connect a function to a VPC, it can only access resources and the internet through that VPC. For more
+     * information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/vpc.html">VPC Settings</a>.
+     * </p>
+     * 
      * @param vpcConfig
+     *        For network connectivity to AWS resources in a VPC, specify a list of security groups and subnets in the
+     *        VPC. When you connect a function to a VPC, it can only access resources and the internet through that VPC.
+     *        For more information, see <a href="https://docs.aws.amazon.com/lambda/latest/dg/vpc.html">VPC
+     *        Settings</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -472,11 +611,11 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parent object that contains your environment's configuration settings.
+     * Environment variables that are accessible from function code during execution.
      * </p>
      * 
      * @param environment
-     *        The parent object that contains your environment's configuration settings.
+     *        Environment variables that are accessible from function code during execution.
      */
 
     public void setEnvironment(Environment environment) {
@@ -485,10 +624,10 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parent object that contains your environment's configuration settings.
+     * Environment variables that are accessible from function code during execution.
      * </p>
      * 
-     * @return The parent object that contains your environment's configuration settings.
+     * @return Environment variables that are accessible from function code during execution.
      */
 
     public Environment getEnvironment() {
@@ -497,11 +636,11 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parent object that contains your environment's configuration settings.
+     * Environment variables that are accessible from function code during execution.
      * </p>
      * 
      * @param environment
-     *        The parent object that contains your environment's configuration settings.
+     *        Environment variables that are accessible from function code during execution.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -512,36 +651,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The runtime environment for the Lambda function.
+     * The identifier of the function's <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * </p>
-     * <p>
-     * To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the value to
-     * "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js runtime v4.3,
-     * set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     * </p>
-     * <note>
-     * <p>
-     * Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js runtime
-     * versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so will result in
-     * an invalid parameter error being returned. Note that you will have to follow this procedure for each region that
-     * contains functions written in the Node v0.10.42 runtime.
-     * </p>
-     * </note>
      * 
      * @param runtime
-     *        The runtime environment for the Lambda function.</p>
-     *        <p>
-     *        To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the
-     *        value to "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js
-     *        runtime v4.3, set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     *        </p>
-     *        <note>
-     *        <p>
-     *        Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js
-     *        runtime versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so
-     *        will result in an invalid parameter error being returned. Note that you will have to follow this procedure
-     *        for each region that contains functions written in the Node v0.10.42 runtime.
-     *        </p>
+     *        The identifier of the function's <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * @see Runtime
      */
 
@@ -551,35 +667,12 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The runtime environment for the Lambda function.
+     * The identifier of the function's <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * </p>
-     * <p>
-     * To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the value to
-     * "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js runtime v4.3,
-     * set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     * </p>
-     * <note>
-     * <p>
-     * Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js runtime
-     * versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so will result in
-     * an invalid parameter error being returned. Note that you will have to follow this procedure for each region that
-     * contains functions written in the Node v0.10.42 runtime.
-     * </p>
-     * </note>
      * 
-     * @return The runtime environment for the Lambda function.</p>
-     *         <p>
-     *         To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the
-     *         value to "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js
-     *         runtime v4.3, set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     *         </p>
-     *         <note>
-     *         <p>
-     *         Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js
-     *         runtime versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so
-     *         will result in an invalid parameter error being returned. Note that you will have to follow this
-     *         procedure for each region that contains functions written in the Node v0.10.42 runtime.
-     *         </p>
+     * @return The identifier of the function's <a
+     *         href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * @see Runtime
      */
 
@@ -589,36 +682,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The runtime environment for the Lambda function.
+     * The identifier of the function's <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * </p>
-     * <p>
-     * To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the value to
-     * "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js runtime v4.3,
-     * set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     * </p>
-     * <note>
-     * <p>
-     * Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js runtime
-     * versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so will result in
-     * an invalid parameter error being returned. Note that you will have to follow this procedure for each region that
-     * contains functions written in the Node v0.10.42 runtime.
-     * </p>
-     * </note>
      * 
      * @param runtime
-     *        The runtime environment for the Lambda function.</p>
-     *        <p>
-     *        To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the
-     *        value to "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js
-     *        runtime v4.3, set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     *        </p>
-     *        <note>
-     *        <p>
-     *        Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js
-     *        runtime versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so
-     *        will result in an invalid parameter error being returned. Note that you will have to follow this procedure
-     *        for each region that contains functions written in the Node v0.10.42 runtime.
-     *        </p>
+     *        The identifier of the function's <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see Runtime
      */
@@ -630,36 +700,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The runtime environment for the Lambda function.
+     * The identifier of the function's <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * </p>
-     * <p>
-     * To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the value to
-     * "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js runtime v4.3,
-     * set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     * </p>
-     * <note>
-     * <p>
-     * Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js runtime
-     * versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so will result in
-     * an invalid parameter error being returned. Note that you will have to follow this procedure for each region that
-     * contains functions written in the Node v0.10.42 runtime.
-     * </p>
-     * </note>
      * 
      * @param runtime
-     *        The runtime environment for the Lambda function.</p>
-     *        <p>
-     *        To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the
-     *        value to "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js
-     *        runtime v4.3, set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     *        </p>
-     *        <note>
-     *        <p>
-     *        Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js
-     *        runtime versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so
-     *        will result in an invalid parameter error being returned. Note that you will have to follow this procedure
-     *        for each region that contains functions written in the Node v0.10.42 runtime.
-     *        </p>
+     *        The identifier of the function's <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * @see Runtime
      */
 
@@ -669,36 +716,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The runtime environment for the Lambda function.
+     * The identifier of the function's <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * </p>
-     * <p>
-     * To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the value to
-     * "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js runtime v4.3,
-     * set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     * </p>
-     * <note>
-     * <p>
-     * Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js runtime
-     * versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so will result in
-     * an invalid parameter error being returned. Note that you will have to follow this procedure for each region that
-     * contains functions written in the Node v0.10.42 runtime.
-     * </p>
-     * </note>
      * 
      * @param runtime
-     *        The runtime environment for the Lambda function.</p>
-     *        <p>
-     *        To use the Python runtime v3.6, set the value to "python3.6". To use the Python runtime v2.7, set the
-     *        value to "python2.7". To use the Node.js runtime v6.10, set the value to "nodejs6.10". To use the Node.js
-     *        runtime v4.3, set the value to "nodejs4.3". To use the Python runtime v3.6, set the value to "python3.6".
-     *        </p>
-     *        <note>
-     *        <p>
-     *        Node v0.10.42 is currently marked as deprecated. You must migrate existing functions to the newer Node.js
-     *        runtime versions available on AWS Lambda (nodejs4.3 or nodejs6.10) as soon as possible. Failure to do so
-     *        will result in an invalid parameter error being returned. Note that you will have to follow this procedure
-     *        for each region that contains functions written in the Node v0.10.42 runtime.
-     *        </p>
+     *        The identifier of the function's <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">runtime</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see Runtime
      */
@@ -710,12 +734,15 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic.
+     * A dead letter queue configuration that specifies the queue or topic where Lambda sends asynchronous events when
+     * they fail processing. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/dlq.html">Dead Letter Queues</a>.
      * </p>
      * 
      * @param deadLetterConfig
-     *        The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS
-     *        topic.
+     *        A dead letter queue configuration that specifies the queue or topic where Lambda sends asynchronous events
+     *        when they fail processing. For more information, see <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/dlq.html">Dead Letter Queues</a>.
      */
 
     public void setDeadLetterConfig(DeadLetterConfig deadLetterConfig) {
@@ -724,11 +751,14 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic.
+     * A dead letter queue configuration that specifies the queue or topic where Lambda sends asynchronous events when
+     * they fail processing. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/dlq.html">Dead Letter Queues</a>.
      * </p>
      * 
-     * @return The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon
-     *         SNS topic.
+     * @return A dead letter queue configuration that specifies the queue or topic where Lambda sends asynchronous
+     *         events when they fail processing. For more information, see <a
+     *         href="https://docs.aws.amazon.com/lambda/latest/dg/dlq.html">Dead Letter Queues</a>.
      */
 
     public DeadLetterConfig getDeadLetterConfig() {
@@ -737,12 +767,15 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic.
+     * A dead letter queue configuration that specifies the queue or topic where Lambda sends asynchronous events when
+     * they fail processing. For more information, see <a
+     * href="https://docs.aws.amazon.com/lambda/latest/dg/dlq.html">Dead Letter Queues</a>.
      * </p>
      * 
      * @param deadLetterConfig
-     *        The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS
-     *        topic.
+     *        A dead letter queue configuration that specifies the queue or topic where Lambda sends asynchronous events
+     *        when they fail processing. For more information, see <a
+     *        href="https://docs.aws.amazon.com/lambda/latest/dg/dlq.html">Dead Letter Queues</a>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -753,13 +786,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the KMS key used to encrypt your function's environment variables. If you elect
-     * to use the AWS Lambda default service key, pass in an empty string ("") for this parameter.
+     * The ARN of the AWS Key Management Service (AWS KMS) key that's used to encrypt your function's environment
+     * variables. If it's not provided, AWS Lambda uses a default service key.
      * </p>
      * 
      * @param kMSKeyArn
-     *        The Amazon Resource Name (ARN) of the KMS key used to encrypt your function's environment variables. If
-     *        you elect to use the AWS Lambda default service key, pass in an empty string ("") for this parameter.
+     *        The ARN of the AWS Key Management Service (AWS KMS) key that's used to encrypt your function's environment
+     *        variables. If it's not provided, AWS Lambda uses a default service key.
      */
 
     public void setKMSKeyArn(String kMSKeyArn) {
@@ -768,12 +801,12 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the KMS key used to encrypt your function's environment variables. If you elect
-     * to use the AWS Lambda default service key, pass in an empty string ("") for this parameter.
+     * The ARN of the AWS Key Management Service (AWS KMS) key that's used to encrypt your function's environment
+     * variables. If it's not provided, AWS Lambda uses a default service key.
      * </p>
      * 
-     * @return The Amazon Resource Name (ARN) of the KMS key used to encrypt your function's environment variables. If
-     *         you elect to use the AWS Lambda default service key, pass in an empty string ("") for this parameter.
+     * @return The ARN of the AWS Key Management Service (AWS KMS) key that's used to encrypt your function's
+     *         environment variables. If it's not provided, AWS Lambda uses a default service key.
      */
 
     public String getKMSKeyArn() {
@@ -782,13 +815,13 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the KMS key used to encrypt your function's environment variables. If you elect
-     * to use the AWS Lambda default service key, pass in an empty string ("") for this parameter.
+     * The ARN of the AWS Key Management Service (AWS KMS) key that's used to encrypt your function's environment
+     * variables. If it's not provided, AWS Lambda uses a default service key.
      * </p>
      * 
      * @param kMSKeyArn
-     *        The Amazon Resource Name (ARN) of the KMS key used to encrypt your function's environment variables. If
-     *        you elect to use the AWS Lambda default service key, pass in an empty string ("") for this parameter.
+     *        The ARN of the AWS Key Management Service (AWS KMS) key that's used to encrypt your function's environment
+     *        variables. If it's not provided, AWS Lambda uses a default service key.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -799,11 +832,12 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parent object that contains your function's tracing settings.
+     * Set <code>Mode</code> to <code>Active</code> to sample and trace a subset of incoming requests with AWS X-Ray.
      * </p>
      * 
      * @param tracingConfig
-     *        The parent object that contains your function's tracing settings.
+     *        Set <code>Mode</code> to <code>Active</code> to sample and trace a subset of incoming requests with AWS
+     *        X-Ray.
      */
 
     public void setTracingConfig(TracingConfig tracingConfig) {
@@ -812,10 +846,11 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parent object that contains your function's tracing settings.
+     * Set <code>Mode</code> to <code>Active</code> to sample and trace a subset of incoming requests with AWS X-Ray.
      * </p>
      * 
-     * @return The parent object that contains your function's tracing settings.
+     * @return Set <code>Mode</code> to <code>Active</code> to sample and trace a subset of incoming requests with AWS
+     *         X-Ray.
      */
 
     public TracingConfig getTracingConfig() {
@@ -824,11 +859,12 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
 
     /**
      * <p>
-     * The parent object that contains your function's tracing settings.
+     * Set <code>Mode</code> to <code>Active</code> to sample and trace a subset of incoming requests with AWS X-Ray.
      * </p>
      * 
      * @param tracingConfig
-     *        The parent object that contains your function's tracing settings.
+     *        Set <code>Mode</code> to <code>Active</code> to sample and trace a subset of incoming requests with AWS
+     *        X-Ray.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -838,7 +874,139 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * Only update the function if the revision ID matches the ID that's specified. Use this option to avoid modifying a
+     * function that has changed since you last read it.
+     * </p>
+     * 
+     * @param revisionId
+     *        Only update the function if the revision ID matches the ID that's specified. Use this option to avoid
+     *        modifying a function that has changed since you last read it.
+     */
+
+    public void setRevisionId(String revisionId) {
+        this.revisionId = revisionId;
+    }
+
+    /**
+     * <p>
+     * Only update the function if the revision ID matches the ID that's specified. Use this option to avoid modifying a
+     * function that has changed since you last read it.
+     * </p>
+     * 
+     * @return Only update the function if the revision ID matches the ID that's specified. Use this option to avoid
+     *         modifying a function that has changed since you last read it.
+     */
+
+    public String getRevisionId() {
+        return this.revisionId;
+    }
+
+    /**
+     * <p>
+     * Only update the function if the revision ID matches the ID that's specified. Use this option to avoid modifying a
+     * function that has changed since you last read it.
+     * </p>
+     * 
+     * @param revisionId
+     *        Only update the function if the revision ID matches the ID that's specified. Use this option to avoid
+     *        modifying a function that has changed since you last read it.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public UpdateFunctionConfigurationRequest withRevisionId(String revisionId) {
+        setRevisionId(revisionId);
+        return this;
+    }
+
+    /**
+     * <p>
+     * A list of <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">function layers</a> to
+     * add to the function's execution environment. Specify each layer by its ARN, including the version.
+     * </p>
+     * 
+     * @return A list of <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">function
+     *         layers</a> to add to the function's execution environment. Specify each layer by its ARN, including the
+     *         version.
+     */
+
+    public java.util.List<String> getLayers() {
+        if (layers == null) {
+            layers = new com.amazonaws.internal.SdkInternalList<String>();
+        }
+        return layers;
+    }
+
+    /**
+     * <p>
+     * A list of <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">function layers</a> to
+     * add to the function's execution environment. Specify each layer by its ARN, including the version.
+     * </p>
+     * 
+     * @param layers
+     *        A list of <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">function
+     *        layers</a> to add to the function's execution environment. Specify each layer by its ARN, including the
+     *        version.
+     */
+
+    public void setLayers(java.util.Collection<String> layers) {
+        if (layers == null) {
+            this.layers = null;
+            return;
+        }
+
+        this.layers = new com.amazonaws.internal.SdkInternalList<String>(layers);
+    }
+
+    /**
+     * <p>
+     * A list of <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">function layers</a> to
+     * add to the function's execution environment. Specify each layer by its ARN, including the version.
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setLayers(java.util.Collection)} or {@link #withLayers(java.util.Collection)} if you want to override the
+     * existing values.
+     * </p>
+     * 
+     * @param layers
+     *        A list of <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">function
+     *        layers</a> to add to the function's execution environment. Specify each layer by its ARN, including the
+     *        version.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public UpdateFunctionConfigurationRequest withLayers(String... layers) {
+        if (this.layers == null) {
+            setLayers(new com.amazonaws.internal.SdkInternalList<String>(layers.length));
+        }
+        for (String ele : layers) {
+            this.layers.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * A list of <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">function layers</a> to
+     * add to the function's execution environment. Specify each layer by its ARN, including the version.
+     * </p>
+     * 
+     * @param layers
+     *        A list of <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">function
+     *        layers</a> to add to the function's execution environment. Specify each layer by its ARN, including the
+     *        version.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public UpdateFunctionConfigurationRequest withLayers(java.util.Collection<String> layers) {
+        setLayers(layers);
+        return this;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -871,7 +1039,11 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
         if (getKMSKeyArn() != null)
             sb.append("KMSKeyArn: ").append(getKMSKeyArn()).append(",");
         if (getTracingConfig() != null)
-            sb.append("TracingConfig: ").append(getTracingConfig());
+            sb.append("TracingConfig: ").append(getTracingConfig()).append(",");
+        if (getRevisionId() != null)
+            sb.append("RevisionId: ").append(getRevisionId()).append(",");
+        if (getLayers() != null)
+            sb.append("Layers: ").append(getLayers());
         sb.append("}");
         return sb.toString();
     }
@@ -934,6 +1106,14 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
             return false;
         if (other.getTracingConfig() != null && other.getTracingConfig().equals(this.getTracingConfig()) == false)
             return false;
+        if (other.getRevisionId() == null ^ this.getRevisionId() == null)
+            return false;
+        if (other.getRevisionId() != null && other.getRevisionId().equals(this.getRevisionId()) == false)
+            return false;
+        if (other.getLayers() == null ^ this.getLayers() == null)
+            return false;
+        if (other.getLayers() != null && other.getLayers().equals(this.getLayers()) == false)
+            return false;
         return true;
     }
 
@@ -954,6 +1134,8 @@ public class UpdateFunctionConfigurationRequest extends com.amazonaws.AmazonWebS
         hashCode = prime * hashCode + ((getDeadLetterConfig() == null) ? 0 : getDeadLetterConfig().hashCode());
         hashCode = prime * hashCode + ((getKMSKeyArn() == null) ? 0 : getKMSKeyArn().hashCode());
         hashCode = prime * hashCode + ((getTracingConfig() == null) ? 0 : getTracingConfig().hashCode());
+        hashCode = prime * hashCode + ((getRevisionId() == null) ? 0 : getRevisionId().hashCode());
+        hashCode = prime * hashCode + ((getLayers() == null) ? 0 : getLayers().hashCode());
         return hashCode;
     }
 

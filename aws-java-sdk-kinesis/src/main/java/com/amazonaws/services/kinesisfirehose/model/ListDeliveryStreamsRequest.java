@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -43,7 +43,7 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
      * </li>
      * <li>
      * <p>
-     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.
+     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis data stream as a source.
      * </p>
      * </li>
      * </ul>
@@ -54,7 +54,9 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
     private String deliveryStreamType;
     /**
      * <p>
-     * The name of the delivery stream to start the list with.
+     * The list of delivery streams returned by this call to <code>ListDeliveryStreams</code> will start with the
+     * delivery stream whose name comes alphabetically immediately after the name you specify in
+     * <code>ExclusiveStartDeliveryStreamName</code>.
      * </p>
      */
     private String exclusiveStartDeliveryStreamName;
@@ -111,7 +113,7 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
      * </li>
      * <li>
      * <p>
-     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.
+     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis data stream as a source.
      * </p>
      * </li>
      * </ul>
@@ -129,7 +131,7 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
      *        </li>
      *        <li>
      *        <p>
-     *        <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.
+     *        <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis data stream as a source.
      *        </p>
      *        </li>
      *        </ul>
@@ -154,7 +156,7 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
      * </li>
      * <li>
      * <p>
-     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.
+     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis data stream as a source.
      * </p>
      * </li>
      * </ul>
@@ -171,7 +173,7 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
      *         </li>
      *         <li>
      *         <p>
-     *         <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.
+     *         <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis data stream as a source.
      *         </p>
      *         </li>
      *         </ul>
@@ -196,7 +198,7 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
      * </li>
      * <li>
      * <p>
-     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.
+     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis data stream as a source.
      * </p>
      * </li>
      * </ul>
@@ -214,7 +216,7 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
      *        </li>
      *        <li>
      *        <p>
-     *        <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.
+     *        <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis data stream as a source.
      *        </p>
      *        </li>
      *        </ul>
@@ -241,7 +243,7 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
      * </li>
      * <li>
      * <p>
-     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.
+     * <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis data stream as a source.
      * </p>
      * </li>
      * </ul>
@@ -259,7 +261,7 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
      *        </li>
      *        <li>
      *        <p>
-     *        <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.
+     *        <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis data stream as a source.
      *        </p>
      *        </li>
      *        </ul>
@@ -276,11 +278,15 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
 
     /**
      * <p>
-     * The name of the delivery stream to start the list with.
+     * The list of delivery streams returned by this call to <code>ListDeliveryStreams</code> will start with the
+     * delivery stream whose name comes alphabetically immediately after the name you specify in
+     * <code>ExclusiveStartDeliveryStreamName</code>.
      * </p>
      * 
      * @param exclusiveStartDeliveryStreamName
-     *        The name of the delivery stream to start the list with.
+     *        The list of delivery streams returned by this call to <code>ListDeliveryStreams</code> will start with the
+     *        delivery stream whose name comes alphabetically immediately after the name you specify in
+     *        <code>ExclusiveStartDeliveryStreamName</code>.
      */
 
     public void setExclusiveStartDeliveryStreamName(String exclusiveStartDeliveryStreamName) {
@@ -289,10 +295,14 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
 
     /**
      * <p>
-     * The name of the delivery stream to start the list with.
+     * The list of delivery streams returned by this call to <code>ListDeliveryStreams</code> will start with the
+     * delivery stream whose name comes alphabetically immediately after the name you specify in
+     * <code>ExclusiveStartDeliveryStreamName</code>.
      * </p>
      * 
-     * @return The name of the delivery stream to start the list with.
+     * @return The list of delivery streams returned by this call to <code>ListDeliveryStreams</code> will start with
+     *         the delivery stream whose name comes alphabetically immediately after the name you specify in
+     *         <code>ExclusiveStartDeliveryStreamName</code>.
      */
 
     public String getExclusiveStartDeliveryStreamName() {
@@ -301,11 +311,15 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
 
     /**
      * <p>
-     * The name of the delivery stream to start the list with.
+     * The list of delivery streams returned by this call to <code>ListDeliveryStreams</code> will start with the
+     * delivery stream whose name comes alphabetically immediately after the name you specify in
+     * <code>ExclusiveStartDeliveryStreamName</code>.
      * </p>
      * 
      * @param exclusiveStartDeliveryStreamName
-     *        The name of the delivery stream to start the list with.
+     *        The list of delivery streams returned by this call to <code>ListDeliveryStreams</code> will start with the
+     *        delivery stream whose name comes alphabetically immediately after the name you specify in
+     *        <code>ExclusiveStartDeliveryStreamName</code>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -315,7 +329,8 @@ public class ListDeliveryStreamsRequest extends com.amazonaws.AmazonWebServiceRe
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

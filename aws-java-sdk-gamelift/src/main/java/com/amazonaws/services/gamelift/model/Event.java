@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -45,16 +45,6 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * Type of event being logged. The following events are currently in use:
      * </p>
-     * <p>
-     * <b>General events:</b>
-     * </p>
-     * <ul>
-     * <li>
-     * <p>
-     * GENERIC_EVENT -- An unspecified event has occurred.
-     * </p>
-     * </li>
-     * </ul>
      * <p>
      * <b>Fleet creation events:</b>
      * </p>
@@ -160,13 +150,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for peering failure is that
      * the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this, change the CIDR block for the VPC
      * in your AWS account. For more information on VPC peering failures, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
-     * >http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
+     * >https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      * </p>
      * </li>
      * <li>
      * <p>
      * FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Spot instance events:</b>
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      * </p>
      * </li>
      * </ul>
@@ -189,6 +189,11 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * <li>
      * <p>
      * FLEET_DELETED -- A request to delete a fleet was initiated.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * GENERIC_EVENT -- An unspecified event has occurred.
      * </p>
      * </li>
      * </ul>
@@ -300,16 +305,6 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * Type of event being logged. The following events are currently in use:
      * </p>
      * <p>
-     * <b>General events:</b>
-     * </p>
-     * <ul>
-     * <li>
-     * <p>
-     * GENERIC_EVENT -- An unspecified event has occurred.
-     * </p>
-     * </li>
-     * </ul>
-     * <p>
      * <b>Fleet creation events:</b>
      * </p>
      * <ul>
@@ -414,13 +409,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for peering failure is that
      * the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this, change the CIDR block for the VPC
      * in your AWS account. For more information on VPC peering failures, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
-     * >http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
+     * >https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      * </p>
      * </li>
      * <li>
      * <p>
      * FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Spot instance events:</b>
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      * </p>
      * </li>
      * </ul>
@@ -445,20 +450,15 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * FLEET_DELETED -- A request to delete a fleet was initiated.
      * </p>
      * </li>
+     * <li>
+     * <p>
+     * GENERIC_EVENT -- An unspecified event has occurred.
+     * </p>
+     * </li>
      * </ul>
      * 
      * @param eventCode
      *        Type of event being logged. The following events are currently in use:</p>
-     *        <p>
-     *        <b>General events:</b>
-     *        </p>
-     *        <ul>
-     *        <li>
-     *        <p>
-     *        GENERIC_EVENT -- An unspecified event has occurred.
-     *        </p>
-     *        </li>
-     *        </ul>
      *        <p>
      *        <b>Fleet creation events:</b>
      *        </p>
@@ -566,14 +566,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *        information (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for
      *        peering failure is that the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this,
      *        change the CIDR block for the VPC in your AWS account. For more information on VPC peering failures, see
-     *        <a
-     *        href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">http
-     *        ://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     *        <a href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">
+     *        https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      *        </p>
      *        </li>
      *        <li>
      *        <p>
      *        FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     *        </p>
+     *        </li>
+     *        </ul>
+     *        <p>
+     *        <b>Spot instance events:</b>
+     *        </p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      *        </p>
      *        </li>
      *        </ul>
@@ -598,6 +607,11 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *        FLEET_DELETED -- A request to delete a fleet was initiated.
      *        </p>
      *        </li>
+     *        <li>
+     *        <p>
+     *        GENERIC_EVENT -- An unspecified event has occurred.
+     *        </p>
+     *        </li>
      * @see EventCode
      */
 
@@ -609,16 +623,6 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * Type of event being logged. The following events are currently in use:
      * </p>
-     * <p>
-     * <b>General events:</b>
-     * </p>
-     * <ul>
-     * <li>
-     * <p>
-     * GENERIC_EVENT -- An unspecified event has occurred.
-     * </p>
-     * </li>
-     * </ul>
      * <p>
      * <b>Fleet creation events:</b>
      * </p>
@@ -724,13 +728,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for peering failure is that
      * the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this, change the CIDR block for the VPC
      * in your AWS account. For more information on VPC peering failures, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
-     * >http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
+     * >https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      * </p>
      * </li>
      * <li>
      * <p>
      * FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Spot instance events:</b>
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      * </p>
      * </li>
      * </ul>
@@ -755,19 +769,14 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * FLEET_DELETED -- A request to delete a fleet was initiated.
      * </p>
      * </li>
+     * <li>
+     * <p>
+     * GENERIC_EVENT -- An unspecified event has occurred.
+     * </p>
+     * </li>
      * </ul>
      * 
      * @return Type of event being logged. The following events are currently in use:</p>
-     *         <p>
-     *         <b>General events:</b>
-     *         </p>
-     *         <ul>
-     *         <li>
-     *         <p>
-     *         GENERIC_EVENT -- An unspecified event has occurred.
-     *         </p>
-     *         </li>
-     *         </ul>
      *         <p>
      *         <b>Fleet creation events:</b>
      *         </p>
@@ -875,13 +884,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *         information (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for
      *         peering failure is that the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this,
      *         change the CIDR block for the VPC in your AWS account. For more information on VPC peering failures, see
-     *         <a href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">
-     *         http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     *         <a href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">
+     *         https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      *         </p>
      *         </li>
      *         <li>
      *         <p>
      *         FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         <b>Spot instance events:</b>
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      *         </p>
      *         </li>
      *         </ul>
@@ -906,6 +925,11 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *         FLEET_DELETED -- A request to delete a fleet was initiated.
      *         </p>
      *         </li>
+     *         <li>
+     *         <p>
+     *         GENERIC_EVENT -- An unspecified event has occurred.
+     *         </p>
+     *         </li>
      * @see EventCode
      */
 
@@ -917,16 +941,6 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * <p>
      * Type of event being logged. The following events are currently in use:
      * </p>
-     * <p>
-     * <b>General events:</b>
-     * </p>
-     * <ul>
-     * <li>
-     * <p>
-     * GENERIC_EVENT -- An unspecified event has occurred.
-     * </p>
-     * </li>
-     * </ul>
      * <p>
      * <b>Fleet creation events:</b>
      * </p>
@@ -1032,13 +1046,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for peering failure is that
      * the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this, change the CIDR block for the VPC
      * in your AWS account. For more information on VPC peering failures, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
-     * >http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
+     * >https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      * </p>
      * </li>
      * <li>
      * <p>
      * FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Spot instance events:</b>
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      * </p>
      * </li>
      * </ul>
@@ -1063,20 +1087,15 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * FLEET_DELETED -- A request to delete a fleet was initiated.
      * </p>
      * </li>
+     * <li>
+     * <p>
+     * GENERIC_EVENT -- An unspecified event has occurred.
+     * </p>
+     * </li>
      * </ul>
      * 
      * @param eventCode
      *        Type of event being logged. The following events are currently in use:</p>
-     *        <p>
-     *        <b>General events:</b>
-     *        </p>
-     *        <ul>
-     *        <li>
-     *        <p>
-     *        GENERIC_EVENT -- An unspecified event has occurred.
-     *        </p>
-     *        </li>
-     *        </ul>
      *        <p>
      *        <b>Fleet creation events:</b>
      *        </p>
@@ -1184,14 +1203,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *        information (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for
      *        peering failure is that the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this,
      *        change the CIDR block for the VPC in your AWS account. For more information on VPC peering failures, see
-     *        <a
-     *        href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">http
-     *        ://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     *        <a href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">
+     *        https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      *        </p>
      *        </li>
      *        <li>
      *        <p>
      *        FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     *        </p>
+     *        </li>
+     *        </ul>
+     *        <p>
+     *        <b>Spot instance events:</b>
+     *        </p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      *        </p>
      *        </li>
      *        </ul>
@@ -1214,6 +1242,11 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *        <li>
      *        <p>
      *        FLEET_DELETED -- A request to delete a fleet was initiated.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        GENERIC_EVENT -- An unspecified event has occurred.
      *        </p>
      *        </li>
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -1230,16 +1263,6 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * Type of event being logged. The following events are currently in use:
      * </p>
      * <p>
-     * <b>General events:</b>
-     * </p>
-     * <ul>
-     * <li>
-     * <p>
-     * GENERIC_EVENT -- An unspecified event has occurred.
-     * </p>
-     * </li>
-     * </ul>
-     * <p>
      * <b>Fleet creation events:</b>
      * </p>
      * <ul>
@@ -1344,13 +1367,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for peering failure is that
      * the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this, change the CIDR block for the VPC
      * in your AWS account. For more information on VPC peering failures, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
-     * >http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
+     * >https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      * </p>
      * </li>
      * <li>
      * <p>
      * FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Spot instance events:</b>
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      * </p>
      * </li>
      * </ul>
@@ -1375,20 +1408,15 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * FLEET_DELETED -- A request to delete a fleet was initiated.
      * </p>
      * </li>
+     * <li>
+     * <p>
+     * GENERIC_EVENT -- An unspecified event has occurred.
+     * </p>
+     * </li>
      * </ul>
      * 
      * @param eventCode
      *        Type of event being logged. The following events are currently in use:</p>
-     *        <p>
-     *        <b>General events:</b>
-     *        </p>
-     *        <ul>
-     *        <li>
-     *        <p>
-     *        GENERIC_EVENT -- An unspecified event has occurred.
-     *        </p>
-     *        </li>
-     *        </ul>
      *        <p>
      *        <b>Fleet creation events:</b>
      *        </p>
@@ -1496,14 +1524,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *        information (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for
      *        peering failure is that the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this,
      *        change the CIDR block for the VPC in your AWS account. For more information on VPC peering failures, see
-     *        <a
-     *        href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">http
-     *        ://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     *        <a href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">
+     *        https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      *        </p>
      *        </li>
      *        <li>
      *        <p>
      *        FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     *        </p>
+     *        </li>
+     *        </ul>
+     *        <p>
+     *        <b>Spot instance events:</b>
+     *        </p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      *        </p>
      *        </li>
      *        </ul>
@@ -1526,6 +1563,11 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *        <li>
      *        <p>
      *        FLEET_DELETED -- A request to delete a fleet was initiated.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        GENERIC_EVENT -- An unspecified event has occurred.
      *        </p>
      *        </li>
      * @see EventCode
@@ -1540,16 +1582,6 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * Type of event being logged. The following events are currently in use:
      * </p>
      * <p>
-     * <b>General events:</b>
-     * </p>
-     * <ul>
-     * <li>
-     * <p>
-     * GENERIC_EVENT -- An unspecified event has occurred.
-     * </p>
-     * </li>
-     * </ul>
-     * <p>
      * <b>Fleet creation events:</b>
      * </p>
      * <ul>
@@ -1654,13 +1686,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for peering failure is that
      * the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this, change the CIDR block for the VPC
      * in your AWS account. For more information on VPC peering failures, see <a
-     * href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
-     * >http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     * href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html"
+     * >https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      * </p>
      * </li>
      * <li>
      * <p>
      * FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Spot instance events:</b>
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      * </p>
      * </li>
      * </ul>
@@ -1685,20 +1727,15 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      * FLEET_DELETED -- A request to delete a fleet was initiated.
      * </p>
      * </li>
+     * <li>
+     * <p>
+     * GENERIC_EVENT -- An unspecified event has occurred.
+     * </p>
+     * </li>
      * </ul>
      * 
      * @param eventCode
      *        Type of event being logged. The following events are currently in use:</p>
-     *        <p>
-     *        <b>General events:</b>
-     *        </p>
-     *        <ul>
-     *        <li>
-     *        <p>
-     *        GENERIC_EVENT -- An unspecified event has occurred.
-     *        </p>
-     *        </li>
-     *        </ul>
      *        <p>
      *        <b>Fleet creation events:</b>
      *        </p>
@@ -1806,14 +1843,23 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *        information (see <a>DescribeVpcPeeringConnections</a>) provide additional detail. A common reason for
      *        peering failure is that the two VPCs have overlapping CIDR blocks of IPv4 addresses. To resolve this,
      *        change the CIDR block for the VPC in your AWS account. For more information on VPC peering failures, see
-     *        <a
-     *        href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">http
-     *        ://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
+     *        <a href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html">
+     *        https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/invalid-peering-configurations.html</a>
      *        </p>
      *        </li>
      *        <li>
      *        <p>
      *        FLEET_VPC_PEERING_DELETED -- A VPC peering connection has been successfully deleted.
+     *        </p>
+     *        </li>
+     *        </ul>
+     *        <p>
+     *        <b>Spot instance events:</b>
+     *        </p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        INSTANCE_INTERRUPTED -- A spot instance was interrupted by EC2 with a two-minute notification.
      *        </p>
      *        </li>
      *        </ul>
@@ -1836,6 +1882,11 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
      *        <li>
      *        <p>
      *        FLEET_DELETED -- A request to delete a fleet was initiated.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        GENERIC_EVENT -- An unspecified event has occurred.
      *        </p>
      *        </li>
      * @return Returns a reference to this object so that method calls can be chained together.
@@ -1983,7 +2034,8 @@ public class Event implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

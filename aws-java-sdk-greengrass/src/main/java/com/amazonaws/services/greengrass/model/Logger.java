@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -18,7 +18,7 @@ import com.amazonaws.protocol.StructuredPojo;
 import com.amazonaws.protocol.ProtocolMarshaller;
 
 /**
- * Information on the Logger
+ * Information about a logger
  * 
  * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/Logger" target="_top">AWS API
  *      Documentation</a>
@@ -26,22 +26,25 @@ import com.amazonaws.protocol.ProtocolMarshaller;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class Logger implements Serializable, Cloneable, StructuredPojo {
 
-    /** The component that will be subject to logs */
+    /** The component that will be subject to logging. */
     private String component;
-    /** Element Id for this entry in the list. */
+    /**
+     * A descriptive or arbitrary ID for the logger. This value must be unique within the logger definition version. Max
+     * length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
+     */
     private String id;
-    /** The level of the logs */
+    /** The level of the logs. */
     private String level;
-    /** Amount of hardware space, in KB, to use if file system is used for logging purposes. */
+    /** The amount of file space, in KB, to use if the local file system is used for logging purposes. */
     private Integer space;
-    /** The type which will be use for log output */
+    /** The type of log output which will be used. */
     private String type;
 
     /**
-     * The component that will be subject to logs
+     * The component that will be subject to logging.
      * 
      * @param component
-     *        The component that will be subject to logs
+     *        The component that will be subject to logging.
      * @see LoggerComponent
      */
 
@@ -50,9 +53,9 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The component that will be subject to logs
+     * The component that will be subject to logging.
      * 
-     * @return The component that will be subject to logs
+     * @return The component that will be subject to logging.
      * @see LoggerComponent
      */
 
@@ -61,10 +64,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The component that will be subject to logs
+     * The component that will be subject to logging.
      * 
      * @param component
-     *        The component that will be subject to logs
+     *        The component that will be subject to logging.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see LoggerComponent
      */
@@ -75,10 +78,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The component that will be subject to logs
+     * The component that will be subject to logging.
      * 
      * @param component
-     *        The component that will be subject to logs
+     *        The component that will be subject to logging.
      * @see LoggerComponent
      */
 
@@ -87,10 +90,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The component that will be subject to logs
+     * The component that will be subject to logging.
      * 
      * @param component
-     *        The component that will be subject to logs
+     *        The component that will be subject to logging.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see LoggerComponent
      */
@@ -101,10 +104,12 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Element Id for this entry in the list.
+     * A descriptive or arbitrary ID for the logger. This value must be unique within the logger definition version. Max
+     * length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      * 
      * @param id
-     *        Element Id for this entry in the list.
+     *        A descriptive or arbitrary ID for the logger. This value must be unique within the logger definition
+     *        version. Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      */
 
     public void setId(String id) {
@@ -112,9 +117,11 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Element Id for this entry in the list.
+     * A descriptive or arbitrary ID for the logger. This value must be unique within the logger definition version. Max
+     * length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      * 
-     * @return Element Id for this entry in the list.
+     * @return A descriptive or arbitrary ID for the logger. This value must be unique within the logger definition
+     *         version. Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      */
 
     public String getId() {
@@ -122,10 +129,12 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Element Id for this entry in the list.
+     * A descriptive or arbitrary ID for the logger. This value must be unique within the logger definition version. Max
+     * length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      * 
      * @param id
-     *        Element Id for this entry in the list.
+     *        A descriptive or arbitrary ID for the logger. This value must be unique within the logger definition
+     *        version. Max length is 128 characters with pattern ''[a-zA-Z0-9:_-]+''.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -135,10 +144,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The level of the logs
+     * The level of the logs.
      * 
      * @param level
-     *        The level of the logs
+     *        The level of the logs.
      * @see LoggerLevel
      */
 
@@ -147,9 +156,9 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The level of the logs
+     * The level of the logs.
      * 
-     * @return The level of the logs
+     * @return The level of the logs.
      * @see LoggerLevel
      */
 
@@ -158,10 +167,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The level of the logs
+     * The level of the logs.
      * 
      * @param level
-     *        The level of the logs
+     *        The level of the logs.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see LoggerLevel
      */
@@ -172,10 +181,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The level of the logs
+     * The level of the logs.
      * 
      * @param level
-     *        The level of the logs
+     *        The level of the logs.
      * @see LoggerLevel
      */
 
@@ -184,10 +193,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The level of the logs
+     * The level of the logs.
      * 
      * @param level
-     *        The level of the logs
+     *        The level of the logs.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see LoggerLevel
      */
@@ -198,10 +207,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Amount of hardware space, in KB, to use if file system is used for logging purposes.
+     * The amount of file space, in KB, to use if the local file system is used for logging purposes.
      * 
      * @param space
-     *        Amount of hardware space, in KB, to use if file system is used for logging purposes.
+     *        The amount of file space, in KB, to use if the local file system is used for logging purposes.
      */
 
     public void setSpace(Integer space) {
@@ -209,9 +218,9 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Amount of hardware space, in KB, to use if file system is used for logging purposes.
+     * The amount of file space, in KB, to use if the local file system is used for logging purposes.
      * 
-     * @return Amount of hardware space, in KB, to use if file system is used for logging purposes.
+     * @return The amount of file space, in KB, to use if the local file system is used for logging purposes.
      */
 
     public Integer getSpace() {
@@ -219,10 +228,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Amount of hardware space, in KB, to use if file system is used for logging purposes.
+     * The amount of file space, in KB, to use if the local file system is used for logging purposes.
      * 
      * @param space
-     *        Amount of hardware space, in KB, to use if file system is used for logging purposes.
+     *        The amount of file space, in KB, to use if the local file system is used for logging purposes.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -232,10 +241,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The type which will be use for log output
+     * The type of log output which will be used.
      * 
      * @param type
-     *        The type which will be use for log output
+     *        The type of log output which will be used.
      * @see LoggerType
      */
 
@@ -244,9 +253,9 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The type which will be use for log output
+     * The type of log output which will be used.
      * 
-     * @return The type which will be use for log output
+     * @return The type of log output which will be used.
      * @see LoggerType
      */
 
@@ -255,10 +264,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The type which will be use for log output
+     * The type of log output which will be used.
      * 
      * @param type
-     *        The type which will be use for log output
+     *        The type of log output which will be used.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see LoggerType
      */
@@ -269,10 +278,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The type which will be use for log output
+     * The type of log output which will be used.
      * 
      * @param type
-     *        The type which will be use for log output
+     *        The type of log output which will be used.
      * @see LoggerType
      */
 
@@ -281,10 +290,10 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * The type which will be use for log output
+     * The type of log output which will be used.
      * 
      * @param type
-     *        The type which will be use for log output
+     *        The type of log output which will be used.
      * @return Returns a reference to this object so that method calls can be chained together.
      * @see LoggerType
      */
@@ -295,7 +304,8 @@ public class Logger implements Serializable, Cloneable, StructuredPojo {
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -39,7 +39,7 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
     private String name;
     /**
      * <p>
-     * A set of global filters used to exclude patches from the baseline.
+     * A set of global filters used to include patches in the baseline.
      * </p>
      */
     private PatchFilterGroup globalFilters;
@@ -53,6 +53,11 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
      * <p>
      * A list of explicitly approved patches for the baseline.
      * </p>
+     * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
+     * </p>
      */
     private com.amazonaws.internal.SdkInternalList<String> approvedPatches;
     /**
@@ -63,16 +68,64 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
     private String approvedPatchesComplianceLevel;
     /**
      * <p>
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
+     * </p>
+     */
+    private Boolean approvedPatchesEnableNonSecurity;
+    /**
+     * <p>
      * A list of explicitly rejected patches for the baseline.
+     * </p>
+     * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
      * </p>
      */
     private com.amazonaws.internal.SdkInternalList<String> rejectedPatches;
+    /**
+     * <p>
+     * The action for Patch Manager to take on patches included in the RejectedPackages list.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency of
+     * another package. It is considered compliant with the patch baseline, and its status is reported as
+     * <i>InstalledOther</i>. This is the default action if no option is specified.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are not
+     * installed under any circumstances. If a package was installed before it was added to the Rejected patches list,
+     * it is considered non-compliant with the patch baseline, and its status is reported as <i>InstalledRejected</i>.
+     * </p>
+     * </li>
+     * </ul>
+     */
+    private String rejectedPatchesAction;
     /**
      * <p>
      * A description of the patch baseline.
      * </p>
      */
     private String description;
+    /**
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     */
+    private com.amazonaws.internal.SdkInternalList<PatchSource> sources;
+    /**
+     * <p>
+     * If True, then all fields that are required by the CreatePatchBaseline action are also required for this API
+     * request. Optional fields that are not specified are set to null.
+     * </p>
+     */
+    private Boolean replace;
 
     /**
      * <p>
@@ -156,11 +209,11 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
 
     /**
      * <p>
-     * A set of global filters used to exclude patches from the baseline.
+     * A set of global filters used to include patches in the baseline.
      * </p>
      * 
      * @param globalFilters
-     *        A set of global filters used to exclude patches from the baseline.
+     *        A set of global filters used to include patches in the baseline.
      */
 
     public void setGlobalFilters(PatchFilterGroup globalFilters) {
@@ -169,10 +222,10 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
 
     /**
      * <p>
-     * A set of global filters used to exclude patches from the baseline.
+     * A set of global filters used to include patches in the baseline.
      * </p>
      * 
-     * @return A set of global filters used to exclude patches from the baseline.
+     * @return A set of global filters used to include patches in the baseline.
      */
 
     public PatchFilterGroup getGlobalFilters() {
@@ -181,11 +234,11 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
 
     /**
      * <p>
-     * A set of global filters used to exclude patches from the baseline.
+     * A set of global filters used to include patches in the baseline.
      * </p>
      * 
      * @param globalFilters
-     *        A set of global filters used to exclude patches from the baseline.
+     *        A set of global filters used to include patches in the baseline.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -238,8 +291,18 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
      * <p>
      * A list of explicitly approved patches for the baseline.
      * </p>
+     * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
+     * </p>
      * 
-     * @return A list of explicitly approved patches for the baseline.
+     * @return A list of explicitly approved patches for the baseline.</p>
+     *         <p>
+     *         For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     *         "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     *         >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User
+     *         Guide</i>.
      */
 
     public java.util.List<String> getApprovedPatches() {
@@ -253,9 +316,19 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
      * <p>
      * A list of explicitly approved patches for the baseline.
      * </p>
+     * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
+     * </p>
      * 
      * @param approvedPatches
-     *        A list of explicitly approved patches for the baseline.
+     *        A list of explicitly approved patches for the baseline.</p>
+     *        <p>
+     *        For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     *        "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     *        >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User
+     *        Guide</i>.
      */
 
     public void setApprovedPatches(java.util.Collection<String> approvedPatches) {
@@ -272,13 +345,23 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
      * A list of explicitly approved patches for the baseline.
      * </p>
      * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
+     * </p>
+     * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setApprovedPatches(java.util.Collection)} or {@link #withApprovedPatches(java.util.Collection)} if you
      * want to override the existing values.
      * </p>
      * 
      * @param approvedPatches
-     *        A list of explicitly approved patches for the baseline.
+     *        A list of explicitly approved patches for the baseline.</p>
+     *        <p>
+     *        For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     *        "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     *        >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User
+     *        Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -296,9 +379,19 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
      * <p>
      * A list of explicitly approved patches for the baseline.
      * </p>
+     * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
+     * </p>
      * 
      * @param approvedPatches
-     *        A list of explicitly approved patches for the baseline.
+     *        A list of explicitly approved patches for the baseline.</p>
+     *        <p>
+     *        For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     *        "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     *        >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User
+     *        Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -382,10 +475,80 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
 
     /**
      * <p>
-     * A list of explicitly rejected patches for the baseline.
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
      * </p>
      * 
-     * @return A list of explicitly rejected patches for the baseline.
+     * @param approvedPatchesEnableNonSecurity
+     *        Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     *        instances. The default value is 'false'. Applies to Linux instances only.
+     */
+
+    public void setApprovedPatchesEnableNonSecurity(Boolean approvedPatchesEnableNonSecurity) {
+        this.approvedPatchesEnableNonSecurity = approvedPatchesEnableNonSecurity;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
+     * </p>
+     * 
+     * @return Indicates whether the list of approved patches includes non-security updates that should be applied to
+     *         the instances. The default value is 'false'. Applies to Linux instances only.
+     */
+
+    public Boolean getApprovedPatchesEnableNonSecurity() {
+        return this.approvedPatchesEnableNonSecurity;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
+     * </p>
+     * 
+     * @param approvedPatchesEnableNonSecurity
+     *        Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     *        instances. The default value is 'false'. Applies to Linux instances only.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public UpdatePatchBaselineRequest withApprovedPatchesEnableNonSecurity(Boolean approvedPatchesEnableNonSecurity) {
+        setApprovedPatchesEnableNonSecurity(approvedPatchesEnableNonSecurity);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the
+     * instances. The default value is 'false'. Applies to Linux instances only.
+     * </p>
+     * 
+     * @return Indicates whether the list of approved patches includes non-security updates that should be applied to
+     *         the instances. The default value is 'false'. Applies to Linux instances only.
+     */
+
+    public Boolean isApprovedPatchesEnableNonSecurity() {
+        return this.approvedPatchesEnableNonSecurity;
+    }
+
+    /**
+     * <p>
+     * A list of explicitly rejected patches for the baseline.
+     * </p>
+     * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
+     * </p>
+     * 
+     * @return A list of explicitly rejected patches for the baseline.</p>
+     *         <p>
+     *         For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     *         "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     *         >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User
+     *         Guide</i>.
      */
 
     public java.util.List<String> getRejectedPatches() {
@@ -399,9 +562,19 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
      * <p>
      * A list of explicitly rejected patches for the baseline.
      * </p>
+     * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
+     * </p>
      * 
      * @param rejectedPatches
-     *        A list of explicitly rejected patches for the baseline.
+     *        A list of explicitly rejected patches for the baseline.</p>
+     *        <p>
+     *        For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     *        "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     *        >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User
+     *        Guide</i>.
      */
 
     public void setRejectedPatches(java.util.Collection<String> rejectedPatches) {
@@ -418,13 +591,23 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
      * A list of explicitly rejected patches for the baseline.
      * </p>
      * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
+     * </p>
+     * <p>
      * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
      * {@link #setRejectedPatches(java.util.Collection)} or {@link #withRejectedPatches(java.util.Collection)} if you
      * want to override the existing values.
      * </p>
      * 
      * @param rejectedPatches
-     *        A list of explicitly rejected patches for the baseline.
+     *        A list of explicitly rejected patches for the baseline.</p>
+     *        <p>
+     *        For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     *        "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     *        >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User
+     *        Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -442,14 +625,257 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
      * <p>
      * A list of explicitly rejected patches for the baseline.
      * </p>
+     * <p>
+     * For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     * "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     * >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User Guide</i>.
+     * </p>
      * 
      * @param rejectedPatches
-     *        A list of explicitly rejected patches for the baseline.
+     *        A list of explicitly rejected patches for the baseline.</p>
+     *        <p>
+     *        For information about accepted formats for lists of approved patches and rejected patches, see <a href=
+     *        "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-approved-rejected-package-name-formats.html"
+     *        >Package Name Formats for Approved and Rejected Patch Lists</a> in the <i>AWS Systems Manager User
+     *        Guide</i>.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
     public UpdatePatchBaselineRequest withRejectedPatches(java.util.Collection<String> rejectedPatches) {
         setRejectedPatches(rejectedPatches);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The action for Patch Manager to take on patches included in the RejectedPackages list.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency of
+     * another package. It is considered compliant with the patch baseline, and its status is reported as
+     * <i>InstalledOther</i>. This is the default action if no option is specified.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are not
+     * installed under any circumstances. If a package was installed before it was added to the Rejected patches list,
+     * it is considered non-compliant with the patch baseline, and its status is reported as <i>InstalledRejected</i>.
+     * </p>
+     * </li>
+     * </ul>
+     * 
+     * @param rejectedPatchesAction
+     *        The action for Patch Manager to take on patches included in the RejectedPackages list.</p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency
+     *        of another package. It is considered compliant with the patch baseline, and its status is reported as
+     *        <i>InstalledOther</i>. This is the default action if no option is specified.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are
+     *        not installed under any circumstances. If a package was installed before it was added to the Rejected
+     *        patches list, it is considered non-compliant with the patch baseline, and its status is reported as
+     *        <i>InstalledRejected</i>.
+     *        </p>
+     *        </li>
+     * @see PatchAction
+     */
+
+    public void setRejectedPatchesAction(String rejectedPatchesAction) {
+        this.rejectedPatchesAction = rejectedPatchesAction;
+    }
+
+    /**
+     * <p>
+     * The action for Patch Manager to take on patches included in the RejectedPackages list.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency of
+     * another package. It is considered compliant with the patch baseline, and its status is reported as
+     * <i>InstalledOther</i>. This is the default action if no option is specified.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are not
+     * installed under any circumstances. If a package was installed before it was added to the Rejected patches list,
+     * it is considered non-compliant with the patch baseline, and its status is reported as <i>InstalledRejected</i>.
+     * </p>
+     * </li>
+     * </ul>
+     * 
+     * @return The action for Patch Manager to take on patches included in the RejectedPackages list.</p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a
+     *         dependency of another package. It is considered compliant with the patch baseline, and its status is
+     *         reported as <i>InstalledOther</i>. This is the default action if no option is specified.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are
+     *         not installed under any circumstances. If a package was installed before it was added to the Rejected
+     *         patches list, it is considered non-compliant with the patch baseline, and its status is reported as
+     *         <i>InstalledRejected</i>.
+     *         </p>
+     *         </li>
+     * @see PatchAction
+     */
+
+    public String getRejectedPatchesAction() {
+        return this.rejectedPatchesAction;
+    }
+
+    /**
+     * <p>
+     * The action for Patch Manager to take on patches included in the RejectedPackages list.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency of
+     * another package. It is considered compliant with the patch baseline, and its status is reported as
+     * <i>InstalledOther</i>. This is the default action if no option is specified.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are not
+     * installed under any circumstances. If a package was installed before it was added to the Rejected patches list,
+     * it is considered non-compliant with the patch baseline, and its status is reported as <i>InstalledRejected</i>.
+     * </p>
+     * </li>
+     * </ul>
+     * 
+     * @param rejectedPatchesAction
+     *        The action for Patch Manager to take on patches included in the RejectedPackages list.</p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency
+     *        of another package. It is considered compliant with the patch baseline, and its status is reported as
+     *        <i>InstalledOther</i>. This is the default action if no option is specified.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are
+     *        not installed under any circumstances. If a package was installed before it was added to the Rejected
+     *        patches list, it is considered non-compliant with the patch baseline, and its status is reported as
+     *        <i>InstalledRejected</i>.
+     *        </p>
+     *        </li>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see PatchAction
+     */
+
+    public UpdatePatchBaselineRequest withRejectedPatchesAction(String rejectedPatchesAction) {
+        setRejectedPatchesAction(rejectedPatchesAction);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The action for Patch Manager to take on patches included in the RejectedPackages list.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency of
+     * another package. It is considered compliant with the patch baseline, and its status is reported as
+     * <i>InstalledOther</i>. This is the default action if no option is specified.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are not
+     * installed under any circumstances. If a package was installed before it was added to the Rejected patches list,
+     * it is considered non-compliant with the patch baseline, and its status is reported as <i>InstalledRejected</i>.
+     * </p>
+     * </li>
+     * </ul>
+     * 
+     * @param rejectedPatchesAction
+     *        The action for Patch Manager to take on patches included in the RejectedPackages list.</p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency
+     *        of another package. It is considered compliant with the patch baseline, and its status is reported as
+     *        <i>InstalledOther</i>. This is the default action if no option is specified.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are
+     *        not installed under any circumstances. If a package was installed before it was added to the Rejected
+     *        patches list, it is considered non-compliant with the patch baseline, and its status is reported as
+     *        <i>InstalledRejected</i>.
+     *        </p>
+     *        </li>
+     * @see PatchAction
+     */
+
+    public void setRejectedPatchesAction(PatchAction rejectedPatchesAction) {
+        withRejectedPatchesAction(rejectedPatchesAction);
+    }
+
+    /**
+     * <p>
+     * The action for Patch Manager to take on patches included in the RejectedPackages list.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency of
+     * another package. It is considered compliant with the patch baseline, and its status is reported as
+     * <i>InstalledOther</i>. This is the default action if no option is specified.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are not
+     * installed under any circumstances. If a package was installed before it was added to the Rejected patches list,
+     * it is considered non-compliant with the patch baseline, and its status is reported as <i>InstalledRejected</i>.
+     * </p>
+     * </li>
+     * </ul>
+     * 
+     * @param rejectedPatchesAction
+     *        The action for Patch Manager to take on patches included in the RejectedPackages list.</p>
+     *        <ul>
+     *        <li>
+     *        <p>
+     *        <b>ALLOW_AS_DEPENDENCY</b>: A package in the Rejected patches list is installed only if it is a dependency
+     *        of another package. It is considered compliant with the patch baseline, and its status is reported as
+     *        <i>InstalledOther</i>. This is the default action if no option is specified.
+     *        </p>
+     *        </li>
+     *        <li>
+     *        <p>
+     *        <b>BLOCK</b>: Packages in the RejectedPatches list, and packages that include them as dependencies, are
+     *        not installed under any circumstances. If a package was installed before it was added to the Rejected
+     *        patches list, it is considered non-compliant with the patch baseline, and its status is reported as
+     *        <i>InstalledRejected</i>.
+     *        </p>
+     *        </li>
+     * @return Returns a reference to this object so that method calls can be chained together.
+     * @see PatchAction
+     */
+
+    public UpdatePatchBaselineRequest withRejectedPatchesAction(PatchAction rejectedPatchesAction) {
+        this.rejectedPatchesAction = rejectedPatchesAction.toString();
         return this;
     }
 
@@ -494,7 +920,149 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     * 
+     * @return Information about the patches to use to update the instances, including target operating systems and
+     *         source repositories. Applies to Linux instances only.
+     */
+
+    public java.util.List<PatchSource> getSources() {
+        if (sources == null) {
+            sources = new com.amazonaws.internal.SdkInternalList<PatchSource>();
+        }
+        return sources;
+    }
+
+    /**
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     * 
+     * @param sources
+     *        Information about the patches to use to update the instances, including target operating systems and
+     *        source repositories. Applies to Linux instances only.
+     */
+
+    public void setSources(java.util.Collection<PatchSource> sources) {
+        if (sources == null) {
+            this.sources = null;
+            return;
+        }
+
+        this.sources = new com.amazonaws.internal.SdkInternalList<PatchSource>(sources);
+    }
+
+    /**
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     * <p>
+     * <b>NOTE:</b> This method appends the values to the existing list (if any). Use
+     * {@link #setSources(java.util.Collection)} or {@link #withSources(java.util.Collection)} if you want to override
+     * the existing values.
+     * </p>
+     * 
+     * @param sources
+     *        Information about the patches to use to update the instances, including target operating systems and
+     *        source repositories. Applies to Linux instances only.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public UpdatePatchBaselineRequest withSources(PatchSource... sources) {
+        if (this.sources == null) {
+            setSources(new com.amazonaws.internal.SdkInternalList<PatchSource>(sources.length));
+        }
+        for (PatchSource ele : sources) {
+            this.sources.add(ele);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Information about the patches to use to update the instances, including target operating systems and source
+     * repositories. Applies to Linux instances only.
+     * </p>
+     * 
+     * @param sources
+     *        Information about the patches to use to update the instances, including target operating systems and
+     *        source repositories. Applies to Linux instances only.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public UpdatePatchBaselineRequest withSources(java.util.Collection<PatchSource> sources) {
+        setSources(sources);
+        return this;
+    }
+
+    /**
+     * <p>
+     * If True, then all fields that are required by the CreatePatchBaseline action are also required for this API
+     * request. Optional fields that are not specified are set to null.
+     * </p>
+     * 
+     * @param replace
+     *        If True, then all fields that are required by the CreatePatchBaseline action are also required for this
+     *        API request. Optional fields that are not specified are set to null.
+     */
+
+    public void setReplace(Boolean replace) {
+        this.replace = replace;
+    }
+
+    /**
+     * <p>
+     * If True, then all fields that are required by the CreatePatchBaseline action are also required for this API
+     * request. Optional fields that are not specified are set to null.
+     * </p>
+     * 
+     * @return If True, then all fields that are required by the CreatePatchBaseline action are also required for this
+     *         API request. Optional fields that are not specified are set to null.
+     */
+
+    public Boolean getReplace() {
+        return this.replace;
+    }
+
+    /**
+     * <p>
+     * If True, then all fields that are required by the CreatePatchBaseline action are also required for this API
+     * request. Optional fields that are not specified are set to null.
+     * </p>
+     * 
+     * @param replace
+     *        If True, then all fields that are required by the CreatePatchBaseline action are also required for this
+     *        API request. Optional fields that are not specified are set to null.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public UpdatePatchBaselineRequest withReplace(Boolean replace) {
+        setReplace(replace);
+        return this;
+    }
+
+    /**
+     * <p>
+     * If True, then all fields that are required by the CreatePatchBaseline action are also required for this API
+     * request. Optional fields that are not specified are set to null.
+     * </p>
+     * 
+     * @return If True, then all fields that are required by the CreatePatchBaseline action are also required for this
+     *         API request. Optional fields that are not specified are set to null.
+     */
+
+    public Boolean isReplace() {
+        return this.replace;
+    }
+
+    /**
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -516,10 +1084,18 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
             sb.append("ApprovedPatches: ").append(getApprovedPatches()).append(",");
         if (getApprovedPatchesComplianceLevel() != null)
             sb.append("ApprovedPatchesComplianceLevel: ").append(getApprovedPatchesComplianceLevel()).append(",");
+        if (getApprovedPatchesEnableNonSecurity() != null)
+            sb.append("ApprovedPatchesEnableNonSecurity: ").append(getApprovedPatchesEnableNonSecurity()).append(",");
         if (getRejectedPatches() != null)
             sb.append("RejectedPatches: ").append(getRejectedPatches()).append(",");
+        if (getRejectedPatchesAction() != null)
+            sb.append("RejectedPatchesAction: ").append(getRejectedPatchesAction()).append(",");
         if (getDescription() != null)
-            sb.append("Description: ").append(getDescription());
+            sb.append("Description: ").append(getDescription()).append(",");
+        if (getSources() != null)
+            sb.append("Sources: ").append(getSources()).append(",");
+        if (getReplace() != null)
+            sb.append("Replace: ").append(getReplace());
         sb.append("}");
         return sb.toString();
     }
@@ -559,13 +1135,30 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
         if (other.getApprovedPatchesComplianceLevel() != null
                 && other.getApprovedPatchesComplianceLevel().equals(this.getApprovedPatchesComplianceLevel()) == false)
             return false;
+        if (other.getApprovedPatchesEnableNonSecurity() == null ^ this.getApprovedPatchesEnableNonSecurity() == null)
+            return false;
+        if (other.getApprovedPatchesEnableNonSecurity() != null
+                && other.getApprovedPatchesEnableNonSecurity().equals(this.getApprovedPatchesEnableNonSecurity()) == false)
+            return false;
         if (other.getRejectedPatches() == null ^ this.getRejectedPatches() == null)
             return false;
         if (other.getRejectedPatches() != null && other.getRejectedPatches().equals(this.getRejectedPatches()) == false)
             return false;
+        if (other.getRejectedPatchesAction() == null ^ this.getRejectedPatchesAction() == null)
+            return false;
+        if (other.getRejectedPatchesAction() != null && other.getRejectedPatchesAction().equals(this.getRejectedPatchesAction()) == false)
+            return false;
         if (other.getDescription() == null ^ this.getDescription() == null)
             return false;
         if (other.getDescription() != null && other.getDescription().equals(this.getDescription()) == false)
+            return false;
+        if (other.getSources() == null ^ this.getSources() == null)
+            return false;
+        if (other.getSources() != null && other.getSources().equals(this.getSources()) == false)
+            return false;
+        if (other.getReplace() == null ^ this.getReplace() == null)
+            return false;
+        if (other.getReplace() != null && other.getReplace().equals(this.getReplace()) == false)
             return false;
         return true;
     }
@@ -581,8 +1174,12 @@ public class UpdatePatchBaselineRequest extends com.amazonaws.AmazonWebServiceRe
         hashCode = prime * hashCode + ((getApprovalRules() == null) ? 0 : getApprovalRules().hashCode());
         hashCode = prime * hashCode + ((getApprovedPatches() == null) ? 0 : getApprovedPatches().hashCode());
         hashCode = prime * hashCode + ((getApprovedPatchesComplianceLevel() == null) ? 0 : getApprovedPatchesComplianceLevel().hashCode());
+        hashCode = prime * hashCode + ((getApprovedPatchesEnableNonSecurity() == null) ? 0 : getApprovedPatchesEnableNonSecurity().hashCode());
         hashCode = prime * hashCode + ((getRejectedPatches() == null) ? 0 : getRejectedPatches().hashCode());
+        hashCode = prime * hashCode + ((getRejectedPatchesAction() == null) ? 0 : getRejectedPatchesAction().hashCode());
         hashCode = prime * hashCode + ((getDescription() == null) ? 0 : getDescription().hashCode());
+        hashCode = prime * hashCode + ((getSources() == null) ? 0 : getSources().hashCode());
+        hashCode = prime * hashCode + ((getReplace() == null) ? 0 : getReplace().hashCode());
         return hashCode;
     }
 

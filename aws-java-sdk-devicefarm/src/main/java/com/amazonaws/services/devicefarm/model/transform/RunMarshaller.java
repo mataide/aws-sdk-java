@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -36,15 +36,15 @@ public class RunMarshaller {
     private static final MarshallingInfo<String> PLATFORM_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
             .marshallLocationName("platform").build();
     private static final MarshallingInfo<java.util.Date> CREATED_BINDING = MarshallingInfo.builder(MarshallingType.DATE)
-            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("created").build();
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("created").timestampFormat("unixTimestamp").build();
     private static final MarshallingInfo<String> STATUS_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
             .marshallLocationName("status").build();
     private static final MarshallingInfo<String> RESULT_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
             .marshallLocationName("result").build();
     private static final MarshallingInfo<java.util.Date> STARTED_BINDING = MarshallingInfo.builder(MarshallingType.DATE)
-            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("started").build();
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("started").timestampFormat("unixTimestamp").build();
     private static final MarshallingInfo<java.util.Date> STOPPED_BINDING = MarshallingInfo.builder(MarshallingType.DATE)
-            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("stopped").build();
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("stopped").timestampFormat("unixTimestamp").build();
     private static final MarshallingInfo<StructuredPojo> COUNTERS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("counters").build();
     private static final MarshallingInfo<String> MESSAGE_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
@@ -63,8 +63,32 @@ public class RunMarshaller {
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("parsingResultUrl").build();
     private static final MarshallingInfo<String> RESULTCODE_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("resultCode").build();
+    private static final MarshallingInfo<Integer> SEED_BINDING = MarshallingInfo.builder(MarshallingType.INTEGER).marshallLocation(MarshallLocation.PAYLOAD)
+            .marshallLocationName("seed").build();
+    private static final MarshallingInfo<String> APPUPLOAD_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
+            .marshallLocationName("appUpload").build();
+    private static final MarshallingInfo<Integer> EVENTCOUNT_BINDING = MarshallingInfo.builder(MarshallingType.INTEGER)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("eventCount").build();
+    private static final MarshallingInfo<Integer> JOBTIMEOUTMINUTES_BINDING = MarshallingInfo.builder(MarshallingType.INTEGER)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("jobTimeoutMinutes").build();
+    private static final MarshallingInfo<String> DEVICEPOOLARN_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("devicePoolArn").build();
+    private static final MarshallingInfo<String> LOCALE_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
+            .marshallLocationName("locale").build();
+    private static final MarshallingInfo<StructuredPojo> RADIOS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("radios").build();
+    private static final MarshallingInfo<StructuredPojo> LOCATION_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("location").build();
     private static final MarshallingInfo<StructuredPojo> CUSTOMERARTIFACTPATHS_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("customerArtifactPaths").build();
+    private static final MarshallingInfo<String> WEBURL_BINDING = MarshallingInfo.builder(MarshallingType.STRING).marshallLocation(MarshallLocation.PAYLOAD)
+            .marshallLocationName("webUrl").build();
+    private static final MarshallingInfo<Boolean> SKIPAPPRESIGN_BINDING = MarshallingInfo.builder(MarshallingType.BOOLEAN)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("skipAppResign").build();
+    private static final MarshallingInfo<String> TESTSPECARN_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("testSpecArn").build();
+    private static final MarshallingInfo<StructuredPojo> DEVICESELECTIONRESULT_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("deviceSelectionResult").build();
 
     private static final RunMarshaller instance = new RunMarshaller();
 
@@ -100,7 +124,19 @@ public class RunMarshaller {
             protocolMarshaller.marshall(run.getNetworkProfile(), NETWORKPROFILE_BINDING);
             protocolMarshaller.marshall(run.getParsingResultUrl(), PARSINGRESULTURL_BINDING);
             protocolMarshaller.marshall(run.getResultCode(), RESULTCODE_BINDING);
+            protocolMarshaller.marshall(run.getSeed(), SEED_BINDING);
+            protocolMarshaller.marshall(run.getAppUpload(), APPUPLOAD_BINDING);
+            protocolMarshaller.marshall(run.getEventCount(), EVENTCOUNT_BINDING);
+            protocolMarshaller.marshall(run.getJobTimeoutMinutes(), JOBTIMEOUTMINUTES_BINDING);
+            protocolMarshaller.marshall(run.getDevicePoolArn(), DEVICEPOOLARN_BINDING);
+            protocolMarshaller.marshall(run.getLocale(), LOCALE_BINDING);
+            protocolMarshaller.marshall(run.getRadios(), RADIOS_BINDING);
+            protocolMarshaller.marshall(run.getLocation(), LOCATION_BINDING);
             protocolMarshaller.marshall(run.getCustomerArtifactPaths(), CUSTOMERARTIFACTPATHS_BINDING);
+            protocolMarshaller.marshall(run.getWebUrl(), WEBURL_BINDING);
+            protocolMarshaller.marshall(run.getSkipAppResign(), SKIPAPPRESIGN_BINDING);
+            protocolMarshaller.marshall(run.getTestSpecArn(), TESTSPECARN_BINDING);
+            protocolMarshaller.marshall(run.getDeviceSelectionResult(), DEVICESELECTIONRESULT_BINDING);
         } catch (Exception e) {
             throw new SdkClientException("Unable to marshall request to JSON: " + e.getMessage(), e);
         }

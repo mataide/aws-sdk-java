@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -28,6 +28,8 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
 
     /** The unique ID for the application. */
     private String applicationId;
+    /** Default campaign hook. */
+    private CampaignHook campaignHook;
     /** The date that the settings were last updated in ISO 8601 format. */
     private String lastModifiedDate;
     /**
@@ -36,8 +38,21 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
      */
     private CampaignLimits limits;
     /**
-     * The default quiet time for the app. Each campaign for this app sends no messages during this time unless the
-     * campaign overrides the default with a quiet time of its own.
+     * The default quiet time for the app. Campaigns in the app don't send messages to endpoints during the quiet time.
+     * 
+     * Note: Make sure that your endpoints include the Demographics.Timezone attribute if you plan to enable a quiet
+     * time for your app. If your endpoints don't include this attribute, they'll receive the messages that you send
+     * them, even if quiet time is enabled.
+     * 
+     * When you set up an app to use quiet time, campaigns in that app don't send messages during the time range you
+     * specified, as long as all of the following are true: - The endpoint includes a valid Demographic.Timezone
+     * attribute. - The current time in the endpoint's time zone is later than or equal to the time specified in the
+     * QuietTime.Start attribute for the app (or campaign, if applicable). - The current time in the endpoint's time
+     * zone is earlier than or equal to the time specified in the QuietTime.End attribute for the app (or campaign, if
+     * applicable).
+     * 
+     * Individual campaigns within the app can have their own quiet time settings, which override the quiet time
+     * settings at the app level.
      */
     private QuietTime quietTime;
 
@@ -72,6 +87,40 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
 
     public ApplicationSettingsResource withApplicationId(String applicationId) {
         setApplicationId(applicationId);
+        return this;
+    }
+
+    /**
+     * Default campaign hook.
+     * 
+     * @param campaignHook
+     *        Default campaign hook.
+     */
+
+    public void setCampaignHook(CampaignHook campaignHook) {
+        this.campaignHook = campaignHook;
+    }
+
+    /**
+     * Default campaign hook.
+     * 
+     * @return Default campaign hook.
+     */
+
+    public CampaignHook getCampaignHook() {
+        return this.campaignHook;
+    }
+
+    /**
+     * Default campaign hook.
+     * 
+     * @param campaignHook
+     *        Default campaign hook.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public ApplicationSettingsResource withCampaignHook(CampaignHook campaignHook) {
+        setCampaignHook(campaignHook);
         return this;
     }
 
@@ -150,12 +199,39 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
     }
 
     /**
-     * The default quiet time for the app. Each campaign for this app sends no messages during this time unless the
-     * campaign overrides the default with a quiet time of its own.
+     * The default quiet time for the app. Campaigns in the app don't send messages to endpoints during the quiet time.
+     * 
+     * Note: Make sure that your endpoints include the Demographics.Timezone attribute if you plan to enable a quiet
+     * time for your app. If your endpoints don't include this attribute, they'll receive the messages that you send
+     * them, even if quiet time is enabled.
+     * 
+     * When you set up an app to use quiet time, campaigns in that app don't send messages during the time range you
+     * specified, as long as all of the following are true: - The endpoint includes a valid Demographic.Timezone
+     * attribute. - The current time in the endpoint's time zone is later than or equal to the time specified in the
+     * QuietTime.Start attribute for the app (or campaign, if applicable). - The current time in the endpoint's time
+     * zone is earlier than or equal to the time specified in the QuietTime.End attribute for the app (or campaign, if
+     * applicable).
+     * 
+     * Individual campaigns within the app can have their own quiet time settings, which override the quiet time
+     * settings at the app level.
      * 
      * @param quietTime
-     *        The default quiet time for the app. Each campaign for this app sends no messages during this time unless
-     *        the campaign overrides the default with a quiet time of its own.
+     *        The default quiet time for the app. Campaigns in the app don't send messages to endpoints during the quiet
+     *        time.
+     * 
+     *        Note: Make sure that your endpoints include the Demographics.Timezone attribute if you plan to enable a
+     *        quiet time for your app. If your endpoints don't include this attribute, they'll receive the messages that
+     *        you send them, even if quiet time is enabled.
+     * 
+     *        When you set up an app to use quiet time, campaigns in that app don't send messages during the time range
+     *        you specified, as long as all of the following are true: - The endpoint includes a valid
+     *        Demographic.Timezone attribute. - The current time in the endpoint's time zone is later than or equal to
+     *        the time specified in the QuietTime.Start attribute for the app (or campaign, if applicable). - The
+     *        current time in the endpoint's time zone is earlier than or equal to the time specified in the
+     *        QuietTime.End attribute for the app (or campaign, if applicable).
+     * 
+     *        Individual campaigns within the app can have their own quiet time settings, which override the quiet time
+     *        settings at the app level.
      */
 
     public void setQuietTime(QuietTime quietTime) {
@@ -163,11 +239,38 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
     }
 
     /**
-     * The default quiet time for the app. Each campaign for this app sends no messages during this time unless the
-     * campaign overrides the default with a quiet time of its own.
+     * The default quiet time for the app. Campaigns in the app don't send messages to endpoints during the quiet time.
      * 
-     * @return The default quiet time for the app. Each campaign for this app sends no messages during this time unless
-     *         the campaign overrides the default with a quiet time of its own.
+     * Note: Make sure that your endpoints include the Demographics.Timezone attribute if you plan to enable a quiet
+     * time for your app. If your endpoints don't include this attribute, they'll receive the messages that you send
+     * them, even if quiet time is enabled.
+     * 
+     * When you set up an app to use quiet time, campaigns in that app don't send messages during the time range you
+     * specified, as long as all of the following are true: - The endpoint includes a valid Demographic.Timezone
+     * attribute. - The current time in the endpoint's time zone is later than or equal to the time specified in the
+     * QuietTime.Start attribute for the app (or campaign, if applicable). - The current time in the endpoint's time
+     * zone is earlier than or equal to the time specified in the QuietTime.End attribute for the app (or campaign, if
+     * applicable).
+     * 
+     * Individual campaigns within the app can have their own quiet time settings, which override the quiet time
+     * settings at the app level.
+     * 
+     * @return The default quiet time for the app. Campaigns in the app don't send messages to endpoints during the
+     *         quiet time.
+     * 
+     *         Note: Make sure that your endpoints include the Demographics.Timezone attribute if you plan to enable a
+     *         quiet time for your app. If your endpoints don't include this attribute, they'll receive the messages
+     *         that you send them, even if quiet time is enabled.
+     * 
+     *         When you set up an app to use quiet time, campaigns in that app don't send messages during the time range
+     *         you specified, as long as all of the following are true: - The endpoint includes a valid
+     *         Demographic.Timezone attribute. - The current time in the endpoint's time zone is later than or equal to
+     *         the time specified in the QuietTime.Start attribute for the app (or campaign, if applicable). - The
+     *         current time in the endpoint's time zone is earlier than or equal to the time specified in the
+     *         QuietTime.End attribute for the app (or campaign, if applicable).
+     * 
+     *         Individual campaigns within the app can have their own quiet time settings, which override the quiet time
+     *         settings at the app level.
      */
 
     public QuietTime getQuietTime() {
@@ -175,12 +278,39 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
     }
 
     /**
-     * The default quiet time for the app. Each campaign for this app sends no messages during this time unless the
-     * campaign overrides the default with a quiet time of its own.
+     * The default quiet time for the app. Campaigns in the app don't send messages to endpoints during the quiet time.
+     * 
+     * Note: Make sure that your endpoints include the Demographics.Timezone attribute if you plan to enable a quiet
+     * time for your app. If your endpoints don't include this attribute, they'll receive the messages that you send
+     * them, even if quiet time is enabled.
+     * 
+     * When you set up an app to use quiet time, campaigns in that app don't send messages during the time range you
+     * specified, as long as all of the following are true: - The endpoint includes a valid Demographic.Timezone
+     * attribute. - The current time in the endpoint's time zone is later than or equal to the time specified in the
+     * QuietTime.Start attribute for the app (or campaign, if applicable). - The current time in the endpoint's time
+     * zone is earlier than or equal to the time specified in the QuietTime.End attribute for the app (or campaign, if
+     * applicable).
+     * 
+     * Individual campaigns within the app can have their own quiet time settings, which override the quiet time
+     * settings at the app level.
      * 
      * @param quietTime
-     *        The default quiet time for the app. Each campaign for this app sends no messages during this time unless
-     *        the campaign overrides the default with a quiet time of its own.
+     *        The default quiet time for the app. Campaigns in the app don't send messages to endpoints during the quiet
+     *        time.
+     * 
+     *        Note: Make sure that your endpoints include the Demographics.Timezone attribute if you plan to enable a
+     *        quiet time for your app. If your endpoints don't include this attribute, they'll receive the messages that
+     *        you send them, even if quiet time is enabled.
+     * 
+     *        When you set up an app to use quiet time, campaigns in that app don't send messages during the time range
+     *        you specified, as long as all of the following are true: - The endpoint includes a valid
+     *        Demographic.Timezone attribute. - The current time in the endpoint's time zone is later than or equal to
+     *        the time specified in the QuietTime.Start attribute for the app (or campaign, if applicable). - The
+     *        current time in the endpoint's time zone is earlier than or equal to the time specified in the
+     *        QuietTime.End attribute for the app (or campaign, if applicable).
+     * 
+     *        Individual campaigns within the app can have their own quiet time settings, which override the quiet time
+     *        settings at the app level.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -190,7 +320,8 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -202,6 +333,8 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
         sb.append("{");
         if (getApplicationId() != null)
             sb.append("ApplicationId: ").append(getApplicationId()).append(",");
+        if (getCampaignHook() != null)
+            sb.append("CampaignHook: ").append(getCampaignHook()).append(",");
         if (getLastModifiedDate() != null)
             sb.append("LastModifiedDate: ").append(getLastModifiedDate()).append(",");
         if (getLimits() != null)
@@ -226,6 +359,10 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
             return false;
         if (other.getApplicationId() != null && other.getApplicationId().equals(this.getApplicationId()) == false)
             return false;
+        if (other.getCampaignHook() == null ^ this.getCampaignHook() == null)
+            return false;
+        if (other.getCampaignHook() != null && other.getCampaignHook().equals(this.getCampaignHook()) == false)
+            return false;
         if (other.getLastModifiedDate() == null ^ this.getLastModifiedDate() == null)
             return false;
         if (other.getLastModifiedDate() != null && other.getLastModifiedDate().equals(this.getLastModifiedDate()) == false)
@@ -247,6 +384,7 @@ public class ApplicationSettingsResource implements Serializable, Cloneable, Str
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getApplicationId() == null) ? 0 : getApplicationId().hashCode());
+        hashCode = prime * hashCode + ((getCampaignHook() == null) ? 0 : getCampaignHook().hashCode());
         hashCode = prime * hashCode + ((getLastModifiedDate() == null) ? 0 : getLastModifiedDate().hashCode());
         hashCode = prime * hashCode + ((getLimits() == null) ? 0 : getLimits().hashCode());
         hashCode = prime * hashCode + ((getQuietTime() == null) ? 0 : getQuietTime().hashCode());

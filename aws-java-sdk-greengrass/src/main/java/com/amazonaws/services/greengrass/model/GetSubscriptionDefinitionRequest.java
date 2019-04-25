@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -25,14 +25,14 @@ import com.amazonaws.AmazonWebServiceRequest;
 @Generated("com.amazonaws:aws-java-sdk-code-generator")
 public class GetSubscriptionDefinitionRequest extends com.amazonaws.AmazonWebServiceRequest implements Serializable, Cloneable {
 
-    /** subscription definition Id */
+    /** The ID of the subscription definition. */
     private String subscriptionDefinitionId;
 
     /**
-     * subscription definition Id
+     * The ID of the subscription definition.
      * 
      * @param subscriptionDefinitionId
-     *        subscription definition Id
+     *        The ID of the subscription definition.
      */
 
     public void setSubscriptionDefinitionId(String subscriptionDefinitionId) {
@@ -40,9 +40,9 @@ public class GetSubscriptionDefinitionRequest extends com.amazonaws.AmazonWebSer
     }
 
     /**
-     * subscription definition Id
+     * The ID of the subscription definition.
      * 
-     * @return subscription definition Id
+     * @return The ID of the subscription definition.
      */
 
     public String getSubscriptionDefinitionId() {
@@ -50,10 +50,10 @@ public class GetSubscriptionDefinitionRequest extends com.amazonaws.AmazonWebSer
     }
 
     /**
-     * subscription definition Id
+     * The ID of the subscription definition.
      * 
      * @param subscriptionDefinitionId
-     *        subscription definition Id
+     *        The ID of the subscription definition.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -63,7 +63,8 @@ public class GetSubscriptionDefinitionRequest extends com.amazonaws.AmazonWebSer
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -36,7 +36,7 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
  * </p>
  * <p>
  * You can use ACM to manage SSL/TLS certificates for your AWS-based websites and applications. For general information
- * about using ACM, see the <a href="http://docs.aws.amazon.com/acm/latest/userguide/"> <i>AWS Certificate Manager User
+ * about using ACM, see the <a href="https://docs.aws.amazon.com/acm/latest/userguide/"> <i>AWS Certificate Manager User
  * Guide</i> </a>.
  * </p>
  */
@@ -350,6 +350,39 @@ public class AWSCertificateManagerAsyncClient extends AWSCertificateManagerClien
     }
 
     @Override
+    public java.util.concurrent.Future<ExportCertificateResult> exportCertificateAsync(ExportCertificateRequest request) {
+
+        return exportCertificateAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<ExportCertificateResult> exportCertificateAsync(final ExportCertificateRequest request,
+            final com.amazonaws.handlers.AsyncHandler<ExportCertificateRequest, ExportCertificateResult> asyncHandler) {
+        final ExportCertificateRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<ExportCertificateResult>() {
+            @Override
+            public ExportCertificateResult call() throws Exception {
+                ExportCertificateResult result = null;
+
+                try {
+                    result = executeExportCertificate(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
     public java.util.concurrent.Future<GetCertificateResult> getCertificateAsync(GetCertificateRequest request) {
 
         return getCertificateAsync(request, null);
@@ -515,6 +548,39 @@ public class AWSCertificateManagerAsyncClient extends AWSCertificateManagerClien
     }
 
     @Override
+    public java.util.concurrent.Future<RenewCertificateResult> renewCertificateAsync(RenewCertificateRequest request) {
+
+        return renewCertificateAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<RenewCertificateResult> renewCertificateAsync(final RenewCertificateRequest request,
+            final com.amazonaws.handlers.AsyncHandler<RenewCertificateRequest, RenewCertificateResult> asyncHandler) {
+        final RenewCertificateRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<RenewCertificateResult>() {
+            @Override
+            public RenewCertificateResult call() throws Exception {
+                RenewCertificateResult result = null;
+
+                try {
+                    result = executeRenewCertificate(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
     public java.util.concurrent.Future<RequestCertificateResult> requestCertificateAsync(RequestCertificateRequest request) {
 
         return requestCertificateAsync(request, null);
@@ -565,6 +631,39 @@ public class AWSCertificateManagerAsyncClient extends AWSCertificateManagerClien
 
                 try {
                     result = executeResendValidationEmail(finalRequest);
+                } catch (Exception ex) {
+                    if (asyncHandler != null) {
+                        asyncHandler.onError(ex);
+                    }
+                    throw ex;
+                }
+
+                if (asyncHandler != null) {
+                    asyncHandler.onSuccess(finalRequest, result);
+                }
+                return result;
+            }
+        });
+    }
+
+    @Override
+    public java.util.concurrent.Future<UpdateCertificateOptionsResult> updateCertificateOptionsAsync(UpdateCertificateOptionsRequest request) {
+
+        return updateCertificateOptionsAsync(request, null);
+    }
+
+    @Override
+    public java.util.concurrent.Future<UpdateCertificateOptionsResult> updateCertificateOptionsAsync(final UpdateCertificateOptionsRequest request,
+            final com.amazonaws.handlers.AsyncHandler<UpdateCertificateOptionsRequest, UpdateCertificateOptionsResult> asyncHandler) {
+        final UpdateCertificateOptionsRequest finalRequest = beforeClientExecution(request);
+
+        return executorService.submit(new java.util.concurrent.Callable<UpdateCertificateOptionsResult>() {
+            @Override
+            public UpdateCertificateOptionsResult call() throws Exception {
+                UpdateCertificateOptionsResult result = null;
+
+                try {
+                    result = executeUpdateCertificateOptions(finalRequest);
                 } catch (Exception ex) {
                     if (asyncHandler != null) {
                         asyncHandler.onError(ex);

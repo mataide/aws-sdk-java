@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -24,14 +24,14 @@ import javax.annotation.Generated;
 public class DisassociateServiceRoleFromAccountResult extends com.amazonaws.AmazonWebServiceResult<com.amazonaws.ResponseMetadata> implements Serializable,
         Cloneable {
 
-    /** Time when the service role was disassociated from the account. */
+    /** The time when the service role was disassociated from the account. */
     private String disassociatedAt;
 
     /**
-     * Time when the service role was disassociated from the account.
+     * The time when the service role was disassociated from the account.
      * 
      * @param disassociatedAt
-     *        Time when the service role was disassociated from the account.
+     *        The time when the service role was disassociated from the account.
      */
 
     public void setDisassociatedAt(String disassociatedAt) {
@@ -39,9 +39,9 @@ public class DisassociateServiceRoleFromAccountResult extends com.amazonaws.Amaz
     }
 
     /**
-     * Time when the service role was disassociated from the account.
+     * The time when the service role was disassociated from the account.
      * 
-     * @return Time when the service role was disassociated from the account.
+     * @return The time when the service role was disassociated from the account.
      */
 
     public String getDisassociatedAt() {
@@ -49,10 +49,10 @@ public class DisassociateServiceRoleFromAccountResult extends com.amazonaws.Amaz
     }
 
     /**
-     * Time when the service role was disassociated from the account.
+     * The time when the service role was disassociated from the account.
      * 
      * @param disassociatedAt
-     *        Time when the service role was disassociated from the account.
+     *        The time when the service role was disassociated from the account.
      * @return Returns a reference to this object so that method calls can be chained together.
      */
 
@@ -62,7 +62,8 @@ public class DisassociateServiceRoleFromAccountResult extends com.amazonaws.Amaz
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *

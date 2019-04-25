@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -31,6 +31,12 @@ public class RoleAliasDescription implements Serializable, Cloneable, Structured
      * </p>
      */
     private String roleAlias;
+    /**
+     * <p>
+     * The ARN of the role alias.
+     * </p>
+     */
+    private String roleAliasArn;
     /**
      * <p>
      * The role ARN.
@@ -99,6 +105,46 @@ public class RoleAliasDescription implements Serializable, Cloneable, Structured
 
     public RoleAliasDescription withRoleAlias(String roleAlias) {
         setRoleAlias(roleAlias);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The ARN of the role alias.
+     * </p>
+     * 
+     * @param roleAliasArn
+     *        The ARN of the role alias.
+     */
+
+    public void setRoleAliasArn(String roleAliasArn) {
+        this.roleAliasArn = roleAliasArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the role alias.
+     * </p>
+     * 
+     * @return The ARN of the role alias.
+     */
+
+    public String getRoleAliasArn() {
+        return this.roleAliasArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the role alias.
+     * </p>
+     * 
+     * @param roleAliasArn
+     *        The ARN of the role alias.
+     * @return Returns a reference to this object so that method calls can be chained together.
+     */
+
+    public RoleAliasDescription withRoleAliasArn(String roleAliasArn) {
+        setRoleAliasArn(roleAliasArn);
         return this;
     }
 
@@ -303,7 +349,8 @@ public class RoleAliasDescription implements Serializable, Cloneable, Structured
     }
 
     /**
-     * Returns a string representation of this object; useful for testing and debugging.
+     * Returns a string representation of this object. This is useful for testing and debugging. Sensitive data will be
+     * redacted from this string using a placeholder value.
      *
      * @return A string representation of this object.
      *
@@ -315,6 +362,8 @@ public class RoleAliasDescription implements Serializable, Cloneable, Structured
         sb.append("{");
         if (getRoleAlias() != null)
             sb.append("RoleAlias: ").append(getRoleAlias()).append(",");
+        if (getRoleAliasArn() != null)
+            sb.append("RoleAliasArn: ").append(getRoleAliasArn()).append(",");
         if (getRoleArn() != null)
             sb.append("RoleArn: ").append(getRoleArn()).append(",");
         if (getOwner() != null)
@@ -342,6 +391,10 @@ public class RoleAliasDescription implements Serializable, Cloneable, Structured
         if (other.getRoleAlias() == null ^ this.getRoleAlias() == null)
             return false;
         if (other.getRoleAlias() != null && other.getRoleAlias().equals(this.getRoleAlias()) == false)
+            return false;
+        if (other.getRoleAliasArn() == null ^ this.getRoleAliasArn() == null)
+            return false;
+        if (other.getRoleAliasArn() != null && other.getRoleAliasArn().equals(this.getRoleAliasArn()) == false)
             return false;
         if (other.getRoleArn() == null ^ this.getRoleArn() == null)
             return false;
@@ -372,6 +425,7 @@ public class RoleAliasDescription implements Serializable, Cloneable, Structured
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getRoleAlias() == null) ? 0 : getRoleAlias().hashCode());
+        hashCode = prime * hashCode + ((getRoleAliasArn() == null) ? 0 : getRoleAliasArn().hashCode());
         hashCode = prime * hashCode + ((getRoleArn() == null) ? 0 : getRoleArn().hashCode());
         hashCode = prime * hashCode + ((getOwner() == null) ? 0 : getOwner().hashCode());
         hashCode = prime * hashCode + ((getCredentialDurationSeconds() == null) ? 0 : getCredentialDurationSeconds().hashCode());

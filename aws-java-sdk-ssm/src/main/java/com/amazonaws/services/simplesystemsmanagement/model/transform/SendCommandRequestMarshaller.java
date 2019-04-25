@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with
  * the License. A copy of the License is located at
@@ -35,6 +35,8 @@ public class SendCommandRequestMarshaller {
             .marshallLocationName("Targets").build();
     private static final MarshallingInfo<String> DOCUMENTNAME_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("DocumentName").build();
+    private static final MarshallingInfo<String> DOCUMENTVERSION_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("DocumentVersion").build();
     private static final MarshallingInfo<String> DOCUMENTHASH_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("DocumentHash").build();
     private static final MarshallingInfo<String> DOCUMENTHASHTYPE_BINDING = MarshallingInfo.builder(MarshallingType.STRING)
@@ -59,6 +61,8 @@ public class SendCommandRequestMarshaller {
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("ServiceRoleArn").build();
     private static final MarshallingInfo<StructuredPojo> NOTIFICATIONCONFIG_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
             .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("NotificationConfig").build();
+    private static final MarshallingInfo<StructuredPojo> CLOUDWATCHOUTPUTCONFIG_BINDING = MarshallingInfo.builder(MarshallingType.STRUCTURED)
+            .marshallLocation(MarshallLocation.PAYLOAD).marshallLocationName("CloudWatchOutputConfig").build();
 
     private static final SendCommandRequestMarshaller instance = new SendCommandRequestMarshaller();
 
@@ -79,6 +83,7 @@ public class SendCommandRequestMarshaller {
             protocolMarshaller.marshall(sendCommandRequest.getInstanceIds(), INSTANCEIDS_BINDING);
             protocolMarshaller.marshall(sendCommandRequest.getTargets(), TARGETS_BINDING);
             protocolMarshaller.marshall(sendCommandRequest.getDocumentName(), DOCUMENTNAME_BINDING);
+            protocolMarshaller.marshall(sendCommandRequest.getDocumentVersion(), DOCUMENTVERSION_BINDING);
             protocolMarshaller.marshall(sendCommandRequest.getDocumentHash(), DOCUMENTHASH_BINDING);
             protocolMarshaller.marshall(sendCommandRequest.getDocumentHashType(), DOCUMENTHASHTYPE_BINDING);
             protocolMarshaller.marshall(sendCommandRequest.getTimeoutSeconds(), TIMEOUTSECONDS_BINDING);
@@ -91,6 +96,7 @@ public class SendCommandRequestMarshaller {
             protocolMarshaller.marshall(sendCommandRequest.getMaxErrors(), MAXERRORS_BINDING);
             protocolMarshaller.marshall(sendCommandRequest.getServiceRoleArn(), SERVICEROLEARN_BINDING);
             protocolMarshaller.marshall(sendCommandRequest.getNotificationConfig(), NOTIFICATIONCONFIG_BINDING);
+            protocolMarshaller.marshall(sendCommandRequest.getCloudWatchOutputConfig(), CLOUDWATCHOUTPUTCONFIG_BINDING);
         } catch (Exception e) {
             throw new SdkClientException("Unable to marshall request to JSON: " + e.getMessage(), e);
         }

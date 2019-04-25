@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2013-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package com.amazonaws.util;
 import static com.amazonaws.SDKGlobalConfiguration.EC2_METADATA_SERVICE_OVERRIDE_SYSTEM_PROPERTY;
 
 import com.amazonaws.AmazonClientException;
+import com.amazonaws.SDKGlobalConfiguration;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.internal.EC2CredentialsUtils;
 import com.amazonaws.util.json.Jackson;
@@ -46,6 +47,11 @@ import org.apache.commons.logging.LogFactory;
  * add a new customer at any time, simply create a bucket for the customer, add
  * their content, and launch your AMI.<br>
  *
+ * <p>
+ * You can disable the use of the EC2 Instance meta data service by either setting the
+ * {@link SDKGlobalConfiguration#AWS_EC2_METADATA_DISABLED_ENV_VAR} or
+ * {@link SDKGlobalConfiguration#AWS_EC2_METADATA_DISABLED_SYSTEM_PROPERTY} to 'true'(not case sensitive).
+ *
  * More information about Amazon EC2 Metadata
  *
  * @see <a
@@ -56,6 +62,7 @@ public class EC2MetadataUtils {
 
     private static final String REGION = "region";
     private static final String INSTANCE_IDENTITY_DOCUMENT = "instance-identity/document";
+    private static final String INSTANCE_IDENTITY_SIGNATURE = "instance-identity/signature";
     private static final String EC2_METADATA_ROOT = "/latest/meta-data";
     private static final String EC2_USERDATA_ROOT = "/latest/user-data/";
     private static final String EC2_DYNAMICDATA_ROOT = "/latest/dynamic/";
@@ -239,6 +246,13 @@ public class EC2MetadataUtils {
                 EC2_DYNAMICDATA_ROOT + INSTANCE_IDENTITY_DOCUMENT));
     }
 
+    /**
+     * Get the signature of the instance.
+     */
+    public static String getInstanceSignature() {
+        return fetchData(EC2_DYNAMICDATA_ROOT + INSTANCE_IDENTITY_SIGNATURE);
+    }
+
     static InstanceInfo doGetInstanceInfo(String json) {
         if (null != json) {
             try {
@@ -390,7 +404,7 @@ public class EC2MetadataUtils {
                 items = Arrays.asList(response.split("\n"));
             return items;
         } catch (AmazonClientException ace) {
-            log.warn("Unable to retrieve the requested metadata.");
+            log.warn("Unable to retrieve the requested metadata (" + path + "). " + ace.getMessage(), ace);
             return null;
         } catch (Exception e) {
             // Retry on any other exceptions
